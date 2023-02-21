@@ -72,14 +72,14 @@ class Shareholder extends MY_Controller {
 			$data = array(
 						'member_mid' => $this->input->post('member_mid'),
 						'member_name' => $this->input->post('member_name'),
-						//'member_gender' => $this->input->post('member_gender'),
-					//	'member_dob' => $this->input->post('member_dob'),
+						'member_gender' => $this->input->post('member_gender'),
+						'member_dob' => $this->input->post('member_dob'),
 						'member_type' => 1,
 						'member_email' => $this->input->post('member_email'),
 						'member_pnumber' => $this->input->post('member_pnumber'),
 						'member_wnumber' => $this->input->post('member_wnumber'),
 						'member_address' => $this->input->post('member_address'),
-						'created_at' => $this->input->post('member_exitdate'),
+						'm_created_at' => $this->input->post('member_exitdate'),
                         'member_share_aahar' => $this->input->post('share_aadhar'),
                         'member_share_pan' => $this->input->post('share_pan'),
                         'member_share_no_shares' => $this->input->post('share_shares'),
@@ -88,6 +88,7 @@ class Shareholder extends MY_Controller {
 						'member_account' => $this->input->post('member_account'),
 						'member_ifsc' => $this->input->post('member_ifsc'),
 						'member_bank_id' => $this->input->post('member_bank_id'),
+						'member_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 						// 'member_img' => $member_img,
 						'member_status' => 1
 						);
@@ -142,6 +143,7 @@ class Shareholder extends MY_Controller {
 
 	public function get_shareholders(){
 		$this->load->model('Shareholder_model');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
     	$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
@@ -149,7 +151,7 @@ class Shareholder extends MY_Controller {
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
         $param['memberid'] = (isset($_REQUEST['memberid']))?$_REQUEST['memberid']:'';
-    	$data = $this->Shareholder_model->getshareholdersClassinfoTable($param);
+    	$data = $this->Shareholder_model->getshareholdersClassinfoTable($param,$branch_id_fk);
     	$json_data = json_encode($data);
     	echo $json_data;
     }

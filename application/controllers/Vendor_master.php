@@ -23,13 +23,14 @@ class Vendor_master extends MY_Controller {
 	}
 	public function get(){
 		$this->load->model('Vendor_model');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
     	$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-    	$data = $this->Vendor_model->getVendorTable($param);
+    	$data = $this->Vendor_model->getVendorTable($param,$branch_id_fk);
     	$json_data = json_encode($data);
     	echo $json_data;
     }
@@ -44,6 +45,7 @@ class Vendor_master extends MY_Controller {
 		}
 		else {
 			$data = array(
+						'vendor_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 						'vendorname' => $this->input->post('vendorname'),
 						'vendoraddress' => $this->input->post('vendoraddress'),
 						'vendorphone' => $this->input->post('vendorphone'),

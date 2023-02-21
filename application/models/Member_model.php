@@ -5,7 +5,7 @@ class Member_model extends CI_Model{
 	{
 		parent::__construct();
 	}
-	public function getClassinfoTable($param){
+	public function getClassinfoTable($param,$branch_id_fk){
 		$arOrder = array('','member_name');
 		$searchValue =($param['searchValue'])?$param['searchValue']:'';
 		$memberid	 =(isset($param['memberid']))?$param['memberid']:'';
@@ -15,14 +15,21 @@ class Member_model extends CI_Model{
 		if($memberid){
 			$this->db->or_like('tbl_member.member_mid ', $memberid);
 			$this->db->or_like('tbl_member.member_name ', $memberid);
-			$this->db->or_like('tbl_member_type.member_type_name ', $memberid);
 		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("member_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("member_branch_id_fk",0);
+        }
 		$this->db->where("member_status",1);
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'],$param['start']);
 		}
 		//$this->db->select('*,tbl_cag.cag_name,tbl_region.region_name,tbl_panchayath.panchayath_name,sum(tbl_deposit.deposit_amount) as depositsum');
-		$this->db->select('*,DATE_FORMAT(MAX(tbl_member.created_at),\'%d/%m/%Y\') AS created_at,date_format(tbl_member.member_dob,"%d/%m/%Y") as date_of_birth');
+		$this->db->select('*,DATE_FORMAT(tbl_member.m_created_at,\'%d/%m/%Y\') AS m_created_at,date_format(tbl_member.member_dob,"%d/%m/%Y") as date_of_birth');
 		$this->db->from('tbl_member');
 		$this->db->join('tbl_state','member_state= state_id','left');
 		$this->db->join('tbl_district','member_district= district_id','left');
@@ -32,11 +39,11 @@ class Member_model extends CI_Model{
 		$this->db->where("member_type!=",1);
 		$query = $this->db->get();
 		$data['data'] = $query->result();
-		$data['recordsTotal'] = $this->getClassinfoTotalCount($param);
-		$data['recordsFiltered'] = $this->getClassinfoTotalCount($param);
+		$data['recordsTotal'] = $this->getClassinfoTotalCount($param,$branch_id_fk);
+		$data['recordsFiltered'] = $this->getClassinfoTotalCount($param,$branch_id_fk);
 		return $data;
 	}
-	public function getClassinfoTotalCount($param = NULL){
+	public function getClassinfoTotalCount($param = NULL,$branch_id_fk){
 		$searchValue =($param['searchValue'])?$param['searchValue']:'';
 		if($searchValue){
 			$this->db->like('member_name', $searchValue);
@@ -46,6 +53,14 @@ class Member_model extends CI_Model{
 		$this->db->where("member_status",1);
 		$this->db->order_by('member_id', 'DESC');
 		$this->db->where("member_type!=",1);
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("member_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("member_branch_id_fk",0);
+        }
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

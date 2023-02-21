@@ -51,9 +51,7 @@
                 <th>ADDRESS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                 <th>PHONE_NUMBER</th>
                 <th>EMAIL</th>
-                <th>PANCHAYATH</th>
-                <th>DISTRICT</th>
-                <th>STATE</th>
+                <th>GST</th>
                 <th>DATE_OF_JOINING</th>
                 <th>
                   <center>EDIT/DELETE</center>

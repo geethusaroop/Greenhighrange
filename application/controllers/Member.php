@@ -7,6 +7,7 @@ class Member extends MY_Controller {
 		parent::__construct();
         $this->load->model('General_model');
         $this->load->model('Member_model');
+		$this->load->model('Shareholder_model');
 	}
 	public function index()
 	{
@@ -38,6 +39,10 @@ class Member extends MY_Controller {
 			$template['script'] = 'Member/script';
 			$template['state'] = $this->Member_model->get_state();
 			//$this->load->view('template', $template);
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$admno = $this->Shareholder_model->get_admno2($branch_id_fk);
+			if(isset($admno->member_id)){$adm=$admno->member_id+1;}else{$adm='1';}
+			$template['adm'] = "M00".$adm;	
 			$this->load->view('template', $template);
 		}
 		else {
@@ -66,17 +71,19 @@ class Member extends MY_Controller {
 					}
 				 }
 			$data = array(
+						'member_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 						'member_mid' => $this->input->post('member_mid'),
 						'member_name' => $this->input->post('member_name'),
-						'member_gender' => $this->input->post('member_gender'),
-						'member_dob' => $this->input->post('member_dob'),
+						'member_gst' => $this->input->post('member_gst'),
+						//'member_gender' => $this->input->post('member_gender'),
+						//'member_dob' => $this->input->post('member_dob'),
 						'member_type' => $this->input->post('member_type'),
 						'member_email' => $this->input->post('member_email'),
 						'member_pnumber' => $this->input->post('member_pnumber'),
 						'member_address' => $this->input->post('member_address'),
-						'member_panchayath' => $this->input->post('member_panchayath'),
-						'member_district' => $this->input->post('member_district'),
-						'member_state' => $this->input->post('member_state'),
+						//'member_panchayath' => $this->input->post('member_panchayath'),
+						//'member_district' => $this->input->post('member_district'),
+						//'member_state' => $this->input->post('member_state'),
 						'm_created_at' => $this->input->post('member_exitdate'),
 						'member_img' => $member_img,
 						'member_status' => 1
@@ -104,6 +111,7 @@ class Member extends MY_Controller {
 	}
 	public function get(){
 		$this->load->model('Member_model');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
     	$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
@@ -113,7 +121,7 @@ class Member extends MY_Controller {
         $param['memberid'] = (isset($_REQUEST['memberid']))?$_REQUEST['memberid']:'';
 		//print_r($memberid);
 		//exit();
-    	$data = $this->Member_model->getClassinfoTable($param);
+    	$data = $this->Member_model->getClassinfoTable($param,$branch_id_fk);
     	$json_data = json_encode($data);
     	echo $json_data;
     }

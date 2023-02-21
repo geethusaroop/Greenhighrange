@@ -90,7 +90,9 @@ var d=c+"(IST)";
            $table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-    $('td', row).eq(18).html('<center><a href="<?php echo base_url();?>index.php/Shareholder/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+            $('td',row).eq(11).html('Bank Name :<b>'+data['member_bank']+'</b><br>Branch:   <b>'+data['member_branch']+'</b>,  <br>A/C No : <b>'+data['member_account']+'</b>,  <br>IFSC : <b>'+data['member_ifsc']+'</b>');
+
+            $('td', row).eq(12).html('<center><a href="<?php echo base_url();?>index.php/Shareholder/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         
         }, 
         "columns": [
@@ -99,21 +101,14 @@ var d=c+"(IST)";
            { "data": "member_mid", "orderable": false },
             { "data": "member_name", "orderable": false },
             { "data": "member_dob", "orderable": false },
-            { "data": "member_share_nominee", "orderable": false },
-            { "data": "member_share_father_husband", "orderable": false },
       		{ "data": "member_address", "orderable": false },
       		{ "data": "member_pnumber", "orderable": false },
       		{ "data": "member_email", "orderable": false },
             { "data": "member_share_aahar", "orderable": false },
             { "data": "member_share_pan", "orderable": false },
             { "data": "member_share_no_shares", "orderable": false },
-            { "data": "panchayath_name", "orderable": false },
-            { "data": "member_share_serial_number", "orderable": false },
-            { "data": "member_block_number", "orderable": false },
-            { "data": "district_name", "orderable": false },
-            { "data": "state_name", "orderable": false },
             { "data": "m_created_at", "orderable": false } ,
-           // { "data": "member_share_no_shares", "orderable": false } ,
+            { "data": "member_bank", "orderable": false } ,
             { "data": "member_id", "orderable": false }        
             
         ]

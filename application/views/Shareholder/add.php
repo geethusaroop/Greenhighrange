@@ -90,16 +90,16 @@
 
                   <div class="form-group row">
                     <div class="col-md-4">
-                      <label class="fsize">Email ID <span style="color: red;"> *</span></label>
+                      <label class="fsize">Email ID</label>
                       <input type="text" autofocus class="form-control" name="member_email" value="<?php if (isset($records->member_email)) echo $records->member_email ?>" placeholder="Enter Email">
                     </div>
                     <div class="col-md-4">
-                      <label class="fsize">Phone Number<span style="color: red;"> *</span></label>
+                      <label class="fsize">Phone Number</label>
                       <input type="text"" autofocus class="form-control" name="member_pnumber" value="<?php if (isset($records->member_pnumber)) echo $records->member_pnumber ?>" placeholder="Enter Phone Number">
                     </div>
 
                     <div class="col-md-4">
-                      <label class="fsize">Whatsapp Number<span style="color: red;"> *</span></label>
+                      <label class="fsize">Whatsapp Number</label>
                       <input type="text" autofocus class="form-control" name="member_wnumber" value="<?php if (isset($records->member_wnumber)) echo $records->member_wnumber ?>" placeholder="Enter Phone Number">
                     </div>
                   </div>
@@ -107,7 +107,7 @@
                   <div class="form-group row">
                     <div class="col-md-3">
                       <label class="fsize">Joining Date</label>
-                      <input type="date" autofocus class="form-control" name="member_exitdate" value="<?php if (isset($records->created_at)) echo $records->created_at ?>">
+                      <input type="date" autofocus class="form-control" name="member_exitdate" value="<?php if (isset($records->m_created_at)) echo $records->m_created_at ?>">
                     </div>
                     <div class="col-md-3" id="aadhar_number" style="display: block;">
                         <label for="">Aadhar Number</label>

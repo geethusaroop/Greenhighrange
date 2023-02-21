@@ -73,21 +73,14 @@
                                 <th>MEMBER_ID</th>
                                 <th>SHAREHOLDER_NAME&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                 <th>DATE_OF_BIRTH</th>
-                                <th>NOMINEE_NAME</th>
-                                <th>FATHER_HUSBAND</th>
                                 <th>ADDRESS&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                 <th>PHONE_NUMBER</th>
                                 <th>EMAIL</th>
                                 <th>AADHAAR_NO</th>
                                 <th>PAN_NO</th>
                                 <th>SHARES_HELD</th>
-                                <th>PANCHAYATH</th>
-                                <th>BLOCK</th>
-                                <th>SERIAL_NUMBER</th>
-                                <th>DISTRICT</th>
-                                <th>STATE</th>
                                 <th>DATE_OF_JOINING</th>
-                           <!--  <th>SHARE_TRANSFER</th> -->
+                                 <th>BANK_DETAILS</th> 
                                 <th>
                                     <center>EDIT/DELETE</center>
                                 </th>

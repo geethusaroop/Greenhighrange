@@ -41,7 +41,9 @@ class Product extends MY_Controller
 			$this->load->view('template', $template);
 		} else {
 			$product_id = $this->input->post('product_id');
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
 			$data = array(
+				'branch_id_fk'=>$branch_id_fk,
 				//'product_type' => $this->input->post('product_type'),
 			//	'product_sub_type' => $this->input->post('subcategory'),
 				'product_code' => strtoupper($this->input->post('prod_code')),

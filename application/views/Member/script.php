@@ -108,7 +108,7 @@ var d=c+"(IST)";
          $('td',row).eq(2).html('OTHER CUSTOMERS');
       }
 
-      $('td', row).eq(12).html('<center><a href="<?php echo base_url();?>index.php/Member/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+      $('td', row).eq(10).html('<center><a href="<?php echo base_url();?>index.php/Member/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
       },
         "columns": [
             { "data": "member_status", "orderable": false},
@@ -119,9 +119,7 @@ var d=c+"(IST)";
       			{ "data": "member_address", "orderable": false },
       			{ "data": "member_pnumber", "orderable": false },
       			{ "data": "member_email", "orderable": false },
-            { "data": "panchayath_name", "orderable": false },
-            { "data": "district_name", "orderable": false },
-            { "data": "state_name", "orderable": false },
+            { "data": "member_gst", "orderable": false },
       			{ "data": "m_created_at", "orderable": false },
             { "data": "member_id", "orderable": false }
         ]

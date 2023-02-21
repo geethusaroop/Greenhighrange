@@ -433,6 +433,29 @@
           </ul>
        </li>
 
+       <li class="treeview <?php
+         if ($this->uri->segment(1) == "Shareholder") {
+            echo "active";
+          }
+          else  if ($this->uri->segment(1) == "Member") {
+            echo "active";
+          }
+          ?>">
+         <a><i class="fa fa-university"></i><span>Administration</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+         
+           <li class="<?php if ($this->uri->segment(1) == "Shareholder") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Shareholder"><i class="fa fa-circle-o"></i><span>Share Holders Details</span></a></li>
+
+           <li class="<?php if ($this->uri->segment(1) == "Member") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Member"><i class="fa fa-circle-o"></i><span>Members</span></a></li>
+
+          </ul>
+       </li>
+
+
        <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-truck"></i><span>Stock From Master Branch</span></a></li>
 
 
