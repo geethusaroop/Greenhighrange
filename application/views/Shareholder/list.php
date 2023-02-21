@@ -26,44 +26,41 @@
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-danger nohover">Member ID</button>
                                 </div><!-- /btn-group -->
-                                <!-- <input type="text" name="member_mid" placeholder="" id="member_mid" class="form-control"> -->
-                                <select name="member_mid" id="member_mid" class="form-control">
+                              <input type="text" name="member_mid" placeholder="" id="member_mid" class="form-control">
+                              <!--   <select name="member_mid" id="member_mid" class="form-control">
                                     <option value="">SELECT</option>
                                     <?php foreach($member_id as $mem_id_list){ ?>
                                     <option value="<?php echo $mem_id_list->member_mid ?>"><?php echo $mem_id_list->member_mid ?></option>
                                     <?php } ?>
-                                </select>
+                                </select> -->
                             </div><!-- /input-group -->
                         </div>
-                        <div class="col-md-3">
+                       <!--  <div class="col-md-3">
                             <div class="input-group margin">
                                 <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger nohover">Date </button>
-                                </div><!-- /btn-group -->
+                                </div>
                                 <input id="pmsDateStart" type="text" data-validation-optional="true" data-pms-max-date="today" data-pms-type="date" name="start_date" data-pms-date-to="pmsDateEnd" class="col-md-5 form-control" placeholder="dd/mm/yyyy" >
                                 <span tabindex="-1" class="input-group-btn select-calendar date-range"><button type="button" tabindex="-1" class="btn btn-default"><i class=" fa fa-calendar"></i></button></span>
                                     
                                 <input id="pmsDateEnd" type="text" data-validation-optional="true" data-pms-type="date" name="end_date" data-pms-date-from="pmsDateStart" class="col-md-5 form-control" placeholder="dd/mm/yyyy" >
                                 <span tabindex="-1" class="input-group-btn select-calendar date-range"><button type="button" tabindex="-1" class="btn btn-default"><i class=" fa fa-calendar"></i></button></span>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-sm-2">
                             <div class="input-group">
                                 <button type="button" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if (isset($values->mainhead_id)) echo $values->mainhead_id; ?>">Search</button>
+                                <a href="<?php echo base_url(); ?>Shareholder/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Shareholder</a>
+                               
                             </div>
                             
                         </div>
-                        <div class="col-sm-2">
-                            <div class="input-group">
-                                <a href="<?php echo base_url(); ?>Shareholder/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Shareholder</a>
-                                
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
+                       
+                      <!--   <div class="col-sm-2">
                             <div class="input-group">
                             <a href="<?php echo base_url(); ?>Shareholder/addExcelShareholder" class="btn btn-danger"><i class="fa fa-plus-square"></i> Import Excel</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <br>
                 </div>
@@ -73,7 +70,7 @@
                         <thead>
                             <tr>
                                 <th>SINO</th>
-                                <!-- <th>MEMBER_ID</th> -->
+                                <th>MEMBER_ID</th>
                                 <th>SHAREHOLDER_NAME&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                 <th>DATE_OF_BIRTH</th>
                                 <th>NOMINEE_NAME</th>

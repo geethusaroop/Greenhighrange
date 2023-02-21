@@ -54,7 +54,7 @@
                   <div class="form-group row">
                     <div class="col-md-6">
                       <label class="fsize">Shareholder ID <span style="color: red;"> *</span></label>
-                      <input type="text" data-pms-required="true" autofocus class="form-control" name="member_mid" value="<?php if (isset($records->member_mid)) echo $records->member_mid ?>" placeholder="Enter Shareholder ID">
+                      <input type="text" data-pms-required="true" autofocus class="form-control" name="member_mid" value="<?php if (isset($records->member_mid)){echo $records->member_mid;}else{echo $adm;}  ?>" placeholder="Enter Shareholder ID">
                     </div>
                     <div class="col-md-6">
                       <label class="fsize">Shareholder Name<span style="color: red;"> *</span></label>
@@ -62,7 +62,7 @@
                     </div>
                   </div>
 
-                <!--   <div class="form-group row">
+                 <div class="form-group row">
                     <div class="col-md-6">
                       <label class="fsize">Gender </label>
                       <select name="member_gender" class="form-control">
@@ -79,7 +79,7 @@
                       <label class="fsize">DOB</label>
                       <input type="date" autofocus class="form-control" name="member_dob" value="<?php if (isset($records->member_dob)) echo $records->member_dob ?>">
                     </div>
-                  </div> -->
+                  </div> 
 
                   <div class="form-group row">
                     <div class="col-md-12">

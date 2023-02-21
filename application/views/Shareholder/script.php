@@ -90,13 +90,13 @@ var d=c+"(IST)";
            $table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-    $('td', row).eq(17).html('<center><a href="<?php echo base_url();?>index.php/Shareholder/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+    $('td', row).eq(18).html('<center><a href="<?php echo base_url();?>index.php/Shareholder/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         
         }, 
         "columns": [
         
             { "data": "member_status", "orderable": false},
-            //{ "data": "member_mid", "orderable": false },
+           { "data": "member_mid", "orderable": false },
             { "data": "member_name", "orderable": false },
             { "data": "member_dob", "orderable": false },
             { "data": "member_share_nominee", "orderable": false },

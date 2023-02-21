@@ -185,5 +185,26 @@ class Shareholder_model extends CI_Model{
 		return $query = $this->db->get('tbl_panchayath')->row()->panchayath_id;
 
 	}
+
+	public function get_admno2($branch_id_fk)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_member');
+		$this->db->where('member_status', 1);
+		$this->db->where('member_type', 1);
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("member_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("member_branch_id_fk",0);
+        }
+		$this->db->order_by('member_mid',"DESC");
+		$this->db->limit(1);
+		$query = $this->db->get();
+		return $query->row();
+
+	}
 	
 }
