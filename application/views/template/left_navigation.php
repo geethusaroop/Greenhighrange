@@ -436,6 +436,38 @@
        <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-truck"></i><span>Stock From Master Branch</span></a></li>
 
 
+       <li class="treeview <?php
+         if ($this->uri->segment(1) == "Stock") {
+            echo "active";
+          }
+
+          else if ($this->uri->segment(1) == "StockStatus") {
+            echo "active";
+          }
+
+          else if ($this->uri->segment(1) == "Sale") {
+            echo "active";
+          }
+
+          ?>">
+         <a><i class="fa fa-shopping-cart"></i><span>Inventory</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+
+
+         <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
+
+
+           <li class="<?php if ($this->uri->segment(1) == "Stock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stock"><i class="fa fa-circle-o"></i><span>Stock Details</span></a></li>
+
+<!--            <li class="<?php if ($this->uri->segment(1) == "StockStatus") {echo "active";} ?>"><a href="<?php echo base_url(); ?>StockStatus"><i class="fa fa-circle-o"></i><span>Stock Status</span></a></li>
+ -->
+          </ul>
+       </li>
+
        <li class="divider"></li> 
        <li class="treeview"> <a><i class="fa fa-product-hunt" style="color:#227b05;"></i> <span style="font-weight:bold;text-shadow:2px 2px #227b05;">PRODUCTION UNIT</span>  </a></li>
              

@@ -22,7 +22,8 @@ class Purchaseitem extends MY_Controller {
 	}
 	public function index()
 	{
-		$template['product_names'] = $this->Item_model->view_by();
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['product_names'] = $this->Item_model->view_by1($branch_id_fk);
 		$template['product_unit'] = $this->Item_model->view_unit();
 		$template['body'] = 'Purchaseitem/list';
 		$template['script'] = 'Purchaseitem/script';
@@ -35,8 +36,9 @@ class Purchaseitem extends MY_Controller {
 		$template['body'] = 'Purchaseview/edit';
 		$template['script'] = 'Purchaseview/script';
 		$prid= $this->session->userdata('prid');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$template['vendor_names'] = $this->Vendor_model->view_by();
-		$template['product_names'] = $this->Item_model->view_by();
+		$template['product_names'] = $this->Item_model->view_by1($branch_id_fk);
 		$template['tax_names'] = $this->Tax_model->view_by();
 		$template['records'] = $this->Purchase_model->get_data($purchase_id);
 		$this->load->view('template', $template);
@@ -44,8 +46,9 @@ class Purchaseitem extends MY_Controller {
 	}
 	public function add(){
 		$prid= $this->session->userdata('prid');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$template['vendor_names'] = $this->Vendor_model->view_by();
-		$template['product_names'] = $this->Item_model->view_by();
+		$template['product_names'] = $this->Item_model->view_by1($branch_id_fk);
 		$template['product_unit'] = $this->Item_model->view_unit();
 	//	$template['category'] = $this->Product_model->get__category();
 	//	$template['category'] = $this->Product_model->get__category();

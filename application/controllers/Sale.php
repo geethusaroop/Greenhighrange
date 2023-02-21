@@ -143,6 +143,7 @@ class Sale extends MY_Controller {
 						 'sale_igstamt' => $sale_igstamt[$i],
 						 'sale_netamt' => $sale_netamt[$i],
 						'sale_date' => $sale_date,
+						'sale_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 						'sale_status' => 1
 							);
 				
@@ -179,6 +180,7 @@ class Sale extends MY_Controller {
 		$this->load->view('template', $template);
 	}
 	public function get(){
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
@@ -200,7 +202,7 @@ class Sale extends MY_Controller {
 		//$shopid = $this->Sale_model->get_shop($sessid);
 		//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
 		//$param['shop'] =$shid;
-		$data = $this->Sale_model->getSaleReport($param);
+		$data = $this->Sale_model->getSaleReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;
     }
@@ -347,9 +349,9 @@ class Sale extends MY_Controller {
 
 
 	public function getproduct_names()
-	{
+	{$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$id = ($this->input->get('phrase'))?$this->input->get('phrase'):'';
-		$data =  $this->Sale_model->getproduct_names($id);
+		$data =  $this->Sale_model->getproduct_names($id,$branch_id_fk);
 		echo json_encode($data);
 	}
 

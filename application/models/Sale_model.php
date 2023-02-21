@@ -7,7 +7,7 @@ class Sale_model extends CI_Model
 	{
 		parent::__construct();
 	}
-	public function getSaleReport($param)
+	public function getSaleReport($param,$branch_id_fk)
 	{
 		$arOrder = array('', 'product_num');
 		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
@@ -25,6 +25,14 @@ class Sale_model extends CI_Model
 		if ($end_date) {
 			$this->db->where('sale_date <=', $end_date);
 		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
 		$this->db->where("sale_status", 1);
 
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
@@ -42,12 +50,12 @@ class Sale_model extends CI_Model
 		$query = $this->db->get();
 
 		$data['data'] = $query->result();
-		$data['recordsTotal'] = $this->getSaleReportTotalCount($param);
-		$data['recordsFiltered'] = $this->getSaleReportTotalCount($param);
+		$data['recordsTotal'] = $this->getSaleReportTotalCount($param,$branch_id_fk);
+		$data['recordsFiltered'] = $this->getSaleReportTotalCount($param,$branch_id_fk);
 		//return $this->db->last_query();
 		return $data;
 	}
-	public function getSaleReportTotalCount($param)
+	public function getSaleReportTotalCount($param,$branch_id_fk)
 	{
 		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
 		//$shop =(isset($param['shop']))?$param['shop']:'';
@@ -63,6 +71,14 @@ class Sale_model extends CI_Model
 		if ($end_date) {
 			$this->db->where('sale_date <=', $end_date);
 		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.discount_price as discount');
 
 		//	$this->db->select('*,tbl_member.*,COUNT(invoice_number) as slcount,SUM(total_price) as total,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates');
@@ -70,7 +86,7 @@ class Sale_model extends CI_Model
 
 		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale.member_id_fk', 'left');
 		//$this->db->join('tbl_member_type','tbl_member_type.member_type_id = tbl_member.member_type','left');
-
+		$this->db->where("sale_status", 1);
 		$this->db->group_by('invoice_number', 'DESC');
 
 		$query = $this->db->get();
@@ -496,12 +512,20 @@ class Sale_model extends CI_Model
 		return $query->row();
 	}
 
-	public function getproduct_names($id)
+	public function getproduct_names($id,$branch_id_fk)
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_product');
 		$this->db->where("product_status", 1);
 		$this->db->like("product_name", $id);
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
 		$this->db->group_by("product_name");
 		$records = $this->db->get()->result();
 		foreach ($records as $row) {

@@ -38,8 +38,9 @@ class Productionitem extends MY_Controller
 		
 		$template['body'] = 'Productionitem/add';
 		$template['script'] = 'Productionitem/script';
-		$template['product'] = $this->Item_model->view_by();
-		$template['product_names'] = $this->Item_model->view_by1();
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['product'] = $this->Item_model->view_by($branch_id_fk);
+		$template['product_names'] = $this->Item_model->view_by1($branch_id_fk);
 		$template['unit'] = $this->Productionitem_model->get_unit();
 		$template['records'] = $this->General_model->get_row_ptransfer($punit_id);
 		//$template['record'] = $this->General_model->get_row($this->table, 'product_id', $product_id);
@@ -140,6 +141,7 @@ class Productionitem extends MY_Controller
 	}
 	public function get()
 	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$this->load->model('Productionitem_model');
 		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
 		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
@@ -148,7 +150,7 @@ class Productionitem extends MY_Controller
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
 		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
 		$param['item_name'] = (isset($_REQUEST['item_name'])) ? $_REQUEST['item_name'] : '';
-		$data = $this->Productionitem_model->getClassinfoTable($param);
+		$data = $this->Productionitem_model->getClassinfoTable($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
@@ -173,7 +175,8 @@ class Productionitem extends MY_Controller
 	{
 		$template['body'] = 'Productionitem/add';
 		$template['script'] = 'Productionitem/script';
-		$template['product_names'] = $this->Item_model->view_by1();
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['product_names'] = $this->Item_model->view_by1($branch_id_fk);
 		$template['unit'] = $this->Productionitem_model->get_unit();
 		$template['hsncode']=$this->HSNcode_model->gethsncode();
 		$template['records'] = $this->General_model->get_row($this->table, 'product_id', $product_id);

@@ -5,7 +5,7 @@ class Productionitem_model extends CI_Model{
     {
         parent::__construct();
     }
-    public function getClassinfoTable($param){
+    public function getClassinfoTable($param,$branch_id_fk){
         $arOrder = array('','product_name');
         $searchValue =($param['searchValue'])?$param['searchValue']:'';
         $item_name = ($param['item_name'])?$param['item_name']:'';
@@ -15,6 +15,14 @@ class Productionitem_model extends CI_Model{
         if($item_name){
             $this->db->like('product_name', $item_name);
             $this->db->or_like('product_code', $item_name);
+        }
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
         }
         $this->db->where("product_status",1);
         if ($param['start'] != 'false' and $param['length'] != 'false') {
@@ -29,8 +37,8 @@ class Productionitem_model extends CI_Model{
         $this->db->order_by('product_id','ASC');
         $query = $this->db->get();
         $data['data'] = $query->result();
-        $data['recordsTotal'] = $this->getClassinfoTotalCount($param);
-        $data['recordsFiltered'] = $this->getClassinfoTotalCount($param);
+        $data['recordsTotal'] = $this->getClassinfoTotalCount($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getClassinfoTotalCount($param,$branch_id_fk);
         return $data;
     }
     public function getClassinfoTotalCount($param = NULL){
@@ -44,6 +52,14 @@ class Productionitem_model extends CI_Model{
         $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
         $this->db->where('product_status',1);
         $this->db->where('product_category',2);
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
         $this->db->order_by('product_id','ASC');
         $query = $this->db->get();
         return $query->num_rows();
