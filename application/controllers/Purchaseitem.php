@@ -1,4 +1,6 @@
 <?php
+require 'vendor/autoload.php';
+use Dompdf\Dompdf;
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Purchaseitem extends MY_Controller {
 	public $table = 'tbl_purchase';
@@ -696,5 +698,25 @@ class Purchaseitem extends MY_Controller {
 		$template['subcategories'] = $this->General_model->get_all('tbl_subcategories');
 		$template['records'] = $this->Purchase_model->get_row($auto_invoice);
 		$this->load->view('template', $template);
+	}
+
+	public function Pdf_Purchase($auto_invoice)
+	{
+		// global $_dompdf_warnings;
+		// $_dompdf_warnings = array();
+		// global $_dompdf_show_warnings;
+		// $_dompdf_show_warnings = true;
+		$records = $this->Purchase_model->get_purchase_pdf($auto_invoice);
+		// instantiate and use the dompdf class
+		$dompdf = new Dompdf();
+		$dompdf->loadHtml($records);
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper('A4', 'landscape');
+		// Render the HTML as PDF
+		$dompdf->render();
+		// var_dump($_dompdf_warnings);
+		// die();
+		// Output the generated PDF to Browser
+		$dompdf->stream("" . $auto_invoice . ".pdf");
 	}
 }
