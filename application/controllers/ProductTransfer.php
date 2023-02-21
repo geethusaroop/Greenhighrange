@@ -30,12 +30,12 @@ class ProductTransfer extends MY_Controller
 	{
 		$this->form_validation->set_rules('punit_product_id_fk', 'Name', 'required');
 		if ($this->form_validation->run() == FALSE) {
-			
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
 			$template['body'] = 'ProductTransfer/add';
 			$template['script'] = 'ProductTransfer/script';
 			$template['unit'] = $this->ProductTransfer_model->get_unit();
 			$template['hsncode']=$this->HSNcode_model->gethsncode();
-			$template['product_names'] = $this->Item_model->view_by();
+			$template['product_names'] = $this->Item_model->view_by($branch_id_fk);
 			$this->load->view('template', $template);
 		} else {
 			$punit_id = $this->input->post('punit_id');
@@ -50,6 +50,7 @@ class ProductTransfer extends MY_Controller
 				'punit_type' => $this->input->post('punit_type'),
 				'punit_date' => $this->input->post('punit_date'),
 				'punit_bal_stock' => $this->input->post('punit_bal'),
+				'punit_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 				'punit_status' => 1,
 			);
 			$punit_id = $this->input->post('punit_id');
@@ -76,6 +77,7 @@ class ProductTransfer extends MY_Controller
 	}
 	public function get()
 	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$this->load->model('ProductTransfer_model');
 		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
 		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
@@ -84,7 +86,7 @@ class ProductTransfer extends MY_Controller
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
 		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
 		$param['item_name'] = (isset($_REQUEST['item_name'])) ? $_REQUEST['item_name'] : '';
-		$data = $this->ProductTransfer_model->getClassinfoTable($param);
+		$data = $this->ProductTransfer_model->getClassinfoTable($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
@@ -107,11 +109,12 @@ class ProductTransfer extends MY_Controller
 	}
 	public function edit($punit_id)
 	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$template['body'] = 'ProductTransfer/add';
 		$template['script'] = 'ProductTransfer/script';
 		$template['unit'] = $this->ProductTransfer_model->get_unit();
 		$template['hsncode']=$this->HSNcode_model->gethsncode();
-		$template['product_names'] = $this->Item_model->view_by();
+		$template['product_names'] = $this->Item_model->view_by($branch_id_fk);
 		$template['records'] = $this->General_model->get_row($this->table, 'punit_id', $punit_id);
 		$this->load->view('template', $template);
 	}

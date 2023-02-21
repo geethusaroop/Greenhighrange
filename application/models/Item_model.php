@@ -5,7 +5,7 @@ class Item_model extends CI_Model{
     {
         parent::__construct();
     }
-	public function view_by()
+	public function view_by($branch_id_fk)
 	{
 		$status=1;
 		$this->db->select('*');
@@ -13,6 +13,14 @@ class Item_model extends CI_Model{
 		$this->db->where('product_status', $status);
 		$this->db->where('product_category', 1);
 		$this->db->order_by('product_name', 'ASC');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
 		$query = $this->db->get();
 		return $query->result();
 	}

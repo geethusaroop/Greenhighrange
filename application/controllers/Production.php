@@ -40,8 +40,10 @@ class Production extends MY_Controller
 			$template['hsncode']=$this->HSNcode_model->gethsncode();
 			$this->load->view('template', $template);
 		} else {
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
 			$product_id = $this->input->post('product_id');
 			$data = array(
+				'branch_id_fk'=>$branch_id_fk,
 				'product_unit_type' => $this->input->post('product_unit_type'),
 				//'product_code' => strtoupper($this->input->post('prod_code')),
 				'product_name' => $this->input->post('product_name'),
@@ -76,6 +78,7 @@ class Production extends MY_Controller
 	}
 	public function get()
 	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$this->load->model('Product_model');
 		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
 		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
@@ -84,7 +87,7 @@ class Production extends MY_Controller
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
 		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
 		$param['item_name'] = (isset($_REQUEST['item_name'])) ? $_REQUEST['item_name'] : '';
-		$data = $this->Product_model->getClassinfoTable1($param);
+		$data = $this->Product_model->getClassinfoTable1($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}

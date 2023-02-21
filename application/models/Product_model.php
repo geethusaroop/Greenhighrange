@@ -67,7 +67,7 @@ class Product_model extends CI_Model{
         return $query->num_rows();
     }
 
-    public function getClassinfoTable1($param){
+    public function getClassinfoTable1($param,$branch_id_fk){
         $arOrder = array('','product_name');
         $searchValue =($param['searchValue'])?$param['searchValue']:'';
         $item_name = ($param['item_name'])?$param['item_name']:'';
@@ -77,6 +77,14 @@ class Product_model extends CI_Model{
         if($item_name){
             $this->db->like('product_name', $item_name);
             $this->db->or_like('product_code', $item_name);
+        }
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
         }
         $this->db->where("product_status",1);
         if ($param['start'] != 'false' and $param['length'] != 'false') {
@@ -93,11 +101,11 @@ class Product_model extends CI_Model{
         $this->db->order_by('product_id','ASC');
         $query = $this->db->get();
         $data['data'] = $query->result();
-        $data['recordsTotal'] = $this->getClassinfoTotalCount1($param);
-        $data['recordsFiltered'] = $this->getClassinfoTotalCount1($param);
+        $data['recordsTotal'] = $this->getClassinfoTotalCount1($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getClassinfoTotalCount1($param,$branch_id_fk);
         return $data;
     }
-    public function getClassinfoTotalCount1($param = NULL){
+    public function getClassinfoTotalCount1($param = NULL,$branch_id_fk){
         $searchValue =($param['searchValue'])?$param['searchValue']:'';
         if($searchValue){
             $this->db->like('product_name', $searchValue);
@@ -106,6 +114,14 @@ class Product_model extends CI_Model{
         $this->db->from('tbl_product');
         $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
       //  $this->db->join('tbl_product_category','tbl_product_category.prod_cat_id=tbl_product.product_type','left');
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
         $this->db->where('product_status',1);
         $this->db->where('product_category',2);
         $this->db->order_by('product_id','DESC');

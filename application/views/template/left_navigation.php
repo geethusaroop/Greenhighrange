@@ -436,6 +436,58 @@
        <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-truck"></i><span>Stock From Master Branch</span></a></li>
 
 
+       <li class="divider"></li> 
+       <li class="treeview"> <a><i class="fa fa-product-hunt" style="color:#227b05;"></i> <span style="font-weight:bold;text-shadow:2px 2px #227b05;">PRODUCTION UNIT</span>  </a></li>
+             
+       <li class="treeview <?php
+          if ($this->uri->segment(1) == "ProductTransfer") {
+            echo "active";
+          }
+     
+          ?>">
+         <a><i class="fa fa-truck"></i><span>Transfer To Production Unit</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+         
+           <li class="<?php if ($this->uri->segment(1) == "ProductTransfer" && $this->uri->segment(2) == "add") {echo "active";} ?>"><a href="<?php echo base_url(); ?>ProductTransfer/add"><i class="fa fa-circle-o"></i><span>Add</span></a></li>
+
+           <li class="<?php if ($this->uri->segment(1) == "ProductTransfer" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>ProductTransfer/"><i class="fa fa-circle-o"></i><span>Manage Production Unit</span></a></li>
+
+          </ul>
+       </li>
+
+       <li class="<?php if ($this->uri->segment(1) == "Production" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Production"><i class="fa fa-list"></i><span>Production Items</span></a></li>
+
+
+       <li class="treeview <?php
+         if ($this->uri->segment(1) == "Productionitem") {
+            echo "active";
+          }
+
+          ?>">
+         <a><i class="fa fa-product-hunt"></i><span>Transfer To Stock</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+         
+           <li class="<?php if ($this->uri->segment(1) == "Productionitem" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Productionitem/view"><i class="fa fa-circle-o"></i><span>Add Stock</span></a></li>
+
+           <li class="<?php if ($this->uri->segment(1) == "Productionitem" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Productionitem"><i class="fa fa-circle-o"></i><span>Manage Production Stock</span></a></li>
+
+          </ul>
+       </li>
+
+
+
+       <li class="divider"></li> 
+
+
+
        <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
        
        <?php } ?>
