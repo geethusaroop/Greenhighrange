@@ -3,7 +3,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
+    <?php if($this->session->userdata['user_type'] == "A"){ ?>
       Purchased Products Information
+      <?php } else{ ?>
+        Stock From Master Branch
+        <?php } ?>
       <small id="date" class="col-md-4"></small>
       <!-- <small>Optional description</small> -->
     </h1>
@@ -38,19 +42,24 @@
           <div class="col-md-8">
             <h2 class="box-title"></h2>
           </div>
+          <?php if($this->session->userdata['user_type'] == "A"){ ?>
           <div class="col-md-2">
+           
             <a href="<?php echo base_url(); ?>Product/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Purchased Products</a>
           </div>
+          <?php } ?>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
           <table id="classinfo_table" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th style="text-align: center;">SINO</th>
+                <th>SINO</th>
                 <th>ITEM NAME</th>
                 <th style="text-align: left;">ITEM CODE</th>
                  <th>HSNCODE</th>
+
+                 <th>STOCK</th>
                 <th style="text-align: center;">ITEM UNIT</th>
               
                 <th style="text-align: center;">
