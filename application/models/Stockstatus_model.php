@@ -5,7 +5,7 @@ class Stockstatus_model extends CI_Model{
     {
         parent::__construct();
     }
-	public function getStock($param){
+	public function getStock($param,$branch_id_fk){
         $searchValue =($param['searchValue'])?$param['searchValue']:'';
         if($searchValue){
             $this->db->like('product_name', $searchValue);
@@ -13,19 +13,33 @@ class Stockstatus_model extends CI_Model{
 		$this->db->select('*');
     	$this->db->from('tbl_product');
         $this->db->where("product_status",1);
-
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
         $query = $this->db->get();
 		$data['data'] = $query->result();
-        $data['recordsTotal'] = $this->getStockTotalCount($param);
-        $data['recordsFiltered'] = $this->getStockTotalCount($param);
+        $data['recordsTotal'] = $this->getStockTotalCount($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getStockTotalCount($param,$branch_id_fk);
         return $data;
 	}
-	public function getStockTotalCount($param){
+	public function getStockTotalCount($param,$branch_id_fk){
 		$searchValue =($param['searchValue'])?$param['searchValue']:'';
         if($searchValue){
             $this->db->like('product_name', $searchValue);
         }
-
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
 		$this->db->select('*');
     	$this->db->from('tbl_product');
         $this->db->where("product_status",1);
