@@ -113,7 +113,7 @@ write_file($save, $backup);  */
 	}
 	public function run_sql(){
 		//$sql="ALTER TABLE `tbl_sale` ADD `invoice` INT NOT NULL AFTER `product_code`";
-		$sql="ALTER TABLE `tbl_sale` ADD `sale_branch_id_fk` INT NOT NULL AFTER `sale_id`";
+		$sql="ALTER TABLE `tbl_member` ADD `member_branch_id_fk` INT NOT NULL AFTER `member_id`";
 		//$sql="ALTER TABLE `tbl_employee` DROP `emp_designation`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;

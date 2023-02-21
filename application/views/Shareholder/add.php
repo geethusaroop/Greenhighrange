@@ -62,7 +62,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group row">
+                <!--   <div class="form-group row">
                     <div class="col-md-6">
                       <label class="fsize">Gender </label>
                       <select name="member_gender" class="form-control">
@@ -79,7 +79,7 @@
                       <label class="fsize">DOB</label>
                       <input type="date" autofocus class="form-control" name="member_dob" value="<?php if (isset($records->member_dob)) echo $records->member_dob ?>">
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="form-group row">
                     <div class="col-md-12">

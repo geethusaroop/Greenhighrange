@@ -68,8 +68,8 @@ class Shareholder extends MY_Controller {
 			$data = array(
 						'member_mid' => $this->input->post('member_mid'),
 						'member_name' => $this->input->post('member_name'),
-						'member_gender' => $this->input->post('member_gender'),
-						'member_dob' => $this->input->post('member_dob'),
+						//'member_gender' => $this->input->post('member_gender'),
+					//	'member_dob' => $this->input->post('member_dob'),
 						'member_type' => 1,
 						'member_email' => $this->input->post('member_email'),
 						'member_pnumber' => $this->input->post('member_pnumber'),
