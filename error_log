@@ -1,0 +1,3 @@
+[05-Feb-2019 11:55:31 Etc/GMT] PHP Fatal error:  Call to undefined method Checkout_model::getgstroom() in /home/wahylnhz/public_html/jumayiraresidency.com/Jumayira/application/controllers/Checkout.php on line 191
+[05-Feb-2019 11:56:00 Etc/GMT] PHP Fatal error:  Call to undefined method Checkout_model::getgstroom() in /home/wahylnhz/public_html/jumayiraresidency.com/Jumayira/application/controllers/Checkout.php on line 191
+[05-Feb-2019 12:11:55 Etc/GMT] PHP Fatal error:  Call to undefined method Checkout_model::getgstroom() in /home/wahylnhz/public_html/jumayiraresidency.com/Jumayira/application/controllers/Checkout.php on line 191
