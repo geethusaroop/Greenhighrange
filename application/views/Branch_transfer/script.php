@@ -102,6 +102,39 @@ function confirmDelete(bt_id){
                 var options = $.parseJSON(data);
                 $('#av_stk').val(options.product_stock);
                 $('#av_stk').html(options.product_stock);
+
+                $('#prod_code').val(options.product_code);
+                $('#prod_code').html(options.product_code);
+
+                $('#product_name').val(options.product_name);
+                $('#product_name').html(options.product_name);
+
+                $('#product_unit').val(options.product_unit);
+                $('#product_unit').html(options.product_unit);
+
+                $('#product_hsn').val(options.product_hsn);
+                $('#product_hsn').html(options.product_hsn);
+
+                $('#product_hsncode').val(options.product_hsncode);
+                $('#product_hsncode').html(options.product_hsncode);
+
+                $('#product_price_r1').val(options.product_price_r1);
+                $('#product_price_r1').html(options.product_price_r1);
+
+                $('#product_price_r2').val(options.product_price_r2);
+                $('#product_price_r2').html(options.product_price_r2);
+
+                $('#product_price_r3').val(options.product_price_r3);
+                $('#product_price_r3').html(options.product_price_r3);
+
+                $('#product_des').val(options.product_des);
+                $('#product_des').html(options.product_des);
+
+                $('#product_category').val(options.product_category);
+                $('#product_category').html(options.product_category);
+
+                $('#product_unit_type').val(options.product_unit_type);
+                $('#product_unit_type').html(options.product_unit_type);
             }
         });
   })

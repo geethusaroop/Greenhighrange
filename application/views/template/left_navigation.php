@@ -401,6 +401,8 @@
          </li>
  
     
+
+
     
        
       
@@ -408,6 +410,35 @@
        
      </ul>
      <?php } ?>
+
+
+     <?php if($this->session->userdata['user_type'] == "B"){ ?>
+       <li class="treeview <?php
+          if ($this->uri->segment(1) == "Finyear") {
+            echo "active";
+          } else if ($this->uri->segment(1) == "ChangePassword") {
+            echo "active";
+          }
+         
+          ?>">
+         <a><i class="fa fa-gear"></i><span>Settings</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+          
+           <li class="<?php if ($this->uri->segment(1) == "Finyear") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Finyear"><i class="fa fa-circle-o"></i> <span>Financial Year</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "ChangePassword") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Company/ChangePassword"><i class="fa fa-circle-o"></i> <span>Change Password</span></a></li>
+          </ul>
+       </li>
+
+       <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-truck"></i><span>Stock From Master Branch</span></a></li>
+
+
+       <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
+       
+       <?php } ?>
      <!--------------------------------------------------------------------------------------------------------------------------->
 
      <!-- /.sidebar-menu -->

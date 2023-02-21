@@ -69,6 +69,56 @@
                          <input type="text" autofocus class="form-control" name="stck_amt" id="" value="<?php if (isset($records->branch_trade_licenses)) echo $records->branch_trade_licenses ?>">
                        </div>
                      </div>
+
+                     <div class="form-group">
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="prod_code" id="prod_code">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_name" id="product_name">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_unit" id="product_unit">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_hsn" id="product_hsn">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_hsncode" id="product_hsncode">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_price_r1" id="product_price_r1">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_price_r2" id="product_price_r2">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_price_r3" id="product_price_r3">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_des" id="product_des">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_category" id="product_category">
+                     </div>
+
+                     <div class="col-md-2">
+                     <input type="hidden" class="form-control" name="product_unit_type" id="product_unit_type">
+                     </div>
+
+
+                     </div>
+
                      <div class="form-group">
                        <div class="col-md-12">
                          <center><small >Available Stock: <span id="av_stk"></span></small></center>

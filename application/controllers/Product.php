@@ -77,6 +77,7 @@ class Product extends MY_Controller
 	}
 	public function get()
 	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$this->load->model('Product_model');
 		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
 		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
@@ -85,7 +86,7 @@ class Product extends MY_Controller
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
 		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
 		$param['item_name'] = (isset($_REQUEST['item_name'])) ? $_REQUEST['item_name'] : '';
-		$data = $this->Product_model->getClassinfoTable($param);
+		$data = $this->Product_model->getClassinfoTable($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
