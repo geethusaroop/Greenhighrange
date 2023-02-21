@@ -1,4 +1,7 @@
 <?php
+ob_start();
+require 'vendor/autoload.php';
+use Dompdf\Dompdf;
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Sale extends MY_Controller {
 	public $table = 'tbl_sale';
@@ -385,6 +388,20 @@ class Sale extends MY_Controller {
 		}
 
 		echo json_encode($prod1);
+	}
+
+	public function Pdf_Sale($auto_invoice)
+	{
+		$records = $this->Sale_model->get_sale_pdf($auto_invoice);
+		// instantiate and use the dompdf class
+		$dompdf = new Dompdf();
+		$dompdf->loadHtml($records);
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper('A4', 'landscape');
+		// Render the HTML as PDF
+		$dompdf->render();
+		// Output the generated PDF to Browser
+		$dompdf->stream("".$auto_invoice.".pdf");
 	}
 
 

@@ -263,10 +263,11 @@ class numbertowordconvertsconver {
       <div class="row no-print"><hr>
         <div class="col-xs-12">
           <a target="_blank" class="btn btn-default" id="print" onclick="printDiv('divName');"><i class="fa fa-print"></i> Print</a>
-          <button type="button" id="genpdf" class="btn btn-success pull-right" style="margin-right: 5px;">
+          <!-- <button type="button" id="genpdf" class="btn btn-success pull-right" style="margin-right: 5px;">
             <i class="fa fa-download"></i> Generate PDF
-          </button>
-      <a href="<?php echo base_url();?>Salekss" class="btn btn-primary pull-right"><i class="fa fa-eye"></i> Go to View</a>
+          </button> -->
+          <a class="btn btn-success pull-right" href="<?php echo base_url();?>Sale/Pdf_Sale/<?php echo $records[0]->auto_invoice ?>"><i class="fa fa-download"></i> Generate PDF</a>
+          <a href="<?php echo base_url();?>Sale" class="btn btn-primary pull-right"><i class="fa fa-eye"></i> Go to View</a>
          </div>
       </div>
     </section>
