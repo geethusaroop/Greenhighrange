@@ -157,7 +157,7 @@
                                             <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->prcount; ?></td>
                                             <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->total; ?></td>
                                             <td style="border:1px solid #dee2e6;" class="text-center" id=" printinvoice">
-                                            <a target ="_blank"  href="<?php echo base_url();?>Mara_purchase/invoice/<?php echo $row->auto_invoice; ?>"><i class="fa  fa-file iconFontSize-medium" ></i></a></td>
+                                            <a target ="_blank"  href="<?php echo base_url();?>Purchaseitem/invoice/<?php echo $row->auto_invoice; ?>"><i class="fa  fa-file iconFontSize-medium" ></i></a></td>
                                         </tr>
                                     <?php $i++;
                                         $qty = $qty + $row->prcount;

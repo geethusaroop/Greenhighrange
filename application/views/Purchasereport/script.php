@@ -138,7 +138,7 @@ var response = $("#response").val();
             $('td', row).eq(4).css('text-align','center');
             $('td', row).eq(5).css('text-align','center');
 
-			$('td', row).eq(6).html('<center><a target ="_blank"  href="<?php echo base_url();?>Mara_purchase/invoice/'+data['auto_invoice']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
+			$('td', row).eq(6).html('<center><a target ="_blank"  href="<?php echo base_url();?>Purchaseitem/invoice/'+data['auto_invoice']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
             },
 
         "columns": [
