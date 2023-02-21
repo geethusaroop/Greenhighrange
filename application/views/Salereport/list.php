@@ -155,7 +155,7 @@
                                             <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->discount; ?></td>
                                             <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->total_price; ?></td>
                                             <td style="border:1px solid #dee2e6;" class="text-center" id=" printinvoice">
-                                            <a target ="_blank"  href="<?php echo base_url();?>Sale/invoiceview1/<?php echo $row->auto_invoice; ?>"><i class="fa  fa-file iconFontSize-medium" ></i></a></td>
+                                            <a target ="_blank"  href="<?php echo base_url();?>Sale/invoice/<?php echo $row->auto_invoice; ?>"><i class="fa  fa-file iconFontSize-medium" ></i></a></td>
                                         </tr>
                                     <?php $i++;
                                         $qty = $qty + $row->qty;
