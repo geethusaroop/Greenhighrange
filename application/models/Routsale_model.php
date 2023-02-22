@@ -47,6 +47,54 @@ class Routsale_model extends CI_Model{
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    public function getClassinfoTable1($param){
+        $date=date('Y-m-d');
+        $arOrder = array('','product_name');
+        $searchValue =($param['searchValue'])?$param['searchValue']:'';
+        $item_name = ($param['item_name'])?$param['item_name']:'';
+        if($searchValue){
+            $this->db->like('product_name', $searchValue);
+        }
+        if($item_name){
+            $this->db->like('product_name', $item_name);
+            $this->db->or_like('product_code', $item_name);
+        }
+       
+        if ($param['start'] != 'false' and $param['length'] != 'false') {
+            $this->db->limit($param['length'],$param['start']);
+        }
+        $this->db->select('*,date_format(routsale_date,\'%d/%m/%Y\') as routsale_dates');
+        $this->db->from('tbl_routsale');
+        $this->db->join('tbl_product','product_id=routsale_product_id_fk');
+      //  $this->db->join('tbl_unit','tbl_unit.unit_id=routsale_unit','left');
+        $this->db->where('routsale_status',1);
+        $this->db->where("product_status",1);
+       // $this->db->where("routsale_date",$date);
+        $this->db->order_by('product_id','ASC');
+        $query = $this->db->get();
+        $data['data'] = $query->result();
+        $data['recordsTotal'] = $this->getClassinfoTotalCount1($param);
+        $data['recordsFiltered'] = $this->getClassinfoTotalCount1($param);
+        return $data;
+    }
+    public function getClassinfoTotalCount1($param = NULL){
+        $date=date('Y-m-d');
+        $searchValue =($param['searchValue'])?$param['searchValue']:'';
+        if($searchValue){
+            $this->db->like('product_name', $searchValue);
+        }
+        $this->db->from('tbl_routsale');
+        $this->db->join('tbl_product','product_id=routsale_product_id_fk');
+       // $this->db->join('tbl_unit','tbl_unit.unit_id=routsale_unit','left');
+      // $this->db->where("routsale_date",$date);
+        $this->db->where('routsale_status',1);
+        $this->db->where("product_status",1);
+        $this->db->order_by('product_id','ASC');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
     function get_unit(){
         $status=1;
         $this->db->select('*');

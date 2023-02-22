@@ -553,6 +553,32 @@
        <?php } ?>
      <!--------------------------------------------------------------------------------------------------------------------------->
 
+     <?php if($this->session->userdata['user_type'] == "RS"){ ?>
+       <li class="treeview <?php
+          if ($this->uri->segment(1) == "Finyear") {
+            echo "active";
+          } 
+         
+          ?>">
+         <a><i class="fa fa-gear"></i><span>Settings</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+
+           <li class="<?php if ($this->uri->segment(1) == "Finyear") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Finyear"><i class="fa fa-circle-o"></i> <span>Financial Year</span></a></li>
+          </ul>
+       </li>
+
+       <li class="<?php if ($this->uri->segment(1) == "RSStock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSStock"><i class="fa fa-truck"></i><span>Today's Stock</span></a></li>
+
+       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
+
+       <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
+       
+       <?php } ?>
+
      <!-- /.sidebar-menu -->
    </section>
    <!-- /.sidebar -->
