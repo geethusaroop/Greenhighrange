@@ -237,7 +237,7 @@
                       <td>Total Amount<input type='text' id='net_total' class="form-control" name="net_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                         <td>Qty. Total<input type='text' id='qty_total' class="form-control" name="qty_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                       
-                        <td style="float:right;">Received Amount<input type='text' id='pamount' class="form-control" name="pamount" readonly style="background-color:white;text-align:right;width:250px;"/></td>
+                        <td style="float:right;">Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  style="background-color:white;text-align:right;width:250px;"/></td>
                       </tr>
                       <tr>
                         <td>Discount Amount<input type="text" class="form-control" name="discount_price" id="discount_price" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" />
