@@ -1251,8 +1251,8 @@ $(document).on("change",'#customer_nam',function(){
       
         document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
-        document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
+      //  document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
+    //   document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);  
     }
   
@@ -1333,33 +1333,46 @@ function totalamt(idx) { //alert(idx);
             total1 += isNaN(tamount) ? 0 : tamount;
             total2 += isNaN(pquantity) ? 0 : pquantity;
         }
-        var discount_price = parseFloat(document.getElementById("discount_price").value);
-        var nettotal=total-discount_price;
+        var sale_old_balance = parseFloat(document.getElementById("sale_old_balance").value);
+        var discount_price = parseFloat(document.getElementById("discount_prices").value);
+        var total_amt=total+sale_old_balance;
+       // var nettotal=total-discount_price;
+       var nettotal=total_amt-discount_price;
       
-        document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("net_total").value = isNaN(total_amt) ? "0.00" : total_amt.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
-        document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("total_amt").value = isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
+      //  document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
+      //  document.getElementById("total_amt").value = isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);//balance
         document.getElementById("net").innerHTML=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
     }
 
 function getdiscamount() {
        // var total_amt1 = parseFloat(document.getElementById("total_amt1").value);
        var total_amt1 = parseFloat(document.getElementById("net_total").value);
-        var discount_price = parseFloat(document.getElementById("discount_price").value);
+        var discount_price = parseFloat(document.getElementById("discount_prices").value);
         var total = parseFloat(total_amt1) - parseFloat(discount_price);
-        document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
+      //  document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);
     }
+
+    function getsharediscamount() {
+        var sharedisc = parseFloat(document.getElementById("sale_shareholder_discount").value);
+       var total_amt1 = parseFloat(document.getElementById("net_total").value);
+        var discount_price = parseFloat(document.getElementById("discount_prices").value);
+        var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;
+       // document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);
+    }
+
     function getamount() {
-        var total_amt = parseFloat(document.getElementById("total_amt").value);
-        var paid_amt = parseFloat(document.getElementById("paid_amt").value);
+        var total_amt = document.getElementById("net").innerHTML;
+        var paid_amt = parseFloat(document.getElementById("pamount").value);
         if (total_amt > paid_amt) {
             var total = parseFloat(total_amt) - parseFloat(paid_amt);
         } else if (total_amt < paid_amt) {
             var total = parseFloat(paid_amt) - parseFloat(total_amt);
         }
-        document.getElementById("net_balances").value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
     }
 
 function getcustomer()
@@ -1404,6 +1417,23 @@ function getcustomer()
                     dataset.forEach((item) => {
                     $(select).append('<option value="'+item.member_id+'">'+item.member_name+'</option>');
                     });
+                }
+            });
+    })
+
+    $('#custname').on('change',function(){
+        var mem_id = this.value;
+        $.ajax({
+                url: "<?php echo base_url(); ?>Sale/get_old_bal",
+                type: 'POST',
+                data: {
+                    vid: mem_id
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $('#sale_old_balance').html(data[0]['member_sale_balance']);
+                    $('#sale_old_balance').val(data[0]['member_sale_balance']);
+                   
                 }
             });
     })

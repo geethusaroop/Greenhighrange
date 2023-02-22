@@ -38,7 +38,7 @@ class Sale_model extends CI_Model
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'], $param['start']);
 		}
-		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.discount_price as discount');
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.sale_discount as discount');
 
 		//$this->db->select('*,tbl_member.*,COUNT(invoice_number) as slcount,SUM(total_price) as total,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
 		$this->db->from('tbl_sale');
@@ -767,5 +767,14 @@ class Sale_model extends CI_Model
 			"." . $words[$point / 10] . " " .
 			$words[$point = $point % 10] : '';
 		return $result;
+	}
+
+	public function get_old_bal($mem_id)
+	{
+		$this->db->select('');
+		$this->db->from('tbl_member');
+		$this->db->where('member_id',$mem_id);
+		$query = $this->db->get();
+		return $query->result();
 	}
 }

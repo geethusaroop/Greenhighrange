@@ -65,13 +65,17 @@
                 <thead>
                 <tr>
 					<th>SINO</th>
-					<th>SALE DATE</th>
+					<th>SALE_DATE</th>
 					<th>INVOICE</th>
-					<th>CUSTOMER NAME</th>
+					<th>CUSTOMER_NAME</th>
 					<th>TOTAL_QTY</th>
-					<th>TOTAL_AMOUNT</th>
+					<th>SALE_AMOUNT</th>
+					<th>OLD_BALANCE</th>
 					<th>DISCOUNT</th>
+					<th>SHAREHOLDER_DISCOUNT</th>
 					<th>NET_TOTAL</th>
+					<th>RECEIVED_AMOUNT</th>
+					<th>NEW_BALANCE</th>
 					<th>VIEW/INVOICE</th>
                 </tr>
                 </thead>

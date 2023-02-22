@@ -428,7 +428,7 @@ $(document).on("change",'.product_num',function(){
             $table.cell(node).data(index+1);
             });
              $('td', row).eq(2).css('color','red');
-            $('td', row).eq(8).html('<center><a target ="_blank"  href="<?php echo base_url();?>Sale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
+            $('td', row).eq(12).html('<center><a target ="_blank"  href="<?php echo base_url();?>Sale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
             },
         "columns": [
             { "data": "sale_status", "orderable": false },
@@ -454,11 +454,27 @@ $(document).on("change",'.product_num',function(){
                     "orderable": false
                 },
                 {
+                    "data": "sale_old_balance",
+                    "orderable": false
+                },
+                {
                     "data": "discount",
                     "orderable": false
                 },
                 {
-                    "data": "total_price",
+                    "data": "sale_shareholder_discount",
+                    "orderable": false
+                },
+                {
+                    "data": "tprice",
+                    "orderable": false
+                },
+                {
+                    "data": "sale_paid_amount",
+                    "orderable": false
+                },
+                {
+                    "data": "sale_new_balance",
                     "orderable": false
                 },
                 {

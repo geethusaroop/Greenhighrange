@@ -113,8 +113,8 @@ write_file($save, $backup);  */
 	}
 	public function run_sql(){
 		//$sql="ALTER TABLE `tbl_sale` ADD `invoice` INT NOT NULL AFTER `product_code`";
-		$sql="ALTER TABLE `tbl_vendor` CHANGE `project_id_fk` `vendor_branch_id_fk` INT(11) NOT NULL";
-		//$sql="ALTER TABLE `tbl_employee` DROP `emp_designation`";
+	//	$sql="ALTER TABLE `tbl_sale` ADD `sale_discount` FLOAT NOT NULL AFTER `sale_status`, ADD `sale_old_balance` FLOAT NOT NULL AFTER `sale_discount`, ADD `sale_new_balance` FLOAT NOT NULL AFTER `sale_old_balance`";
+		//$sql="ALTER TABLE `tbl_sale` ADD `sale_shareholder_discount` FLOAT NOT NULL AFTER `sale_status`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

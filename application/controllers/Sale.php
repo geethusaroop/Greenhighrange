@@ -54,7 +54,7 @@ class Sale extends MY_Controller {
 			$sale_price = $this->input->post('rate');
 			$discount_price = $this->input->post('discount_price');
 			$tax_id_fk = $this->input->post('taxtype');
-			$sale_total_price = $this->input->post('total_amt');
+			$sale_total_price = $this->input->post('net_total');//totalmat +oldbal
 			$sale_date = str_replace('/', '-', $this->input->post('sale_date'));
 			$sale_date =  date("Y-m-d",strtotime($sale_date));
 			$invc_no = $this->input->post('invoice_no');
@@ -131,8 +131,7 @@ class Sale extends MY_Controller {
 						'sale_hsn' => $hsn[$i],
 						'sale_quantity' => $sale_quantity[$i],
 						'sale_price' => $sale_price[$i],
-						//'discount_price' => $discount_price[$i],
-						'discount_price' => $discount_price,
+						'discount_price' => $discount_price[$i],
 						'total_price' => $sale_total_price,
 						'taxamount' => $taxamount[$i],
 						'sale_cgst' => $sale_cgst[$i],
@@ -142,6 +141,11 @@ class Sale extends MY_Controller {
 						 'sale_igst' => $sale_igst[$i],
 						 'sale_igstamt' => $sale_igstamt[$i],
 						 'sale_netamt' => $sale_netamt[$i],
+						 'sale_discount' => $this->input->post('discount_prices'),
+						 'sale_shareholder_discount' => $this->input->post('sale_shareholder_discount'),
+						 'sale_old_balance' => $this->input->post('sale_old_balance'),
+						 'sale_new_balance' => $this->input->post('total_amt'),
+						 'sale_paid_amount' => $this->input->post('pamount'),//Received AMount
 						'sale_date' => $sale_date,
 						'sale_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 						'sale_status' => 1
@@ -155,7 +159,11 @@ class Sale extends MY_Controller {
 								'product_stock' =>$nwstk,
 								'product_updated_date' =>date('Y-m-d'),
 								);
+								
 				$result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
+				
+				$mdata=array('member_sale_balance'=> $this->input->post('total_amt'));
+				$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
 				
 				}
 	       redirect('/Sale/invoice/'.$invoice_no, 'refresh');
@@ -404,6 +412,14 @@ class Sale extends MY_Controller {
 		$dompdf->render();
 		// Output the generated PDF to Browser
 		$dompdf->stream("".$auto_invoice.".pdf");
+	}
+
+	public function get_old_bal()
+	{
+		$mem_id = $this->input->post('vid');
+		$records = $this->Sale_model->get_old_bal($mem_id);
+		$data_json = json_encode($records);
+		echo $data_json;
 	}
 
 

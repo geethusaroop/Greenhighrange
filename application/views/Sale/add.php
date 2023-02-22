@@ -74,12 +74,12 @@
               <label for="inputEmail3" class="col-sm-2 control-label"></label>
             </div>
             <div class="box-body" style="margin-top:-20px;font-family:'Times New Roman', Times, serif;font-size:16px;">
-              <div class="panel panel-danger" style="box-shadow: 4px 3px 4px 3px #172158;">
+              <div class="panel panel-info" style="box-shadow: 4px 3px 4px 3px #172158;">
                 <div class="panel-heading">
                   <h3 class="panel-title"><b>SALES FORM</b> <span style="float: right;font-weight: bold;">Date : <?php echo date('d-m-Y'); ?></span></h3>
                 </div>
-                <div class="panel-body" style="font-weight:bold;background: #ffffff;">
-                <div style="box-shadow: 4px 3px 4px 3px #172158;">
+                <div class="panel-body" style="font-weight:bold;background: aliceblue;">
+                <div style="box-shadow: 4px 3px 4px 3px #97989b;">
                   <div class="form-group" style="float:right;">
                     <div class="col-md-4">
                       <label>Bill Number</label>
@@ -224,28 +224,28 @@
                   </table>
                   </div>
                  
-                  <br><br>
                  
                   <!-------------------------------------------------------------------------------------------------->
                   <div class="panel-body" style="font-weight:bold;">
                     <br>
-                    <table align="left" class="table table-bordered" style="border:ridge;">
+                    <table align="left" class="table table-bordered" style="box-shadow: 4px 3px 4px 3px #97989b;">
                       <tr>
-                        <!-- <td>Gross Amount<input type='text' id='gross_amt' class="form-control" name="gross_amt" readonly style="background-color:white;text-align:right;"/></td>
-                        <td>Taxable Amount<input type='text' id='taxamounts' class="form-control" name="taxamounts" readonly style="background-color:white;text-align:right;"/></td>
-                      -->
+                      <td>Old Balance<input type='text' id='sale_old_balance' class="form-control" name="sale_old_balance" value="0" style="background-color:white;text-align:right;width:250px;"/></td>
                       <td>Total Amount<input type='text' id='net_total' class="form-control" name="net_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
-                        <td>Qty. Total<input type='text' id='qty_total' class="form-control" name="qty_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
+                      <td>Qty. Total<input type='text' id='qty_total' class="form-control" name="qty_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                       
-                        <td style="float:right;">Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  style="background-color:white;text-align:right;width:250px;"/></td>
                       </tr>
+                   
                       <tr>
-                        <td>Discount Amount<input type="text" class="form-control" name="discount_price" id="discount_price" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" />
-                                <td></td>
+                        <td>Discount Amount<input type="text" class="form-control" name="discount_prices" id="discount_prices" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" />
+                        <td>Shareholder Discount Amount<input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" />
+
+                        <td>Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
+
                         <td style="float:right;">Balance <input type='text' id='total_amt' class="form-control" name="total_amt" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                       </tr>
                     </table>
-                    <table align="left" class="table table-bordered" style="border:ridge;">
+                    <table align="left" class="table table-bordered" style="box-shadow: 4px 3px 4px 3px #97989b;">
                   
                       <tr>
                         <td style="text-align: right;font-size:20px;color:blue;">Net Amount &nbsp;&nbsp; :&nbsp;&nbsp;<span id="net"></span></td>
