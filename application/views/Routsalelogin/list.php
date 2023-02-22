@@ -64,7 +64,7 @@
 
 				<div class="col-md-2">
 
-                  <a href="<?php echo base_url();?>Routsalelogin/add" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Add Branch Login</a>
+                  <a href="<?php echo base_url();?>Routsalelogin/add" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Add Routsale Login</a>
 
 				</div>
 
