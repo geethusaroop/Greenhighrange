@@ -76,7 +76,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
     'username' => 'root',
 	'password' => '' ,
-	'database' => 'greenhighrange',
+	'database' => 'gh',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -91,5 +91,5 @@ $db['default'] = array(
 	'stricton' => FALSE,
 	'failover' => array(),
 	'save_queries' => TRUE,
-	'port' => '3307'
+	//'port' => '3307'
 );
