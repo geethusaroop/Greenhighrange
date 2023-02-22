@@ -24,7 +24,7 @@
 
       <h1>
 
-      Branch Login Details
+      Rout Sale Login Details
 
         <!-- <small>Optional description</small> -->
 
@@ -36,7 +36,7 @@
 
         <li><a href="<?php echo base_url();?>Routsalelogin/add"><i class="fa fa-dashboard"></i> Back to Add</a></li>
 
-        <li class="active">Branch Login Details</li>
+        <li class="active">Rout Sale Login Details</li>
 
       </ol>
 

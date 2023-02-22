@@ -28,7 +28,7 @@ class Routsalelogin extends MY_Controller
     }
     public function add()
     {
-        $this->form_validation->set_rules('branch_id_fk', 'NAME', 'required');
+        $this->form_validation->set_rules('user_name', 'NAME', 'required');
         if ($this->form_validation->run() == FALSE) {
             $branch = ['branch_status'=> 1];
             $template['branch'] = $this->General_model->getall('tbl_branch',$branch);
