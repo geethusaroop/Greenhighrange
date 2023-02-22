@@ -142,11 +142,11 @@ h4 {
 }">
                                         <center><img src="<?php echo base_url(); ?>/Images/logo.jpeg" align="center" style="width:100px;border-radius: 50px;">
                                       <address><h3 style="margin-top: 3px;"> 
-                                          <strong>Venad Poultry Farmers Producer Company Limited</strong></h3><h4>
-                                       NoXIV/542,
-                                    Opposite Kottarakkara Railway Station,<br>
-                                    Kottarakkara, ,Kottarakkara,Kerala,India<br>
-                                    PIN:691506<br>Phone:0474 245 6225<br>
+                                          <strong>GREENHIGHRANGE FARMERS PRODUCER COMPANY LIMITED</strong></h3><h4>
+                                          No, 106/14,
+                                          Vakachuvadu,Prabhacity<br>
+                                          Kanjikuzhy, ,Idukki,Kerala,India<br>
+                                    PIN:685606<br>Phone:+91 7907753352<br>
                                         </address></h4></center>
                                     </td>
                                 </tr>
