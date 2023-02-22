@@ -85,6 +85,7 @@ class Member extends MY_Controller {
 						//'member_district' => $this->input->post('member_district'),
 						//'member_state' => $this->input->post('member_state'),
 						'm_created_at' => $this->input->post('member_exitdate'),
+						'member_sale_balance'=>$this->input->post('member_sale_balance'),
 						'member_img' => $member_img,
 						'member_status' => 1
 						);

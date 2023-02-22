@@ -151,6 +151,12 @@
                                 <input type="text" class="form-control" name="member_bank_id" placeholder="" value="<?php if (isset($records->member_bank_id)) echo $records->member_bank_id ?>">
                             </div>
                         
+
+                            <div class="col-md-4" id="" style="display: block;">
+                                <label for="">Member Purchase Balance Amount</label>
+                                <input type="text" class="form-control" name="member_sale_balance" placeholder="" value="<?php if (isset($records->member_sale_balance)) echo $records->member_sale_balance ?>">
+                            </div>
+                        
                       </div>
                      
                   <!--form-group-->

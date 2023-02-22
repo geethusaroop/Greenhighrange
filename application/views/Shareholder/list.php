@@ -81,6 +81,7 @@
                                 <th>SHARES_HELD</th>
                                 <th>DATE_OF_JOINING</th>
                                  <th>BANK_DETAILS</th> 
+                                 <th>MEMBER_SALE_BALANCE</th> 
                                 <th>
                                     <center>EDIT/DELETE</center>
                                 </th>

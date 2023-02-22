@@ -32,8 +32,8 @@
             </div>
           </div>
           <div class="box-body">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
               <div class="panel panel-danger" style="box-shadow: 2px 2px 2px 2px black;">
                 <div class="panel-heading">
                   <h3 class="panel-title"><b>NEW MEMBER</b></h3>
@@ -114,17 +114,17 @@
                   
                   
                   <div class="form-group row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <label class="fsize">Photo</label>
                       <input type="hidden" name="member_img1" value="<?php if (isset($records->member_img)) echo $records->member_img ?>" />
                       <input type="file" class="form-control" id="fileupload" onclick="hide()" name="member_img" />
                     </div>
                  
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <label class="fsize">Joining Date</label>
                       <input type="date" autofocus class="form-control" name="member_exitdate" value="<?php if (isset($records->m_created_at)) echo $records->m_created_at ?>">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <label class="fsize">Member Type</label>
                       <select name="member_type" class="form-control" id="shareholder">
                         <option value="">Please Select</option>
@@ -136,6 +136,12 @@
                                             echo "selected";
                                           } ?>>Customers/Retailers</option>
                       </select>
+                    </div>
+
+
+                    <div class="col-md-3" id="" style="display: block;">
+                                <label for="">Member Purchase Balance Amount</label>
+                                <input type="text" class="form-control" name="member_sale_balance" placeholder="" value="<?php if (isset($records->member_sale_balance)) echo $records->member_sale_balance ?>">
                     </div>
                   
                   </div>

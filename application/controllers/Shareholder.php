@@ -89,6 +89,7 @@ class Shareholder extends MY_Controller {
 						'member_ifsc' => $this->input->post('member_ifsc'),
 						'member_bank_id' => $this->input->post('member_bank_id'),
 						'member_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
+						'member_sale_balance'=>$this->input->post('member_sale_balance'),
 						// 'member_img' => $member_img,
 						'member_status' => 1
 						);
