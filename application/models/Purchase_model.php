@@ -300,7 +300,6 @@ class Purchase_model extends CI_Model{
 		$this->db->from('tbl_purchase');
 		$this->db->join('tbl_product','tbl_product.product_id = tbl_purchase.product_id_fk');
 		$this->db->join('tbl_vendor','tbl_vendor.vendor_id = tbl_purchase.vendor_id_fk');
-		//$this->db->join('tbl_taxdetails','tbl_taxdetails.tax_id = tbl_purchase.tax_id_fk');
 		$this->db->where('auto_invoice',$auto_invoice);
 		$this->db->where('purchase_status',1);
 		$query = $this->db->get();
@@ -683,6 +682,25 @@ class Purchase_model extends CI_Model{
 			"." . $words[$point / 10] . " " .
 			$words[$point = $point % 10] : '';
 		return $result;
+	}
+
+	public function view_by($branch_id_fk)
+	{
+		$status=1;
+		$this->db->select('*');
+		$this->db->from('tbl_vendor');
+		$this->db->where('vendorstatus', $status);
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("vendor_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("vendor_branch_id_fk",0);
+        }
+		$this->db->order_by('vendorname','ASC');
+		$query = $this->db->get();
+		return $query->result();
 	}
 }
 ?>
