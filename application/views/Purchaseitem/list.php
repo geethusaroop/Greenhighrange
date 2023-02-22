@@ -49,7 +49,7 @@
                 <!-- <th>RETURN</th> -->
                 <th class="text-center">VIEW/INVOICE</th>
                 <!-- <th>UPDATE.STOCK</th> -->
-              <!--   <th class="text-center">ACTION</th> -->
+                <th class="text-center">ACTION</th>
                 </tr>
                 </thead>
                 <tbody>

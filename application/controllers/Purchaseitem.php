@@ -234,6 +234,122 @@ class Purchaseitem extends MY_Controller {
 		redirect('/Purchaseitem/', 'refresh');
 	}
 	public function edit(){
+			$finyear = $this->Purchase_model->get_fyear();
+			if(isset($finyear[0]->fin_year)){$fin=$finyear[0]->fin_year;}else{$fin=0;}
+			$temp =count($this->input->post('product_id_fk'));
+			$invc_no = $this->input->post('purchase_invoice_number');
+			$auto_invoice = $this->input->post('auto_inv');
+			$product_id_fk = $this->input->post('product_id_fk');
+			$purchase_quantity = $this->input->post('purchase_quantity');
+			$purchase_unit=$this->input->post('purchase_unit');
+			$mrp = $this->input->post('mrp');
+			$r1 = $this->input->post('r1');
+			$r2 = $this->input->post('r2');
+			$r3 = $this->input->post('r3');
+			$discount_price = $this->input->post('discount_price');
+			$purchase_total_price = $this->input->post('tamount');
+			$purchase_hsn = $this->input->post('purchase_hsn');
+			$rate = $this->input->post('rate');
+			$taxamount = $this->input->post('taxamount');
+			$purchase_cgst = $this->input->post('cgst');
+			$purchase_cgstamt = $this->input->post('cgstamt');
+			$purchase_sgst = $this->input->post('sgst');
+			$purchase_sgstamt = $this->input->post('sgstamt');
+			$purchase_igst = $this->input->post('igst');
+			$purchase_igstamt = $this->input->post('igstamt');
+			$purchase_netamt = $this->input->post('netamt');
+			$purchase_date = str_replace('/', '-', $this->input->post('purchase_date'));
+			$purchase_date =  date("Y-m-d",strtotime($purchase_date));
+			/*-------------Static Contents-------------*/
+			$vendor_id=$this->input->post('vendor_id');
+			$pur = [
+				'auto_invoice' => $auto_invoice,
+			];
+			$current_purchase_data = $this->General_model->getall('tbl_purchase',$pur);
+			if($auto_invoice){
+				$delete_existing_data = $this->General_model->delete('tbl_purchase','auto_invoice',$auto_invoice);
+			}
+			for($i=0;$i<$temp;$i++){
+				$data = array(
+					'product_id_fk' => $product_id_fk[$i],
+					'purchase_hsn' => $purchase_hsn[$i],
+					'finyear'=>$fin,
+					'shop_id_fk'=>0,
+					'login_id_fk'=>0,
+					'vendor_id_fk' =>$vendor_id,
+					'ref_number' =>$this->input->post('ref_number'),
+					'invoice_number' => $invc_no,
+					'auto_invoice' => $auto_invoice,
+					'purchase_quantity' => $purchase_quantity[$i],
+					'purchase_unit_fk' => $purchase_unit[$i],
+					'purchase_price' => $rate[$i],
+					'purchase_mrp' => $mrp[$i],
+					'purchase_selling_price_r1' => $r1[$i],
+					'purchase_selling_price_r2' => $r2[$i],
+					'purchase_selling_price_r3' => $r3[$i],
+					'discount_price' => $discount_price[$i],
+					'total_price' => $purchase_total_price[$i],
+					'taxamount' => $taxamount[$i],
+					'purchase_cgst' => $purchase_cgst[$i],
+					'purchase_cgstamt' => $purchase_cgstamt[$i],
+					'purchase_sgst' => $purchase_sgst[$i],
+					'purchase_sgstamt' => $purchase_sgstamt[$i],
+					'purchase_igst' => $purchase_igst[$i],
+					'purchase_igstamt' => $purchase_igstamt[$i],
+					'purchase_netamt' => $purchase_netamt[$i],
+					'purchase_mop' => $this->input->post('purchase_mop'),
+					'purchase_taxmode' => $this->input->post('purchase_taxmode'),
+					'pur_old_bal' => $this->input->post('old_bal'),
+					'pur_paid_amt' => $this->input->post('paid_amt'),
+					'pur_new_bal' => $this->input->post('net_balance'),
+					'purchase_date' => $purchase_date,
+					'stockstatus' => 0,
+					'entry_date'=>date('Y-m-d'),
+					'purchase_status' => 1
+				);
+				$tblstock = array(
+					'current_stock' => $purchase_quantity[$i],
+				);
+				$AccData = array(
+					'old_balance' =>$this->input->post('net_balance'),
+				);
+				$this->General_model->update($this->tbl_supp_acc,$AccData,'sup_id_fk',$vendor_id);
+				$result = $this->General_model->add($this->table,$data);
+
+				//$records = $this->Purchase_model->get_invc($auto_invoice);
+				
+					$current_stock=$this->Purchase_model->get_current_productstock($product_id_fk[$i]);
+					if($current_purchase_data){
+						if(intval($current_purchase_data[$i]->purchase_quantity) > intval($purchase_quantity[$i])){
+							$new_stk = (intval($current_purchase_data[$i]->purchase_quantity) - intval($purchase_quantity[$i]));
+							$new_stock=intval($current_stock)-intval($new_stk);
+							$updateData = array('product_stock' =>$new_stock, 'product_updated_date'=>$purchase_date,'product_price_r1' => $r1[$i],'product_price_r2' => $r2[$i],'product_price_r3' => $r3[$i]);
+							$data = $this->General_model->update('tbl_product',$updateData,'product_id',$product_id_fk[$i]);
+						}
+						else if(intval($current_purchase_data[$i]->purchase_quantity) < intval($purchase_quantity[$i]))
+						{
+							$new_stk = (intval($purchase_quantity[$i]) - intval($current_purchase_data[$i]->purchase_quantity));
+							$new_stock=intval($current_stock)+intval($new_stk);
+							$updateData = array('product_stock' =>$new_stock, 'product_updated_date'=>$purchase_date,'product_price_r1' => $r1[$i],'product_price_r2' => $r2[$i],'product_price_r3' => $r3[$i]);
+							$data = $this->General_model->update('tbl_product',$updateData,'product_id',$product_id_fk[$i]);
+						}
+					}
+					$insert_array=[
+						'stock_product_id_fk'=>$product_id_fk[$i],
+						'stock_total'=>$purchase_quantity[$i],
+						'stock_vendor'=>$vendor_id,
+						'stock_date'=>$purchase_date,
+						'stock_status'=>1
+					];
+					$insertion_status=$this->General_model->add('tbl_stock_history',$insert_array);
+				
+			}
+			$upData = array('stockstatus' =>1);
+			$stk = $this->General_model->update($this->table,$upData,'auto_invoice',$auto_invoice);
+			redirect('/Purchaseitem/invoice/'.$auto_invoice, 'refresh');
+
+	}
+	public function edit2(){
 		// $sessid = $this->session->userdata['id'];
 		// $shopid = $this->Purchase_model->get_shop($sessid);
 		$finyear = $this->Purchase_model->get_fyear();
@@ -685,17 +801,14 @@ class Purchaseitem extends MY_Controller {
 
 	public function editPurchase($auto_invoice)
 	{
-		$template['body'] = 'Purchaseitem/edit2';
-		$template['script'] = 'Purchaseitem/script4';
-		$cond=['vendorstatus'=>1];
-		$template['vendor_names'] = $this->General_model->getall('tbl_vendor',$cond);
-		$template['product_names'] = $this->Item_model->view_by();
+		$template['body'] = 'Purchaseitem/edit-purchase';
+		$template['script'] = 'Purchaseitem/editscript-purchase';
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['vendor_names'] = $this->Purchase_model->view_by($branch_id_fk);
+		$template['product_names'] = $this->Item_model->view_by($branch_id_fk);
 		$template['product_unit'] = $this->Item_model->view_unit();
-		$template['category'] = $this->Product_model->get__category();
-		$template['category'] = $this->Product_model->get__category();
 		$template['unit'] = $this->Product_model->get_unit();
 		$template['hsncode']=$this->HSNcode_model->gethsncode();
-		$template['subcategories'] = $this->General_model->get_all('tbl_subcategories');
 		$template['records'] = $this->Purchase_model->get_row($auto_invoice);
 		$this->load->view('template', $template);
 	}
