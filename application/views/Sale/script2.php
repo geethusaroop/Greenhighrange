@@ -1239,7 +1239,8 @@ $(document).on("change",'#customer_nam',function(){
         var total2 = 0;
         var total3 = 0;
         var table = document.getElementById('dataTable');
-        var rowCount = table.rows.length;
+        var rowCount1 = table.rows.length;
+        var rowCount=rowCount1-1;
         for (var i = 1; i <= rowCount; i++) {
             var price = parseFloat(document.getElementById("netamt" + i).value);
             var tamount = parseFloat(document.getElementById("tamount" + i).value);
@@ -1248,12 +1249,21 @@ $(document).on("change",'#customer_nam',function(){
             total1 += isNaN(tamount) ? 0 : tamount;
             total2 += isNaN(pquantity) ? 0 : pquantity;
         }
+
+        var sale_old_balance = parseFloat(document.getElementById("sale_old_balance").value);
+        var discount_price = parseFloat(document.getElementById("discount_prices").value);
+        var total_amt=total+sale_old_balance;
+       var nettotal=total_amt-discount_price;
       
-        document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("net_total").value = isNaN(total_amt) ? "0.00" : total_amt.toFixed(2);
+        document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
+        document.getElementById("net").innerHTML=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
+      
+       /*  document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
       //  document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
     //   document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);  
+        document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);   */
     }
   
 
