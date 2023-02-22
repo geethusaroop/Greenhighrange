@@ -39,8 +39,8 @@ class Member extends MY_Controller {
 			$template['script'] = 'Member/script';
 			$template['state'] = $this->Member_model->get_state();
 			//$this->load->view('template', $template);
-			$branch_id_fk=$this->session->userdata('branch_id_fk');
-			$admno = $this->Shareholder_model->get_admno2($branch_id_fk);
+			//$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$admno = $this->Shareholder_model->get_admno2();
 			if(isset($admno->member_id)){$adm=$admno->member_id+1;}else{$adm='1';}
 			$template['adm'] = "M00".$adm;	
 			$this->load->view('template', $template);

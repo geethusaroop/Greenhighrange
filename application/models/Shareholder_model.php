@@ -17,14 +17,14 @@ class Shareholder_model extends CI_Model{
 		if($memberid){
 			$this->db->like('tbl_member.member_mid ', $memberid);
 		}
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+		/* if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("member_branch_id_fk",$branch_id_fk);
         }
         else
         {
             $this->db->where("member_branch_id_fk",0);
-        }
+        } */
 		$this->db->where("member_status",1);
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'],$param['start']);
@@ -59,14 +59,14 @@ class Shareholder_model extends CI_Model{
 		$this->db->from('tbl_member');
 		$this->db->where("member_status",1);
 		$this->db->where("member_type",1);
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+		/* if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("member_branch_id_fk",$branch_id_fk);
         }
         else
         {
             $this->db->where("member_branch_id_fk",0);
-        }
+        } */
 		$this->db->order_by('member_id', 'DESC');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -202,20 +202,12 @@ class Shareholder_model extends CI_Model{
 
 	}
 
-	public function get_admno2($branch_id_fk)
+	public function get_admno2()
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_member');
 		$this->db->where('member_status', 1);
 		//$this->db->where('member_type', 1);
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
-        {
-            $this->db->where("member_branch_id_fk",$branch_id_fk);
-        }
-        else
-        {
-            $this->db->where("member_branch_id_fk",0);
-        }
 		$this->db->order_by('member_mid',"DESC");
 		$this->db->limit(1);
 		$query = $this->db->get();

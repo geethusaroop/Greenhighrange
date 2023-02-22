@@ -16,14 +16,14 @@ class Member_model extends CI_Model{
 			$this->db->or_like('tbl_member.member_mid ', $memberid);
 			$this->db->or_like('tbl_member.member_name ', $memberid);
 		}
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+		/* if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("member_branch_id_fk",$branch_id_fk);
         }
         else
         {
             $this->db->where("member_branch_id_fk",0);
-        }
+        } */
 		$this->db->where("member_status",1);
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'],$param['start']);
@@ -53,14 +53,14 @@ class Member_model extends CI_Model{
 		$this->db->where("member_status",1);
 		$this->db->order_by('member_id', 'DESC');
 		$this->db->where("member_type!=",1);
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+		/* if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("member_branch_id_fk",$branch_id_fk);
         }
         else
         {
             $this->db->where("member_branch_id_fk",0);
-        }
+        } */
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
