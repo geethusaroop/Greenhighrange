@@ -28,6 +28,9 @@
           else if ($this->uri->segment(1) == "Branchlogin") {
             echo "active";
           }
+          else if ($this->uri->segment(1) == "Routsalelogin") {
+            echo "active";
+          }
          
           ?>">
          <a><i class="fa fa-gear"></i><span>Settings</span>
@@ -41,6 +44,8 @@
            <li class="<?php if ($this->uri->segment(1) == "ChangePassword") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Company/ChangePassword"><i class="fa fa-circle-o"></i> <span>Change Password</span></a></li>
           
            <li class="<?php if($this->uri->segment(1)=="Branchlogin"){echo "active";}?>" ><a href="<?php echo base_url();?>Branchlogin"><i class="fa fa-circle-o"></i><span>Branch Login</span></a></li>
+           <li class="<?php if($this->uri->segment(1)=="Routsalelogin"){echo "active";}?>" ><a href="<?php echo base_url();?>Routsalelogin"><i class="fa fa-circle-o"></i><span>Routsale Login</span></a></li>
+          
           </ul>
        </li>
 

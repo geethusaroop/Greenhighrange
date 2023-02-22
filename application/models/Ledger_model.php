@@ -1022,7 +1022,7 @@ class Ledger_model extends CI_Model{
         {
             $this->db->select('*,sum(tbl_sale.total_price) as total_amount,DATE_FORMAT(MAX(sale_date),\'%d/%m/%Y\') AS sale_date');
             $this->db->from('tbl_sale');
-               $this->db->join('tbl_customer','cust_id = customer_name','left');
+               $this->db->join('tbl_member','member_id = member_id_fk','left');
             $this->db->where("tbl_sale.sale_status",1);
              $this->db->where('sale_date >=',$cdate);
             $this->db->where('sale_date <=',$edate);

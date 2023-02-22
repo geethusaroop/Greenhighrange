@@ -36,7 +36,8 @@ class Routsale extends MY_Controller
 			$template['script'] = 'Routsale/script';
 			$template['unit'] = $this->Routsale_model->get_unit();
 			$template['hsncode']=$this->HSNcode_model->gethsncode();
-			$template['product_names'] = $this->Item_model->view();
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$template['product_names'] = $this->Item_model->view($branch_id_fk);
 			$this->load->view('template', $template);
 		} else {
 			//$routsale_id = $this->input->post('routsale_id');
@@ -109,7 +110,8 @@ class Routsale extends MY_Controller
 		$template['script'] = 'Routsale/script';
 		$template['unit'] = $this->Routsale_model->get_unit();
 		$template['hsncode']=$this->HSNcode_model->gethsncode();
-		$template['product_names'] = $this->Item_model->view();
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['product_names'] = $this->Item_model->view($branch_id_fk);
 		$template['records'] = $this->General_model->get_row($this->table, 'routsale_id', $routsale_id);
 		$this->load->view('template', $template);
 	}
