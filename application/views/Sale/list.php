@@ -77,6 +77,7 @@
 					<th>RECEIVED_AMOUNT</th>
 					<th>NEW_BALANCE</th>
 					<th>VIEW/INVOICE</th>
+					<th>DELETE_ALL</th>
                 </tr>
                 </thead>
                 <tbody>

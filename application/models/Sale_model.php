@@ -777,4 +777,21 @@ class Sale_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	function get_prodstk($prid)
+
+	{
+
+		$this->db->select('*');
+
+		$this->db->from('tbl_product');
+
+		$this->db->where('product_id',$prid);
+
+		$query = $this->db->get();
+
+		return $query->result();
+
+	}
+
 }

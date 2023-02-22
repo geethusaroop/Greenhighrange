@@ -481,12 +481,42 @@ $(document).on("change",'.product_num',function(){
                     "data": "sale_id",
                     "orderable": false
                 },
+                {
+                    "data": null,
+                    render: function(data, type, row) {
+                        return "<div data-id=" + data['auto_invoice'] + " onclick='test(this)' class='text-center'><i class='fa fa-trash-o iconFontSize-medium'></i></div>";
+                    }
+                }
          ]
     } );
     $('#product').keyup(function (){
     $table.ajax.reload();
     });
   });
+
+
+  function test(data) {
+        var invoice_id = data.getAttribute('data-id');
+       // alert(invoice_id);
+        var conf = confirm("Do you want to Delete All Item from This Sale ?");
+        if (conf) {
+            $.ajax({
+                url: "<?php echo base_url(); ?>Sale/delete",
+                data: {
+                    invoice_id: invoice_id
+                },
+                method: "POST",
+                datatype: "json",
+                success: function(data) {
+                    var options = $.parseJSON(data);console.log(options);
+                    noty(options);
+                    $table.ajax.reload();
+                }
+            })
+        }
+    }
+
+
 // Auto Searching//
     $(document).on("click","#customer_name",function(){
         var param='';

@@ -214,7 +214,7 @@ class Sale extends MY_Controller {
 		$json_data = json_encode($data);
     	echo $json_data;
     }
-	public function delete(){
+	/* public function delete(){
         $product_id = $this->input->post('product_id');
         $updateData = array('product_status' => 0);
         $data = $this->General_model->update($this->table,$updateData,'product_id',$product_id);
@@ -230,7 +230,37 @@ class Sale extends MY_Controller {
         $data_json = json_encode($response);
         echo $data_json;
 		redirect('/Sale/', 'refresh');
-    }
+    } */
+
+	public function delete()
+	{
+		$invoice_number = $this->input->post('invoice_id');
+		$records = $this->Sale_model->get_invc($invoice_number);
+		for($i=0; $i< count($records); $i++)
+		{
+			$stok = $this->Sale_model->get_prodstk($records[$i]->product_id);
+			//var_dump($stok);die;
+            $nwstk = $stok[0]->product_stock + $records[$i]->sale_quantity;
+            
+			$updateData = array('product_stock' =>$nwstk);	
+			
+			$datas = $this->General_model->update('tbl_product',$updateData,'product_id',$records[$i]->product_id);
+		}
+		$updateDatas = array('sale_status' => 0);
+		$data = $this->General_model->update($this->table, $updateDatas, 'auto_invoice', $invoice_number);
+		if ($data) {
+			$response['text'] = 'Deleted successfully';
+			$response['type'] = 'success';
+		} else {
+			$response['text'] = 'Something went wrong';
+			$response['type'] = 'error';
+		}
+		$response['layout'] = 'topRight';
+		$data_json = json_encode($response);
+		echo $data_json;
+		//redirect('/Sale/', 'refresh');
+	}
+
 	public function edit($product_id){
 		$template['body'] = 'Sale/add';
 		$template['script'] = 'Sale/script';
