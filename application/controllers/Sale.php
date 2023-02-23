@@ -472,7 +472,9 @@ class Sale extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-		$sDate = (isset($_REQUEST['startDate'])) ? $_REQUEST['startDate'] : '';
+		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+        $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
+		/* $sDate = (isset($_REQUEST['startDate'])) ? $_REQUEST['startDate'] : '';
 		$eDate = (isset($_REQUEST['endDate'])) ? $_REQUEST['endDate'] : '';
 		if($sDate){
             $start_date = str_replace('/', '-', $sDate);
@@ -482,7 +484,7 @@ class Sale extends MY_Controller {
         if($eDate){
             $end_date = str_replace('/', '-', $eDate);
             $param['endDate'] =  date("Y-m-d",strtotime($end_date));
-		}	
+		}	 */
         $sessid = $this->session->userdata['id'];
 		
 		$data = $this->Sale_model->getSaleReturnReport($param);

@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sale Details
+        Branch Sale Details
 
         <!-- <small>Optional description</small> -->
       </h1>
@@ -16,27 +16,43 @@
 
      <!-- Main content -->
     <section class="content">
-		
+		<div class="row">
             <div class="box-header">
 
               <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
 
-			  
+
+			
+		</div>
 		</div>
 
             <!-- /.box-header -->
 			<div class="row">
 			<div class="box">
-			<div class="row">
-				<div class="col-md-3">
+				<div class="row">
+				<div class="col-md-2">
 					<div class="input-group margin">
 						<div class="input-group-btn">
-							<button type="button" class="btn btn-primary nohover">Invoice No</button>
+							<button type="button" class="btn btn-primary nohover">Invoice Number</button>
 						</div><!-- /btn-group -->
 					<input type="text"  class="form-control"  id="product"  placeholder="">
 				</div><!-- /input-group -->
 				</div>
+
 				<div class="col-md-3">
+					<div class="input-group margin">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-primary nohover">Branch</button>
+						</div><!-- /btn-group -->
+						<select class="form-control" name="branch" id="branch">
+                          <option value="">SELECT</option>
+                          <?php foreach($branch as $br){ ?>
+                            <option value="<?php echo $br->branch_id ?>"><?php echo $br->branch_name ?></option>
+                          <?php } ?>  
+                         </select>
+				</div><!-- /input-group -->
+				</div>
+			<div class="col-md-3">
 				<div class="input-group margin">
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-primary nohover">Sale Date </button>
@@ -58,15 +74,9 @@
 						<button type="button" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if(isset($values->mainhead_id))echo $values->mainhead_id;?>">Search</button>
 					</div>
 			</div>
-			  <!--<div class="col-md-2">
-                  <a href="<?php echo base_url();?>index.php/sale/" class="btn btn-success"><i class="glyphicon glyphicon-user"></i>Sale List</a>
-              </div>-->
-            <div class="col-md-1">
-				<div class="input-group margin">
-					<a href="<?php echo base_url();?>Sale/add" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Add Sale</a>
-				</div>
-			</div>
+			
             </div>
+				
             <div class="box-body table-responsive">
               <table id="sale_details_table" class="table table-bordered table-striped">
                 <thead>
@@ -84,7 +94,6 @@
 					<th>RECEIVED_AMOUNT</th>
 					<th>NEW_BALANCE</th>
 					<th>VIEW/INVOICE</th>
-					<th>DELETE_ALL</th>
                 </tr>
                 </thead>
                 <tbody>
