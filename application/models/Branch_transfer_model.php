@@ -11,11 +11,15 @@ class Branch_transfer_model extends CI_Model{
         if($searchValue){
             $this->db->like('branch_name', $searchValue);
         }
+		$sdate = ($param['sdate'])?$param['sdate']:'';
+        if($sdate){
+            $this->db->where('bt_date', $sdate);
+        }
         $this->db->where("bt_status",1);
         if ($param['start'] != 'false' and $param['length'] != 'false') {
         	$this->db->limit($param['length'],$param['start']);
         }
-		$this->db->select('*,date_format(bt_date,\'%d/%m/%Y\') as bt_date');
+		$this->db->select('*,date_format(bt_date,\'%d/%m/%Y\') as bt_dates');
 		$this->db->from('tbl_branch_transfer');
         $this->db->join('tbl_branch','branch_id=bt_branch_id_fk','left');
         $this->db->join('tbl_product','product_id=bt_product_id_fk','left');
@@ -30,6 +34,10 @@ class Branch_transfer_model extends CI_Model{
 		$searchValue =($param['searchValue'])?$param['searchValue']:'';
         if($searchValue){
             $this->db->like('branch_name', $searchValue);
+        }
+		$sdate = ($param['sdate'])?$param['sdate']:'';
+        if($sdate){
+            $this->db->where('bt_date', $sdate);
         }
 		$this->db->select('*');
 		$this->db->from('tbl_branch_transfer');

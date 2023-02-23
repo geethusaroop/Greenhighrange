@@ -110,6 +110,7 @@ class Branch_transfer extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+        $param['sdate'] = (isset($_REQUEST['sdate'])) ? $_REQUEST['sdate'] : '';
     	$data = $this->Branch_transfer_model->getClassinfoTable($param);
     	$json_data = json_encode($data);
     	echo $json_data;

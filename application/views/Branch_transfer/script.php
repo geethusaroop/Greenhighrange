@@ -41,6 +41,11 @@ var d=c+"(IST)";
       checkboxClass: 'icheckbox_flat-green',
       radioClass: 'iradio_flat-green'
     });
+
+    $('#search').click(function () {
+    $table.ajax.reload();
+});
+
     $table = $('#classinfo_table').DataTable( {
         "fixedHeader": true,
         "processing": true,
@@ -50,7 +55,7 @@ var d=c+"(IST)";
             "url": "<?php echo base_url();?>Branch_transfer/get/",
             "type": "POST",
             "data" : function (d) {
-
+              d.sdate = $('#sdate').val();
            }
         },
         "createdRow": function ( row, data, index ) {
@@ -62,10 +67,11 @@ var d=c+"(IST)";
         },
         "columns": [
             { "data": "bt_status", "orderable": false },
+            { "data": "bt_dates", "orderable": false },
             { "data": "product_name", "orderable": false },
       			{ "data": "branch_name", "orderable": false },
       			{ "data": "bt_stock", "orderable": false },
-            { "data": "bt_date", "orderable": false },
+          
            // { "data": "bt_id", "orderable": false }
 
         ]
