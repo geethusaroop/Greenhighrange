@@ -127,6 +127,7 @@ class Routsale_model extends CI_Model{
         $this->db->from('tbl_routsale');
         $this->db->join('tbl_product','product_id=routsale_product_id_fk');
         $this->db->where('routsale_status',1);
+        $this->db->where('routsale_return_status',0);
         $this->db->where('routsale_date',$date);
         $this->db->where("product_status",1);
         $this->db->order_by('product_id','ASC');

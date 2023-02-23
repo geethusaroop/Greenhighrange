@@ -17,7 +17,7 @@ class Product extends MY_Controller
 	}
 	public function index()
 	{
-		
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$template['body'] = 'Product/list';
 		$template['script'] = 'Product/script';
 		$this->load->view('template', $template);
