@@ -23,6 +23,7 @@
           <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
           
                   <div class="row">
+                  <div class="col-md-2"></div>
               <div class="col-md-3">
                 <div class="input-group margin">
                   <div class="input-group-btn">
@@ -32,7 +33,14 @@
                 </div><!-- /input-group -->
               </div>
 
-             
+              <div class="col-md-3">
+                <div class="input-group margin">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary nohover">Date</button>
+                  </div><!-- /btn-group -->
+                  <input type="date" name="sdate" placeholder="Item Name or Code" id="sdate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                </div><!-- /input-group -->
+              </div>
               <div class="col-sm-2">
                   <div class="input-group">
                     <button type="button" id="search" class="btn bg-orange btn-flat margin">Search</button>

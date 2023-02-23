@@ -285,6 +285,9 @@
           </ul>
        </li>
 
+       <li class="<?php if ($this->uri->segment(1) == "RSreturn" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSreturn/"><i class="fa fa-arrow-left"></i><span>Return To Stock</span></a></li>
+
+
 
       <li class="divider"></li> 
 
