@@ -28,7 +28,7 @@ class Branch_transfer extends MY_Controller {
 			$template['script'] = 'Branch_transfer/script';
 			$this->load->view('template', $template);
 		}
-		else {
+		        else {
 			
 			            $data = array(
 						'bt_branch_id_fk' => $this->input->post('branch_name'),

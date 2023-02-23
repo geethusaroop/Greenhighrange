@@ -597,7 +597,53 @@
 
        <li class="divider"></li> 
 
-
+       <li class="treeview <?php 
+       
+       if($this->uri->segment(1)=="BStock_report")
+                 {echo "active";}
+ 
+      
+       else  if($this->uri->segment(1)=='Sale_Report'){echo "active";}
+       ?>">
+           <a><i class="fa fa-laptop"></i><span>Reports</span>
+             <span class="pull-right-container">
+               <i class="fa fa-angle-left pull-right"></i>
+             </span>
+           </a>
+           <ul class="treeview-menu ">
+       <li class="treeview 
+       <?php 
+       if($this->uri->segment(1)=='Stock_Reports'){echo "active";}
+       ?>">
+            <a href="#"><i class="fa fa-circle-o"></i> Stock Report
+             <span class="pull-right-container">
+                 <i class="fa fa-angle-left pull-right"></i>
+             </span>
+            </a>
+       <ul class="treeview-menu">
+         <li class="<?php if($this->uri->segment(2)=='physicalStock' && $this->uri->segment(1)=="BStock_report"){echo "active";}?>" ><a href="<?php echo base_url();?>BStock_report/physicalStock"><i class="fa fa-circle-o"></i>Physical Stock</a></li>
+      </ul>
+       </li>
+  
+        <li class="treeview 
+       <?php 
+       if($this->uri->segment(1)=='Salereport'){echo "active";}
+       else  if($this->uri->segment(1)=='Sale_Report'){echo "active";}
+       ?>">
+            <a href="#"><i class="fa fa-circle-o"></i> Sale Report
+             <span class="pull-right-container">
+                 <i class="fa fa-angle-left pull-right"></i>
+             </span>
+            </a>
+       <ul class="treeview-menu">
+       <li class="<?php if($this->uri->segment(1)=="Salereport" && $this->uri->segment(2)==""){echo "active";}?>" ><a href="<?php echo base_url();?>Salereport"><i class="fa fa-circle-o"></i> <span>Sales Report</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="Sale_Report" && $this->uri->segment(2)=="cutomerSaleRport"){echo "active";}?>" ><a href="<?php echo base_url();?>Sale_Report/cutomerSaleRport"><i class="fa fa-circle-o"></i> <span>Customer Sale Report</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="Sale_Report" && $this->uri->segment(2)=="itemSaleRport"){echo "active";}?>" ><a href="<?php echo base_url();?>Sale_Report/itemSaleRport"><i class="fa fa-circle-o"></i> <span>Item Sale Report</span></a></li>
+      </ul>
+       </li> 
+     </ul>
+         </li>
+ 
 
        <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
        

@@ -36,12 +36,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Physical Stock Report
+             Stock Transfer From Branch Report
             <!-- <small>Optional description</small> -->
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url(); ?>Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Physical Stock Report</li>
+            <li class="active"> Stock Transfer From Branch Report</li>
         </ol>
     </section>
 
@@ -58,7 +58,7 @@
                         <h2 class="box-title"></h2>
                     </div> -->
 
-                    <form name="" method="post" action="<?php echo base_url(); ?>Stock_Reports/physicalStock1">
+                    <form name="" method="post" action="<?php echo base_url(); ?>BStock_report/physicalStock1">
                         <div class="col-md-12">
 
                             <div class="row" style="border:ridge;border-radius:20px;box-shadow:2px 2px 2px 2px grey;">
@@ -108,7 +108,7 @@
                                     <div class="input-group">
                                         <button type="submit" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if (isset($values->mainhead_id)) echo $values->mainhead_id; ?>">Search</button>
                                         <!--                     <button type="button" id="search" class="btn bg-orange btn-flat margin">Search</button>
- --> <a href="<?php echo base_url(); ?>Stock_Reports/physicalStock"><button class="btn bg-navy btn-flat margin">Refresh</button></a>
+ --> <a href="<?php echo base_url(); ?>BStock_report/physicalStock"><button class="btn bg-navy btn-flat margin">Refresh</button></a>
                                         <a class="btn btn-primary" onclick="printDiv();"><i class="fa fa-print"></i> Print</a>
                                         &nbsp;&nbsp;
                                         <div class="dropdown">
@@ -141,13 +141,7 @@
                                         <th style="border:1px solid #dee2e6;">SINO</th>
                                         <th style="border:1px solid #dee2e6;">PRODUCT_NAME</th>
                                         <th style="border:1px solid #dee2e6;">PRODUCT_CODE</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">OPENING_STOCK</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">PURCHASE_STOCK</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">CURRENT_STOCK</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">PURCHASE_PRICE</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">SELLING_PRICE(R1)</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">SELLING_PRICE(R2)</th>
-                                        <th style="border:1px solid #dee2e6;" class="text-center">SELLING_PRICE(R3)</th>
+                                        <th style="border:1px solid #dee2e6;" class="text-center">TOTAL_STOCK</th>
                                         <th style="border:1px solid #dee2e6;" class="text-center">STOCK_DATE</th>
                                     </tr>
                                 </thead>
@@ -159,14 +153,8 @@
                                             <td style="border:1px solid #dee2e6;"><?php echo $i; ?></td>
                                             <td style="border:1px solid #dee2e6;"><?php echo $row->product_name; ?></td>
                                             <td style="border:1px solid #dee2e6;"><?php echo $row->product_code; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->product_open_stock; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->stock_total; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->product_stock; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->purchase_price; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->product_price_r1; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->product_price_r2; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->product_price_r3; ?></td>
-                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->stock_date; ?></td>
+                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->bt_stock; ?></td>
+                                            <td style="border:1px solid #dee2e6;" class="text-center"><?php echo $row->bt_date; ?></td>
                                         </tr>
                                     <?php $i++;
                                         $qty = $qty + $row->product_stock;
