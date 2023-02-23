@@ -153,13 +153,8 @@
 
          <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
 
-         <li class="<?php if ($this->uri->segment(1) == "SaleReturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>SaleReturn"><i class="fa fa-circle-o"></i><span>Sale Return</span></a></li>
-
          
            <li class="<?php if ($this->uri->segment(1) == "Purchaseitem") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem"><i class="fa fa-circle-o"></i><span>Purchase</span></a></li>
-
-           <li class="<?php if ($this->uri->segment(1) == "Purchaseitem"  && $this->uri->segment(2) == "purchase_return") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem/purchase_return"><i class="fa fa-circle-o"></i><span>Purchase Return</span></a></li>
-
 
            <li class="<?php if ($this->uri->segment(1) == "Stock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stock"><i class="fa fa-circle-o"></i><span>Stock Details</span></a></li>
 

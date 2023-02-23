@@ -414,7 +414,7 @@ $(document).on("change",'.product_num',function(){
         "serverSide": true,
         "bDestroy" : true,
         "ajax": {
-            "url": "<?php echo base_url();?>rssale/get/",
+            "url": "<?php echo base_url();?>RSSale/get/",
             "type": "POST",
             "data" : function (d) {
                     d.product_num = $("#product").val();

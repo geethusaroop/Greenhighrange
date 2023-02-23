@@ -32,7 +32,7 @@
         "serverSide": true,
         "bDestroy" : true,
         "ajax": {
-            "url": "<?php echo base_url();?>rssale/getview/",
+            "url": "<?php echo base_url();?>RSSale/getview/",
             "type": "POST",
             "data" : function (d) {
                     d.product_num = $("#product").val();
