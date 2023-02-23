@@ -12,7 +12,7 @@
 	  </ol>
     </section>
 	<!-- Main content -->
-    <form class="form-horizontal" method="POST" action="<?php echo base_url();?>Vendor_voucher/add" >
+    <form class="form-horizontal" method="POST" action="<?php echo base_url();?>Vendor_voucher/add">
      <!-- Main content -->
     <section class="content">
       <div class="row">
