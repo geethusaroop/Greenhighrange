@@ -82,6 +82,10 @@ class Branch_transfer extends MY_Controller {
                             'product_status' => 1,
                             'product_category' => $this->input->post('product_category'),
                             'product_unit_type' => $this->input->post('product_unit_type'),
+                            'product_price_r1' => $this->input->post('product_price_r1'),
+                            'product_price_r2' => $this->input->post('product_price_r2'),
+                            'product_price_r3' => $this->input->post('product_price_r3'),
+
                         );
                     $result2 = $this->General_model->add('tbl_product',$datas);
                      $response_text = 'Branch_transfer added  successfully';

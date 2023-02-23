@@ -217,8 +217,7 @@
 
        <li class="divider"></li> 
 
-       <li class="divider"></li> 
-       <li class="treeview"> <a><span style="font-weight:bold;text-shadow:2px 2px #c03110;">BRANCH STOCK TRANSFER</span>  </a></li>
+       <li class="treeview"> <a><span style="font-weight:bold;text-shadow:2px 2px green;">BRANCH STOCK TRANSFER</span>  </a></li>
        <li class="treeview <?php
          if ($this->uri->segment(1) == "Branch_transfer") {
             echo "active";
@@ -238,10 +237,14 @@
 
           </ul>
        </li>
+
+       <li class="<?php if ($this->uri->segment(1) == "BStock" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BStock"><i class="fa fa-crop"></i><span>Branch Stock Status</span></a></li>
+
+       <li class="<?php if ($this->uri->segment(1) == "BSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BSale"><i class="fa fa-crop"></i><span>Branch Sale Details</span></a></li>
+
        <li class="divider"></li> 
 
-
-      <li class="divider"></li> 
+   
       <li class="treeview"> <a> <i class="fa fa-truck" style="color:#c03110;"></i> <span style="font-weight:bold;text-shadow:2px 2px #c03110;">ROUT SALE</span>  </a></li>
       
       <li class="treeview <?php
