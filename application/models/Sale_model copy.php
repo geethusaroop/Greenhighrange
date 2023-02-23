@@ -34,7 +34,6 @@ class Sale_model extends CI_Model
             $this->db->where("sale_branch_id_fk",0);
         }
 		$this->db->where("sale_status", 1);
-		$this->db->where("routsale_status", 0);
 
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'], $param['start']);
@@ -88,7 +87,6 @@ class Sale_model extends CI_Model
 		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale.member_id_fk', 'left');
 		//$this->db->join('tbl_member_type','tbl_member_type.member_type_id = tbl_member.member_type','left');
 		$this->db->where("sale_status", 1);
-		$this->db->where("routsale_status",0);
 		$this->db->group_by('invoice_number', 'DESC');
 
 		$query = $this->db->get();
@@ -781,89 +779,19 @@ class Sale_model extends CI_Model
 	}
 
 	function get_prodstk($prid)
+
 	{
+
 		$this->db->select('*');
+
 		$this->db->from('tbl_product');
+
 		$this->db->where('product_id',$prid);
+
 		$query = $this->db->get();
+
 		return $query->result();
 
 	}
 
-	public function getSaleReturnReport($param){
-        $arOrder = array('','invoice_number','shop');
-        $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
-        $startDate =(isset($param['startDate']))?$param['startDate']:'';
-        $endDate =(isset($param['endDate']))?$param['endDate']:'';
-        if($invoice_number){
-            $this->db->like('invoice_number', $invoice_number); 
-        }
-        if($startDate){
-            $this->db->where('return_date >=', $startDate); 
-        }
-        if($endDate){
-            $this->db->where('return_date <=', $endDate); 
-        }
-		$this->db->where("sale_status",1);
-		
-        if ($param['start'] != 'false' and $param['length'] != 'false') {
-            $this->db->limit($param['length'],$param['start']);
-        }
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date');
-		$this->db->from('tbl_sale');
-		$this->db->join('tbl_product','product_id = product_id_fk','left');
-		$this->db->join('tbl_member','member_id = member_id_fk');
-        $this->db->group_by('invoice_number', 'DESC');
-		$this->db->order_by('return_date','DESC');
-        $query = $this->db->get();
-        
-		$data['data'] = $query->result();
-        $data['recordsTotal'] = $this->getSaleReportReturnTotalCount($param);
-        $data['recordsFiltered'] = $this->getSaleReportReturnTotalCount($param);
-        return $data;
-	}
-	public function getSaleReportReturnTotalCount($param){
-        $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
-        $startDate =(isset($param['startDate']))?$param['startDate']:'';
-        $endDate =(isset($param['endDate']))?$param['endDate']:'';
-		if($invoice_number){
-            $this->db->like('invoice_number', $invoice_number); 
-        }
-        if($startDate){
-            $this->db->where('return_date >=', $startDate); 
-        }
-        if($endDate){
-            $this->db->where('return_date <=', $endDate); 
-        }
-		$this->db->where("sale_status",1);
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,');
-		$this->db->from('tbl_sale');
-		$this->db->join('tbl_product','product_id = product_id_fk','left');
-		$this->db->join('tbl_member','member_id = member_id_fk');
-		$this->db->order_by('return_date', 'DESC');
-        $this->db->group_by('invoice_number', 'DESC');
-        $query = $this->db->get();
-		return $query->num_rows();
-	}
-
-	public function getEditData($auto_invoice)
-	{
-		$this->db->select('*');
-		$this->db->from('tbl_sale');
-		$this->db->join('tbl_product','product_id = product_id_fk','left');
-		$this->db->join('tbl_member','member_id = member_id_fk');
-		$this->db->where('sale_status', 1);
-        $this->db->where('auto_invoice', $auto_invoice);
-		$query = $this->db->get();
-		return $query->result();
-	}
-
-	public function get_stoks($prid)
-	{
-		$this->db->select('product_stock');
-		$this->db->from('tbl_product');
-		$this->db->where('product_id',$prid);
-		$query = $this->db->get();
-		return $query->result();
-	}
 }
