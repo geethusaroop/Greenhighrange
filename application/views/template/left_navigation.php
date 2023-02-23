@@ -641,9 +641,26 @@
        <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/view"><i class="fa fa-list"></i><span>Today's Sale Details</span></a></li>
         
 
+       <li class="treeview <?php
+          if ($this->uri->segment(1) == "RSreturn") {
+            echo "active";
+          } 
+         
+          ?>">
+         <a><i class="fa fa-arrow-left"></i><span>Return Stock</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
 
-       <li class="<?php if ($this->uri->segment(1) == "RSreturn" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSreturn"><i class="fa fa-arrow-left"></i><span>Return Stock</span></a></li>
-
+         <li class="<?php if ($this->uri->segment(1) == "RSreturn" && $this->uri->segment(2) == "addreturn_view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSreturn/addreturn_view"><i class="fa fa-circle-o"></i><span>Add Return Stock</span></a></li>
+         
+         <li class="<?php if ($this->uri->segment(1) == "RSreturn" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSreturn/"><i class="fa fa-circle-o"></i><span>Manage Return Stock</span></a></li>
+         
+        
+        </ul>
+       </li>
 
        <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
        

@@ -16,7 +16,6 @@ class RSSale extends MY_Controller {
         $this->load->model('General_model');
 		$this->load->model('RSSale_model');
 		$this->load->model('Purchase_model');
-	//	$this->load->model('Customer_model');
 		$this->load->model('Dashboard_model');
 	}
 	public function index()
