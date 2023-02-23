@@ -453,6 +453,9 @@
        <li class="<?php if($this->uri->segment(1)=="Sale_Report" && $this->uri->segment(2)=="itemSaleRport"){echo "active";}?>" ><a href="<?php echo base_url();?>Sale_Report/itemSaleRport"><i class="fa fa-circle-o"></i> <span>Item Sale Report</span></a></li>
       </ul>
        </li> 
+
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="itemSaleRport"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Shareholder Sale Report</span></a></li>
+
      </ul>
          </li>
  

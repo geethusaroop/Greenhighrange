@@ -113,6 +113,40 @@ Class Vendor_voucher_model extends CI_Model{
 		return $query->row();
 
 	}
+
+			
+	public function view_by_shareholder($branch_id_fk)
+	{
+		$status=1;
+		$this->db->select('*');
+		$this->db->from('tbl_member');
+		$this->db->where('member_status', $status);
+		$this->db->where('member_type', 1);
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("member_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("member_branch_id_fk",0);
+        }
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_shareholder_sale_report($cdate,$edate,$shareholder_id_fk)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_sale');
+		$this->db->join('tbl_product','product_id_fk=product_id');
+		$this->db->where('sale_date >=', $cdate);
+		$this->db->where('sale_date <=', $edate);
+		$this->db->where('member_id_fk', $shareholder_id_fk);
+		$this->db->where('sale_status', 1);
+		$this->db->order_by('sale_id',"DESC");
+		$query = $this->db->get();
+		return $query->result();
+	}
 		
 }
 
