@@ -63,7 +63,7 @@ class Routsale_model extends CI_Model{
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
-        $this->db->select('*');
+        $this->db->select('*,(routsale_stock-routsale_sale_count)as product_stock');
         $this->db->from('tbl_routsale');
         $this->db->join('tbl_product','product_id=routsale_product_id_fk');
       //  $this->db->join('tbl_unit','tbl_unit.unit_id=routsale_unit','left');

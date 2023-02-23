@@ -47,10 +47,17 @@ $(function () {
       });
       $('td', row).eq(1).css( "font-weight", "bold");
 
-      $('td', row).eq(3).css( "font-weight", "bold" );
+      $('td', row).eq(5).css( "font-weight", "bold" );
 
-      $('td', row).eq(3).css( "color", "red" );
-    
+      $('td', row).eq(5).css( "color", "red" );
+
+      $('td', row).eq(3).css( "text-align", "right" );
+      $('td', row).eq(4).css( "text-align", "right" );
+      $('td', row).eq(5).css( "text-align", "right" );
+      $('td', row).eq(6).css( "text-align", "right" );
+      $('td', row).eq(7).css( "text-align", "right" );
+
+      $('td', row).eq(8).css( "text-align", "right" );
 
     },
     "columns": [
@@ -58,6 +65,8 @@ $(function () {
       { "data": "product_name", "orderable": false },
        { "data": "product_code", "orderable": false },
       { "data": "routsale_stock", "orderable": false },
+      { "data": "routsale_sale_count", "orderable": false },
+      { "data": "product_stock", "orderable": false },
       { "data": "product_price_r1", "orderable": false },
       { "data": "product_price_r2", "orderable": false },
       { "data": "product_price_r3", "orderable": false },
