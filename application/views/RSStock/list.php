@@ -43,7 +43,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-          <table id="classinfo_table" class="table table-bordered table-striped">
+          <table id="classinfo_table" class="table table-bordered table-striped" style="font-size:15px;box-shadow: 2px 2px 2px 2px black;">
             <thead>
               <tr>
               <th>SL.No</th>

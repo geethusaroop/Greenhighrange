@@ -573,7 +573,7 @@
 
        <li class="<?php if ($this->uri->segment(1) == "RSStock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSStock"><i class="fa fa-truck"></i><span>Today's Stock</span></a></li>
 
-       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
+       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale"><i class="fa fa-shopping-cart"></i><span>Sale</span></a></li>
 
        <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
        
