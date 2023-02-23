@@ -31,6 +31,8 @@
                   <input type="text" name="item_names" placeholder="Item Name or Code" id="item_names" class="form-control">
                 </div><!-- /input-group -->
               </div>
+
+             
               <div class="col-sm-2">
                   <div class="input-group">
                     <button type="button" id="search" class="btn bg-orange btn-flat margin">Search</button>
@@ -43,16 +45,18 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-          <table id="classinfo_table" class="table table-bordered table-striped">
-            <thead>
+          <table id="classinfo_table" class="table table-bordered table-striped" style="font-size:15px;box-shadow: 2px 2px 2px 2px black;">
+            <thead style="text-transform: uppercase;">
               <tr>
               <th>SL.No</th>
-                  <th>Product Name</th>
-                  <th>Product Code</th>
-                  <th>Current Stock</th>
-                  <th>R1 Price</th>
-                  <th>R2 Price</th>
-                  <th>R3 Price</th>
+                  <th>Product_Name</th>
+                  <th>Product_Code</th>
+                  <th style="text-align: right;">Total_Stock</th>
+                  <th style="text-align: right;">Total_Item_Saled</th>
+                  <th style="text-align: right;">Balance_Stock</th>
+                  <th style="text-align: right;">R1_Price</th>
+                  <th style="text-align: right;">R2_Price</th>
+                  <th style="text-align: right;">R3_Price</th>
               </tr>
             </thead>
             <tbody>

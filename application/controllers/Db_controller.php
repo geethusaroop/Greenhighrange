@@ -116,6 +116,8 @@ write_file($save, $backup);  */
 	//	$sql="ALTER TABLE `tbl_sale` ADD `sale_discount` FLOAT NOT NULL AFTER `sale_status`, ADD `sale_old_balance` FLOAT NOT NULL AFTER `sale_discount`, ADD `sale_new_balance` FLOAT NOT NULL AFTER `sale_old_balance`";
 		//$sql="ALTER TABLE `tbl_sale` ADD `sale_shareholder_discount` FLOAT NOT NULL AFTER `sale_status`";
 		//$sql="ALTER TABLE `tbl_stock_history` ADD `purchase_id_fk` INT NOT NULL AFTER `stock_id`";
+		//$sql="ALTER TABLE `tbl_routsale` ADD `routsale_sale_count` INT NOT NULL COMMENT 'total item saled' AFTER `routsale_stock`";
+		//$sql="ALTER TABLE `tbl_sale` ADD `routsale_status` INT NOT NULL AFTER `invoice`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

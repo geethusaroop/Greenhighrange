@@ -29,6 +29,7 @@ class RSStock extends MY_Controller
 
 	public function get()
 	{
+		$date=date('Y-m-d');
 		$this->load->model('Routsale_model');
 		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
 		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
@@ -37,7 +38,7 @@ class RSStock extends MY_Controller
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
 		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
 		$param['item_name'] = (isset($_REQUEST['item_name'])) ? $_REQUEST['item_name'] : '';
-		$data = $this->Routsale_model->getClassinfoTable1($param);
+		$data = $this->Routsale_model->getClassinfoTable1($param,$date);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
