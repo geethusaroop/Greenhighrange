@@ -1388,12 +1388,12 @@ function getdiscamount() {
 function getcustomer()
     {
         var mem_type=$('#member_types_all').val();
-        if(mem_type==1)
+        if(mem_type==1 || mem_type==2 || mem_type==3)
         {
-            $('#member').toggle();
+            $('#member').show();
             $('#other').hide();
         }
-        else if(mem_type==2)
+      /*   else if(mem_type==2)
         {
             $('#member').toggle();
             $('#other').hide();
@@ -1402,7 +1402,7 @@ function getcustomer()
         {
             $('#member').toggle();
             $('#other').hide();
-        }
+        } */
         else if(mem_type==4)
         {
             $('#other').toggle();
@@ -1412,6 +1412,7 @@ function getcustomer()
 
     $('#member_types_all').on('change',function(){
       $('#custname').empty();
+    
         var mem_id = this.value;
         //alert(mem_id);
         $.ajax({
@@ -1517,4 +1518,5 @@ function getcustomer()
                       }
                   });
     }
+
   </script>

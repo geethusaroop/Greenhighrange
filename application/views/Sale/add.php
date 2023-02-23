@@ -124,11 +124,12 @@
                          <option value="4">Others</option>
                       </select>
                     </div>
+                  
                     <div id="member" style="display: none;">
-                    <div class="col-md-4">
-                    <label>Customer Name <span style="color:red">*</span></label>
-                    <select name="custname" class="form-control" id="custname">
-                      <option value="">-SELECT-</option>
+                    <div class="col-md-4" style="margin-top:10px;">
+                    <label>Customer Name </label><br>
+                    <select name="custname" class="form-control select2" id="custname" style="width:300px;">
+                     
                     </select>
                     </div>
                     </div>

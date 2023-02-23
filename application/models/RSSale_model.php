@@ -451,11 +451,14 @@ class RSSale_model extends CI_Model
 
 	public function getproduct_names($id)
 	{
+		$date=date('Y-m-d');
 		$this->db->select('*');
 		$this->db->from('tbl_product');
 		$this->db->join('tbl_routsale', 'routsale_product_id_fk=product_id');
 		$this->db->where("product_status", 1);
 		$this->db->where("routsale_status", 1);
+		$this->db->where("routsale_return_status", 0);
+		$this->db->where("routsale_date", $date);
 		$this->db->like("product_name", $id);
 		$this->db->group_by("product_name");
 		$records = $this->db->get()->result();

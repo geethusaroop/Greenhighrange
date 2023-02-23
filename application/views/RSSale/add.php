@@ -125,9 +125,9 @@
                       </select>
                     </div>
                     <div id="member" style="display: none;">
-                    <div class="col-md-4">
-                    <label>Customer Name <span style="color:red">*</span></label>
-                    <select name="custname" class="form-control" id="custname">
+                    <div class="col-md-4"style="margin-top:10px;">
+                    <label>Customer Name <span style="color:red">*</span></label><br>
+                    <select name="custname" class="form-control select2" id="custname" style="width:300px;">
                       <option value="">-SELECT-</option>
                     </select>
                     </div>

@@ -1388,7 +1388,7 @@ function getdiscamount() {
 function getcustomer()
     {
         var mem_type=$('#member_types_all').val();
-        if(mem_type==1)
+      /*   if(mem_type==1)
         {
             $('#member').toggle();
             $('#other').hide();
@@ -1401,6 +1401,11 @@ function getcustomer()
         else if(mem_type==3)
         {
             $('#member').toggle();
+            $('#other').hide();
+        } */
+        if(mem_type==1 || mem_type==2 || mem_type==3)
+        {
+            $('#member').show();
             $('#other').hide();
         }
         else if(mem_type==4)

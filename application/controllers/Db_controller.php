@@ -120,7 +120,8 @@ write_file($save, $backup);  */
 		//$sql="ALTER TABLE `tbl_sale` ADD `routsale_status` INT NOT NULL AFTER `invoice`";
 		//$sql="ALTER TABLE `tbl_routsale` ADD `routsale_return_status` INT NOT NULL AFTER `routsale_return_stock`, ADD `routsale_return_date` DATE NOT NULL AFTER `routsale_return_status`";
 		
-		$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 7";
+		//notrun
+		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 7";
 		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 8";
 		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 9";
 		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 10";
