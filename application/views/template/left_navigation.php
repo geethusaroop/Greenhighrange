@@ -153,7 +153,7 @@
 
          <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
 
-         <li class="<?php if ($this->uri->segment(1) == "SaleReturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>SaleReturn"><i class="fa fa-circle-o"></i><span>Sale Return</span></a></li>
+         <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "SaleReturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale/SaleReturn"><i class="fa fa-circle-o"></i><span>Sale Return</span></a></li>
 
          
            <li class="<?php if ($this->uri->segment(1) == "Purchaseitem") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem"><i class="fa fa-circle-o"></i><span>Purchase</span></a></li>
@@ -284,7 +284,6 @@
 
           </ul>
        </li>
-
 
 
       <li class="divider"></li> 
@@ -641,6 +640,9 @@
 
        <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/view"><i class="fa fa-list"></i><span>Today's Sale Details</span></a></li>
         
+
+
+       <li class="<?php if ($this->uri->segment(1) == "RSreturn" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSreturn"><i class="fa fa-arrow-left"></i><span>Return Stock</span></a></li>
 
 
        <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
