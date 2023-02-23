@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-   Stock Return Details -<?php echo date('d/m/Y'); ?>
+   Stock Return Details
       <small id="date" class="col-md-4"></small>
       <!-- <small>Optional description</small> -->
     </h1>
@@ -21,13 +21,23 @@
           <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response'); ?>" />
           <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
           
-                  <div class="row">
+                  <div class="row" style="font-weight: bold;">
+                  <div class="col-md-2"></div>
               <div class="col-md-3">
                 <div class="input-group margin">
                   <div class="input-group-btn">
                     <button type="button" class="btn btn-primary nohover">Item</button>
                   </div><!-- /btn-group -->
                   <input type="text" name="item_names" placeholder="Item Name or Code" id="item_names" class="form-control">
+                </div><!-- /input-group -->
+              </div>
+
+              <div class="col-md-3">
+                <div class="input-group margin">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary nohover">Date</button>
+                  </div><!-- /btn-group -->
+                  <input type="date" name="sdate" placeholder="Item Name or Code" id="sdate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
                 </div><!-- /input-group -->
               </div>
 

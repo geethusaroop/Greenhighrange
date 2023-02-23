@@ -132,12 +132,17 @@ class Routsale_model extends CI_Model{
         $arOrder = array('','product_name');
         $searchValue =($param['searchValue'])?$param['searchValue']:'';
         $item_name = ($param['item_name'])?$param['item_name']:'';
+        $sdate = ($param['sdate'])?$param['sdate']:'';
         if($searchValue){
             $this->db->like('product_name', $searchValue);
         }
         if($item_name){
             $this->db->like('product_name', $item_name);
             $this->db->or_like('product_code', $item_name);
+        }
+
+        if($sdate){
+            $this->db->where('routsale_return_date', $sdate);
         }
        
         if ($param['start'] != 'false' and $param['length'] != 'false') {
@@ -162,6 +167,11 @@ class Routsale_model extends CI_Model{
         if($searchValue){
             $this->db->like('product_name', $searchValue);
         }
+        $sdate = ($param['sdate'])?$param['sdate']:'';
+        if($sdate){
+            $this->db->where('routsale_return_date', $sdate);
+        }
+       
         $this->db->from('tbl_routsale');
         $this->db->join('tbl_product','product_id=routsale_product_id_fk');
        // $this->db->join('tbl_unit','tbl_unit.unit_id=routsale_unit','left');

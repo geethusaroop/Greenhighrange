@@ -38,6 +38,7 @@ $(function () {
       "type": "POST",
       "data" : function (d) {
         d.item_name = $('#item_names').val();
+        d.sdate = $('#sdate').val();
       }
     },
     "createdRow": function ( row, data, index ) {

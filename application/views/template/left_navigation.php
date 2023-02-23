@@ -613,7 +613,7 @@
           </ul>
        </li>
 
-       <li class="<?php if ($this->uri->segment(1) == "RSStock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSStock"><i class="fa fa-truck"></i><span>Today's Stock</span></a></li>
+       <li class="<?php if ($this->uri->segment(1) == "RSStock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSStock"><i class="fa fa-truck"></i><span>Daily Stock</span></a></li>
 
 
        <li class="treeview <?php
@@ -638,7 +638,7 @@
        </li>
 
 
-       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/view"><i class="fa fa-list"></i><span>Today's Sale Details</span></a></li>
+       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/view"><i class="fa fa-list"></i><span>Daily Sale Details</span></a></li>
         
 
        <li class="treeview <?php
