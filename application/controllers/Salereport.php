@@ -32,7 +32,8 @@ class Salereport extends MY_Controller {
 
 		$template['script'] = 'Salereport/script';
 		$prid =$this->session->userdata('prid');
-		$template['records']=$this->Salereport_model->getSaleReports($prid);
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['records']=$this->Salereport_model->getSaleReports($branch_id_fk);
 		$this->load->view('template', $template);
 	}
 
@@ -44,7 +45,8 @@ class Salereport extends MY_Controller {
 		$cdate=$this->input->post('start_date');
 		$edate=$this->input->post('end_date');
 		$invno=$this->input->post('purchase_invoice_no');
-		$template['records']=$this->Salereport_model->getSaleReports1($cdate,$edate,$prid,$invno);
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['records']=$this->Salereport_model->getSaleReports1($cdate,$edate,$branch_id_fk,$invno);
 		$template['cdate']=$cdate;
 		$template['edate']=$edate;
 		$template['invoice_no']=$invno;

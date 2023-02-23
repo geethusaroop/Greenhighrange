@@ -7,12 +7,20 @@ class Salereport_model extends CI_Model{
         parent::__construct();
     }
 
-	public function getSaleReports($prid)
+	public function getSaleReports($branch_id_fk)
 	{
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date,tbl_sale.discount_price as discount');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_member','member_id = tbl_sale.member_id_fk','left');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
 		$this->db->where("sale_status",1);
 		$this->db->group_by('auto_invoice');
 		$this->db->order_by('tbl_sale.invoice_number','ASCE');
@@ -20,7 +28,7 @@ class Salereport_model extends CI_Model{
 		return $query->result();
 	}
 
-	public function getSaleReports1($cdate,$edate,$prid,$invno)
+	public function getSaleReports1($cdate,$edate,$branch_id_fk,$invno)
 	{
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date,tbl_sale.discount_price as discount');
 		$this->db->from('tbl_sale');
@@ -39,6 +47,14 @@ class Salereport_model extends CI_Model{
         }
         if($edate){
             $this->db->where('sale_date <=', $edate); 
+        }
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
         }
 		$query = $this->db->get();
 		return $query->result();

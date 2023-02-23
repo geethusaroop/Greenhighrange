@@ -19,7 +19,8 @@ class Sale_Report extends MY_Controller {
 		$template['body'] = 'Sale_report/cus_list';
 		$template['script'] = 'Sale_report/cus_script';
         $template['customer'] = $this->Sale_report_model->get_customer();
-        $template['records']=$this->Sale_report_model->getCusSaleReports($prid);
+        $branch_id_fk=$this->session->userdata('branch_id_fk');
+        $template['records']=$this->Sale_report_model->getCusSaleReports($branch_id_fk);
 		$this->load->view('template', $template);
 	}
 
@@ -31,7 +32,8 @@ class Sale_Report extends MY_Controller {
 		$template['body'] = 'Sale_report/cus_list';
 		$template['script'] = 'Sale_report/cus_script';
         $template['customer'] = $this->Sale_report_model->get_customer();
-        $template['records']=$this->Sale_report_model->getCusSaleReports1($cdate,$edate,$prid);
+        $branch_id_fk=$this->session->userdata('branch_id_fk');
+        $template['records']=$this->Sale_report_model->getCusSaleReports1($cdate,$edate,$branch_id_fk);
         $template['cdate']=$cdate;
 		$template['edate']=$edate;
 		$this->load->view('template', $template);
@@ -84,8 +86,9 @@ class Sale_Report extends MY_Controller {
             'product_status' => 1,
         ];
         $prid =$this->session->userdata('prid');
-        $template['item'] = $this->Sale_report_model->getitems();
-        $template['records']=$this->Sale_report_model->itemSaleRportLists($prid);
+        $branch_id_fk=$this->session->userdata('branch_id_fk');
+        $template['item'] = $this->Sale_report_model->getitems($branch_id_fk);
+        $template['records']=$this->Sale_report_model->itemSaleRportLists($branch_id_fk);
 		$this->load->view('template', $template);
 	}
 
@@ -98,11 +101,13 @@ class Sale_Report extends MY_Controller {
             'product_status' => 1,
         ];
         $prid =$this->session->userdata('prid');
-        $template['item'] = $this->Sale_report_model->getitems();
+       // $template['item'] = $this->Sale_report_model->getitems();
         $prid =$this->session->userdata('prid');
         $cdate=$this->input->post('start_date');
 		$edate=$this->input->post('end_date');
         $item_id=$this->input->post('item_id');
+        $branch_id_fk=$this->session->userdata('branch_id_fk');
+        $template['item'] = $this->Sale_report_model->getitems($branch_id_fk);
         $template['records']=$this->Sale_report_model->itemSaleRportLists1($cdate,$edate,$item_id,$prid);
         $template['cdate']=$cdate;
 		$template['edate']=$edate;

@@ -6,7 +6,7 @@ class Sale_report_model extends CI_Model{
     {
         parent::__construct();
     }
-    public function getCusSaleReports($prid)
+    public function getCusSaleReports($branch_id_fk)
     {
         $this->db->select('*,tbl_sale.total_price as total,tbl_sale.invoice_number as invoice_number,((sale_price-((sale_price*100)/(100+taxamount)))/2)*sale_quantity as sgst, (taxamount/2) as taxper,((sale_price*100)/(100+taxamount)) as rate,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date,tbl_sale.discount_price as discount');
     	$this->db->from('tbl_sale');
@@ -15,12 +15,20 @@ class Sale_report_model extends CI_Model{
 		$this->db->order_by('tbl_sale.invoice_number','ASCE');
         $this->db->group_by('auto_invoice');
         $this->db->where("sale_status",1);
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
 		//$this->db->where("tbl_sale.project_id_fk",$prid);
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function getCusSaleReports1($cdate,$edate,$prid)
+    public function getCusSaleReports1($cdate,$edate,$branch_id_fk)
     {
         $this->db->select('*,tbl_sale.total_price as total,tbl_sale.invoice_number as invoice_number,((sale_price-((sale_price*100)/(100+taxamount)))/2)*sale_quantity as sgst, (taxamount/2) as taxper,((sale_price*100)/(100+taxamount)) as rate,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date,tbl_sale.discount_price as discount');
     	$this->db->from('tbl_sale');
@@ -29,7 +37,14 @@ class Sale_report_model extends CI_Model{
 		$this->db->order_by('tbl_sale.invoice_number','ASCE');
         $this->db->group_by('auto_invoice');
         $this->db->where("sale_status",1);
-	//	$this->db->where("tbl_sale.project_id_fk",$prid);
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
         if(!empty($cdate)){
             $this->db->where('sale_date >=', $cdate);
         }
@@ -81,20 +96,28 @@ class Sale_report_model extends CI_Model{
     }
     
     ####################################################################################################################################
-    public function itemSaleRportLists($prid)
+    public function itemSaleRportLists($branch_id_fk)
     {
         $this->db->select('*,tbl_sale.total_price as total,tbl_sale.invoice_number as invoice_number,((sale_price-((sale_price*100)/(100+taxamount)))/2)*sale_quantity as sgst, (taxamount/2) as taxper,((sale_price*100)/(100+taxamount)) as rate,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
     	$this->db->from('tbl_sale');
     	$this->db->join('tbl_product','product_id = product_id_fk','left');
         $this->db->join('tbl_member','member_id = tbl_sale.member_id_fk','left');
 		$this->db->order_by('tbl_sale.invoice_number','ASCE');
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
        // $this->db->group_by('auto_invoice');
         $this->db->where("sale_status",1);
         $query = $this->db->get();
         return $query->result();
     }
 
-    public function itemSaleRportLists1($cdate,$edate,$item_id,$prid)
+    public function itemSaleRportLists1($cdate,$edate,$item_id,$branch_id_fk)
     {
         $this->db->select('*,tbl_sale.total_price as total,tbl_sale.invoice_number as invoice_number,((sale_price-((sale_price*100)/(100+taxamount)))/2)*sale_quantity as sgst, (taxamount/2) as taxper,((sale_price*100)/(100+taxamount)) as rate,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
     	$this->db->from('tbl_sale');
@@ -112,6 +135,14 @@ class Sale_report_model extends CI_Model{
          if($edate){
              $this->db->where('sale_date <=', $edate); 
          }
+         if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
         $query = $this->db->get();
         return $query->result();
     }
@@ -128,7 +159,7 @@ class Sale_report_model extends CI_Model{
 		return $query->result();
     }
 
-    public function getitems()
+    public function getitems($branch_id_fk)
 
     {
 
@@ -137,9 +168,16 @@ class Sale_report_model extends CI_Model{
 		$this->db->from('tbl_product');
 
         $this->db->where('product_status',1);
-        $this->db->where('product_category',1);
+       // $this->db->where('product_category',1);
         $this->db->group_by('product_name');
-
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
         $query = $this->db->get();
 		return $query->result();
 
