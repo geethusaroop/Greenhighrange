@@ -26,6 +26,40 @@ class RSSale extends MY_Controller {
 		$template['script'] = 'RSSale/script';
 		$this->load->view('template',$template);
 	}
+
+
+	public function admin_view()
+	{
+		
+		$template['body'] = 'RSSale/list-admin-view';
+		$template['script'] = 'RSSale/script-admin-view';
+		$this->load->view('template',$template);
+	}
+
+
+	public function view()
+	{
+		
+		$template['body'] = 'RSSale/list-view';
+		$template['script'] = 'RSSale/script-view';
+		$this->load->view('template',$template);
+		
+	}
+
+	public function getview(){
+		$date=date('Y-m-d');
+		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
+        $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
+        $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
+        $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
+        $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
+        $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
+		$data = $this->RSSale_model->getSaleReport1($param,$date);
+		$json_data = json_encode($data);
+    	echo $json_data;
+    }
+
 	public function add(){
 	   
 		$template['tax_names'] = $this->RSSale_model->view_by();
@@ -172,9 +206,9 @@ class RSSale extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-				$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
-				$start_date =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
-        $end_date =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
+		$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
+		$param['sdate'] =(isset($_REQUEST['sdate']))?$_REQUEST['sdate']:'';
+       /*  $end_date =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		if($start_date){
             $start_date = str_replace('/', '-', $start_date);
             $param['start_date'] =  date("Y-m-d",strtotime($start_date));
@@ -182,7 +216,7 @@ class RSSale extends MY_Controller {
         if($end_date){
             $end_date = str_replace('/', '-', $end_date);
             $param['end_date'] =  date("Y-m-d",strtotime($end_date));
-        }
+        } */
     
 		$data = $this->RSSale_model->getSaleReport($param);
 		$json_data = json_encode($data);

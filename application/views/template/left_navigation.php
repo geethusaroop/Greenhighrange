@@ -236,15 +236,53 @@
        <li class="divider"></li> 
 
 
+      <li class="divider"></li> 
+      <li class="treeview"> <a> <i class="fa fa-truck" style="color:#c03110;"></i> <span style="font-weight:bold;text-shadow:2px 2px #c03110;">ROUT SALE</span>  </a></li>
+      
+      <li class="treeview <?php
+         if ($this->uri->segment(1) == "Routsale") {
+            echo "active";
+          }
 
-       <li class="divider"></li> 
+          ?>">
+         <a><i class="fa fa-crop"></i><span>Rout Sale Stock</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
 
-<li class="divider"></li> 
-<li class="treeview"> <a> <i class="fa fa-truck" style="color:#c03110;"></i> <span style="font-weight:bold;text-shadow:2px 2px #c03110;">ROUT SALE</span>  </a></li>
-<li class="<?php if ($this->uri->segment(1) == "Routsale" && $this->uri->segment(2) == "add") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Routsale/add"><i class="fa fa-circle-o"></i><span>Add Rout Sale Stock</span></a></li>
-<li class="<?php if ($this->uri->segment(1) == "Routsale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Routsale/"><i class="fa fa-circle-o"></i><span>Manage Rout Sale Stock</span></a></li>
+         <li class="<?php if ($this->uri->segment(1) == "Routsale" && $this->uri->segment(2) == "add") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Routsale/add"><i class="fa fa-circle-o"></i><span>Add Rout Sale Stock</span></a></li>
+       
+         <li class="<?php if ($this->uri->segment(1) == "Routsale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Routsale/"><i class="fa fa-circle-o"></i><span>Manage Rout Sale Stock</span></a></li>
 
-<li class="divider"></li> 
+          </ul>
+       </li>
+
+
+      <li class="treeview <?php
+         if ($this->uri->segment(1) == "RSSale") {
+            echo "active";
+          }
+
+          ?>">
+         <a><i class="fa fa-shopping-cart"></i><span>Sale Details</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+         
+           <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/view"><i class="fa fa-circle-o"></i><span>Today's Sale Details</span></a></li>
+
+           <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "admin_view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/admin_view"><i class="fa fa-circle-o"></i><span>Sale Report</span></a></li>
+
+          </ul>
+       </li>
+
+
+
+      <li class="divider"></li> 
 
 
        
@@ -573,7 +611,32 @@
 
        <li class="<?php if ($this->uri->segment(1) == "RSStock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSStock"><i class="fa fa-truck"></i><span>Today's Stock</span></a></li>
 
-       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale"><i class="fa fa-shopping-cart"></i><span>Sale</span></a></li>
+
+       <li class="treeview <?php
+          if ($this->uri->segment(1) == "RSSale") {
+            echo "active";
+          } 
+         
+          ?>">
+         <a><i class="fa fa-shopping-cart"></i><span>Sale</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+
+         <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "add") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/add"><i class="fa fa-circle-o"></i><span>Add Sale</span></a></li>
+         
+         <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/"><i class="fa fa-circle-o"></i><span>Sale Details</span></a></li>
+         
+        
+        </ul>
+       </li>
+
+
+       <li class="<?php if ($this->uri->segment(1) == "RSSale" && $this->uri->segment(2) == "view") {echo "active";} ?>"><a href="<?php echo base_url(); ?>RSSale/view"><i class="fa fa-list"></i><span>Today's Sale Details</span></a></li>
+        
+
 
        <li class=""><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out"></i>Log out</a></li>
        

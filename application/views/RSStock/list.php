@@ -31,6 +31,8 @@
                   <input type="text" name="item_names" placeholder="Item Name or Code" id="item_names" class="form-control">
                 </div><!-- /input-group -->
               </div>
+
+             
               <div class="col-sm-2">
                   <div class="input-group">
                     <button type="button" id="search" class="btn bg-orange btn-flat margin">Search</button>

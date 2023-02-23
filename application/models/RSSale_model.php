@@ -7,24 +7,21 @@ class RSSale_model extends CI_Model
 	{
 		parent::__construct();
 	}
+	#################################################allsale report##########################################################
 	public function getSaleReport($param)
 	{
 		$arOrder = array('', 'product_num');
 		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
-		//$shop =(isset($param['shop']))?$param['shop']:'';
-		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
-		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+		$sdate = (isset($param['sdate'])) ? $param['sdate'] : '';
 
 		if ($product_num) {
 			$this->db->like('tbl_sale.invoice_number', $product_num);
 		}
 
-		if ($start_date) {
-			$this->db->where('sale_date >=', $start_date);
+		if ($sdate) {
+			$this->db->where('sale_date ', $sdate);
 		}
-		if ($end_date) {
-			$this->db->where('sale_date <=', $end_date);
-		}
+		
 		$this->db->where("routsale_status",1);
 		$this->db->where("sale_status", 1);
 
@@ -47,17 +44,12 @@ class RSSale_model extends CI_Model
 	{
 		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
 		//$shop =(isset($param['shop']))?$param['shop']:'';
-		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
-		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+		$sdate = (isset($param['sdate'])) ? $param['sdate'] : '';
 		if ($product_num) {
 			$this->db->like('tbl_sale.invoice_number', $product_num);
 		}
-
-		if ($start_date) {
-			$this->db->where('sale_date >=', $start_date);
-		}
-		if ($end_date) {
-			$this->db->where('sale_date <=', $end_date);
+		if ($sdate) {
+			$this->db->where('sale_date ', $sdate);
 		}
 		$this->db->where("routsale_status",1);
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.discount_price as discount');
@@ -69,6 +61,56 @@ class RSSale_model extends CI_Model
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
+	###########################################################################################################################
+
+	public function getSaleReport1($param,$date)
+	{
+		$arOrder = array('', 'product_num');
+		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
+
+		if ($product_num) {
+			$this->db->like('tbl_sale.invoice_number', $product_num);
+		}
+		
+			$this->db->where('sale_date ', $date);
+		
+		$this->db->where("routsale_status",1);
+		$this->db->where("sale_status", 1);
+
+		if ($param['start'] != 'false' and $param['length'] != 'false') {
+			$this->db->limit($param['length'], $param['start']);
+		}
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.sale_discount as discount');
+		$this->db->from('tbl_sale');
+		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale.member_id_fk', 'left');
+		$this->db->group_by('invoice_number', 'DESC');
+		$query = $this->db->get();
+
+		$data['data'] = $query->result();
+		$data['recordsTotal'] = $this->getSaleReportTotalCount1($param,$date);
+		$data['recordsFiltered'] = $this->getSaleReportTotalCount1($param,$date);
+		//return $this->db->last_query();
+		return $data;
+	}
+	public function getSaleReportTotalCount1($param,$date)
+	{
+		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
+		if ($product_num) {
+			$this->db->like('tbl_sale.invoice_number', $product_num);
+		}
+		$this->db->where('sale_date ', $date);
+		$this->db->where("routsale_status",1);
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.discount_price as discount');
+		$this->db->from('tbl_sale');
+		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale.member_id_fk', 'left');
+		$this->db->where("sale_status", 1);
+		$this->db->group_by('invoice_number', 'DESC');
+
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	###################################################################################################
 
 	function getproductname()
 	{

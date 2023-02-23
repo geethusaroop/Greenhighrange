@@ -9,7 +9,6 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url();?>Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo base_url();?>RSSale/add"><i class="fa fa-dashboard"></i> Back to Add</a></li>
         <li class="active">Sale Details</li>
       </ol>
     </section>
@@ -24,7 +23,7 @@
 			<div class="row">
 			<div class="box">
 			<div class="row">
-				<div class="col-md-2"></div>
+      <div class="col-md-2"></div>
 					<div class="col-md-3">
 						<div class="input-group margin">
 							<div class="input-group-btn">
@@ -46,7 +45,6 @@
 					<div class="col-sm-2">
 							<div class="input-group">
 								<button type="button" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if(isset($values->mainhead_id))echo $values->mainhead_id;?>">Search</button>
-								<a href="<?php echo base_url();?>RSSale/add" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Add Sale</a>
 
 							</div>
 					</div>
