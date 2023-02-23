@@ -12,6 +12,7 @@ class Ledger extends MY_Controller {
 		$this->load->model('Ledger_model');
 		$this->load->model('General_model');
 		$this->load->model('Member_model');
+		$this->load->model('Vendor_voucher_model');
     }
 	public function index()
 	{
@@ -59,6 +60,66 @@ class Ledger extends MY_Controller {
 	    $this->load->view('template', $template);
 
 	}
+
+
+
+
+	public function report()
+	{
+		$template['body'] = 'Ledger/list-report';
+		$template['script'] = 'Ledger/script';
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$template['vendor_names'] = $this->Vendor_voucher_model->view_by($branch_id_fk);
+		$this->load->view('template', $template);
+	}
+
+	public function getledger_report()
+	{
+		$gid =0;
+		$vendor_id=$this->input->post('vendor_id_fk');
+		$cdate=$this->input->post('cdate');
+		$edate=$this->input->post('edate');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['vendor_names'] = $this->Vendor_voucher_model->view_by($branch_id_fk);
+		$template['body'] = 'Ledger/list-report';
+		$template['script'] = 'Ledger/script';
+		$template['gid']=$gid;
+	    $template['cdate']=$cdate;
+	    $template['edate']=$edate;
+	    $template['vendor']=$vendor_id;
+		$template['cbal']=$this->Ledger_model->opening_ledger($gid,$cdate,$vendor_id);
+		//var_dump($template['cbal']);
+		$template['cbal1']=$this->Ledger_model->opening_ledger1($gid,$cdate,$vendor_id);
+		$template['cbal2']=$this->Ledger_model->opening_ledger2($gid,$cdate,$vendor_id);
+		$template['purc1']=$this->Ledger_model->getpurchase_ledger($gid,$cdate,$edate,$vendor_id);
+		$template['purc2']=$this->Ledger_model->getpurchase_ledger_pay($gid,$cdate,$edate,$vendor_id);
+		$template['purchase_return1']=$this->Ledger_model->getpurchasereturn_pay($gid,$cdate,$edate,$vendor_id);
+		//var_dump($template['purc1']);die;
+	    $this->load->view('template', $template);
+
+	}
+
+	public function add_opening_balance()
+	{
+		$vendor_id=$this->input->post('vendor_id');
+		$cdate=$this->input->post('cdate_bal');
+		$closing_amt=$this->input->post('closing_amt');
+		$updateData = array('open_date'=>$cdate,
+		'opening_balance'=>$closing_amt,
+		);
+		$result = $this->General_model->update('tbl_vendor',$updateData,'vendor_id',$vendor_id);
+		$response_text = 'Opening Balance Added  successfully';
+		if($result){
+			$this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
+			}
+			else{
+			$this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
+			}
+		redirect('/Ledger/report/', 'refresh');
+	}
+
+
+
 	public function get_sum()
 	{$gid =$this->session->userdata('gid');
 		$data = $this->Ledger_model->get_sum($gid);

@@ -758,5 +758,17 @@ public function pupdate_daybook($date,$profit,$stat){
             $result=$query->result();
             return $result;
         }
+
+		public function getVendorVoucher($cdate)
+		{
+			$this->db->select('*,DATE_FORMAT(voucher_date,\'%d/%m/%Y\') AS vendor_voucher_date');
+			$this->db->from('tbl_vendor_voucher');
+			$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
+			$this->db->where("tbl_vendor_voucher.voucher_status",1);
+			$this->db->where("voucher_date",$cdate);
+			$query = $this->db->get();
+			$result=$query->result();
+			return $result;
+		}
 }
 ?>

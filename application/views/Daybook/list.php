@@ -111,6 +111,7 @@
               $test = 0;
               $sal = 0;
               $adv = 0;
+              $vvoucher=0;
               ?>
               <?php foreach ($payroll as $rows1) {if($rows1->salary!=0){ ?>
                 <tr>
@@ -153,6 +154,15 @@
                 </tr>
               <?php $test = $test + $rows->total_amount;
               }} ?>
+
+                <?php foreach($venodr_voucher as $row){if($row->voucher_amount!=0){ ?>
+                  <tr>
+                   <td style="border-color:#d4d6d5;"><?php echo $row->vendorname; ?></td>
+                   <td style="border-color:#d4d6d5;"><?php echo $row->voucher_group; ?></td>
+                 <td style="border-color:#d4d6d5;"></td>
+                  <td style="border-color:#d4d6d5;"><?php echo /*(int)*/$row->voucher_amount; ?></td>
+                </tr>
+              <?php $vvoucher=$vvoucher+$row->voucher_amount;}} ?>
               <!-------------------------------------------------------------------------------------------------------->
               <?php foreach ($voucher as $row) { ?>
                 <tr>
@@ -193,7 +203,7 @@
                 }
               }
               $credit = $treceipt + $obalance + $test;
-              $debit = $tvoucher + $obalance1 + $purchase + $feedpurchase + $sal + $adv;
+              $debit = $tvoucher + $obalance1 + $purchase + $feedpurchase + $sal + $adv+$vvoucher;
               //$credit_sum=
               // $credit_to=$obalance+$credit;
               //$outstanding=$credit_to-$debit;

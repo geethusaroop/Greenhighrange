@@ -128,6 +128,20 @@ write_file($save, $backup);  */
 		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 11";
 	//	$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 12";
 
+	/* $sql="CREATE TABLE IF NOT EXISTS `tbl_vendor_voucher` (
+		`voucher_id` int(11) NOT NULL AUTO_INCREMENT,
+		`project_id_fk` int(11) NOT NULL,
+		`vendor_id_fk` int(11) NOT NULL,
+		`finyear_id_fk` int(11) DEFAULT NULL,
+		`voucher_amount` float DEFAULT NULL,
+		`paid_to` varchar(255) DEFAULT NULL,
+		`voucher_date` date DEFAULT NULL,
+		`narration` varchar(255) DEFAULT NULL,
+		`voucher_status` int(11) NOT NULL,
+		`voucher_group` int(11) DEFAULT NULL,
+		PRIMARY KEY (`voucher_id`)
+	  ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 "; */
+
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;

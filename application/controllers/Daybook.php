@@ -32,6 +32,7 @@ class Daybook extends MY_Controller
 		$template['saleincome'] = $this->Daybook_model->getsaleincome($sdate);
 		$template['payroll'] = $this->Daybook_model->getpayroll($sdate);
 		$template['advance'] = $this->Daybook_model->getadvance($sdate);
+		$template['venodr_voucher'] = $this->Daybook_model->getVendorVoucher($sdate);
 		$template['sdate'] = $sdate;
 		$this->load->view('template', $template);
 	}
@@ -48,6 +49,7 @@ class Daybook extends MY_Controller
 		$template['voucher'] = $this->Daybook_model->getpvoucher($sdate);
 		$template['receipt'] = $this->Daybook_model->getpreceipt($sdate);
 		$template['purc'] = $this->Daybook_model->getpurchase($sdate);
+		$template['venodr_voucher'] = $this->Daybook_model->getVendorVoucher($sdate);
 		$template['saleincome'] = $this->Daybook_model->getsaleincome($sdate);
 		$template['payroll'] = $this->Daybook_model->getpayroll($sdate);
 		$template['advance'] = $this->Daybook_model->getadvance($sdate);
