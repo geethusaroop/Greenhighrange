@@ -832,4 +832,80 @@ class Purchaseitem extends MY_Controller {
 		// Output the generated PDF to Browser
 		$dompdf->stream("" . $auto_invoice . ".pdf");
 	}
+
+	public function purchase_return()
+	{
+		$template['body'] = 'Purchase_return/list';
+		$template['script'] = 'Purchase_return/script';
+		$prid= $this->session->userdata('prid');
+        $id = [
+            'vendorstatus' => 1
+        ];
+		$template['vendor_names'] = $this->General_model->getall('tbl_vendor',$id);
+		$this->load->view('template', $template);
+	}
+
+	public function getPurchaseReturn(){
+		// $prid =$this->session->userdata('prid');
+		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
+        $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10'; 
+        $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
+        $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
+        $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
+        $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$sDate = (isset($_REQUEST['startDate'])) ? $_REQUEST['startDate'] : '';
+		$eDate = (isset($_REQUEST['endDate'])) ? $_REQUEST['endDate'] : '';
+		if($sDate){
+            $start_date = str_replace('/', '-', $sDate);
+            $param['startDate'] =  date("Y-m-d",strtotime($start_date));
+        }
+       
+        if($eDate){
+            $end_date = str_replace('/', '-', $eDate);
+            $param['endDate'] =  date("Y-m-d",strtotime($end_date));
+		}	
+        $sessid = $this->session->userdata['id'];
+		
+		$data = $this->Purchase_model->getPurchaseReturnReport($param);
+		$json_data = json_encode($data);
+    	echo $json_data;
+    }
+
+	public function editedPurchaseRet($auto_invoice)
+	{
+		$template['body'] = 'Purchase_return/edit';
+		$template['script'] = 'Purchase_return/script2';
+		$id = ['vendorstatus' => 1];
+		$template['vendor_names'] = $this->General_model->getall('tbl_vendor',$id);
+		$template['records'] = $this->Purchase_model->getEditData($auto_invoice);
+		$this->load->view('template', $template);
+	}
+
+	public function editReturnPurchase2()
+	{
+		$purchase_return = $this->input->post('purchase_return');
+		$purchase_return_amt = $this->input->post('purchase_return_amt');
+		$purchase_return_date = $this->input->post('purchase_return_date');
+		$purchase_idss = $this->input->post('purchase_idss');
+		$product_id_fk = $this->input->post('product_id_fk');
+		$temp =count($purchase_idss);
+		for ($i = 0; $i < $temp; $i++) {
+			$data = array(
+				'purchase_return' => $purchase_return[$i],
+				'purchase_return_amt' => $purchase_return_amt[$i],
+				'purchase_return_date' => $purchase_return_date,
+			);
+			if(isset($purchase_idss[$i])){
+				$this->General_model->update('tbl_purchase', $data,'purchase_id',$purchase_idss[$i]);
+				$stok[$i] = $this->Purchase_model->get_stoks($product_id_fk[$i]);
+				$nwstk = $stok[$i][0]->product_stock - $purchase_return[$i];
+				$uData = array(
+					'product_stock' => $nwstk,
+				);
+				$result = $this->General_model->update('tbl_product', $uData, 'product_id', $product_id_fk[$i]);
+			}
+			
+		}
+		redirect('/Purchaseitem/purchase_return/', 'refresh');
+	}
 }

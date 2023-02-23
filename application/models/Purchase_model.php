@@ -702,5 +702,82 @@ class Purchase_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	public function getPurchaseReturnReport($param){
+        $arOrder = array('','invoice_number','shop');
+        $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
+        $startDate =(isset($param['startDate']))?$param['startDate']:'';
+        $endDate =(isset($param['endDate']))?$param['endDate']:'';
+        if($invoice_number){
+            $this->db->like('invoice_number', $invoice_number); 
+        }
+        if($startDate){
+            $this->db->where('purchase_return_date >=', $startDate); 
+        }
+        if($endDate){
+            $this->db->where('purchase_return_date <=', $endDate); 
+        }
+		$this->db->where("purchase_status",1);
+		
+        if ($param['start'] != 'false' and $param['length'] != 'false') {
+            $this->db->limit($param['length'],$param['start']);
+        }
+		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date');
+		$this->db->from('tbl_purchase');
+		$this->db->join('tbl_product','product_id = product_id_fk','left');
+		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
+        $this->db->group_by('invoice_number', 'DESC');
+		$this->db->order_by('purchase_return_date','DESC');
+        $query = $this->db->get();
+        
+		$data['data'] = $query->result();
+        $data['recordsTotal'] = $this->getPurchaseReportReturnTotalCount($param);
+        $data['recordsFiltered'] = $this->getPurchaseReportReturnTotalCount($param);
+        return $data;
+	}
+	public function getPurchaseReportReturnTotalCount($param){
+        $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
+        $startDate =(isset($param['startDate']))?$param['startDate']:'';
+        $endDate =(isset($param['endDate']))?$param['endDate']:'';
+		if($invoice_number){
+            $this->db->like('invoice_number', $invoice_number); 
+        }
+        if($startDate){
+            $this->db->where('purchase_return_date >=', $startDate); 
+        }
+        if($endDate){
+            $this->db->where('purchase_return_date <=', $endDate); 
+        }
+		$this->db->where("purchase_status",1);
+		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date,');
+		$this->db->from('tbl_purchase');
+		$this->db->join('tbl_product','product_id = product_id_fk','left');
+		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
+		$this->db->order_by('purchase_return_date', 'DESC');
+        $this->db->group_by('invoice_number', 'DESC');
+        $query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function getEditData($auto_invoice)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_purchase');
+        $this->db->join('tbl_product','tbl_product.product_id = tbl_purchase.product_id_fk','left');
+        $this->db->join('tbl_vendor','tbl_vendor.vendor_id = tbl_purchase.vendor_id_fk','left');
+		$this->db->where('purchase_status', 1);
+        $this->db->where('auto_invoice', $auto_invoice);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_stoks($prid)
+	{
+		$this->db->select('product_stock');
+		$this->db->from('tbl_product');
+		$this->db->where('product_id',$prid);
+		$query = $this->db->get();
+		return $query->result();
+	}
 }
 ?>

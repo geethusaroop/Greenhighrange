@@ -160,6 +160,9 @@
 
            <li class="<?php if ($this->uri->segment(1) == "StockStatus") {echo "active";} ?>"><a href="<?php echo base_url(); ?>StockStatus"><i class="fa fa-circle-o"></i><span>Stock Status</span></a></li>
 
+           <li class="<?php if ($this->uri->segment(1) == "StockStatus") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem/purchase_return"><i class="fa fa-circle-o"></i><span>Purchase Return</span></a></li>
+
+           <li class="<?php if ($this->uri->segment(1) == "StockStatus") {echo "active";} ?>"><a href="<?php echo base_url(); ?>StockStatus"><i class="fa fa-circle-o"></i><span>Sale Return</span></a></li>
           </ul>
        </li>
        <li class="divider"></li> 
