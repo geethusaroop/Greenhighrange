@@ -86,14 +86,21 @@ $(function () {
 
       if(data['punit_proceed_status']==0)
       {
-        $('td', row).eq(8).html('NOT PROCESSED');
+        $('td', row).eq(8).html('NOT_PROCESSED');
         $('td', row).eq(8).css( "font-weight", "bold" );
         $('td', row).eq(8).css( "color", "orange" );
       }
 
       else if(data['punit_proceed_status']==1)
       {
-        $('td', row).eq(8).html('PROCESSED');
+        $('td', row).eq(8).html('ACTIVE');
+        $('td', row).eq(8).css( "font-weight", "bold" );
+        $('td', row).eq(8).css( "color", "green" );
+      }
+
+      else if(data['punit_proceed_status']==1)
+      {
+        $('td', row).eq(8).html('COMPLETED');
         $('td', row).eq(8).css( "font-weight", "bold" );
         $('td', row).eq(8).css( "color", "green" );
       }

@@ -195,48 +195,47 @@ $(document).on('change','#product_hsn',function(){
         var cell5 = row.insertCell(4);
         var element5 = document.createElement("input");
         element5.type = "text";
-        element5.name = "prod_batch[]";
-        element5.setAttribute("size", "16");
+        element5.name = "product_stock[]";
+        element5.setAttribute("size", "6");
         element5.setAttribute("class", "democlass");
-        element5.required = "required";
-        element5.id = "product_batch" + rowCount;
+        element5.id = "pquantity_" + rowCount;
+        //  element5.required = "required";
         cell5.appendChild(element5);
         var cell6 = row.insertCell(5);
-        var element6 = document.createElement("input");
-        element6.type = "text";
-        element6.name = "product_stock[]";
-        element6.setAttribute("size", "6");
+        var element6 = document.createElement("select");
+        element6.type = "select";
+        element6.name = "product_unit[]";
+        element6.id = "p_unit" + rowCount;
         element6.setAttribute("class", "democlass");
-        element6.id = "pquantity_" + rowCount;
-        //  element5.required = "required";
-        cell6.appendChild(element6);
-        var cell7 = row.insertCell(6);
-        var element7 = document.createElement("select");
-        element7.type = "select";
-        element7.name = "product_unit[]";
-        element7.id = "p_unit" + rowCount;
-        element7.setAttribute("class", "democlass");
         // element3.required = "required";
         for (var i = 0; i < listUnits.length; i += 1) {
             var option = document.createElement('option');
             option.setAttribute('value', listUnits[i].value);
             option.appendChild(document.createTextNode(listUnits[i].text));
-            element7.appendChild(option);
+            element6.appendChild(option);
         }
+        cell6.appendChild(element6);
+        var cell7 = row.insertCell(6);
+        var element7 = document.createElement("input");
+        element7.type = "text";
+        element7.name = "product_price_r1[]";
+        element7.setAttribute("size", "6");
+        element7.setAttribute("class", "democlass");
+        element7.id = "product_price_r1_1" + rowCount;
         cell7.appendChild(element7);
+
         var cell8 = row.insertCell(7);
         var element8 = document.createElement("input");
         element8.type = "text";
-        element8.name = "product_price_r1[]";
+        element8.name = "product_price_r2[]";
         element8.setAttribute("size", "6");
         element8.setAttribute("class", "democlass");
-        element8.id = "product_price_r1_1" + rowCount;
         cell8.appendChild(element8);
 
         var cell9 = row.insertCell(8);
         var element9 = document.createElement("input");
         element9.type = "text";
-        element9.name = "product_price_r2[]";
+        element9.name = "product_price_r3[]";
         element9.setAttribute("size", "6");
         element9.setAttribute("class", "democlass");
         cell9.appendChild(element9);
@@ -244,18 +243,10 @@ $(document).on('change','#product_hsn',function(){
         var cell10 = row.insertCell(9);
         var element10 = document.createElement("input");
         element10.type = "text";
-        element10.name = "product_price_r3[]";
+        element10.name = "product_des[]";
         element10.setAttribute("size", "6");
         element10.setAttribute("class", "democlass");
         cell10.appendChild(element10);
-
-        var cell11 = row.insertCell(10);
-        var element11 = document.createElement("input");
-        element11.type = "text";
-        element11.name = "product_des[]";
-        element11.setAttribute("size", "6");
-        element11.setAttribute("class", "democlass");
-        cell11.appendChild(element11);
 
        
         $('#product_num'+rowCount).select2();

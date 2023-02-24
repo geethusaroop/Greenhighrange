@@ -56,6 +56,22 @@ class General_model extends CI_Model{
         }
         return false;
     }
+
+    public function get_row_production($product_id,$branch_id_fk,$punit_id)
+    {
+       
+        $this->db->select('*');
+		$this->db->from('tbl_production_stock_history');
+      //  $this->db->join('tbl_production_unit','punit_id=pstock_punit_id_fk');
+        $this->db->join('tbl_product','product_id=pstock_product_id_fk');
+        $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
+		//$this->db->where('product_id',$product_id);
+        $this->db->where('pstock_punit_id_fk',$punit_id);
+		$this->db->where('branch_id_fk',$branch_id_fk);
+		$this->db->where("product_status",1);
+        $q = $this->db->get();
+        return $q->result();
+    }
 	
 
     public function get_row_ptransfer($punit_id)

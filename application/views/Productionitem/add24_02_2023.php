@@ -140,57 +140,6 @@ h4:after {
       </div>
 
               </div>
-
-                 <!--------------------------------------------------------------------------------->
-
-
-                 <div class="row">
-                <div class="col-lg-12">
-                      <div class="panel panel-danger" style="box-shadow: 2px 2px 2px 2px black;">
-                                    <div class="panel-heading">
-                                      <h3 class="panel-title"><b>Added Stock</b></h3>
-                                    </div>
-                                    <div class="panel-body" style="font-weight:bold;">
-
-                                  <div class="table-responsive">
-                                  <table  class="table table-striped table-bordered tc-table footable" style="border:1px solid #ccc;color:black;">
-                                    <thead>
-                                      <tr style="color: black;text-transform: uppercase;">
-                                        <th style="border:1px solid #ccc;" width="25" class="col-small center ">SlNo</th>
-                                        <th style="border:1px solid #ccc;" width="45">Product_Name</th>
-                                        <th style="border:1px solid #ccc;" width="45">Product_Code</th>
-                                        <th style="border:1px solid #ccc;" width="45">Product_Batch</th>
-                                        <th style="border:1px solid #ccc;" width="72">Qty(Total_Item_Produced)</th>
-                                        <th style="border:1px solid #ccc;" width="72">Unit</th>
-                                        <th style="border:1px solid #ccc;" width="72">SRate(R1)</th>
-                                        <th style="border:1px solid #ccc;" width="69">SRate(R2)</th>
-                                        <th style="border:1px solid #ccc;" width="46">SRate(R3)</th>
-                                        <th style="border:1px solid #ccc;" width="250">Description</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody  style="background: #ffff;">
-                                    <?php $i=0;foreach($record as $row){$i=$i+1; ?>
-                                      <TR style="border:1px solid #ccc;background: #ffff;">
-                                        <TD style="color:black;"> 1 </TD>
-                                        <TD> <?php echo $row->product_name; ?> </TD>
-                                          <TD> <?php echo $row->product_code; ?> </TD>
-                                          <TD>  <?php echo $row->product_batch_no; ?> </TD>
-                                          <TD> <?php echo $row->pstock_total; ?> </TD>
-                                          <TD><?php echo $row->unit_name; ?></TD>
-                                          <TD> <?php echo $row->pstock_r1; ?></TD>
-                                          <TD> <?php echo $row->pstock_r2; ?> </TD>
-                                          <TD> <?php echo $row->pstock_r3; ?> </TD>
-                                          <TD> <?php echo $row->product_des; ?> </TD>
-                                        </TR>
-                                        <?php } ?>
-                                      </table>
-                                      </div>
-                                      <br>
-                                    
-                                  </div>
-                        </div>
-                </div>
-              </div>
               <!--------------------------------------------------------------------------------->
 
 
@@ -221,7 +170,6 @@ h4:after {
                                         <th style="border:1px solid #ccc;" width="25" class="col-small center ">SlNo</th>
                                         <th style="border:1px solid #ccc;" width="45">Product_Name</th>
                                         <th style="border:1px solid #ccc;" width="45">Product_Code</th>
-                                        <th style="border:1px solid #ccc;" width="45">Product_Batch</th>
                                         <th style="border:1px solid #ccc;" width="72">Qty(Total_Item_Produced)</th>
                                         <th style="border:1px solid #ccc;" width="72">Unit</th>
                                         <th style="border:1px solid #ccc;" width="72">SRate(R1)</th>
@@ -244,7 +192,6 @@ h4:after {
                                           }
                                           ?>          </select> </TD>
                                           <TD> <INPUT type="text" class="form-control"  name="prod_code[]" id="product_code1" style="width:100px;"/> </TD>
-                                          <TD> <INPUT type="text" class="form-control"  name="prod_batch[]" id="product_batch1" style="width:100px;"/> </TD>
                                           <TD> <INPUT type="text" class="form-control"  name="product_stock[]" id="pquantity_1" style="width:180px;" required/> </TD>
                                           <TD><select name="product_unit[]" class="form-control" id="p_unit1" style="width:120px;" placeholder="Unit">
                                             <option value="">--SELECT--</option>
@@ -259,21 +206,17 @@ h4:after {
                                         </TR>
                                       </table>
                                       </div>
-                                      <br>
-                                      <div class="row">
-                                        <div class="col-md-4">
-                                          <label for="">STOCK TRANSFER STATUS</label>
-                                          <select class="form-control" name="punit_proceed_status" id="punit_proceed_status">
-                                          <option  value="">SELECT</option>
-                                            <option <?php if(isset($records->punit_proceed_status)){if($records->punit_proceed_status==1){echo "selected";}} ?> value="1">ACTIVE</option>
-                                            <option <?php if(isset($records->punit_proceed_status)){if($records->punit_proceed_status==2){echo "selected";}} ?> value="2">COMPLETED</option>
-                                          </select>
-                                        </div>
-                                      </div>
+                                    </table>
+
+                              
                                   </div>
                         </div>
                 </div>
+
               </div>
+
+
+
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

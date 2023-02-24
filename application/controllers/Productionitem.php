@@ -43,6 +43,8 @@ class Productionitem extends MY_Controller
 		$template['product_names'] = $this->Item_model->view_by1($branch_id_fk);
 		$template['unit'] = $this->Productionitem_model->get_unit();
 		$template['records'] = $this->General_model->get_row_ptransfer($punit_id);
+		$template['record'] = $this->General_model->get_row_production($product_id,$branch_id_fk,$punit_id);
+		//var_dump($template['record']);die;
 		//$template['record'] = $this->General_model->get_row($this->table, 'product_id', $product_id);
 		$this->load->view('template', $template);
 	}
@@ -85,7 +87,7 @@ class Productionitem extends MY_Controller
 				'punit_waste' => strtoupper($this->input->post('punit_waste')),
 				'punit_waste_unit' => strtoupper($this->input->post('punit_waste_unit')),
 				'punit_process_date' => strtoupper($this->input->post('pstock_date')),
-				'punit_proceed_status'=>1
+				'punit_proceed_status'=>$this->input->post('punit_proceed_status'),
 			);
 			//var_dump($data1);
 			for($i=0;$i<$temp;$i++){
