@@ -23,7 +23,7 @@ class Branch_transfer_model extends CI_Model{
 		$this->db->from('tbl_branch_transfer');
         $this->db->join('tbl_branch','branch_id=bt_branch_id_fk','left');
         $this->db->join('tbl_product','product_id=bt_product_id_fk','left');
-		$this->db->order_by('bt_id', 'DESC');
+		$this->db->order_by('bt_date', 'ASCE');
         $query = $this->db->get();
         $data['data'] = $query->result();
         $data['recordsTotal'] = $this->getClassinfoTotalCount($param);
@@ -44,9 +44,20 @@ class Branch_transfer_model extends CI_Model{
         $this->db->join('tbl_branch','branch_id=bt_branch_id_fk','left');
         $this->db->join('tbl_product','product_id=bt_product_id_fk','left');
         $this->db->where("bt_status",1);
-		$this->db->order_by('bt_id', 'DESC');
+		$this->db->order_by('bt_date', 'ASCE');
         $query = $this->db->get();
     	return $query->num_rows();
+    }
+
+	public function getbstock($pr_id,$branch_id_fk)
+	{
+		$this->db->select('bproduct_id_fk');
+		$this->db->from('tbl_product');
+		$this->db->where('bproduct_id_fk',$pr_id);
+		$this->db->where('branch_id_fk',$branch_id_fk);
+		$this->db->where("product_status",1);
+	    $query = $this->db->get();
+		return $query->result();
     }
 	// public function view_by()
 	// {

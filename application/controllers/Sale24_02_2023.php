@@ -49,7 +49,6 @@ class Sale extends MY_Controller {
 			/*-------------Dynamic Contents-------------*/
 			$temp =count($this->input->post('product_id_fk'));
 			$product_id_fk = $this->input->post('product_id_fk');
-			$product_branch_id_fk = $this->input->post('prod_branch_id');
 			$hsn = $this->input->post('hsn');
 			$sale_quantity = $this->input->post('sale_quantity');
 			$sale_price = $this->input->post('rate');
@@ -153,16 +152,16 @@ class Sale extends MY_Controller {
 							);
 				
 				$this->General_model->add($this->table,$data);
-				$branches_id = $this->session->userdata('branch_id_fk');
-				$stok=$this->Purchase_model->get_current_productstock($product_branch_id_fk[$i],$branches_id);
+
+				$stok=$this->Purchase_model->get_current_productstock($product_id_fk[$i]);
             	$nwstk = $stok - $sale_quantity[$i];
 				$uData = array(
 								'product_stock' =>$nwstk,
 								'product_updated_date' =>date('Y-m-d'),
 								);
 								
-				// $result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
-				$result = $this->General_model->updat($this->tbl_stock,$uData,'product_id',$product_branch_id_fk[$i],'branch_id_fk',$branches_id);
+				$result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
+				
 				$mdata=array('member_sale_balance'=> $this->input->post('total_amt'));
 				$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
 				
@@ -397,18 +396,15 @@ class Sale extends MY_Controller {
 	public function getProductDetails1()
 	{
 		$prod1 = [];
-		$branches_id = $this->session->userdata('branch_id_fk');
 		$p_name = $this->input->post('p_name');
 		$data['product_name1'] =  $this->Sale_model->get_row_barcode($p_name);
-		$data['product_name2'] =  $this->Sale_model->get_row_barcode_branch($p_name,$branches_id);
 		$prod1['hsncode'] = $data['product_name1']->product_hsncode;
 		$prod1['igst'] = $data['product_name1']->hsn_igst;
 		$prod1['cgst'] = $data['product_name1']->hsn_cgst;
 		$prod1['sgst'] = $data['product_name1']->hsn_sgst;
 		$prod1['prod_cod'] = $data['product_name1']->product_code;
 		$prod1['prod_id'] = $data['product_name1']->product_id;
-		$prod1['prod_id_branch'] = $data['product_name2']->product_id;
-		$prod1['stock'] = $data['product_name2']->product_stock;
+		$prod1['stock'] = $data['product_name1']->product_stock;
 		echo json_encode($prod1);
 	}
 

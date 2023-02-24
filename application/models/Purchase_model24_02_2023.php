@@ -405,8 +405,8 @@ class Purchase_model extends CI_Model{
 		return $query->num_rows()>0 ? true : false;
 	}
 
-	public function get_current_productstock($item_id,$branches_id){
-		$query=$this->db->select('product_stock')->where('product_id',$item_id)->where('branch_id_fk',$branches_id)->get('tbl_product');
+	public function get_current_productstock($item_id){
+		$query=$this->db->select('product_stock')->where('product_id',$item_id)->get('tbl_product');
 		return $query->num_rows()>0 ? $query->row()->product_stock : 0;
 	}
 

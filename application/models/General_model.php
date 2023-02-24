@@ -40,6 +40,24 @@ class General_model extends CI_Model{
         }
         return false;
     }
+
+    public function get_row_bstock($pr_id,$branch_id_fk)
+    {
+       
+        $this->db->select('*');
+		$this->db->from('tbl_product');
+		$this->db->where('bproduct_id_fk',$pr_id);
+		$this->db->where('branch_id_fk',$branch_id_fk);
+		$this->db->where("product_status",1);
+        $q = $this->db->get();
+        if($q->num_rows() > 0)
+        {
+            return $q->row();
+        }
+        return false;
+    }
+	
+
     public function get_row_ptransfer($punit_id)
     {
        

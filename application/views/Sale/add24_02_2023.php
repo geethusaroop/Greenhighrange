@@ -221,7 +221,6 @@
                         <TD> <INPUT type="hidden" class="form-control" id="sgst1" name="sgst[]"  style="width:80px;"/> </TD>
                         <TD> <INPUT type="hidden" class="form-control" id="sgstamt1" name="sgstamt[]"/> </TD>
                         <TD> <INPUT type="hidden" class="form-control" id="product_num1" name="product_id_fk[]" style="width: 30px;" /> </TD>
-                        <TD><INPUT type="hidden" class="form-control" id="prod_branch_id1" name="prod_branch_id[]" style="width: 30px;" /> </TD>
                       </TR>
                   </table>
                   </div>

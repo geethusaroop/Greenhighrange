@@ -1140,17 +1140,6 @@ $(document).on("change",'#customer_nam',function(){
       //  element17.required = "required";
         cell19.appendChild(element19);
 
-        var cell20 = row.insertCell(19);
-        var element20 = document.createElement("input");
-        element20.type = "hidden";
-        element20.name = "prod_branch_id[]";
-        element20.id = "prod_branch_id"+rowCount;
-        element20.setAttribute("size", "6");
-   // element18.setAttribute("class", "democlass");
-      //  element17.required = "required";
-        cell20.appendChild(element20);
-
-
         var options = {
         // url: "<?php echo base_url() ?>Sale/getproduct_names",
         url: function(phrase) {
@@ -1191,9 +1180,6 @@ $(document).on("change",'#customer_nam',function(){
 
                           $('#sgst'+row).html(d.igst);
                           $('#sgst'+row).val(d.igst);
-
-                          $('#prod_branch_id'+row).html(d.prod_id_branch);
-                          $('#prod_branch_id'+row).val(d.prod_id_branch);
                           
                           $('#quant').html(d.stock);
                           $('#myDiv').show();
@@ -1209,7 +1195,7 @@ $(document).on("change",'#customer_nam',function(){
                       type: 'POST',
                       url: '<?php echo base_url() . 'index.php/Sale/getProductDetails2'; ?>',
                       data: {
-                        product_num: $("#prod_branch_id_"+row).val(),rate_type: $("#rate_type"+row).val()
+                        product_num: $("#product_num"+row).val(),rate_type: $("#rate_type"+row).val()
                       },
                       success: function(data) {
                           d = JSON.parse(data);
@@ -1426,7 +1412,7 @@ function getcustomer()
 
     $('#member_types_all').on('change',function(){
       $('#custname').empty();
-      $('#sale_old_balance').val(0);
+    
         var mem_id = this.value;
         //alert(mem_id);
         $.ajax({
@@ -1447,7 +1433,6 @@ function getcustomer()
     })
 
     $('#custname').on('change',function(){
-      
         var mem_id = this.value;
         $.ajax({
                 url: "<?php echo base_url(); ?>Sale/get_old_bal",
@@ -1504,9 +1489,6 @@ function getcustomer()
 
                           $('#sgst'+row).html(d.igst);
                           $('#sgst'+row).val(d.igst);
-
-                          $('#prod_branch_id'+row).html(d.prod_id_branch);
-                          $('#prod_branch_id'+row).val(d.prod_id_branch);
                           
                           $('#quant').html(d.stock);
                           $('#myDiv').show();

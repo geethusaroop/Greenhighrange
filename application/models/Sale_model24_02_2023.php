@@ -537,6 +537,7 @@ class Sale_model extends CI_Model
 	}
 
 	public function get_row_barcode($p_name)
+
 	{
 
 		$this->db->select('*');
@@ -552,24 +553,6 @@ class Sale_model extends CI_Model
 		}
 
 		return false;
-	}
-
-	public function get_row_barcode_branch($p_name,$branches_id)
-	{
-		$this->db->select('*');
-		$this->db->from('tbl_product');
-		$this->db->join('tbl_hsncode', 'hsncode=product_hsncode', 'left');
-		$this->db->where('product_status', 1);
-		$this->db->where('product_name', $p_name);
-		$this->db->where('branch_id_fk', $branches_id);
-		$q = $this->db->get();
-
-		if ($q->num_rows() > 0) {
-
-			return $q->row();
-		}
-
-		return 0;
 	}
 	public function get_row_barcode1($pid)
 

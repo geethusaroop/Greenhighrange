@@ -28,7 +28,8 @@ class Branch_transfer extends MY_Controller {
 			$template['script'] = 'Branch_transfer/script';
 			$this->load->view('template', $template);
 		}
-		        else {
+		else 
+        {
 			
 			            $data = array(
 						'bt_branch_id_fk' => $this->input->post('branch_name'),
@@ -38,38 +39,34 @@ class Branch_transfer extends MY_Controller {
 						'bt_status' => 1,
 						);
 
-                      /*       $datas = array(
-                                'branch_id_fk' => $this->input->post('branch_name'),
-                                'product_code' => strtoupper($this->input->post('prod_code')),
-                                'product_name' => $this->input->post('product_name'),
-                                'product_unit' => $this->input->post('product_unit'),
-                                'product_hsn' => strtoupper($this->input->post('product_hsn')),
-                                'product_hsncode' => strtoupper($this->input->post('product_hsncode')),
-                                'product_stock' => $this->input->post('stck_amt'),
-                                'product_des' => $this->input->post('product_des'),
-                                'product_created_date' => date('Y-m-d'),
-                                'product_status' => 1,
-                                'product_category' => $this->input->post('product_category'),
-                                'product_unit_type' => $this->input->post('product_unit_type'),
-                            ); */
-
-			$bt_id = $this->input->post('branch_id');
-            $bt_stk = $this->input->post('stck_amt');
-            $pr_id = $this->input->post('prod_name');
+                    $bt_id = $this->input->post('branch_id');
+                    $bt_stk = $this->input->post('stck_amt');
+                    $pr_id = $this->input->post('prod_name');
 				if($bt_id){
                      $data['bt_id'] = $bt_id;
                      $result = $this->General_model->update($this->table,$data,'bt_id',$bt_id);
-                  //   $result1 = $this->General_model->update('tbl_branch_transfer_history',$data2,'bt_id',$bt_id);
-
-                  //   $result = $this->General_model->update($this->table,$data,'bt_id',$bt_id);
                      $response_text = 'Branch_transfer updated successfully';
                 }
 				else{
                      $result = $this->General_model->add($this->table,$data);
                      $lastid=$this->db->insert_id();
-                    
+                     $branch_id_fk=$this->input->post('branch_name');
+                     $bresult = $this->Branch_transfer_model->getbstock($pr_id,$branch_id_fk);
+                 //  var_dump($bresult);die;
+                    if($bresult)
+                    {
+                        $bstok = $this->General_model->get_row_bstock($pr_id,$branch_id_fk);
+                        $updated_bstk = intval($bstok->product_stock) + intval($bt_stk);
+                        $bstok_array = ['product_stock' => $updated_bstk];
+                        $result = $this->General_model->updat('tbl_product',$bstok_array,'bproduct_id_fk',$pr_id,'branch_id_fk',$branch_id_fk);
+                       // var_dump($result);die;
+                        $response_text = 'Branch_transfer added  successfully';
+                    }
+                    else
+                    {
                     //add product-branch stock
                         $datas = array(
+                            'bproduct_id_fk' => $this->input->post('prod_name'),
                             'branch_id_fk' => $this->input->post('branch_name'),
                             'product_code' => strtoupper($this->input->post('prod_code')),
                             'product_name' => $this->input->post('product_name'),
@@ -87,13 +84,14 @@ class Branch_transfer extends MY_Controller {
                             'product_price_r3' => $this->input->post('product_price_r3'),
 
                         );
-                    $result2 = $this->General_model->add('tbl_product',$datas);
+                     $result2 = $this->General_model->add('tbl_product',$datas);
                      $response_text = 'Branch_transfer added  successfully';
+                    }
                 }
                 if($bt_stk){
                     if($bt_stk > 0){
-                        $datas = $this->General_model->get_row('tbl_product','product_id',$pr_id);
-                        $updated_stk = intval($datas->product_stock) - intval($bt_stk);
+                        $datass = $this->General_model->get_row('tbl_product','product_id',$pr_id);
+                        $updated_stk = intval($datass->product_stock) - intval($bt_stk);
                         $stk_array = ['product_stock' => $updated_stk];
                         $result = $this->General_model->update('tbl_product',$stk_array,'product_id',$pr_id);
                     }

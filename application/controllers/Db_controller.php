@@ -141,6 +141,7 @@ write_file($save, $backup);  */
 		`voucher_group` int(11) DEFAULT NULL,
 		PRIMARY KEY (`voucher_id`)
 	  ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 "; */
+	  $sql="ALTER TABLE `tbl_product` ADD `bproduct_id_fk` INT NOT NULL AFTER `branch_id_fk`";
 
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);
