@@ -113,6 +113,8 @@
               $adv = 0;
               $vvoucher=0;
               $bankdep=0;
+              $sfund=0;
+              $tfund=0;
               ?>
               <?php foreach ($payroll as $rows1) {if($rows1->salary!=0){ ?>
                 <tr>
@@ -156,7 +158,7 @@
               <?php $test = $test + $rows->total_amount;
               }} ?>
 
-            <?php foreach ($bdeposit as $rows) { ?>
+            <?php foreach ($bdeposit as $rows) {if($rows->bd_amount!=0){ ?>
                 <tr>
 
                   <td style="border-color:#d4d6d5;"><?php if($rows->bd_member_id_fk!=0){echo "Bank Deposit From Members -".$rows->member_name;}else{echo $rows->bd_remark;} ?></td>
@@ -165,7 +167,29 @@
                   <td style="border-color:#d4d6d5;"></td>
                 </tr>
               <?php $bankdep = $bankdep + $rows->bd_amount;
-              } ?>
+              }} ?>
+
+              <?php foreach ($share_deposit as $rows) {if($rows->member_share_no_shares!=0){ ?>
+                <tr>
+
+                  <td style="border-color:#d4d6d5;"><?php echo "Share Holder Fund"; ?></td>
+                    <td style="border-color:#d4d6d5;"></td>
+                  <td style="border-color:#d4d6d5;"><?php echo $rows->member_share_no_shares; ?></td>
+                  <td style="border-color:#d4d6d5;"></td>
+                </tr>
+              <?php $sfund = $sfund + $rows->member_share_no_shares;
+              }} ?>
+
+              <?php foreach ($fund as $rows) {if($rows->fund_amount!=0){ ?>
+                <tr>
+
+                  <td style="border-color:#d4d6d5;"><?php $rows->ftype_name; ?></td>
+                    <td style="border-color:#d4d6d5;"></td>
+                  <td style="border-color:#d4d6d5;"><?php echo $rows->fund_amount; ?></td>
+                  <td style="border-color:#d4d6d5;"></td>
+                </tr>
+              <?php $tfund = $tfund + $rows->fund_amount;
+              }} ?>
 
                 <?php foreach($venodr_voucher as $row){if($row->voucher_amount!=0){ ?>
                   <tr>
@@ -214,7 +238,7 @@
                   $obalance1 = 0;
                 }
               }
-              $credit = $treceipt + $obalance + $test+$bankdep;
+              $credit = $treceipt + $obalance + $test+$bankdep+$sfund+$tfund;
               $debit = $tvoucher + $obalance1 + $purchase + $feedpurchase + $sal + $adv+$vvoucher;
               //$credit_sum=
               // $credit_to=$obalance+$credit;

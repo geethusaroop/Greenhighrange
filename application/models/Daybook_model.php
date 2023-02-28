@@ -784,5 +784,29 @@ public function pupdate_daybook($date,$profit,$stat){
 			$result=$query->result();
 			return $result;
 		}
+
+		
+		public function getsharedeposit($cdate)
+		{
+			$this->db->select('*,DATE_FORMAT(m_created_at,\'%d/%m/%Y\') AS m_created_at,sum(member_share_no_shares) as member_share_no_shares');
+			$this->db->from('tbl_member');
+			$this->db->where("m_created_at",$cdate);
+			$this->db->where("member_status",1);
+			$query = $this->db->get();
+			$result=$query->result();
+			return $result;
+		}
+
+		public function getfund($cdate)
+		{
+			$this->db->select('*,DATE_FORMAT(fund_date,\'%d/%m/%Y\') AS fund_date');
+			$this->db->from('tbl_fund');
+			$this->db->where("fund_date",$cdate);
+			$this->db->join('tbl_fund_type','tbl_fund_type.ftype_id=tbl_fund.ftype_id_fk');
+			$this->db->where("fund_status",1);
+			$query = $this->db->get();
+			$result=$query->result();
+			return $result;
+		}
 }
 ?>

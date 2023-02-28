@@ -259,7 +259,11 @@
        <li class="<?php if ($this->uri->segment(1) == "BStock" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BStock"><i class="fa fa-crop"></i><span>Branch Stock Status</span></a></li>
 
        <li class="<?php if ($this->uri->segment(1) == "BSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BSale"><i class="fa fa-crop"></i><span>Branch Sale Details</span></a></li>
-
+       
+       <li class="divider"></li> 
+      
+       <li class="<?php if ($this->uri->segment(1) == "MBTSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>MBTSale"><span style="font-weight:bold;">MASTER TO BRANCH SALE</span>  </a></li>
+      
        <li class="divider"></li> 
 
    

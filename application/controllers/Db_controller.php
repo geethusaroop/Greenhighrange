@@ -112,18 +112,46 @@ write_file($save, $backup);  */
 		force_download($db_name, $backup);
 	}
 	public function run_sql(){
-		$sql="CREATE TABLE IF NOT EXISTS `tbl_bank_deposit` (
-			`bd_id` int(11) NOT NULL AUTO_INCREMENT,
-			`bd_bank_id_fk` int(11) NOT NULL,
-			`bd_type` int(11) NOT NULL COMMENT '1=member_deposit,2=others',
-			`bd_member_id_fk` int(11) NOT NULL,
-			`bd_amount` int(11) NOT NULL,
-			`bd_date` date NOT NULL,
-			`bd_status` int(11) NOT NULL,
-			`bd_remark` varchar(100) NOT NULL,
-			PRIMARY KEY (`bd_id`)
-		  ) ENGINE=MyISAM DEFAULT CHARSET=latin1";
+	//	$sql="ALTER TABLE `tbl_purchase` ADD `purchase_branch_id_fk` INT NOT NULL AFTER `purchase_id`";
 
+		$sql="CREATE TABLE IF NOT EXISTS `tbl_master_branch_sale` (
+			`sale_id` int(11) NOT NULL AUTO_INCREMENT,
+			`sale_branch_id_fk` int(11) NOT NULL,
+			`finyear` varchar(11) DEFAULT NULL,
+			`invoice_number` varchar(50) DEFAULT NULL,
+			`auto_invoice` varchar(255) DEFAULT NULL,
+			`sale_mop` varchar(50) DEFAULT NULL,
+			`sale_taxmode` varchar(50) DEFAULT NULL,
+			`sale_hsn` int(11) DEFAULT NULL,
+			`sale_quantity` bigint(20) DEFAULT NULL,
+			`sale_price` float DEFAULT NULL,
+			`discount_price` float DEFAULT NULL,
+			`total_price` float DEFAULT NULL,
+			`taxamount` float DEFAULT NULL,
+			`sale_cgst` float DEFAULT NULL,
+			`sale_cgstamt` float DEFAULT NULL,
+			`sale_sgst` float DEFAULT NULL,
+			`sale_sgstamt` float DEFAULT NULL,
+			`sale_igst` float DEFAULT NULL,
+			`sale_igstamt` float DEFAULT NULL,
+			`sale_netamt` float DEFAULT NULL,
+			`sale_date` date DEFAULT NULL,
+			`sale_staff` int(11) DEFAULT NULL,
+			`return_qty` int(11) DEFAULT NULL,
+			`return_price` int(11) DEFAULT NULL,
+			`return_date` date DEFAULT NULL,
+			`computer_id` varchar(50) DEFAULT NULL,
+			`tax_id_fk` int(11) DEFAULT NULL,
+			`sale_status` int(11) DEFAULT NULL,
+			`sale_shareholder_discount` float NOT NULL,
+			`sale_discount` float NOT NULL,
+			`sale_old_balance` float NOT NULL,
+			`sale_new_balance` float NOT NULL,
+			`sale_paid_amount` float DEFAULT NULL,
+			`product_code` varchar(100) DEFAULT NULL,
+			`invoice` int(11) NOT NULL,
+			PRIMARY KEY (`sale_id`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1";
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
