@@ -112,6 +112,7 @@
               $sal = 0;
               $adv = 0;
               $vvoucher=0;
+              $bankdep=0;
               ?>
               <?php foreach ($payroll as $rows1) {if($rows1->salary!=0){ ?>
                 <tr>
@@ -154,6 +155,17 @@
                 </tr>
               <?php $test = $test + $rows->total_amount;
               }} ?>
+
+            <?php foreach ($bdeposit as $rows) { ?>
+                <tr>
+
+                  <td style="border-color:#d4d6d5;"><?php if($rows->bd_member_id_fk!=0){echo "Bank Deposit From Members -".$rows->member_name;}else{echo $rows->bd_remark;} ?></td>
+                    <td style="border-color:#d4d6d5;"></td>
+                  <td style="border-color:#d4d6d5;"><?php echo $rows->bd_amount; ?></td>
+                  <td style="border-color:#d4d6d5;"></td>
+                </tr>
+              <?php $bankdep = $bankdep + $rows->bd_amount;
+              } ?>
 
                 <?php foreach($venodr_voucher as $row){if($row->voucher_amount!=0){ ?>
                   <tr>
@@ -202,7 +214,7 @@
                   $obalance1 = 0;
                 }
               }
-              $credit = $treceipt + $obalance + $test;
+              $credit = $treceipt + $obalance + $test+$bankdep;
               $debit = $tvoucher + $obalance1 + $purchase + $feedpurchase + $sal + $adv+$vvoucher;
               //$credit_sum=
               // $credit_to=$obalance+$credit;

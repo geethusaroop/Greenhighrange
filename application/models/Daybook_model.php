@@ -770,5 +770,19 @@ public function pupdate_daybook($date,$profit,$stat){
 			$result=$query->result();
 			return $result;
 		}
+
+		public function getbdeposit($cdate)
+		{
+			$this->db->select('*,DATE_FORMAT(bd_date,\'%d/%m/%Y\') AS bd_date');
+			$this->db->from('tbl_bank_deposit');
+			$this->db->join('tbl_bank','bank_id=bd_bank_id_fk');
+			$this->db->join('tbl_member','member_id=bd_member_id_fk','left');
+			$this->db->where("bd_date",$cdate);
+			$this->db->where("bd_status",1);
+			$this->db->where("bank_status",1);
+			$query = $this->db->get();
+			$result=$query->result();
+			return $result;
+		}
 }
 ?>

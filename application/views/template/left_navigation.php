@@ -6,6 +6,14 @@
  width:100%;
  border-top:1px solid gray;
 }
+
+  .main-sidebar{
+    position: fixed;
+    top: 0;
+    height: 400px;
+    overflow-y: scroll;
+  }
+
 </style>
  <!-- Left side column. contains the logo and sidebar -->
  <aside class="main-sidebar">
@@ -332,8 +340,8 @@
             {echo "active";}
             else if($this->uri->segment(1)=="Balancesheet")
             {echo "active";}
-            // else if($this->uri->segment(1)=="GIncome")
-            //  {echo "active";}
+             else if($this->uri->segment(1)=="Bankdeposit")
+              {echo "active";}
             ?>">
             <a href="#"><i class="fa fa-money"></i><span>Accounts</span>
               <span class="pull-right-container">
@@ -363,11 +371,12 @@
             
             <li class="<?php if($this->uri->segment(1)=='Receipt' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Receipt"><i class="fa fa-circle-o"></i>Receipt Entry</a></li>
            
-
-           
             <li class="<?php if($this->uri->segment(1)=='Vendor_voucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Vendor_voucher"><i class="fa fa-circle-o"></i>Vendor Voucher</a></li>
            
             <li class="<?php if($this->uri->segment(1)=='Fund' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Fund"><i class="fa fa-circle-o"></i>Fund Details</a></li>
+
+            <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>Bank Deposit</a></li>
+
 
            <li class="<?php if($this->uri->segment(1)=="Daybook"){echo "active";}?>" ><a  href="<?php echo base_url();?>Daybook"><i class="fa fa-circle-o"></i> <span>Daybook</span></a></li>
            

@@ -23,7 +23,7 @@
             
               <!-- radio -->
                <div class="form-group">
-			   <input type="hidden" name="fund_id" value="<?php if(isset($records->fund_id)) echo $records->fund_id ?>"/>
+			   <input type="hidden" name="bank_id" value="<?php if(isset($records->bank_id)) echo $records->bank_id ?>"/>
                 <div class="box-body">
 				<div class="col-lg-2"></div>
 				<div class="col-lg-8">

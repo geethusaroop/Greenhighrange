@@ -112,15 +112,16 @@ write_file($save, $backup);  */
 		force_download($db_name, $backup);
 	}
 	public function run_sql(){
-		$sql="CREATE TABLE IF NOT EXISTS `tbl_bank` (
-			`bank_id` int(11) NOT NULL AUTO_INCREMENT,
-			`bank_name` varchar(80) NOT NULL,
-			`bank_branch` varchar(80) NOT NULL,
-			`bank_address` varchar(100) NOT NULL,
-			`bank_accno` varchar(60) NOT NULL,
-			`bank_ifsc` varchar(50) NOT NULL,
-			`bank_status` int(11) NOT NULL,
-			PRIMARY KEY (`bank_id`)
+		$sql="CREATE TABLE IF NOT EXISTS `tbl_bank_deposit` (
+			`bd_id` int(11) NOT NULL AUTO_INCREMENT,
+			`bd_bank_id_fk` int(11) NOT NULL,
+			`bd_type` int(11) NOT NULL COMMENT '1=member_deposit,2=others',
+			`bd_member_id_fk` int(11) NOT NULL,
+			`bd_amount` int(11) NOT NULL,
+			`bd_date` date NOT NULL,
+			`bd_status` int(11) NOT NULL,
+			`bd_remark` varchar(100) NOT NULL,
+			PRIMARY KEY (`bd_id`)
 		  ) ENGINE=MyISAM DEFAULT CHARSET=latin1";
 
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
