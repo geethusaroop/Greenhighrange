@@ -551,7 +551,7 @@
        </li>
 
 
-       <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-truck"></i><span>Stock From Master Branch</span></a></li>
+       <li class="<?php if ($this->uri->segment(1) == "BProduct") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BProduct"><i class="fa fa-truck"></i><span>Stock From Master Branch</span></a></li>
 
 
        <li class="treeview <?php

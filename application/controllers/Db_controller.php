@@ -112,11 +112,12 @@ write_file($save, $backup);  */
 		force_download($db_name, $backup);
 	}
 	public function run_sql(){
-	//	$sql="ALTER TABLE `tbl_purchase` ADD `purchase_branch_id_fk` INT NOT NULL AFTER `purchase_id`";
+		$sql="ALTER TABLE `tbl_purchase` ADD `purchase_branch_id_fk` INT NOT NULL AFTER `purchase_id`";
 
-		$sql="CREATE TABLE IF NOT EXISTS `tbl_master_branch_sale` (
+		/* $sql="CREATE TABLE IF NOT EXISTS `tbl_master_branch_sale` (
 			`sale_id` int(11) NOT NULL AUTO_INCREMENT,
 			`sale_branch_id_fk` int(11) NOT NULL,
+			`product_id_fk` int(11) NOT NULL,
 			`finyear` varchar(11) DEFAULT NULL,
 			`invoice_number` varchar(50) DEFAULT NULL,
 			`auto_invoice` varchar(255) DEFAULT NULL,
@@ -151,7 +152,7 @@ write_file($save, $backup);  */
 			`product_code` varchar(100) DEFAULT NULL,
 			`invoice` int(11) NOT NULL,
 			PRIMARY KEY (`sale_id`)
-		  ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1";
+		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1"; */
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;

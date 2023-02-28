@@ -25,14 +25,7 @@ class MBTSale_model extends CI_Model
 		if ($end_date) {
 			$this->db->where('sale_date <=', $end_date);
 		}
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
-        {
-            $this->db->where("sale_branch_id_fk",$branch_id_fk);
-        }
-        else
-        {
-            $this->db->where("sale_branch_id_fk",0);
-        }
+		
 		$this->db->where("sale_status", 1);
 
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
@@ -68,14 +61,7 @@ class MBTSale_model extends CI_Model
 		if ($end_date) {
 			$this->db->where('sale_date <=', $end_date);
 		}
-		if(!empty($branch_id_fk) && $branch_id_fk != 0)
-        {
-            $this->db->where("sale_branch_id_fk",$branch_id_fk);
-        }
-        else
-        {
-            $this->db->where("sale_branch_id_fk",0);
-        }
+		
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_master_branch_sale.discount_price as discount');
 
 		$this->db->from('tbl_master_branch_sale');
@@ -208,7 +194,7 @@ class MBTSale_model extends CI_Model
 		$this->db->select('*,((sale_price-((sale_price*100)/(100+tbl_master_branch_sale.taxamount)))/2)*sale_quantity as sgst, (tbl_master_branch_sale.taxamount/2) as taxper,((sale_price*100)/(100+tbl_master_branch_sale.taxamount)) as rate');
 		$this->db->from('tbl_master_branch_sale');
 		$this->db->where('sale_status', 1);
-		$this->db->join('tbl_product', 'tbl_product.product_id = tbl_master_branch_sale.product_id_fk', 'left');
+		$this->db->join('tbl_product', 'tbl_product.bproduct_id_fk = tbl_master_branch_sale.product_id_fk', 'left');
 		$this->db->join('tbl_branch', 'tbl_branch.branch_id = tbl_master_branch_sale.sale_branch_id_fk', 'left');
 		$this->db->where('tbl_master_branch_sale.auto_invoice', $invc_no);
 		$query = $this->db->get();
@@ -219,7 +205,7 @@ class MBTSale_model extends CI_Model
 		$this->db->select('*,((sale_price-((sale_price*100)/(100+tbl_master_branch_sale.taxamount)))/2)*sale_quantity as sgst, (tbl_master_branch_sale.taxamount/2) as taxper,((sale_price*100)/(100+tbl_master_branch_sale.taxamount)) as rate');
 		$this->db->from('tbl_master_branch_sale');
 		$this->db->where('sale_status', 1);
-		$this->db->join('tbl_product', 'tbl_product.product_id = tbl_master_branch_sale.product_id_fk', 'left');
+		$this->db->join('tbl_product', 'tbl_product.bproduct_id_fk = tbl_master_branch_sale.product_id_fk', 'left');
 		$this->db->join('tbl_branch', 'tbl_branch.branch_id = tbl_master_branch_sale.sale_branch_id_fk', 'left');
 		$this->db->where('tbl_master_branch_sale.invoice_number', $invoice_no);
 		$query = $this->db->get();
