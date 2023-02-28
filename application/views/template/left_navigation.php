@@ -55,6 +55,12 @@
           } else if ($this->uri->segment(1) == "Branch") {
             echo "active";
           }
+          else if ($this->uri->segment(1) == "Bank") {
+            echo "active";
+          }
+          else if ($this->uri->segment(1) == "Licenses") {
+            echo "active";
+          }
           ?>">
          <a><i class="glyphicon glyphicon-share-alt"></i><span>Basic Info</span>
            <span class="pull-right-container">
@@ -65,6 +71,10 @@
            <li class="<?php if ($this->uri->segment(1) == "Company") {echo "active";} ?>">
              <a href="<?php echo base_url(); ?>Company"><i class="fa fa-circle-o"></i><span>Basic Information</span></a>
            </li>
+
+           <li class="<?php if ($this->uri->segment(1) == "Bank") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Bank"><i class="fa fa-circle-o"></i> <span>Bank Info</span></a></li>
+
+
            <li class="<?php if ($this->uri->segment(1) == "Licenses") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Licenses"><i class="fa fa-circle-o"></i> <span>Licenses</span></a></li>
 
            <li class="<?php if ($this->uri->segment(1) == "Branch") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Branch"><i class="fa fa-circle-o"></i> <span>Branches</span></a></li>
@@ -300,16 +310,22 @@
        <li class="treeview <?php
             if($this->uri->segment(1)=="Voucherhead")
             {echo "active";}
+
             else if($this->uri->segment(1)=="Receipthead")
             {echo "active";}
+
             else if($this->uri->segment(1)=="Voucher")
             {echo "active";}
+
             else if($this->uri->segment(1)=="Receipt")
             {echo "active";}
+
+            else if($this->uri->segment(1)=="Fund")
+            {echo "active";}
+
             else if($this->uri->segment(1)=="Vendor_voucher")
              {echo "active";}
-            //   else if($this->uri->segment(1)=="Journal")
-            //{echo "active";}
+           
             else if($this->uri->segment(1)=="Daybook")
             {echo "active";}
             else if($this->uri->segment(1)=="Ledger")
@@ -342,15 +358,22 @@
                 <li class="<?php if($this->uri->segment(1)=='Receipthead'){echo "active";}?>" ><a href="<?php echo base_url();?>Receipthead"><i class="fa fa-circle-o"></i>Receipt</a></li>
               </ul>
             </li>
+            
             <li class="<?php if($this->uri->segment(1)=='Voucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Voucher"><i class="fa fa-circle-o"></i>Voucher Entry</a></li>
+            
             <li class="<?php if($this->uri->segment(1)=='Receipt' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Receipt"><i class="fa fa-circle-o"></i>Receipt Entry</a></li>
-           <li class="<?php if($this->uri->segment(1)=='Vendor_voucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Vendor_voucher"><i class="fa fa-circle-o"></i>Vendor Voucher</a></li>
            
+
+           
+            <li class="<?php if($this->uri->segment(1)=='Vendor_voucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Vendor_voucher"><i class="fa fa-circle-o"></i>Vendor Voucher</a></li>
+           
+            <li class="<?php if($this->uri->segment(1)=='Fund' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Fund"><i class="fa fa-circle-o"></i>Fund Details</a></li>
+
            <li class="<?php if($this->uri->segment(1)=="Daybook"){echo "active";}?>" ><a  href="<?php echo base_url();?>Daybook"><i class="fa fa-circle-o"></i> <span>Daybook</span></a></li>
            
            <li class="<?php if($this->uri->segment(1)=="Ledger" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>Ledger"><i class="fa fa-circle-o"></i> <span>Ledger</span></a></li>
             
-            <li class="<?php if($this->uri->segment(1)=="Ledger" && $this->uri->segment(2)=='report'){echo "active";}?>" ><a  href="<?php echo base_url();?>Ledger/report"><i class="fa fa-circle-o"></i> <span>Ledger Report</span></a></li>
+            <li class="<?php if($this->uri->segment(1)=="Ledger" && $this->uri->segment(2)=='report'){echo "active";}?>" ><a  href="<?php echo base_url();?>Ledger/report"><i class="fa fa-circle-o"></i> <span>Vendor Ledger</span></a></li>
 
             <li class="<?php if($this->uri->segment(1)=="Balancesheet"){echo "active";}?>" ><a  href="<?php echo base_url();?>Balancesheet"><i class="fa fa-circle-o"></i> <span>Balance Sheet</span></a></li>
           </ul>

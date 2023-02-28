@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Shareholder extends MY_Controller {
 	public $table = 'tbl_member';
+	public $table1 = 'tbl_fund';
 	public $page  = 'Shareholder';
 	public function __construct() {
 		parent::__construct();
@@ -93,15 +94,39 @@ class Shareholder extends MY_Controller {
 						// 'member_img' => $member_img,
 						'member_status' => 1
 						);
+						$fund_year = date("Y",strtotime($this->input->post('member_exitdate')));
+						$data_shares = array(
+							'ftype_id_fk' =>1,
+							'fund_date' => $this->input->post('member_exitdate'),
+							'fund_member_id_fk' => $this->input->post('member_id'),
+							'fund_amount'=>$this->input->post('share_shares'),
+							'fund_year' =>$fund_year,	
+							'fund_status' => 1
+							);
+
 				$member_id = $this->input->post('member_id');
 				if($member_id){
 					$member_id = $this->input->post('member_id');
                      $data['member_id'] = $member_id;
                      $result = $this->General_model->update($this->table,$data,'member_id',$member_id);
+					 $results = $this->General_model->update($this->table1,$data_shares,'fund_member_id_fk',$member_id);
                      $response_text = 'Shareholder updated successfully';
                 }
 				else{
                      $result = $this->General_model->add($this->table,$data);
+					 $insert_id=$this->db->insert_id();
+
+					 $data_share = array(
+						'ftype_id_fk' =>1,
+						'fund_date' => $this->input->post('member_exitdate'),
+						'fund_member_id_fk' => $insert_id,
+						'fund_year' =>$fund_year,	
+						'fund_amount'=>$this->input->post('share_shares'),
+						'fund_status' => 1
+						);
+						//var_dump($data_share);die;
+					 $results = $this->General_model->add($this->table1,$data_share);
+
                      $response_text = 'Shareholder added  successfully';
 			}
 				if($result){

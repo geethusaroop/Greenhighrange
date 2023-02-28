@@ -112,38 +112,16 @@ write_file($save, $backup);  */
 		force_download($db_name, $backup);
 	}
 	public function run_sql(){
-		//$sql="ALTER TABLE `tbl_sale` ADD `invoice` INT NOT NULL AFTER `product_code`";
-	//	$sql="ALTER TABLE `tbl_sale` ADD `sale_discount` FLOAT NOT NULL AFTER `sale_status`, ADD `sale_old_balance` FLOAT NOT NULL AFTER `sale_discount`, ADD `sale_new_balance` FLOAT NOT NULL AFTER `sale_old_balance`";
-		//$sql="ALTER TABLE `tbl_sale` ADD `sale_shareholder_discount` FLOAT NOT NULL AFTER `sale_status`";
-		//$sql="ALTER TABLE `tbl_stock_history` ADD `purchase_id_fk` INT NOT NULL AFTER `stock_id`";
-		//$sql="ALTER TABLE `tbl_routsale` ADD `routsale_sale_count` INT NOT NULL COMMENT 'total item saled' AFTER `routsale_stock`";
-		//$sql="ALTER TABLE `tbl_sale` ADD `routsale_status` INT NOT NULL AFTER `invoice`";
-		//$sql="ALTER TABLE `tbl_routsale` ADD `routsale_return_status` INT NOT NULL AFTER `routsale_return_stock`, ADD `routsale_return_date` DATE NOT NULL AFTER `routsale_return_status`";
-		
-		//notrun
-		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 7";
-		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 8";
-		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 9";
-		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 10";
-		//$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 11";
-	//	$sql="DELETE FROM `tbl_product` WHERE `tbl_product`.`product_id` = 12";
-
-	/* $sql="CREATE TABLE IF NOT EXISTS `tbl_vendor_voucher` (
-		`voucher_id` int(11) NOT NULL AUTO_INCREMENT,
-		`project_id_fk` int(11) NOT NULL,
-		`vendor_id_fk` int(11) NOT NULL,
-		`finyear_id_fk` int(11) DEFAULT NULL,
-		`voucher_amount` float DEFAULT NULL,
-		`paid_to` varchar(255) DEFAULT NULL,
-		`voucher_date` date DEFAULT NULL,
-		`narration` varchar(255) DEFAULT NULL,
-		`voucher_status` int(11) NOT NULL,
-		`voucher_group` int(11) DEFAULT NULL,
-		PRIMARY KEY (`voucher_id`)
-	  ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 "; */
-	  //$sql="ALTER TABLE `tbl_product` ADD `bproduct_id_fk` INT NOT NULL AFTER `branch_id_fk`";
-
-	  $sql="ALTER TABLE `tbl_production_stock_history` ADD `product_batch_no` INT NOT NULL AFTER `pstock_id`";
+		$sql="CREATE TABLE IF NOT EXISTS `tbl_bank` (
+			`bank_id` int(11) NOT NULL AUTO_INCREMENT,
+			`bank_name` varchar(80) NOT NULL,
+			`bank_branch` varchar(80) NOT NULL,
+			`bank_address` varchar(100) NOT NULL,
+			`bank_accno` varchar(60) NOT NULL,
+			`bank_ifsc` varchar(50) NOT NULL,
+			`bank_status` int(11) NOT NULL,
+			PRIMARY KEY (`bank_id`)
+		  ) ENGINE=MyISAM DEFAULT CHARSET=latin1";
 
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);
