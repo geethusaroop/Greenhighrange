@@ -166,7 +166,7 @@ write_file($save, $backup);  */
 
 		 // $sql="ALTER TABLE `tbl_bank` ADD `bank_branch_id_fk` INT NOT NULL AFTER `bank_id`";
 
-		$sql="ALTER TABLE `tbl_bank_deposit` ADD `branch_id_fk` INT NOT NULL AFTER `bd_id`";
+		$sql="ALTER TABLE `tbl_production_unit` ADD `punit_batch_no` INT NOT NULL AFTER `punit_id`, ADD `batch_no` INT NOT NULL AFTER `punit_batch_no`";
 
 		
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";

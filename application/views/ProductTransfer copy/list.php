@@ -46,15 +46,14 @@
             <thead>
               <tr>
                 <th style="text-align: center;">SINO</th>
-                <th>DATE_OF_TRANSFER</th>
-                <th>BATCH_NO</th>
                 <th>UNIT_NAME</th>
+                <th>DATE_OF_TRANSFER</th>
                 <th>PRODUCT NAME</th>
                 <th style="text-align: left;">PRODUCT CODE</th>
                 <th style="text-align: center;">TOTAL_QTY_TRANSFERED</th>
 <!--                 <th style="text-align: center;">UNIT</th>
  -->                <th style="text-align: center;">
-                  <center>DELETE ALL</center>
+                  <center>EDIT/DELETE</center>
                 </th>
               </tr>
             </thead>

@@ -5,6 +5,20 @@
     font-family: 'Rubik', sans-serif;
   }
 </style>
+<style>
+.democlass {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+}
+</style>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -31,17 +45,18 @@
               <div class="col-md-8"><h2 class="box-title"></h2> </div>
             </div>
             <div class="box-body">
-            <div class="row">
-              <div class="col-lg-2"></div>
-              <div class="col-lg-8">
+            
+            
+      <div class="row"> 
+      <div class="col-lg-12">
              <div class="panel panel-danger" style="box-shadow: 2px 2px 2px 2px black;">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><b>Product Info</b></h3>
+                  <h3 class="panel-title"><b>Transfer Products To Production Unit</b></h3>
                 </div>
                   <div class="panel-body" style="font-weight:bold;">
                   <input type="hidden" name="punit_id" value="<?php if(isset($records->punit_id)) echo $records->punit_id ?>"/>
                   <div class="form-group row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                                 <label class="fsize">Production Unit<span style="color:red"> *</span></label>
                                 <select name="punit_type"  id="punit_type" class="form-control" style="font-weight: bold;">
                                   <option value="">-SELECT-</option>
@@ -53,90 +68,74 @@
                                 </select>
                       </div>
 
-                    
-
-                  </div>
-               
-              <div class="form-group row">
-
-              <div class="col-md-6">
-                          <label class="fsize">Product Name <span style="color:red"> *</span></label>
-                          <select name="punit_product_id_fk"  id="punit_product_id_fk" class="form-control select2" style="font-weight: bold;">
-                            <option value="">-SELECT-</option>
-                             <?php foreach($product_names as $item){ ?>
-                              <option value="<?php echo $item->product_id ?>" <?php if(isset($records->punit_product_id_fk)) { if($records->punit_product_id_fk==$item->product_id){ echo "selected"; } } ?>><?php echo $item->product_name ?></option>
-                             <?php } ?>
-                          </select>
-                </div>
-              
-                <div class="col-md-3">
-                  <label class="fsize">Current Stock <span style="color:red"> *</span></label>
-                  <input type="text" autofocus class="form-control" name="punit_stock" id="punit_stock"  value="<?php if(isset($records->punit_stock)) echo $records->punit_stock ?>" readonly style="background:white;">
-                </div>
-
-                <div class="col-md-3">
-                  <label class="fsize">Unit <span style="color:red"> *</span></label>
-                  <input type="text" autofocus class="form-control" name="punit_stock_unit" id="punit_stock_unit"  value="<?php if(isset($records->punit_stock_unit)) echo $records->punit_stock_unit ?>" readonly style="background:white;">
-                </div>
-              </div>
-              
-
-          </div>
-        </div>
-      </div>
-            </div>
-      <!--------------------------------------------------------------------->
-      <div class="row"> <div class="col-lg-2"></div>
-      <div class="col-lg-8">
-             <div class="panel panel-danger" style="box-shadow: 2px 2px 2px 2px black;">
-                <div class="panel-heading">
-                  <h3 class="panel-title"><b>Transfer Products To Production Unit</b></h3>
-                </div>
-                  <div class="panel-body" style="font-weight:bold;">
-                  <input type="hidden" name="punit_id" value="<?php if(isset($records->punit_id)) echo $records->punit_id ?>"/>
-                
-               
-              <div class="form-group row">
-
-                <div class="col-md-3">
+                 <div class="col-md-4">
                   <label class="fsize">Date Of Transfer<span style="color:red"> *</span></label>
                   <input type="date" autofocus class="form-control" name="punit_date" id="punit_date"  value="<?php if(isset($records->punit_date)) echo $records->punit_date ?>"  style="background:white;">
                 </div>
 
-             
+                <div class="col-md-4">
+                  <label class="fsize">Batch Number<span style="color:red"> *</span></label>
+                  <input type="hidden" data-pms-required="true" id="batch_no" class="form-control" name="batch_no" value="<?php if(isset($records->batch_no)){echo $records->batch_no;}else{echo $adm;} ?>">  
 
-                <div class="col-md-3">
-                  <label class="fsize">Qty <span style="color:red"> *</span></label>
-                  <input type="text" autofocus class="form-control" name="punit_qty" id="punit_qty" onkeyup="getstockbal();" value="<?php if(isset($records->punit_qty)) echo $records->punit_qty ?>"  style="background:white;">
-                </div>  
-
-                <div class="col-md-3">
-                  <label class="fsize">Product Unit <span style="color:red"> *</span></label>
-                  <select name="punit_unit" class="form-control">
-                    <option value="">-SELECT UNIT-</option>
-                   <?php foreach($unit as $un){ ?>
-                    <option <?php if(isset($records->punit_unit)){if($records->punit_unit==$un->unit_id){echo "selected";}} ?> value="<?php  echo  $un->unit_id;?>"><?php  echo  $un->unit_name;?></option>
-                   <?php } ?>
-                  </select>
+                  <input type="text" autofocus class="form-control" name="punit_batch_no" id="punit_batch_no"  value="<?php if(isset($records->punit_batch_no)){ echo $records->punit_batch_no;}else{ echo "BATCH000".$adm;} ?>"  style="background:white;">
                 </div>
 
-                <div class="col-md-3">
-                  <label class="fsize">Stock Balance <span style="color:red"> *</span></label>
-                  <input type="text" autofocus class="form-control" name="punit_bal" id="punit_bal"  value="<?php if(isset($records->punit_bal_stock)) echo $records->punit_bal_stock ?>" readonly style="background:white;">
-                </div>
+                  </div>
+                  <!----------------------------------->
+                  <button type="button" class="btn btn-primary" value="Add Row" onClick="addRow('dataTables')">Add</button>
+                  <button type="button" class="btn btn-danger" value="Delete Row" onClick="deleteRow('dataTables')">Delete</button>
+                                 
+                                  <div class="table-responsive">
+                                  <table id="dataTables" class="table table-striped table-bordered tc-table footable" style="border:1px solid #ccc;color:black;">
+                                    <thead>
+                                      <tr style="background: black;color: white;text-transform: uppercase;">
+                                        <th style="border:1px solid #ccc;" width="20" class="col-small center style2 style3"> </th>
+                                        <th style="border:1px solid #ccc;" width="25" class="col-small center ">SlNo</th>
+                                        <th style="border:1px solid #ccc;" width="45">Product_Name</th>
+                                        <th style="border:1px solid #ccc;" width="72">Qty</th>
+                                        <th style="border:1px solid #ccc;" width="72">Unit</th>
+                                        <th style="border:1px solid #ccc;" width="45">Current Stock</th>
+                                        <th style="border:1px solid #ccc;" width="45">Unit</th>
+                                        <th style="border:1px solid #ccc;" width="45">Stock Balance</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody  style="background: #ffff;">
+                                      <TR style="border:1px solid #ccc;background: #ffff;">
+                                        <TD><INPUT type="checkbox" name="chk[]"/></TD>
+                                        <TD style="color:black;"> 1 </TD>
+                                        <TD> <select name="punit_product_id_fk[]" id="punit_product_id_fk1" style="width:350px;" class="form-control select2" onchange="getproductdetails(<?php echo $i=1; ?>);" required>
+                                          <option value="" selected="selected">--SELECT--</option>
+                                          <?php
+                                          foreach ($product_names as $w)
+                                          {
+                                            ?><option value="<?php echo $w->product_id;?>"><?php echo $w->product_name ?></option>
+                                            <?php
+                                          }
+                                          ?>          </select> </TD>
+                                          <TD> <INPUT type="text" class="form-control"  name="punit_qty[]" id="punit_qty1" style="width:180px;" onkeyup="getstockbal(<?php echo $i=1; ?>);"/> </TD>
+                                          <TD><select name="punit_unit[]" class="form-control" id="punit_unit1" style="width:180px;" placeholder="Unit">
+                                            <option value="">--SELECT--</option>
+                                            <?php foreach($unit as $ut){ ?>
+                                              <option value="<?php echo $ut->unit_id ?>"><?php echo $ut->unit_name ?></option>
+                                            <?php } ?>
+                                          </select></TD>
+                                          <TD> <INPUT type="text" class="form-control"  name="punit_stock[]" id="punit_stock1" style="width:180px;"/> </TD>
+                                          <TD><input type="text" autofocus class="form-control" name="punit_stock_unit[]" id="punit_stock_unit1"  value="" readonly style="background:white;width:180px;"></TD>
+                                          <TD><input type="text" autofocus class="form-control" name="punit_bal[]" id="punit_bal1"  value="0" readonly style="background:white;width:180px;"></TD>
 
-              </div>
+                                        </TR>
+                                      </table>
+                                      </div>
+                                    </table>
+
+                                  </div>
+
 
           </div>
         </div>
       </div>
       </div>
-
-
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-             <br>
+      
           <div class="box-footer">
           <div class="row">
           <div class="col-md-6">
@@ -147,6 +146,12 @@
           </div>
           </div>
           </div>
+
+            <!-- /.box-body -->
+          </div>
+          
+          <!-- /.box -->
+        
      </div>
     </section>
   </form>

@@ -16,20 +16,19 @@ class ProductTransfer extends MY_Controller
 		$this->load->model('HSNcode_model');
 		$this->load->model('Purchase_model');
 		$this->load->model('Item_model');
-		$this->load->model('Sale_model');
 	}
 	public function index()
 	{
 		
 		$template['body'] = 'ProductTransfer/list';
-		$template['script'] = 'ProductTransfer/script2';
+		$template['script'] = 'ProductTransfer/script';
 		$this->load->view('template', $template);
 	}
 
 
 	public function add()
 	{
-		$this->form_validation->set_rules('punit_date', 'Date', 'required');
+		$this->form_validation->set_rules('punit_product_id_fk', 'Name', 'required');
 		if ($this->form_validation->run() == FALSE) {
 			$branch_id_fk=$this->session->userdata('branch_id_fk');
 			$template['body'] = 'ProductTransfer/add';
@@ -37,40 +36,37 @@ class ProductTransfer extends MY_Controller
 			$template['unit'] = $this->ProductTransfer_model->get_unit();
 			$template['hsncode']=$this->HSNcode_model->gethsncode();
 			$template['product_names'] = $this->Item_model->view_by($branch_id_fk);
-			$admno = $this->ProductTransfer_model->get_admno();
-			if(isset($admno->sale_id)){$adm=$admno->batch_no+1;}else{$adm=1;}
-			$template['adm'] = $adm;
 			$this->load->view('template', $template);
 		} else {
 			$punit_id = $this->input->post('punit_id');
-			$temp =count($this->input->post('punit_product_id_fk'));
 			$product_id_fk=$this->input->post('punit_product_id_fk');
 			$punit_qty=$this->input->post('punit_qty');
-			$punit_bal=$this->input->post('punit_bal');
-			$punit_unit = $this->input->post('punit_unit');
-			$punit_qty = $this->input->post('punit_qty');
-			$punit_stock = $this->input->post('punit_stock');
-			$punit_stock_unit = $this->input->post('punit_stock_unit');
-			for($i=0;$i<$temp;$i++){
-				$data = array(
-					'punit_batch_no'=>$this->input->post('punit_batch_no'),
-					'batch_no'=>$this->input->post('batch_no'),
-					'punit_product_id_fk' => $product_id_fk[$i],
-					'punit_unit' => $punit_unit[$i],
-					'punit_qty' => $punit_qty[$i],
-					'punit_stock' => $punit_stock[$i],
-					'punit_stock_unit' => $punit_stock_unit[$i],
-					'punit_bal_stock' => $punit_bal[$i],
-					'punit_type' => $this->input->post('punit_type'),
-					'punit_date' => $this->input->post('punit_date'),
-					'punit_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
-					'punit_status' => 1,
-					);
-					$result = $this->General_model->add($this->table, $data);
-					$updateData = array('product_stock' =>$punit_bal[$i]);
-					$datas = $this->General_model->update('tbl_product',$updateData,'product_id',$product_id_fk[$i]);
-					$response_text = 'Product added  successfully';
-		   }
+			$data = array(
+				'punit_product_id_fk' => $this->input->post('punit_product_id_fk'),
+				'punit_unit' => $this->input->post('punit_unit'),
+				'punit_qty' => $this->input->post('punit_qty'),
+				'punit_stock' => $this->input->post('punit_stock'),
+				'punit_stock_unit' => $this->input->post('punit_stock_unit'),
+				'punit_type' => $this->input->post('punit_type'),
+				'punit_date' => $this->input->post('punit_date'),
+				'punit_bal_stock' => $this->input->post('punit_bal'),
+				'punit_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
+				'punit_status' => 1,
+			);
+			$punit_id = $this->input->post('punit_id');
+			if ($punit_id) {
+				$data['punit_id'] = $punit_id;
+				$result = $this->General_model->update($this->table, $data, 'punit_id', $punit_id);
+				$response_text = 'Product updated successfully';
+			} else {
+			//	$current_stock=$this->Purchase_model->get_current_productstock($product_id_fk);
+			//	$new_stock=intval($current_stock)-intval($punit_qty);
+				$new_stock=$this->input->post('punit_bal');
+				$updateData = array('product_stock' =>$new_stock);
+				$datas = $this->General_model->update('tbl_product',$updateData,'product_id',$product_id_fk);
+				$result = $this->General_model->add($this->table, $data);
+				$response_text = 'Product added  successfully';
+			}
 			if ($result) {
 				$this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
 			} else {
@@ -111,35 +107,6 @@ class ProductTransfer extends MY_Controller
 		echo $data_json;
 		redirect('/ProductTransfer/', 'refresh');
 	}
-
-	public function deleteall()
-	{
-		$punit_batch_no = $this->input->post('punit_batch_no');
-		$records = $this->ProductTransfer_model->get_invc($punit_batch_no);
-		for($i=0; $i< count($records); $i++)
-		{
-			$stok = $this->Sale_model->get_prodstk($records[$i]->product_id);
-			//var_dump($stok);die;
-            $nwstk = $stok[0]->product_stock + $records[$i]->punit_qty;
-            
-			$updateData = array('product_stock' =>$nwstk);	
-			
-			$datas = $this->General_model->update('tbl_product',$updateData,'product_id',$records[$i]->product_id);
-		}
-		$updateDatas = array('punit_status' => 0);
-		$data = $this->General_model->update($this->table, $updateDatas, 'punit_batch_no', $punit_batch_no);
-		if ($data) {
-			$response['text'] = 'Deleted successfully';
-			$response['type'] = 'success';
-		} else {
-			$response['text'] = 'Something went wrong';
-			$response['type'] = 'error';
-		}
-		$response['layout'] = 'topRight';
-		$data_json = json_encode($response);
-		echo $data_json;
-		//redirect('/Sale/', 'refresh');
-	}
 	public function edit($punit_id)
 	{
 		$branch_id_fk=$this->session->userdata('branch_id_fk');
@@ -152,23 +119,12 @@ class ProductTransfer extends MY_Controller
 		$this->load->view('template', $template);
 	}
 
-	/* public function getpstock()
+	public function getpstock()
     {
     $id = $this->input->post('id');
     $data = $this->ProductTransfer_model->getpstock($id);
     $json_data = json_encode($data);
     echo $json_data;
-    } */
-
-	public function getpstock()
-	{
-		$prod1 = [];
-		$id = $this->input->post('pid');
-		$data =  $this->ProductTransfer_model->getpstock($id);
-		
-		$prod1['product_stock'] = $data->product_stock;
-		$prod1['unit_name'] = $data->unit_name;
-		echo json_encode($prod1);
-	}
+    }
 	
 }

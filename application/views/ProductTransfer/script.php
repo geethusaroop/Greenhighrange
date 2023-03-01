@@ -10,141 +10,167 @@ if(response){
   var options = $.parseJSON(response);
   noty(options);
 }
-$(function () {
-  var enquiry_type = {'J':'Job','C':'Complaint','F':'Follow-up'};
-  //Datemask dd/mm/yyyy
-  $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-  //Date picker
-  $('#date').datepicker({
-    autoclose: true,
-    format: 'dd/mm/yyyy'
-  });
-  //iCheck for checkbox and radio inputs
-  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-    checkboxClass: 'icheckbox_minimal-blue',
-    radioClass: 'iradio_minimal-blue'
-  });
-  //Flat red color scheme for iCheck
-  $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-    checkboxClass: 'icheckbox_flat-green',
-    radioClass: 'iradio_flat-green'
-  });
-  $table = $('#classinfo_table').DataTable( {
-    "processing": true,
-    "serverSide": true,
-    "bDestroy" : true,
-    "ajax": {
-      "url": "<?php echo base_url();?>ProductTransfer/get/",
-      "type": "POST",
-      "data" : function (d) {
-        d.item_name = $('#item_names').val();
-      }
-    },
-    "createdRow": function ( row, data, index ) {
-      //            $('td',row).eq(0).html(index+1);
-      $table.column(0).nodes().each(function(node,index,dt){
-        $table.cell(node).data(index+1);
-      });
-      $('td', row).eq(1).css( "font-weight", "bold");
-      $('td', row).eq(2).css( "font-weight", "bold");
-      $('td', row).eq(3).css( "font-weight", "bold" );
-     // $('td', row).eq(2).css( "text-align", "center" );
-      $('td', row).eq(4).css( "font-weight", "bold" );
-      $('td', row).eq(4).css( "text-align", "center" );
-      $('td', row).eq(5).css( "text-align", "center" );
-      $('td', row).eq(5).css( "font-weight", "bold" );
 
-      $('td', row).eq(6).css( "text-align", "center" );
-      $('td', row).eq(6).css( "font-weight", "bold" );
+    var rowCount = 0;
+    function addRow(tableID) {
+      console.log("HI");
+        <?php
+        $i = 0;
+        ?>
+        var listValues = [
+            { value: '', text: 'SELECT' }, 
+            <?php $i = 0;
+            foreach ($product_names as $w) { ?> {
+                    value: '<?php echo $w->product_id; ?>',
+                    text: '<?php echo $w->product_name ?>'
+                },
+            <?php
+            }
+            ?>
+        ];
+        var listUnits = [
+            { value: '', text: 'SELECT' }, 
+            <?php $i = 0;
+            foreach ($unit as $uts) { ?> {
+                    value: '<?php echo $uts->unit_id; ?>',
+                    text: '<?php echo $uts->unit_name ?>'
+                },
+            <?php
+            }
+            ?>
+        ];
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        var cell1 = row.insertCell(0);
+        var element1 = document.createElement("input");
+        element1.type = "checkbox";
+        element1.name = "chk[]";
+        cell1.appendChild(element1);
+        var cell2 = row.insertCell(1);
+        cell2.innerHTML = rowCount;
+        var cell3 = row.insertCell(2);
+        var element3 = document.createElement("select");
+        element3.type = "select";
+        element3.name = "punit_product_id_fk[]";
+        element3.id = "punit_product_id_fk" + rowCount;
+        element3.setAttribute("onchange", "getproductdetails(" + rowCount + ")");
+        element3.setAttribute("class", "democlass");
+        // element3.required = "required";
+        for (var i = 0; i < listValues.length; i += 1) {
+            var option = document.createElement('option');
+            option.setAttribute('value', listValues[i].value);
+            option.appendChild(document.createTextNode(listValues[i].text));
+            element3.appendChild(option);
+        }
+        cell3.appendChild(element3);
+       
+        var cell4 = row.insertCell(3);
+        var element4 = document.createElement("input");
+        element4.type = "text";
+        element4.name = "punit_qty[]";
+        element4.setAttribute("size", "6");
+        element4.setAttribute("class", "democlass");
+        element4.id = "punit_qty" + rowCount;
+        element4.setAttribute("onkeyup", "getstockbal(" + rowCount + ")");
+        cell4.appendChild(element4);
 
-      $('td', row).eq(7).css( "text-align", "center" );
-      $('td', row).eq(7).css( "font-weight", "bold" );
+        var cell5 = row.insertCell(4);
+        var element5 = document.createElement("select");
+        element5.type = "select";
+        element5.name = "punit_unit[]";
+        element5.id = "punit_unit" + rowCount;
+        element5.setAttribute("class", "democlass");
+        // element3.required = "required";
+        for (var i = 0; i < listUnits.length; i += 1) {
+            var option = document.createElement('option');
+            option.setAttribute('value', listUnits[i].value);
+            option.appendChild(document.createTextNode(listUnits[i].text));
+            element5.appendChild(option);
+        }
+        cell5.appendChild(element5);
 
+        var cell6 = row.insertCell(5);
+        var element6 = document.createElement("input");
+        element6.type = "text";
+        element6.name = "punit_stock[]";
+        element6.setAttribute("size", "6");
+        element6.setAttribute("class", "democlass");
+        element6.id = "punit_stock" + rowCount;
+        cell6.appendChild(element6);
+
+        var cell7 = row.insertCell(6);
+        var element7 = document.createElement("input");
+        element7.type = "text";
+        element7.name = "punit_stock_unit[]";
+        element7.setAttribute("size", "6");
+        element7.setAttribute("class", "democlass");
+        element7.id = "punit_stock_unit" + rowCount;
+        cell7.appendChild(element7);
+
+
+        var cell8 = row.insertCell(7);
+        var element8 = document.createElement("input");
+        element8.type = "text";
+        element8.name = "punit_bal[]";
+        element8.setAttribute("size", "6");
+        element8.setAttribute("class", "democlass");
+        element8.id = "punit_bal" + rowCount;
+        cell8.appendChild(element8);
       
-
-      if(data['punit_type']==1)
-      {
-        $('td', row).eq(1).html('MASALA UNIT');
-      }
-      else if(data['punit_type']==2)
-      {
-        $('td', row).eq(1).html('SPICES UNIT');
-      }
-      else if(data['punit_type']==3)
-      {
-        $('td', row).eq(1).html('OIL UNIT');
-      }
-      else if(data['punit_type']==4)
-      {
-        $('td', row).eq(1).html('PICKLE UNIT');
-      }
-
-      else if(data['punit_type']==5)
-      {
-        $('td', row).eq(1).html('MISCELLANEOUS ITEMS');
-      }
-
-      $('td', row).eq(5).html(''+data['punit_qty']+'-'+data['unit_name']+'');
-    
-     $('td', row).eq(6).html('<center><a href="<?php echo base_url();?>index.php/ProductTransfer/edit/'+data['punit_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['punit_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
-    },
-    "columns": [
-      { "data": "punit_status", "orderable": false },
-      { "data": "punit_type", "orderable": false },
-      { "data": "punit_date", "orderable": false },
-      { "data": "product_name", "orderable": false },
-      { "data": "product_code", "orderable": false },
-      { "data": "punit_qty", "orderable": false },
-      //{ "data": "unit_name", "orderable": false },
-      { "data": "punit_id", "orderable": false }
-    ]
-  } );
-});
-function confirmDelete(punit_id){
-  var conf = confirm("Do you want to Delete Class ?");
-  if(conf){
-    $.ajax({
-      url:"<?php echo base_url();?>ProductTransfer/delete",
-      data:{punit_id:punit_id},
-      method:"POST",
-      datatype:"json",
-      success:function(data){
-        var options = $.parseJSON(data);
-        noty(options);
-        $table.ajax.reload();
-      }
-    });
-  }
-}
-$('#search').click(function () {
-    $table.ajax.reload();
-});
-$(document).on('change','#punit_product_id_fk',function(){
-  var id = $(this).val();
-  if(id)
-  {
-    $.ajax({
-            url:"<?php echo base_url()?>ProductTransfer/getpstock",
-            type: 'POST',
-            data: {id:id},
-            dataType: 'json',
-            success:
-            function(data)
-            {
-         $('#punit_stock').val(data['product_stock']);
-         $('#punit_stock_unit').val(data['unit_name']);
-      },
-    });
+       
+        $('#punit_product_id_fk'+rowCount).select2();
     }
-  });
 
-  $('#punit_product_id_fk').select2();
+    function deleteRow(tableID) {
+        try {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            for (var i = 0; i < rowCount; i++) {
+                var row = table.rows[i];
+                var chkbox = row.cells[0].childNodes[0];
+                if (null != chkbox && true == chkbox.checked) {
+                    table.deleteRow(i);
+                    rowCount--;
+                    i--;
+                }
+            }
+        } catch (e) {
+            alert(e);
+        }
+    }
 
-  function getstockbal()
+    $('#punit_product_id_fk1').select2();
+
+    
+    function getproductdetails(row)
+    { 
+     // alert($("#punit_product_id_fk"+row).val());
+                  $.ajax({
+                      type: 'POST',
+                      url:"<?php echo base_url()?>ProductTransfer/getpstock",
+                      data: {
+                          pid: $("#punit_product_id_fk"+row).val()
+                      },
+                      success: function(data) {
+                          d = JSON.parse(data);
+                          console.log(d);
+                           $('#punit_stock'+row).html(d.product_stock);
+                          $('#punit_stock'+row).val(d.product_stock);
+                          $('#punit_stock_unit'+row).html(d.unit_name);
+                          $('#punit_stock_unit'+row).val(d.unit_name); 
+                        
+                      },
+                      error: function() {
+                      }
+                  });
+    }
+
+  function getstockbal(row)
   {
-    var punit_qty=document.getElementById('punit_qty').value;
-    var punit_stock=document.getElementById('punit_stock').value;
+    var punit_qty=parseFloat(document.getElementById('punit_qty'+row).value);
+    var punit_stock=parseFloat(document.getElementById('punit_stock'+row).value);
     var bal=parseFloat(punit_stock)-parseFloat(punit_qty);
-    document.getElementById('punit_bal').value=bal;
+    document.getElementById('punit_bal'+row).value=isNaN(bal) ? "0" : bal;
   }
 </script>

@@ -35,6 +35,7 @@ class ProductTransfer_model extends CI_Model{
         $this->db->join('tbl_unit','tbl_unit.unit_id=punit_unit','left');
         $this->db->where('punit_status',1);
         $this->db->where("product_status",1);
+        $this->db->group_by("punit_batch_no");
         $this->db->order_by('product_id','ASC');
         $query = $this->db->get();
         $data['data'] = $query->result();
@@ -52,6 +53,7 @@ class ProductTransfer_model extends CI_Model{
         $this->db->join('tbl_unit','tbl_unit.unit_id=punit_unit','left');
         $this->db->where('punit_status',1);
         $this->db->where("product_status",1);
+        $this->db->group_by("punit_batch_no");
         $this->db->order_by('product_id','ASC');
         
         if(!empty($branch_id_fk) && $branch_id_fk != 0)
@@ -76,7 +78,7 @@ class ProductTransfer_model extends CI_Model{
         return $query->result();
     }
 
-    public function getpstock($id)
+    /* public function getpstock($id)
     {
         $this->db->select('*')->from('tbl_product');
         $this->db->join('tbl_unit','tbl_unit.unit_id=product_unit','left');
@@ -84,7 +86,47 @@ class ProductTransfer_model extends CI_Model{
         $this->db->where('product_status',1);
         $query = $this->db->get();
         return $query->row();
+    } */
+
+    public function getpstock($id)
+    {
+        $this->db->select('*');
+		$this->db->from('tbl_product');
+        $this->db->join('tbl_unit','tbl_unit.unit_id=product_unit','left');
+		$this->db->where('product_status', 1);
+		$this->db->where('product_id', $id);
+		$q = $this->db->get();
+
+		if ($q->num_rows() > 0) {
+
+			return $q->row();
+		}
+
+		return false;
     }
+
+    public function get_admno()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_production_unit');
+		$this->db->where('punit_status', 1);
+		$this->db->order_by('punit_id', "DESC");
+		$this->db->limit(1);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+
+    public function get_invc($invc_no)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_production_unit');
+        $this->db->join('tbl_product','product_id=punit_product_id_fk');
+		$this->db->where('punit_status', 1);
+		$this->db->where('tbl_production_unit.punit_batch_no', $invc_no);
+		$query = $this->db->get();
+		return $query->result();
+	}
    
 }
 ?>
