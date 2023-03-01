@@ -529,6 +529,29 @@
        </li>
 
        <li class="treeview <?php
+          if ($this->uri->segment(1) == "Company") {
+            echo "active";
+          } 
+          else if ($this->uri->segment(1) == "Bank") {
+            echo "active";
+          }
+      
+          ?>">
+         <a><i class="glyphicon glyphicon-share-alt"></i><span>Basic Info</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+      <!--      <li class="<?php if ($this->uri->segment(1) == "Company") {echo "active";} ?>">
+             <a href="<?php echo base_url(); ?>Company"><i class="fa fa-circle-o"></i><span>Basic Information</span></a>
+           </li> -->
+           <li class="<?php if ($this->uri->segment(1) == "Bank") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Bank"><i class="fa fa-circle-o"></i> <span>Bank Info</span></a></li>
+
+          </ul>
+       </li>
+
+       <li class="treeview <?php
          if ($this->uri->segment(1) == "Shareholder") {
             echo "active";
           }
@@ -652,6 +675,84 @@
 
 
        <li class="divider"></li> 
+
+
+       <li class="treeview <?php
+            if($this->uri->segment(1)=="BVoucherhead")
+            {echo "active";}
+
+            else if($this->uri->segment(1)=="BReceipthead")
+            {echo "active";}
+
+            else if($this->uri->segment(1)=="BVoucher")
+            {echo "active";}
+
+            else if($this->uri->segment(1)=="BReceipt")
+            {echo "active";}
+
+            else if($this->uri->segment(1)=="Fund")
+            {echo "active";}
+
+            else if($this->uri->segment(1)=="Vendor_voucher")
+             {echo "active";}
+           
+            else if($this->uri->segment(1)=="BDaybook")
+            {echo "active";}
+            else if($this->uri->segment(1)=="BLedger")
+            {echo "active";}
+            else if($this->uri->segment(1)=="BBalancesheet")
+            {echo "active";}
+             else if($this->uri->segment(1)=="Bankdeposit")
+              {echo "active";}
+            ?>">
+            <a href="#"><i class="fa fa-money"></i><span>Accounts</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu ">
+              <li class="treeview
+              <?php
+              if($this->uri->segment(1)=='BVoucherhead')
+              {echo "active";}
+              else if($this->uri->segment(1)=='BReceipthead')
+              {echo "active";}
+              ?>">
+              <a href="#"><i class="fa fa-circle-o"></i>Create account heads
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="<?php if($this->uri->segment(1)=='BVoucherhead'){echo "active";}?>" ><a href="<?php echo base_url();?>BVoucherhead"><i class="fa fa-circle-o"></i>Voucher</a></li>
+                <li class="<?php if($this->uri->segment(1)=='BReceipthead'){echo "active";}?>" ><a href="<?php echo base_url();?>BReceipthead"><i class="fa fa-circle-o"></i>Receipt</a></li>
+              </ul>
+            </li>
+            
+            <li class="<?php if($this->uri->segment(1)=='BVoucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>BVoucher"><i class="fa fa-circle-o"></i>Voucher Entry</a></li>
+            
+            <li class="<?php if($this->uri->segment(1)=='BReceipt' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>BReceipt"><i class="fa fa-circle-o"></i>Receipt Entry</a></li>
+           
+            <li class="<?php if($this->uri->segment(1)=='Vendor_voucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Vendor_voucher"><i class="fa fa-circle-o"></i>Vendor Voucher</a></li>
+           
+            <li class="<?php if($this->uri->segment(1)=='Fund' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Fund"><i class="fa fa-circle-o"></i>Fund Details</a></li>
+
+            <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>Bank Deposit</a></li>
+
+
+           <li class="<?php if($this->uri->segment(1)=="BDaybook"){echo "active";}?>" ><a  href="<?php echo base_url();?>BDaybook"><i class="fa fa-circle-o"></i> <span>Daybook</span></a></li>
+           
+           <li class="<?php if($this->uri->segment(1)=="BLedger" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>BLedger"><i class="fa fa-circle-o"></i> <span>Ledger</span></a></li>
+            
+            <li class="<?php if($this->uri->segment(1)=="BLedger" && $this->uri->segment(2)=='report'){echo "active";}?>" ><a  href="<?php echo base_url();?>BLedger/report"><i class="fa fa-circle-o"></i> <span>Vendor Ledger</span></a></li>
+
+            <li class="<?php if($this->uri->segment(1)=="BBalancesheet"){echo "active";}?>" ><a  href="<?php echo base_url();?>BBalancesheet"><i class="fa fa-circle-o"></i> <span>Balance Sheet</span></a></li>
+          </ul>
+        </li>
+
+
+       <li class="divider"></li>
+
 
        <li class="treeview <?php 
        

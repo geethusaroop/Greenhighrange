@@ -459,8 +459,8 @@ class BRSale extends MY_Controller {
 
 	public function SaleReturn()
 	{
-		$template['body'] = 'SaleReturn/list';
-		$template['script'] = 'SaleReturn/script';
+		$template['body'] = 'BRSale_return/list';
+		$template['script'] = 'BRSale_return/script';
 		$prid= $this->session->userdata('prid');
         $id = [
             'vendorstatus' => 1
@@ -471,6 +471,7 @@ class BRSale extends MY_Controller {
 
 	public function getSaleReturn(){
 		// $prid =$this->session->userdata('prid');
+		$param['branch_id'] = $this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10'; 
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
@@ -499,8 +500,8 @@ class BRSale extends MY_Controller {
 
 	public function editedSaleRet($auto_invoice)
 	{
-		$template['body'] = 'SaleReturn/edit';
-		$template['script'] = 'SaleReturn/script2';
+		$template['body'] = 'BRSale_return/edit';
+		$template['script'] = 'BRSale_return/script2';
 		$id = ['member_status' => 1];
 		$template['member_names'] = $this->General_model->getall('tbl_member',$id);
 		$template['records'] = $this->BRSale_model->getEditData($auto_invoice);

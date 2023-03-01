@@ -719,7 +719,7 @@ class Purchase_model extends CI_Model{
 		return $query->result();
 	}
 
-	public function getPurchaseReturnReport($param){
+	public function getPurchaseReturnReport($param,$branch_id_fk){
         $arOrder = array('','invoice_number','shop');
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
         $startDate =(isset($param['startDate']))?$param['startDate']:'';
@@ -734,7 +734,14 @@ class Purchase_model extends CI_Model{
             $this->db->where('purchase_return_date <=', $endDate); 
         }
 		$this->db->where("purchase_status",1);
-		
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
+        }
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
@@ -747,11 +754,11 @@ class Purchase_model extends CI_Model{
         $query = $this->db->get();
         
 		$data['data'] = $query->result();
-        $data['recordsTotal'] = $this->getPurchaseReportReturnTotalCount($param);
-        $data['recordsFiltered'] = $this->getPurchaseReportReturnTotalCount($param);
+        $data['recordsTotal'] = $this->getPurchaseReportReturnTotalCount($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getPurchaseReportReturnTotalCount($param,$branch_id_fk);
         return $data;
 	}
-	public function getPurchaseReportReturnTotalCount($param){
+	public function getPurchaseReportReturnTotalCount($param,$branch_id_fk){
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
         $startDate =(isset($param['startDate']))?$param['startDate']:'';
         $endDate =(isset($param['endDate']))?$param['endDate']:'';
@@ -763,6 +770,14 @@ class Purchase_model extends CI_Model{
         }
         if($endDate){
             $this->db->where('purchase_return_date <=', $endDate); 
+        }
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
         }
 		$this->db->where("purchase_status",1);
 		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date,');

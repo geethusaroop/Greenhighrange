@@ -813,6 +813,7 @@ class BRSale_model extends CI_Model
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
         $startDate =(isset($param['startDate']))?$param['startDate']:'';
         $endDate =(isset($param['endDate']))?$param['endDate']:'';
+		$branch_id =(isset($param['branch_id']))?$param['branch_id']:'';
         if($invoice_number){
             $this->db->like('invoice_number', $invoice_number); 
         }
@@ -827,11 +828,14 @@ class BRSale_model extends CI_Model
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
+		if($branch_id){
+			$this->db->where('sale_branch_id_fk',$branch_id);
+		}
 		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
-		$this->db->join('tbl_member','member_id = member_id_fk');
-        $this->db->group_by('invoice_number', 'DESC');
+		$this->db->join('tbl_member','member_id = member_id_fk','left');
+        $this->db->group_by('auto_invoice', 'DESC');
 		$this->db->order_by('return_date','DESC');
         $query = $this->db->get();
         
@@ -844,6 +848,7 @@ class BRSale_model extends CI_Model
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
         $startDate =(isset($param['startDate']))?$param['startDate']:'';
         $endDate =(isset($param['endDate']))?$param['endDate']:'';
+		$branch_id =(isset($param['branch_id']))?$param['branch_id']:'';
 		if($invoice_number){
             $this->db->like('invoice_number', $invoice_number); 
         }
@@ -853,13 +858,16 @@ class BRSale_model extends CI_Model
         if($endDate){
             $this->db->where('return_date <=', $endDate); 
         }
+		if($branch_id){
+			$this->db->where('sale_branch_id_fk',$branch_id);
+		}
 		$this->db->where("sale_status",1);
 		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
-		$this->db->join('tbl_member','member_id = member_id_fk');
+		$this->db->join('tbl_member','member_id = member_id_fk','left');
 		$this->db->order_by('return_date', 'DESC');
-        $this->db->group_by('invoice_number', 'DESC');
+        $this->db->group_by('auto_invoice', 'DESC');
         $query = $this->db->get();
 		return $query->num_rows();
 	}
@@ -869,7 +877,7 @@ class BRSale_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
-		$this->db->join('tbl_member','member_id = member_id_fk');
+		$this->db->join('tbl_member','member_id = member_id_fk','left');
 		$this->db->where('sale_status', 1);
         $this->db->where('auto_invoice', $auto_invoice);
 		$query = $this->db->get();
@@ -880,6 +888,7 @@ class BRSale_model extends CI_Model
 	{
 		$this->db->select('product_stock');
 		$this->db->from('tbl_product');
+		$this->db->where('product_id',$prid);
 		$this->db->where('product_id',$prid);
 		$query = $this->db->get();
 		return $query->result();

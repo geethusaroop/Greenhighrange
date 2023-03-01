@@ -848,7 +848,7 @@ class Purchaseitem extends MY_Controller {
 	}
 
 	public function getPurchaseReturn(){
-		// $prid =$this->session->userdata('prid');
+		 $branch_id_fk =$this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10'; 
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
@@ -868,7 +868,7 @@ class Purchaseitem extends MY_Controller {
 		}	
         $sessid = $this->session->userdata['id'];
 		
-		$data = $this->Purchase_model->getPurchaseReturnReport($param);
+		$data = $this->Purchase_model->getPurchaseReturnReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;
     }
