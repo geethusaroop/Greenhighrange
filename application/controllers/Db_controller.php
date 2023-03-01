@@ -112,47 +112,63 @@ write_file($save, $backup);  */
 		force_download($db_name, $backup);
 	}
 	public function run_sql(){
-		$sql="ALTER TABLE `tbl_purchase` ADD `purchase_branch_id_fk` INT NOT NULL AFTER `purchase_id`";
+		/* $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_receipt` (
+			`receipt_id` int(11) NOT NULL AUTO_INCREMENT,
+			`branch_id_fk` int(11) NOT NULL,
+			`receipt_id_fk` varchar(11) NOT NULL,
+			`finyear_id_fk` int(11) NOT NULL,
+			`receipt_number` int(11) NOT NULL,
+			`receipt_amount` varchar(100) NOT NULL,
+			`rept_date` date NOT NULL,
+			`paid_to` varchar(200) NOT NULL,
+			`narration` varchar(250) NOT NULL,
+			`receipt_status` int(11) NOT NULL,
+			`group` int(11) NOT NULL,
+			PRIMARY KEY (`receipt_id`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1"; */
 
-		/* $sql="CREATE TABLE IF NOT EXISTS `tbl_master_branch_sale` (
-			`sale_id` int(11) NOT NULL AUTO_INCREMENT,
-			`sale_branch_id_fk` int(11) NOT NULL,
-			`product_id_fk` int(11) NOT NULL,
-			`finyear` varchar(11) DEFAULT NULL,
-			`invoice_number` varchar(50) DEFAULT NULL,
-			`auto_invoice` varchar(255) DEFAULT NULL,
-			`sale_mop` varchar(50) DEFAULT NULL,
-			`sale_taxmode` varchar(50) DEFAULT NULL,
-			`sale_hsn` int(11) DEFAULT NULL,
-			`sale_quantity` bigint(20) DEFAULT NULL,
-			`sale_price` float DEFAULT NULL,
-			`discount_price` float DEFAULT NULL,
-			`total_price` float DEFAULT NULL,
-			`taxamount` float DEFAULT NULL,
-			`sale_cgst` float DEFAULT NULL,
-			`sale_cgstamt` float DEFAULT NULL,
-			`sale_sgst` float DEFAULT NULL,
-			`sale_sgstamt` float DEFAULT NULL,
-			`sale_igst` float DEFAULT NULL,
-			`sale_igstamt` float DEFAULT NULL,
-			`sale_netamt` float DEFAULT NULL,
-			`sale_date` date DEFAULT NULL,
-			`sale_staff` int(11) DEFAULT NULL,
-			`return_qty` int(11) DEFAULT NULL,
-			`return_price` int(11) DEFAULT NULL,
-			`return_date` date DEFAULT NULL,
-			`computer_id` varchar(50) DEFAULT NULL,
-			`tax_id_fk` int(11) DEFAULT NULL,
-			`sale_status` int(11) DEFAULT NULL,
-			`sale_shareholder_discount` float NOT NULL,
-			`sale_discount` float NOT NULL,
-			`sale_old_balance` float NOT NULL,
-			`sale_new_balance` float NOT NULL,
-			`sale_paid_amount` float DEFAULT NULL,
-			`product_code` varchar(100) DEFAULT NULL,
-			`invoice` int(11) NOT NULL,
-			PRIMARY KEY (`sale_id`)
-		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1"; */
+		  /* $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_receipthead` (
+			`receipt_id` int(11) NOT NULL AUTO_INCREMENT,
+			`receipt_branch_id_fk` varchar(100) NOT NULL,
+			`fin_year` varchar(100) NOT NULL,
+			`receipt_head` varchar(250) NOT NULL,
+			`receipt_desc` varchar(255) NOT NULL,
+			`receipt_date` date NOT NULL,
+			`receipt_status` int(11) NOT NULL,
+			PRIMARY KEY (`receipt_id`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1"; */
+
+		 /*  $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_voucher` (
+			`voucher_id` int(11) NOT NULL AUTO_INCREMENT,
+			`branch_id_fk` int(11) NOT NULL,
+			`vouch_id_fk` int(11) NOT NULL,
+			`finyear_id_fk` int(11) NOT NULL,
+			`voucher_number` varchar(50) NOT NULL,
+			`voucher_amount` varchar(100) NOT NULL,
+			`paid_to` varchar(200) NOT NULL,
+			`voucher_date` date NOT NULL,
+			`narration` varchar(250) NOT NULL,
+			`voucher_status` int(11) NOT NULL,
+			`voucher_group` int(11) NOT NULL,
+			PRIMARY KEY (`voucher_id`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1"; */
+
+		/*   $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_vouchhead` (
+			`vouch_id` int(11) NOT NULL AUTO_INCREMENT,
+			`vouch_branch_id_fk` varchar(100) NOT NULL,
+			`fin_year` varchar(100) NOT NULL,
+			`vouch_head` varchar(250) NOT NULL,
+			`vouch_desc` varchar(255) NOT NULL,
+			`vouch_date` date NOT NULL,
+			`vouch_status` int(11) NOT NULL,
+			PRIMARY KEY (`vouch_id`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1"; */
+
+		 // $sql="ALTER TABLE `tbl_bank` ADD `bank_branch_id_fk` INT NOT NULL AFTER `bank_id`";
+
+		$sql="ALTER TABLE `tbl_bank_deposit` ADD `branch_id_fk` INT NOT NULL AFTER `bd_id`";
+
+		
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
