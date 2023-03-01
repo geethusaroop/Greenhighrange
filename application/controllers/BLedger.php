@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class BLedger extends MY_Controller {
 	public $table = 'tbl_ledgerbuk';
 	public $table1 = 'tbl_daybook';
-	public $page  = 'Ledger';
+	public $page  = 'BLedger';
 	public function __construct() {
 		parent::__construct();
         if(! $this->is_logged_in()){

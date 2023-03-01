@@ -175,9 +175,37 @@ class Balancesheet_model extends CI_Model{
         public function getcashbalancep1($cdate,$edate)
     {
         $this->db->select('*,sum(closing_amt) as cbalance');
-        $this->db->from('tbl_daybook');
+        $this->db->from('tbl_branch_daybook');
         $this->db->where("daybook_status",2);
        // $this->db->where("project_id_fk",$gid);
+        $d=date("Y-m", strtotime ( '-1 month' , strtotime ( $cdate ) ));
+         $d1=date("Y-m", strtotime ( '-1 month' , strtotime ( $edate ) ));
+       // $this->db->where('date', $cdate);
+       // $this->db->where('date', $d);
+       //$this->db->where('date <=', $edate);
+        if($cdate ==$edate)
+        {
+          $this->db->where('date', $d);
+        }
+        else
+        {
+            $this->db->where('date', $d);
+        // $where = '(date between "'.$d.'" and "'.$d1.'")';
+        // $this->db->where($where);
+        }
+        $this->db->order_by('daybook_id', 'asc');
+        $query = $this->db->get();
+        // print_r($query->result());
+        // exit();
+        return $query->result();
+    }
+
+    public function getbranchcashbalancep1($cdate,$edate,$branch_id_fk)
+    {
+        $this->db->select('*,sum(closing_amt) as cbalance');
+        $this->db->from('tbl_branch_daybook');
+        $this->db->where("daybook_status",2);
+        $this->db->where("branch_id_fk",$branch_id_fk);
         $d=date("Y-m", strtotime ( '-1 month' , strtotime ( $cdate ) ));
          $d1=date("Y-m", strtotime ( '-1 month' , strtotime ( $edate ) ));
        // $this->db->where('date', $cdate);

@@ -292,7 +292,7 @@
 
                         <td style="border-color:#d4d6d5;"><?php echo date('d-m-Y', strtotime($row->sale_date)); ?></td>
 
-                        <td style="border-color:#d4d6d5;"><?php echo $row->custname; ?></td>
+                        <td style="border-color:#d4d6d5;"><?php echo $row->member_name; ?></td>
 
                         <td style="border-color:#d4d6d5;text-align: center;"><?php echo $row->total_price; ?></td>
 
