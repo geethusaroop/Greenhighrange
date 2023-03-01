@@ -563,7 +563,15 @@
             echo "active";
           }
 
-          else if ($this->uri->segment(1) == "Sale") {
+          else if ($this->uri->segment(1) == "BRSale") {
+            echo "active";
+          }
+
+          else if ($this->uri->segment(1) == "Purchaseitem") {
+            echo "active";
+          }
+
+          else if ($this->uri->segment(1) == "Vendor_master") {
             echo "active";
           }
 
@@ -576,13 +584,22 @@
          <ul class="treeview-menu ">
 
 
-         <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
+         <li class="<?php if ($this->uri->segment(1) == "BRSale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BRSale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
+
+         <li class="<?php if ($this->uri->segment(1) == "BRSale" && $this->uri->segment(2) == "SaleReturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BRSale/SaleReturn"><i class="fa fa-circle-o"></i><span>Sale Return</span></a></li>
+
+         
+          <li class="<?php if ($this->uri->segment(1) == "Purchaseitem") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem"><i class="fa fa-circle-o"></i><span>Purchase</span></a></li>
+
+          <li class="<?php if ($this->uri->segment(1) == "Purchaseitem"  && $this->uri->segment(2) == "purchase_return") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem/purchase_return"><i class="fa fa-circle-o"></i><span>Purchase Return</span></a></li>
 
 
            <li class="<?php if ($this->uri->segment(1) == "Stock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stock"><i class="fa fa-circle-o"></i><span>Stock Details</span></a></li>
 
-<!--            <li class="<?php if ($this->uri->segment(1) == "StockStatus") {echo "active";} ?>"><a href="<?php echo base_url(); ?>StockStatus"><i class="fa fa-circle-o"></i><span>Stock Status</span></a></li>
- -->
+           <li class="<?php if ($this->uri->segment(1) == "Vendor_master") {echo "active";} ?>">
+             <a href="<?php echo base_url(); ?>Vendor_master"><i class="fa fa-circle-o"></i><span>Vendor Master</span></a>
+           </li>
+
           </ul>
        </li>
 

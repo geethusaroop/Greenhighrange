@@ -6,7 +6,7 @@ class Purchase_model extends CI_Model{
 	{
 		parent::__construct();
 	}
-	public function getPurchaseReport($param){
+	public function getPurchaseReport($param,$branch_id_fk){
 		$arOrder = array('','invoice_number','shop');
 		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
 		$shop =(isset($param['shop']))?$param['shop']:'';
@@ -20,6 +20,14 @@ class Purchase_model extends CI_Model{
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'],$param['start']);
 		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
+        }
 		$this->db->select('*,COUNT(invoice_number) as prcount,ROUND(SUM(total_price),2) as total,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_dat');
 		$this->db->from('tbl_purchase');
 		$this->db->join('tbl_product','product_id = product_id_fk');
@@ -29,11 +37,11 @@ class Purchase_model extends CI_Model{
 		$this->db->order_by('purchase_id','DESC');
 		$query = $this->db->get();
 		$data['data'] = $query->result();
-		$data['recordsTotal'] = $this->getPurchaseReportTotalCount($param);
-		$data['recordsFiltered'] = $this->getPurchaseReportTotalCount($param);
+		$data['recordsTotal'] = $this->getPurchaseReportTotalCount($param,$branch_id_fk);
+		$data['recordsFiltered'] = $this->getPurchaseReportTotalCount($param,$branch_id_fk);
 		return $data;
 	}
-	public function getPurchaseReportTotalCount($param){
+	public function getPurchaseReportTotalCount($param,$branch_id_fk){
 		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
 		$shop =(isset($param['shop']))?$param['shop']:'';
 		if($invoice_number){
@@ -42,6 +50,14 @@ class Purchase_model extends CI_Model{
 		if($shop!=0){
 			$this->db->where('shop_id_fk', $shop);
 		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
+        }
 		$this->db->where("purchase_status",1);
 		$this->db->select('*,COUNT(invoice_number) as prcount,SUM(total_price) as total,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_date');
 		$this->db->from('tbl_purchase');

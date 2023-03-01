@@ -3,20 +3,20 @@ ob_start();
 require 'vendor/autoload.php';
 use Dompdf\Dompdf;
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Sale extends MY_Controller {
+class BRSale extends MY_Controller {
 	public $table = 'tbl_sale';
 	public $tbl_stock = 'tbl_product';
 	public $tbl_customer = 'tbl_customer';
 	public $tbl_daybuk = 'tbl_daybuk';
 	public $tbl_ledgerbuk = 'tbl_ledgerbuk';
-	public $page  = 'Sale';
+	public $page  = 'BRSale';
 	public function __construct() {
 		parent::__construct();
          if(! $this->is_logged_in()){
             redirect('/login');
         }
         $this->load->model('General_model');
-		$this->load->model('Sale_model');
+		$this->load->model('BRSale_model');
 		$this->load->model('Purchase_model');
 	//	$this->load->model('Customer_model');
 		$this->load->model('Dashboard_model');
@@ -24,25 +24,25 @@ class Sale extends MY_Controller {
 	public function index()
 	{
 		
-		$template['body'] = 'Sale/list';
-		$template['script'] = 'Sale/script';
+		$template['body'] = 'BRSale/list';
+		$template['script'] = 'BRSale/script';
 		$this->load->view('template',$template);
 	}
 	public function add(){
 	   
-		$template['tax_names'] = $this->Sale_model->view_by();
+		$template['tax_names'] = $this->BRSale_model->view_by();
 		$this->form_validation->set_rules('customer_name', 'Customer Name', 'required');
 		if ($this->form_validation->run() == FALSE) {
-			$admno = $this->Sale_model->get_admno();
+			$admno = $this->BRSale_model->get_admno();
 			if(isset($admno->sale_id)){$adm=$admno->invoice+1;}else{$adm=1;}
 			$template['adm'] = $adm;
-			$template['body'] = 'Sale/add';
-			$template['script'] = 'Sale/script2';
+			$template['body'] = 'BRSale/add';
+			$template['script'] = 'BRSale/script2';
 			$this->load->view('template', $template);
 		}
 		else {
 			$sessid = $this->session->userdata['id'];
-		//	$shopid = $this->Sale_model->get_shop($sessid);
+		//	$shopid = $this->BRSale_model->get_shop($sessid);
 		$finyear = $this->Purchase_model->get_fyear();
 		if(isset($finyear[0]->fin_year)){$fin=$finyear[0]->fin_year;}else{$fin=0;}
 			//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
@@ -91,7 +91,7 @@ class Sale extends MY_Controller {
 			$grand_total = $this->input->post('net_total');
 			$shop_id=$this->session->userdata('shop_id');
 			 for($i=0;$i<$temp;$i++){
-			//	$stok = $this->Sale_model->get_stk($product_id_fk[$i]);
+			//	$stok = $this->BRSale_model->get_stk($product_id_fk[$i]);
 			//	$nwstk = $stok[0]->production_quantity - $sale_quantity[$i];
 			$mem_type=$this->input->post('member_type');
 			if($mem_type==1 || $mem_type==2  || $mem_type==3)
@@ -167,23 +167,23 @@ class Sale extends MY_Controller {
 				$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
 				
 				}
-	       redirect('/Sale/invoice/'.$invoice_no, 'refresh');
+	       redirect('/BRSale/invoice/'.$invoice_no, 'refresh');
 		}
 	}
 	public function invoice($invoice_no)
 	{
-		$template['body'] = 'Sale_Invoice/Invoice2';
-		$template['script'] = 'Sale_Invoice/script';
+		$template['body'] = 'BSale_Invoice/Invoice2';
+		$template['script'] = 'BSale_Invoice/script';
 		
-		$template['records'] = $this->Sale_model->get_invc($invoice_no);
+		$template['records'] = $this->BRSale_model->get_invc($invoice_no);
 		$this->load->view('template', $template);
 	}
 	public function invoiceview($invoice_no)
 	{
-		$template['body'] = 'Sale_Invoice/Invoice2';
-		$template['script'] = 'Sale_Invoice/script';
+		$template['body'] = 'BSale_Invoice/Invoice2';
+		$template['script'] = 'BSale_Invoice/script';
 		
-		$template['records'] = $this->Sale_model->get_invoice($invoice_no);
+		$template['records'] = $this->BRSale_model->get_invoice($invoice_no);
 		//var_dump($template['records']);die;
 		//echo "<pre>"; print_r($template['records']);
 		$this->load->view('template', $template);
@@ -208,10 +208,10 @@ class Sale extends MY_Controller {
             $param['end_date'] =  date("Y-m-d",strtotime($end_date));
         }
        // $sessid = $this->session->userdata['id'];
-		//$shopid = $this->Sale_model->get_shop($sessid);
+		//$shopid = $this->BRSale_model->get_shop($sessid);
 		//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
 		//$param['shop'] =$shid;
-		$data = $this->Sale_model->getSaleReport($param,$branch_id_fk);
+		$data = $this->BRSale_model->getSaleReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;
     }
@@ -230,16 +230,16 @@ class Sale extends MY_Controller {
         $response['layout'] = 'topRight';
         $data_json = json_encode($response);
         echo $data_json;
-		redirect('/Sale/', 'refresh');
+		redirect('/BRSale/', 'refresh');
     } */
 
 	public function delete()
 	{
 		$invoice_number = $this->input->post('invoice_id');
-		$records = $this->Sale_model->get_invc($invoice_number);
+		$records = $this->BRSale_model->get_invc($invoice_number);
 		for($i=0; $i< count($records); $i++)
 		{
-			$stok = $this->Sale_model->get_prodstk($records[$i]->product_id);
+			$stok = $this->BRSale_model->get_prodstk($records[$i]->product_id);
 			//var_dump($stok);die;
             $nwstk = $stok[0]->product_stock + $records[$i]->sale_quantity;
             
@@ -259,30 +259,30 @@ class Sale extends MY_Controller {
 		$response['layout'] = 'topRight';
 		$data_json = json_encode($response);
 		echo $data_json;
-		//redirect('/Sale/', 'refresh');
+		//redirect('/BRSale/', 'refresh');
 	}
 
 	public function edit($product_id){
-		$template['body'] = 'Sale/add';
-		$template['script'] = 'Sale/script';
+		$template['body'] = 'BRSale/add';
+		$template['script'] = 'BRSale/script';
 		$template['category_names'] = $this->Category_model->view_by();
 		$template['records'] = $this->General_model->get_row($this->table,'product_id',$product_id);
     	$this->load->view('template', $template);
 	}
 	function getproductnum(){
 	header('Content-Type: application/x-json; charset=utf-8');
-	$result = $this->Sale_model->getproductnum();
+	$result = $this->BRSale_model->getproductnum();
 	echo json_encode($result);
     }
     public function getproductname(){
 	header('Content-Type: application/x-json; charset=utf-8');
-	$result = $this->Sale_model->getproductnames();
+	$result = $this->BRSale_model->getproductnames();
 	echo json_encode($result);
     }
     public function getprice()
 	{
 	$product_id_fk = $this->input->post('product_id_fk');
-	$data = $this->Sale_model->getprice($product_id_fk);
+	$data = $this->BRSale_model->getprice($product_id_fk);
 	$json_data = json_encode($data);
 	echo $json_data;
 	}
@@ -291,7 +291,7 @@ class Sale extends MY_Controller {
 	// $product_id = $this->input->post('product_num');
 	// print_r($product_id);
 	// exit();
-	// $result = $this->Sale_model->get_price($product_id);
+	// $result = $this->BRSale_model->get_price($product_id);
 	// echo json_encode($result);
  //    }
 	 public function get_price(){
@@ -299,26 +299,26 @@ class Sale extends MY_Controller {
 	$product_id = $this->input->post('p_id');
 	//print_r($product_id);
 	//exit();
-	$result = $this->Sale_model->get_price($product_id);
+	$result = $this->BRSale_model->get_price($product_id);
 	echo json_encode($result);
     }
 	function gettax(){
 	header('Content-Type: application/x-json; charset=utf-8');
-	$result = $this->Sale_model->gettax();
+	$result = $this->BRSale_model->gettax();
 	echo json_encode($result);
     }
 	public function get_purchasedetails(){
 	    $product_num = $this->input->post('product_num');
 		//$product_size = $this->input->post('product_size');
-		//$data = $this->Sale_model->get_purchasedetails($product_num,$product_size);
-		$data = $this->Sale_model->get_purchasedetails2($product_num);
+		//$data = $this->BRSale_model->get_purchasedetails($product_num,$product_size);
+		$data = $this->BRSale_model->get_purchasedetails2($product_num);
 		$data_json = json_encode($data);
     	echo $data_json;
 	}
 	public function getstock(){
 		$product_id =$this->input->post('product_id');
 		$shop_id = $this->input->post('shop_id');
-		$stok = $this->Sale_model->get_stok($product_id,$shop_id);
+		$stok = $this->BRSale_model->get_stok($product_id,$shop_id);
 		//if(isset($stok[0]->production_quantity)){$mas=$stok[0]->production_quantity;}else{$mas=0;};
 		if(isset($stok[0]->item_quantity)){$mas=$stok[0]->item_quantity;}else{$mas=0;};
 		$json_data = json_encode($mas);
@@ -329,7 +329,7 @@ class Sale extends MY_Controller {
 		header('Content-Type: application/x-json; charset=utf-8');
 		$product_cmpny = $this->input->post('product_cmpny');
 		$product_size = $this->input->post('product_size');
-		$data = $this->Sale_model->getproduct($product_cmpny,$product_size);
+		$data = $this->BRSale_model->getproduct($product_cmpny,$product_size);
 		$data_json = json_encode($data);
 		echo $data_json;
     }
@@ -337,52 +337,52 @@ class Sale extends MY_Controller {
 	{
 		header('Content-Type: application/x-json; charset=utf-8');
 		$product_size = $this->input->post('product_size');
-		$data = $this->Sale_model->getproductcompany($product_size);
+		$data = $this->BRSale_model->getproductcompany($product_size);
 		$data_json = json_encode($data);
 		echo $data_json;
 	}
 	 public function getproductname1(){
     $prod_id = $this->input->post('p_id');
-	$data['product'] = $this->Sale_model->getproductname1($prod_id);
+	$data['product'] = $this->BRSale_model->getproductname1($prod_id);
 	echo json_encode($data);
     }
 	// function get_memberaddress(){
 	// 	$id = $this->input->post('member_id');
-	// 	$data = $this->Sale_model->get_memberaddress($id);
+	// 	$data = $this->BRSale_model->get_memberaddress($id);
 	// 	echo json_encode($data);
 	// }
 	function get_memberaddress(){
 		$id = $this->input->post('id');
-		//$data = $this->Sale_model->get_memberaddress($id);
+		//$data = $this->BRSale_model->get_memberaddress($id);
 		//echo json_encode($data);
-		$records = $this->Sale_model->get_memberaddress($id);
+		$records = $this->BRSale_model->get_memberaddress($id);
 		$data_json = json_encode($records);
         echo $data_json;
 	}
 	function get_phone(){
 		$id = $this->input->post('id');
-		//$data = $this->Sale_model->get_memberaddress($id);
+		//$data = $this->BRSale_model->get_memberaddress($id);
 		//echo json_encode($data);
-		$records = $this->Sale_model->get_phone($id);
+		$records = $this->BRSale_model->get_phone($id);
 		$data_json = json_encode($records);
         echo $data_json;
 	}
 	public function getOldBalance()
 	{
 		$id = $this->input->post('id');
-		$data = $this->Sale_model->getOldBalanceDetails($id);
+		$data = $this->BRSale_model->getOldBalanceDetails($id);
 		echo json_encode($data);
 	}
 	public function getMemberList()
 	{
 		$mem_id = $_POST['mem_id'];
-		$data = $this->Sale_model->getMemberlists($mem_id);
+		$data = $this->BRSale_model->getMemberlists($mem_id);
 		echo json_encode($data);
 	}
 
 	public function get_table(){
 		$table='tbl_production_itemlist';
-		$result=$this->Sale_model->get_table($table);
+		$result=$this->BRSale_model->get_table($table);
 		echo "<pre>"; print_r($result); die;
 	}
 
@@ -390,23 +390,23 @@ class Sale extends MY_Controller {
 	public function getproduct_names()
 	{$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$id = ($this->input->get('phrase'))?$this->input->get('phrase'):'';
-		$data =  $this->Sale_model->getproduct_names($id,$branch_id_fk);
+		$data =  $this->BRSale_model->getproduct_names($id,$branch_id_fk);
 		echo json_encode($data);
 	}
 
-	 public function getProductDetails1()
+	public function getProductDetails1()
 	{
 		$prod1 = [];
 		$branches_id = $this->session->userdata('branch_id_fk');
 		$p_name = $this->input->post('p_name');
-		$data['product_name1'] =  $this->Sale_model->get_row_barcode($p_name);
-		$data['product_name2'] =  $this->Sale_model->get_row_barcode_branch($p_name,$branches_id);
-		$prod1['hsncode'] = $data['product_name1']->product_hsncode;
-		$prod1['igst'] = $data['product_name1']->hsn_igst;
-		$prod1['cgst'] = $data['product_name1']->hsn_cgst;
-		$prod1['sgst'] = $data['product_name1']->hsn_sgst;
-		$prod1['prod_cod'] = $data['product_name1']->product_code;
-		$prod1['prod_id'] = $data['product_name1']->product_id;
+		// $data['product_name1'] =  $this->BRSale_model->get_row_barcode($p_name);
+		$data['product_name2'] =  $this->BRSale_model->get_row_barcode_branch($p_name,$branches_id);
+		$prod1['hsncode'] = $data['product_name2']->product_hsncode;
+		$prod1['igst'] = $data['product_name2']->hsn_igst;
+		$prod1['cgst'] = $data['product_name2']->hsn_cgst;
+		$prod1['sgst'] = $data['product_name2']->hsn_sgst;
+		$prod1['prod_cod'] = $data['product_name2']->product_code;
+		$prod1['prod_id'] = $data['product_name2']->product_id;
 		$prod1['prod_id_branch'] = $data['product_name2']->product_id;
 		$prod1['stock'] = $data['product_name2']->product_stock;
 		echo json_encode($prod1);
@@ -418,7 +418,7 @@ class Sale extends MY_Controller {
 		$prod1 = [];
 		$pid = $this->input->post('product_num');
 		$ptype = $this->input->post('rate_type');
-		$data['product_name1'] =  $this->Sale_model->get_row_rate($pid);
+		$data['product_name1'] =  $this->BRSale_model->get_row_rate($pid);
 		if($ptype==1)
 		{
 			$prod1['rate'] = $data['product_name1']->product_price_r1;
@@ -437,7 +437,7 @@ class Sale extends MY_Controller {
 
 	public function Pdf_Sale($auto_invoice)
 	{
-		$records = $this->Sale_model->get_sale_pdf($auto_invoice);
+		$records = $this->BRSale_model->get_sale_pdf($auto_invoice);
 		// instantiate and use the dompdf class
 		$dompdf = new Dompdf();
 		$dompdf->loadHtml($records);
@@ -452,7 +452,7 @@ class Sale extends MY_Controller {
 	public function get_old_bal()
 	{
 		$mem_id = $this->input->post('vid');
-		$records = $this->Sale_model->get_old_bal($mem_id);
+		$records = $this->BRSale_model->get_old_bal($mem_id);
 		$data_json = json_encode($records);
 		echo $data_json;
 	}
@@ -492,7 +492,7 @@ class Sale extends MY_Controller {
 		}	 */
         $sessid = $this->session->userdata['id'];
 		
-		$data = $this->Sale_model->getSaleReturnReport($param);
+		$data = $this->BRSale_model->getSaleReturnReport($param);
 		$json_data = json_encode($data);
     	echo $json_data;
     }
@@ -503,7 +503,7 @@ class Sale extends MY_Controller {
 		$template['script'] = 'SaleReturn/script2';
 		$id = ['member_status' => 1];
 		$template['member_names'] = $this->General_model->getall('tbl_member',$id);
-		$template['records'] = $this->Sale_model->getEditData($auto_invoice);
+		$template['records'] = $this->BRSale_model->getEditData($auto_invoice);
 		$this->load->view('template', $template);
 	}
 
@@ -523,7 +523,7 @@ class Sale extends MY_Controller {
 			);
 			if(isset($sale_idss[$i])){
 				$this->General_model->update('tbl_sale', $data,'sale_id',$sale_idss[$i]);
-				$stok[$i] = $this->Sale_model->get_stoks($product_id_fk[$i]);
+				$stok[$i] = $this->BRSale_model->get_stoks($product_id_fk[$i]);
 				$nwstk = $stok[$i][0]->product_stock + $return_qty[$i];
 				$uData = array(
 					'product_stock' => $nwstk,
@@ -532,7 +532,7 @@ class Sale extends MY_Controller {
 			}
 			
 		}
-		redirect('/Sale/SaleReturn/', 'refresh');
+		redirect('/BRSale/SaleReturn/', 'refresh');
 	}
 
 }

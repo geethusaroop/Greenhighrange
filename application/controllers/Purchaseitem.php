@@ -136,6 +136,7 @@ class Purchaseitem extends MY_Controller {
 					'pur_new_bal' => $this->input->post('net_balance'),
 					'purchase_date' => $purchase_date,
 					'stockstatus' => 0,
+					'purchase_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 					//'tax_id_fk' =>$tax_id_fk[$i],
 					'entry_date'=>date('Y-m-d'),
 					'purchase_status' => 1
@@ -199,6 +200,7 @@ class Purchaseitem extends MY_Controller {
 		$this->load->view('template', $template);
 	}
 	public function get(){
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
 		$param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
 		$param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
@@ -209,7 +211,7 @@ class Purchaseitem extends MY_Controller {
 		//$shopid = $this->Purchase_model->get_shop($sessid);
 		//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
 		//$param['shop'] =$shid;
-		$data = $this->Purchase_model->getPurchaseReport($param);
+		$data = $this->Purchase_model->getPurchaseReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
