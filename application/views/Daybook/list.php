@@ -115,6 +115,7 @@
               $bankdep=0;
               $sfund=0;
               $tfund=0;
+              $mbtsale=0;
               ?>
               <?php foreach ($payroll as $rows1) {if($rows1->salary!=0){ ?>
                 <tr>
@@ -156,6 +157,16 @@
                   <td style="border-color:#d4d6d5;"></td>
                 </tr>
               <?php $test = $test + $rows->total_amount;
+              }} ?>
+
+            <?php foreach ($mbtsaleincome as $rows) {if($rows->total_amount!=0){ ?>
+                <tr>
+                  <td style="border-color:#d4d6d5;"><?php echo "Master To Branch Sale Income- ".$rows->branch_name." "."Branch"; ?></td>
+                 <td style="border-color:#d4d6d5;"><?php echo $rows->invoice_number; ?></td>
+                  <td style="border-color:#d4d6d5;"><?php if(!empty($rows->total_amount)) { echo $rows->total_amount; } else { echo 0; } ?></td>
+                  <td style="border-color:#d4d6d5;"></td>
+                </tr>
+              <?php $mbtsale = $mbtsale + $rows->total_amount;
               }} ?>
 
             <?php foreach ($bdeposit as $rows) {if($rows->bd_amount!=0){ ?>
@@ -238,7 +249,7 @@
                   $obalance1 = 0;
                 }
               }
-              $credit = $treceipt + $obalance + $test+$bankdep+$sfund+$tfund;
+              $credit = $treceipt + $obalance + $test+$bankdep+$sfund+$tfund+$mbtsale;
               $debit = $tvoucher + $obalance1 + $purchase + $feedpurchase + $sal + $adv+$vvoucher;
               //$credit_sum=
               // $credit_to=$obalance+$credit;

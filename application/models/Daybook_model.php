@@ -808,5 +808,19 @@ public function pupdate_daybook($date,$profit,$stat){
 			$result=$query->result();
 			return $result;
 		}
+
+		public function getmbtsaleincome($cdate)
+        {
+            $this->db->select('*,DATE_FORMAT(sale_date,\'%d/%m/%Y\') AS sale_date,tbl_master_branch_sale.total_price as total_amount');
+            $this->db->from('tbl_master_branch_sale');
+			$this->db->join('tbl_branch','tbl_branch.branch_id=tbl_master_branch_sale.sale_branch_id_fk');
+            $this->db->where("tbl_master_branch_sale.sale_status",1);
+             $this->db->where('sale_date',$cdate);
+			 $this->db->group_by('auto_invoice');
+			 $this->db->order_by('invoice_number','ASCE');
+            $query = $this->db->get();
+            $result=$query->result();
+            return $result;
+        }
 }
 ?>
