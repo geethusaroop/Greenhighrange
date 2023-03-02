@@ -55,12 +55,11 @@ h4:after {
             <div class="box-header">
             <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response');?>" />
               <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
-              <div class="col-md-8"><h2 class="box-title"></h2> </div>
+           
             </div>
-            <div class="box-body">
+            <div class="box-body" >
               <div class="row">
-              <div class="col-lg-1"></div>
-              <div class="col-lg-10">
+              <div class="col-lg-12">
              <div class="panel panel-danger" style="box-shadow: 2px 2px 2px 2px black;">
                 <div class="panel-heading">
                   <h3 class="panel-title"><b>Production Details</b></h3>
@@ -71,67 +70,92 @@ h4:after {
                   <label class="fsize">Item  Transfer Date<span style="color:red"> *</span></label>
                   <input type="hidden" autofocus class="form-control" name="punit_id" id="punit_id"  value="<?php if(isset($records->punit_id)) echo $records->punit_id ?>"  style="background:white;">
 
-                  <input type="text" autofocus class="form-control" name="punit_date" id="punit_date"  value="<?php if(isset($records->punit_date)) echo $records->punit_date ?>"  style="background:white;">
+                  <input type="text" autofocus class="form-control" name="punit_date" id="punit_date"  value="<?php if(isset($records[0]->punit_date)) echo $records[0]->punit_date ?>"  style="background:white;">
                 </div>
                     <div class="col-md-4">
                                 <label class="fsize">Production Unit<span style="color:red"> *</span></label>
                                 <select name="punit_type"  id="punit_type" class="form-control" style="font-weight: bold;">
                                   <option value="">-SELECT-</option>
-                                  <option <?php if(isset($records->punit_type)) {if($records->punit_type==1){echo "selected";}} ?> value="1">Masala Unit</option>
-                                  <option <?php if(isset($records->punit_type)) {if($records->punit_type==2){echo "selected";}} ?> value="2">Spices Unit</option>
-                                  <option <?php if(isset($records->punit_type)) {if($records->punit_type==3){echo "selected";}} ?> value="3">Oil Unit</option>
-                                  <option <?php if(isset($records->punit_type)) {if($records->punit_type==4){echo "selected";}} ?> value="4">Pickle Unit</option>
-                                  <option <?php if(isset($records->punit_type)) {if($records->punit_type==5){echo "selected";}} ?> value="5">Miscellaneous Unit</option>
+                                  <option <?php if(isset($records[0]->punit_type)) {if($records[0]->punit_type==1){echo "selected";}} ?> value="1">Masala Unit</option>
+                                  <option <?php if(isset($records[0]->punit_type)) {if($records[0]->punit_type==2){echo "selected";}} ?> value="2">Spices Unit</option>
+                                  <option <?php if(isset($records[0]->punit_type)) {if($records[0]->punit_type==3){echo "selected";}} ?> value="3">Oil Unit</option>
+                                  <option <?php if(isset($records[0]->punit_type)) {if($records[0]->punit_type==4){echo "selected";}} ?> value="4">Pickle Unit</option>
+                                  <option <?php if(isset($records[0]->punit_type)) {if($records[0]->punit_type==5){echo "selected";}} ?> value="5">Miscellaneous Unit</option>
                                 </select>
                       </div>
 
-                      <div class="col-md-4">
-                     <label class="fsize">Raw Material Used <span style="color:red"> *</span></label>
-                          <select name="punit_product_id_fk"  id="punit_product_id_fk" class="form-control select2" style="font-weight: bold;">
-                            <option value="">-SELECT-</option>
-                             <?php foreach($product as $item){ ?>
-                              <option value="<?php echo $item->product_id ?>" <?php if(isset($records->punit_product_id_fk)) { if($records->punit_product_id_fk==$item->product_id){ echo "selected"; } } ?>><?php echo $item->product_name ?></option>
-                             <?php } ?>
-                          </select>
-                </div>
+                     
+                          <div class="col-md-4">
+                          <label class="fsize">Batch No<span style="color:red"> *</span></label>
 
+                          <input type="text" autofocus class="form-control" name="punit_batch_no" id="punit_batch_no"  value="<?php if(isset($records[0]->punit_batch_no)) echo $records[0]->punit_batch_no ?>"  style="background:white;">
+                        </div>
                   </div>
 
-                  <div class="form-group row">
-                  <div class="col-md-3">
-                              <label for="">Total Qty Transfered</label>
-                              <input type="text" class="form-control" name="punit_qty" style="text-transform:uppercase"  autofocus value="<?php if(isset($records->punit_qty)) echo $records->punit_qty."-".$records->unit_name; ?>">
-                   </div>
-                   <div class="col-md-2">
-                              <label for="">Used Weight <span style="color:red"> *</span></label>
-                              <input type="text" class="form-control" name="punit_weight" style="text-transform:uppercase"  autofocus value="<?php if(isset($records->punit_weight)) echo $records->punit_weight; ?>">
-                   </div>
 
-                   <div class="col-md-2">
-                  <label class="fsize">Unit <span style="color:red"> *</span></label>
-                  <select name="punit_weight_unit" class="form-control">
-                    <option value="">-SELECT UNIT-</option>
-                   <?php foreach($unit as $un){ ?>
-                    <option <?php if(isset($records->punit_weight_unit)){if($records->punit_weight_unit==$un->unit_name){echo "selected";}} ?> value="<?php  echo  $un->unit_name;?>"><?php  echo  $un->unit_name;?></option>
-                   <?php } ?>
-                  </select>
+                  <div class="table-responsive">
+                                  <table  class="table table-striped table-bordered tc-table footable" style="border:1px solid #ccc;color:black;">
+                                    <thead>
+                                      <tr style="color: black;text-transform: uppercase;">
+                                        <th style="border:1px solid #ccc;" width="25" class="col-small center ">SlNo</th>
+                                        <th style="border:1px solid #ccc;" width="45">Raw_Material_Used</th>
+                                        <th style="border:1px solid #ccc;" width="45">Product_Code</th>
+                                        <th style="border:1px solid #ccc;" width="45">Total_Qty_Transfered</th>
+                                        <th style="border:1px solid #ccc;" width="72">Unit</th>
+                                        <th style="border:1px solid #ccc;" width="250">Purchase_Price</th>
+                                        <th style="border:1px solid #ccc;" width="250">Total_Purchase_Price</th>
+                                        <th style="border:1px solid #ccc;" width="250">Total_Weight_Used</th>
+                                        <th style="border:1px solid #ccc;" width="250">Unit</th>
+                                        <th style="border:1px solid #ccc;" width="250">Wastage</th>
+                                        <th style="border:1px solid #ccc;" width="250">Unit</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody  style="background: #ffff;">
+                                    <?php $i=0;$sum=0;foreach($records as $row){$i=$i+1; ?>
+                                      <TR style="border:1px solid #ccc;background: #ffff;">
+                                        <TD style="color:black;border:1px solid #ccc;"><?php echo $i; ?><input type="hidden" name="punit_product_id_fk[]" value="<?php echo $row->punit_product_id_fk; ?>"></TD>
+                                        <TD style="border:1px solid #ccc;"> <?php echo $row->product_name; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->product_code; ?> </TD>
+                                          <TD style="border:1px solid #ccc;">  <?php echo $row->punit_qty; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"><?php echo $row->unit_name; ?></TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->purchase_price; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->purchase_price * $row->punit_qty; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"><input type="text" class="form-control" name="punit_weight[]" style="text-transform:uppercase"  autofocus value="<?php echo $row->punit_weight; ?>"></TD>
+                                          <TD style="border:1px solid #ccc;"> 
+                                          <select name="punit_weight_unit[]" class="form-control">
+                                          <option value="">-SELECT UNIT-</option>
+                                            <?php foreach($unit as $un){ ?>
+                                            <option <?php if(isset($records->punit_weight_unit)){if($records->punit_weight_unit==$un->unit_name){echo "selected";}} ?> value="<?php  echo  $un->unit_name;?>"><?php  echo  $un->unit_name;?></option>
+                                            <?php } ?>
+                                          </select>
+                                          </TD>
+                                          <TD style="border:1px solid #ccc;"> 
+                                          <input type="text" class="form-control" name="punit_waste[]" style="text-transform:uppercase"  autofocus value="<?php echo $row->punit_waste; ?>">
+                                          </TD>
+                                          <TD style="border:1px solid #ccc;"> 
+                                          <select name="punit_waste_unit[]" class="form-control">
+                                          <option value="">-SELECT UNIT-</option>
+                                          <?php foreach($unit as $un){ ?>
+                                          <option <?php if(isset($records->punit_waste_unit)){if($records->punit_waste_unit==$un->unit_name){echo "selected";}} ?> value="<?php  echo  $un->unit_name;?>"><?php  echo  $un->unit_name;?></option>
+                                          <?php } ?>
+                                          </select>
+                                          </TD>
+                                        </TR>
+                                        <?php $sum=$sum+($row->purchase_price * $row->punit_qty);} ?>
+                                      </table>
+                                      </div>
+
+                  
+                <div class="form-group row">
+                  <div class="col-md-2">
+                  <label class="fsize">Total Purchase Cost</label>
+                  <input type="text" autofocus class="form-control" name="punit_purchase_cost" id="punit_purchase_cost"  value="<?php if($row->punit_purchase_cost!=0){echo $row->punit_purchase_cost;}else{echo $sum;}  ?>"  style="background:white;">
                 </div>
-
-                   <div class="col-md-2">
-                              <label for="">Wastage <span style="color:red"> *</span></label>
-                              <input type="text" class="form-control" name="punit_waste" style="text-transform:uppercase"  autofocus value="<?php if(isset($records->punit_waste)) echo $records->punit_waste; ?>">
-                   </div>
-
-                   <div class="col-md-2">
-                  <label class="fsize">Unit <span style="color:red"> *</span></label>
-                  <select name="punit_waste_unit" class="form-control">
-                    <option value="">-SELECT UNIT-</option>
-                   <?php foreach($unit as $un){ ?>
-                    <option <?php if(isset($records->punit_waste_unit)){if($records->punit_waste_unit==$un->unit_name){echo "selected";}} ?> value="<?php  echo  $un->unit_name;?>"><?php  echo  $un->unit_name;?></option>
-                   <?php } ?>
-                  </select>
+                <div class="col-md-2">
+                  <label class="fsize">Total Production Cost</label>
+                  <input type="text" autofocus class="form-control" name="punit_product_cost" id="punit_product_cost"  value="<?php echo $row->punit_product_cost; ?>"  style="background:white;">
                 </div>
-                  </div>
+                </div>
 
               
             <!-- /.box-header -->
@@ -171,16 +195,16 @@ h4:after {
                                     <tbody  style="background: #ffff;">
                                     <?php $i=0;foreach($record as $row){$i=$i+1; ?>
                                       <TR style="border:1px solid #ccc;background: #ffff;">
-                                        <TD style="color:black;"> 1 </TD>
-                                        <TD> <?php echo $row->product_name; ?> </TD>
-                                          <TD> <?php echo $row->product_code; ?> </TD>
-                                          <TD>  <?php echo $row->product_batch_no; ?> </TD>
-                                          <TD> <?php echo $row->pstock_total; ?> </TD>
-                                          <TD><?php echo $row->unit_name; ?></TD>
-                                          <TD> <?php echo $row->pstock_r1; ?></TD>
-                                          <TD> <?php echo $row->pstock_r2; ?> </TD>
-                                          <TD> <?php echo $row->pstock_r3; ?> </TD>
-                                          <TD> <?php echo $row->product_des; ?> </TD>
+                                        <TD style="color:black;border:1px solid #ccc;"> 1 </TD>
+                                        <TD style="border:1px solid #ccc;"> <?php echo $row->product_name; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->product_code; ?> </TD>
+                                          <TD style="border:1px solid #ccc;">  <?php echo $row->product_batch_no; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->pstock_total; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"><?php echo $row->unit_name; ?></TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->pstock_r1; ?></TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->pstock_r2; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->pstock_r3; ?> </TD>
+                                          <TD style="border:1px solid #ccc;"> <?php echo $row->product_des; ?> </TD>
                                         </TR>
                                         <?php } ?>
                                       </table>

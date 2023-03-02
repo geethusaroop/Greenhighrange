@@ -63,13 +63,25 @@ class Db_controller extends MY_Controller
 		$this->load->dbforge();
 		$fields = [
 			
-				'purchase_ven_discount' => [
+				'punit_batch_no' => [
+					'type' => 'VARCHAR',
+					'constraint' => '80',
+				],
+
+				'batch_no' => [
+					'type' => 'INT',
+				],
+
+				'punit_product_cost' => [
 					'type' => 'FLOAT',
-					'default' => NULL,
+				],
+
+				'punit_purchase_cost' => [
+					'type' => 'FLOAT',
 				],
 				
 		];
-		//$query = $this->dbforge->add_column('tbl_mara_purchase',$fields);  //uncomment this line
+	//	$query = $this->dbforge->add_column('tbl_production_unit',$fields);  //uncomment this line
 		if ($query) {
 			echo "Success";
 		} else {
@@ -166,8 +178,7 @@ write_file($save, $backup);  */
 
 		 // $sql="ALTER TABLE `tbl_bank` ADD `bank_branch_id_fk` INT NOT NULL AFTER `bank_id`";
 
-		$sql="ALTER TABLE `tbl_production_unit` ADD `punit_batch_no` INT NOT NULL AFTER `punit_id`, ADD `batch_no` INT NOT NULL AFTER `punit_batch_no`";
-
+$sql="ALTER TABLE `tbl_production_stock_history` CHANGE `pstock_punit_id_fk` `pstock_punit_id_fk` VARCHAR(80) NOT NULL";
 		
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);

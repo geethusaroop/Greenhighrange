@@ -57,7 +57,7 @@ class General_model extends CI_Model{
         return false;
     }
 
-    public function get_row_production($product_id,$branch_id_fk,$punit_id)
+    public function get_row_production($product_id,$branch_id_fk,$punit_batch_no)
     {
        
         $this->db->select('*');
@@ -66,7 +66,7 @@ class General_model extends CI_Model{
         $this->db->join('tbl_product','product_id=pstock_product_id_fk');
         $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
 		//$this->db->where('product_id',$product_id);
-        $this->db->where('pstock_punit_id_fk',$punit_id);
+        $this->db->where('pstock_punit_id_fk',$punit_batch_no);
 		$this->db->where('branch_id_fk',$branch_id_fk);
 		$this->db->where("product_status",1);
         $q = $this->db->get();
@@ -74,22 +74,25 @@ class General_model extends CI_Model{
     }
 	
 
-    public function get_row_ptransfer($punit_id)
+    public function get_row_ptransfer($punit_batch_no,$branch_id_fk)
     {
        
-        $this->db->select('*,date_format(punit_date,\'%d/%m/%Y\') as punit_date');
+        $this->db->select('*,date_format(punit_date,\'%d/%m/%Y\') as punit_date,avg(purchase_price) as purchase_price');
         $this->db->from('tbl_production_unit');
         $this->db->join('tbl_product','product_id=punit_product_id_fk');
+        $this->db->join('tbl_purchase','product_id=product_id_fk');
         $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
         $this->db->where('product_status',1);
-        $this->db->where('punit_id',$punit_id);
+        $this->db->where('punit_batch_no',$punit_batch_no);
+        $this->db->where('purchase_branch_id_fk',$branch_id_fk);
         $this->db->order_by('product_id','ASC');
         $q = $this->db->get();
-        if($q->num_rows() > 0)
+        return $q->result();
+      /*   if($q->num_rows() > 0)
         {
             return $q->row();
         }
-        return false;
+        return false; */
     }
 	
  
