@@ -59,22 +59,6 @@ class Branch_transfer_model extends CI_Model{
 	    $query = $this->db->get();
 		return $query->result();
     }
-
-	public function getpstock($id)
-    {
-        $this->db->select('*');
-		$this->db->from('tbl_product');
-        $this->db->join('tbl_unit','tbl_unit.unit_id=product_unit','left');
-		$this->db->where('product_status', 1);
-		$this->db->where('product_id', $id);
-		$q = $this->db->get();
-		if ($q->num_rows() > 0) {
-
-			return $q->row();
-		}
-		return false;
-    }
-
 	// public function view_by()
 	// {
 	// 	$status=1;

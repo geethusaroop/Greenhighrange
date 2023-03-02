@@ -1,3 +1,17 @@
+<style>
+.democlass {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+}
+</style>
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
    <!-- Content Header (Page header) -->
@@ -32,8 +46,7 @@
                <label for="inputEmail3" class="col-sm-2 control-label"></label>
              </div>
              <div class="box-body">
-               <div class="col-lg-1"></div>
-               <div class="col-lg-10">
+               <div class="col-lg-12">
                  <div class="panel panel-danger" style="box-shadow:2px 2px 2px 2px black;">
                    <div class="panel-heading">
                      <h3 class="panel-title"><b>BRANCH WISE STOCK TRANSFER INFORMATION</b></h3>
@@ -41,14 +54,9 @@
                    <div class="panel-body" style="font-weight:bold;">
 
                      <div class="form-group">
-                       <div class="col-md-6">
-                         <label>Product Name</label>
-                         <select class="form-control" name="prod_name" id="prod_name">
-                          <option value="">SELECT</option>
-                          <?php foreach($product as $pr){ ?>
-                            <option value="<?php echo $pr->product_id ?>"><?php echo $pr->product_name ?></option>
-                          <?php } ?>  
-                         </select>
+                        <div class="col-md-6">
+                         <label>Date Of Transfer<span style="color:red"></span></label>
+                         <input type="date" autofocus class="form-control" name="bt_date" id="" value="<?php echo date('Y-m-d'); ?>">
                        </div>
 
                        <div class="col-md-6">
@@ -61,70 +69,53 @@
                          </select>
                        </div>
                      </div>
+                     <!----------------------------------------------------------------------------------------->
 
-
-                     <div class="form-group">
-                       <div class="col-md-12">
-                         <label>Stock Amount<span style="color:red"></span></label>
-                         <input type="text" autofocus class="form-control" name="stck_amt" id="" value="<?php if (isset($records->branch_trade_licenses)) echo $records->branch_trade_licenses ?>">
-                       </div>
-                     </div>
-
-                     <div class="form-group">
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="prod_code" id="prod_code">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_name" id="product_name">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_unit" id="product_unit">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_hsn" id="product_hsn">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_hsncode" id="product_hsncode">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_price_r1" id="product_price_r1">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_price_r2" id="product_price_r2">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_price_r3" id="product_price_r3">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_des" id="product_des">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_category" id="product_category">
-                     </div>
-
-                     <div class="col-md-2">
-                     <input type="hidden" class="form-control" name="product_unit_type" id="product_unit_type">
-                     </div>
-
-
-                     </div>
-
-                     <div class="form-group">
-                       <div class="col-md-12">
-                         <center><small >Available Stock: <span id="av_stk"></span></small></center>
-                       </div>
-                     </div>
-                   </div>
+                     <button type="submit" class="btn btn-primary" value="Add Row" onClick="addRow('dataTables')">Add</button>
+                      <button type="button" class="btn btn-danger" value="Delete Row" onClick="deleteRow('dataTables')">Delete</button>
+                           <br>      
+                                  <div class="table-responsive">
+                                  <table id="dataTables" class="table table-striped table-bordered tc-table footable" style="border:1px solid #ccc;color:black;">
+                                    <thead>
+                                      <tr style="background: black;color: white;text-transform: uppercase;">
+                                        <th style="border:1px solid #ccc;" width="20" class="col-small center style2 style3"> </th>
+                                        <th style="border:1px solid #ccc;" width="25" class="col-small center ">SlNo</th>
+                                        <th style="border:1px solid #ccc;" width="45">Product_Name</th>
+                                        <th style="border:1px solid #ccc;" width="45">Product_Code</th>
+                                        <th style="border:1px solid #ccc;" width="45">Transfer_Stock_Qty</th>
+                                        <th style="border:1px solid #ccc;" width="72">Available_Stock</th>
+                                        <th style="border:1px solid #ccc;" width="72" colspan="10"></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody  style="background: #ffff;">
+                                      <TR style="border:1px solid #ccc;background: #ffff;">
+                                        <TD><INPUT type="checkbox" name="chk[]"/></TD>
+                                        <TD style="color:black;"> 1 </TD>
+                                        <TD> <select name="prod_name[]" id="prod_name1" required style="width:480px;" class="form-control" onchange="getproductdetails(<?php echo $i=1; ?>);">
+                                          <option value="">--SELECT--</option>
+                                          <?php
+                                          foreach ($product as $w)
+                                          {
+                                            ?><option value="<?php echo $w->product_id;?>"><?php echo $w->product_name ?></option>
+                                            <?php
+                                          }
+                                          ?>          </select> </TD>
+                                          <TD> <INPUT type="text" class="form-control"  name="prod_code[]" id="prod_code1" style="width:150px;"/> </TD>
+                                          <TD> <INPUT type="text" class="form-control"  name="stck_amt[]" id="stck_amt1"/> </TD>
+                                          <TD> <INPUT type="text" class="form-control"  name="av_stk[]" id="av_stk1" style="width:180px;" /> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control"  name="product_name[]" id="product_name1" style="width:180px;" /> </TD>
+                                          <TD><INPUT type="hidden" class="form-control"  name="product_unit[]" id="product_unit1" style="width:80px;" /></TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_price_r1_1" name="product_price_r1[]"  style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_price_r2_1" name="product_price_r2[]"  style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_price_r3_1" name="product_price_r3[]"  style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_des1" name="product_des[]" style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_category1" name="product_category[]" style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_unit_type1" name="product_unit_type[]" style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_hsn1" name="product_hsn[]" style="width:80px;"/> </TD>
+                                          <TD> <INPUT type="hidden" class="form-control" id="product_hsncode1" name="product_hsncode[]" style="width:80px;"/> </TD>
+                                        </TR>
+                                      </table>
+                                      </div>            
 
                  </div>
                </div>
@@ -135,7 +126,7 @@
                  <div class="col-md-6">
                  </div>
                  <div class="col-md-4">
-                 <a href="<?php echo base_url(); ?>Branch"  <button type="button" class="btn btn-danger">Cancel</button></a>
+                 <a href="<?php echo base_url(); ?>Branch_transfer"  <button type="button" class="btn btn-danger">Cancel</button></a>
                    <button type="submit" class="btn btn-primary">Save</button>
                  </div>
                </div>

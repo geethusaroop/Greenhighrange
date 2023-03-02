@@ -43,14 +43,15 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-          <table id="classinfo_table" class="table table-bordered table-striped" style="text-transform: uppercase;font-weight:12pt;">
+          <table id="classinfo_table" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th>SL.NO.</th>
-                <th>BRANCH</th>
                 <th>DATE</th>
                 <th>PRODUCT NAME</th>
+                <th>BRANCH</th>
                 <th>STOCK</th>
+               
                 <!-- <th>
                   <center>EDIT/DELETE</center>
                 </th> -->

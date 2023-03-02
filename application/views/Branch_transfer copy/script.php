@@ -67,9 +67,9 @@ var d=c+"(IST)";
         },
         "columns": [
             { "data": "bt_status", "orderable": false },
-            { "data": "branch_name", "orderable": false },
             { "data": "bt_dates", "orderable": false },
             { "data": "product_name", "orderable": false },
+      			{ "data": "branch_name", "orderable": false },
       			{ "data": "bt_stock", "orderable": false },
           
            // { "data": "bt_id", "orderable": false }
