@@ -799,6 +799,30 @@
 
        <li class="divider"></li>
 
+       <li class="treeview <?php
+         if ($this->uri->segment(1) == "Stockregister") {
+          echo "active";
+        }
+          else if ($this->uri->segment(1) == "Purchaseregister") {
+            echo "active";
+          } else if ($this->uri->segment(1) == "Saleregister") {
+            echo "active";
+          }
+         
+          ?>">
+         <a><i class="fa fa-book"></i><span>Registers</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+          
+           <li class="<?php if ($this->uri->segment(1) == "Stockregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stockregister"><i class="fa fa-circle-o"></i> <span>Stock Register</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseregister"><i class="fa fa-circle-o"></i> <span>Purchase Register</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Saleregister"><i class="fa fa-circle-o"></i> <span>Sale Register</span></a></li>
+          </ul>
+       </li>
+
 
        <li class="treeview <?php 
        
