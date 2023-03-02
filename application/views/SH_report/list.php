@@ -3,21 +3,21 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Shareholder Sale Report
+      Shareholder Incentive
       <small id="date" class="col-md-4"></small>
       <!-- <small>Optional description</small> -->
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo base_url(); ?>Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="<?php echo base_url(); ?>Ledger/add"><i class="fa fa-dashboard"></i> Back to Add</a></li>
-      <li class="active">Shareholder Sale Report</li>
+      <li class="active">Shareholder Incentive</li>
     </ol>
   </section>
   <!-- Main content -->
   <section class="content">
     <div class="row">
       <div class="box">
-        <form name="" method="post" action="<?php echo base_url(); ?>SH_report/getledger_report">
+        <form name="" method="post" action="<?php echo base_url(); ?>SH_report/getledger">
           <div class="box-header">
             <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response'); ?>" />
             <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
@@ -79,7 +79,7 @@
                 <thead>
                   <tr style="border-color:#d4d6d5;">
                     <th colspan="11" style="border-color:#d4d6d5;">
-                      <center>SHAREHOLDER SALE REPORT</center>
+                      <center>SHAREHOLDER PURCHASE REPORT FROM <?php echo date('d/m/Y',strtotime($cdate)); ?> TO <?php echo date('d/m/Y',strtotime($edate)); ?></center>
                     </th>
                   </tr>
                   <tr>
@@ -101,6 +101,7 @@
                   $total1 = 0;
                   $total2 = 0;
                   $total3 = 0;
+                  $total4=0;
                   ?>
                   <?php foreach ($sale as $sh_report) { ?>
                     <tr>
@@ -120,6 +121,7 @@
                   $total1=number_format($total1+$sh_report->tprice, 2);
                   $total2=number_format($total2+$sh_report->sale_paid_amount, 2);
                   $total3=number_format($total3+$sh_report->sale_new_balance, 2);
+                  $total4=$total4+$sh_report->tprice;
                   } ?>
                 </tbody>
                  <tfoot>
@@ -140,7 +142,57 @@
                 </tfoot> 
               </table>
             </div>
+            <hr>
+            
           </div>
+          <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>SH_report/add">
+            <div class="row">
+              <div class="col-lg-1"></div>
+              <div class="col-lg-10">
+            <div class="panel panel-info" style="box-shadow: 4px 3px 4px 3px #172158;">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><b>INCENTIVE FORM</b> <span style="float: right;font-weight: bold;">Date : <?php echo date('d-m-Y'); ?></span></h3>
+                </div>
+                <div class="panel-body" style="font-weight:bold;background: aliceblue;">
+                <?php if(isset($count)){if($count==0){ ?>
+                <div class="form-group">
+                      <div class="col-md-3">
+                      <label>Date</label>
+                      <input type="date" name="incent_date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                      </div>
+                      <div class="col-md-3">
+                      <label>Total Purchase Amount</label>
+                      <input type="text" name="incent_total_purchase_amt" id="pamt" class="form-control" value="<?php echo $total4; ?>">
+                      </div>
+
+                      <div class="col-md-3">
+                      <label>Incentive %</label>
+                      <input type="text" name="incent_percent" id="percent" class="form-control" value="" onkeyup="getincentive();">
+                      </div>
+
+                      <div class="col-md-3">
+                      <label>Incentive Amount</label>
+                      <input type="text" name="incent_amount" id="incent_amount" class="form-control" value="">
+                      </div>
+
+                      <input type="hidden" name="incent_from_date" id="incent_from_date" class="form-control" value="<?php echo $cdate; ?>">
+                      <input type="hidden" name="incent_to_date" id="incent_to_date" class="form-control" value="<?php echo $edate; ?>">
+                      <input type="hidden" name="incent_member_id_fk" id="incent_member_id_fk" class="form-control" value="<?php echo $vendor; ?>">
+                </div>
+                <hr>
+                <div class="box-footer">
+                <div class="row">
+                  <div class="col-md-5">
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-danger" onclick="window.location.reload();">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+              <?php }else { echo "INCENTIVE ADDED";}} ?>
+                </div></div></div></div>
+            </form>
         <?php } ?>
         <!-- /.box-body -->
       </div>
@@ -150,49 +202,7 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="exampleModalLabel" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"><b>Add Opening Balance</b></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>index.php/Ledger/add_opening_balance" enctype="multipart/form-data">
-        <div class="modal-body" style="font-weight: bold;">
-          <div class="form-group">
-            <div class="col-md-4">
-              <label>Supplier Name<span style="color:red"></span></label>
-              <select name="vendor_id" id="vendor_id" class="form-control select2" style="font-weight: bold;">
-                <option value="">SELECT</option>
-                <?php foreach ($vendor_names as $row) { ?>
-                  <option <?php if (isset($vendor)) {
-                            if ($vendor == $row->vendor_id) {
-                              echo "selected";
-                            }
-                          } ?> value="<?php echo $row->vendor_id; ?>"><?php echo $row->vendorname; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label>Date<span style="color:red"></span></label>
-              <input type="date" data-pms-required="true" autofocus class="form-control" name="cdate_bal" value="<?php echo "2021-03-31"; ?>">
-            </div>
-            <div class="col-md-4">
-              <label>Opening Balance<span style="color:red"></span></label>
-              <input type="text" data-pms-required="true" autofocus class="form-control" name="closing_amt" value="">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div><!--endds add dmlogin-->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>

@@ -136,17 +136,93 @@ Class Vendor_voucher_model extends CI_Model{
 
 	public function get_shareholder_sale_report($cdate,$edate,$shareholder_id_fk)
 	{
-		$this->db->select('*');
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,tbl_sale.sale_discount as discount');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id_fk=product_id');
 		$this->db->where('sale_date >=', $cdate);
 		$this->db->where('sale_date <=', $edate);
 		$this->db->where('member_id_fk', $shareholder_id_fk);
 		$this->db->where('sale_status', 1);
-		$this->db->order_by('sale_id',"DESC");
+		$this->db->where('sale_branch_id_fk', 0);
+		$this->db->order_by('sale_date',"ASC");
+		$this->db->group_by('invoice_number');
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	public function get_shareholder_incent_report($cdate,$edate,$shareholder_id_fk)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_incentive');
+		$this->db->where('incent_date >=', $cdate);
+		$this->db->where('incent_date <=', $edate);
+		$this->db->where('incent_member_id_fk', $shareholder_id_fk);
+		$this->db->where('incent_status', 1);
+		$this->db->where('incent_branch_id_fk', 0);
+		$q = $this->db->get();
+		return $q->result();
+	/* 	if($q->num_rows() > 0)
+        {
+            return $q->row();
+        }
+        return false; */
+	}
+
+
+	public function getIncentiveTable($param,$branch_id_fk){
+		$arOrder = array('','class');
+		$searchValue =($param['searchValue'])?$param['searchValue']:'';
+         if($searchValue){
+            $this->db->like('member_name', $searchValue); 
+        }
+        if ($param['start'] != 'false' and $param['length'] != 'false') {
+        	$this->db->limit($param['length'],$param['start']);
+        }
+		
+		$this->db->select('*,date_format(incent_date,\'%d/%m/%Y\') as incent_date');
+		$this->db->from('tbl_incentive');
+		$this->db->join('tbl_member','member_id=incent_member_id_fk');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("incent_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("incent_branch_id_fk",0);
+        }
+		$this->db->where("incent_status",1);
+		$this->db->where("member_type",1);
+        $query = $this->db->get();
+		
+        $data['data'] = $query->result();
+        $data['recordsTotal'] = $this->getIncentiveTableTotalCount($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getIncentiveTableTotalCount($param,$branch_id_fk);
+        return $data;
+
+	}
+	public function getIncentiveTableTotalCount($param = NULL,$branch_id_fk){
+
+		$searchValue =($param['searchValue'])?$param['searchValue']:'';
+        if($searchValue){
+            $this->db->like('member_name', $searchValue); 
+        }
+		
+		$this->db->select('*');
+		$this->db->from('tbl_incentive');
+		$this->db->join('tbl_member','member_id=incent_member_id_fk');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("incent_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("incent_branch_id_fk",0);
+        }
+		$this->db->where("incent_status",1);
+		$this->db->where("member_type",1);
+        $query = $this->db->get();
+    	return $query->num_rows();
+    }
 		
 }
 

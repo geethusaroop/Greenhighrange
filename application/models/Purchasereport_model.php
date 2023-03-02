@@ -43,6 +43,90 @@ class Purchasereport_model extends CI_Model{
 		return $query->result();
     }
 
+
+	public function getPurchaseRegister($branch_id_fk,$cdate,$edate) 
+    {
+        $this->db->select('*,COUNT(invoice_number) as prcount,ROUND(SUM(taxamount),2) as total,ROUND(SUM(purchase_igstamt),2) as tax,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_date');
+		$this->db->from('tbl_purchase');
+		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk','left');
+        $this->db->where("purchase_status",1);
+		$this->db->group_by('auto_invoice');
+		$this->db->order_by('purchase_date','ASC');
+        $this->db->where('purchase_date >=', $cdate);
+        $this->db->where('purchase_date <=', $edate); 
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
+        }
+        $query = $this->db->get();
+		return $query->result();
+    }
+
+	public function getSaleRegister($branch_id_fk,$cdate,$edate) 
+    {
+        $this->db->select('*,ROUND(SUM(taxamount),2) as total,ROUND(SUM(sale_cgstamt),2) as cgst,ROUND(SUM(sale_sgstamt),2) as sgst');
+		$this->db->from('tbl_sale');
+		$this->db->join('tbl_member','member_id = tbl_sale.member_id_fk','left');
+        $this->db->where("sale_status",1);
+		$this->db->group_by('auto_invoice');
+		$this->db->order_by('sale_date','ASC');
+        $this->db->where('sale_date >=', $cdate);
+        $this->db->where('sale_date <=', $edate); 
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
+        $query = $this->db->get();
+		return $query->result();
+    }
+
+	public function getStockRegister1($branch_id_fk) 
+    {
+        $this->db->select('*');
+		$this->db->from('tbl_product');
+        $this->db->where("product_status",1);
+		$this->db->where("product_category",1);
+		$this->db->order_by('product_name','ASC');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
+        $query = $this->db->get();
+		return $query->result();
+    }
+
+	public function getStockRegister2($branch_id_fk) 
+    {
+        $this->db->select('*');
+		$this->db->from('tbl_product');
+        $this->db->where("product_status",1);
+		$this->db->where("product_category",2);
+		$this->db->order_by('product_name','ASC');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        }
+        $query = $this->db->get();
+		return $query->result();
+    }
+
+
 	
 
 	public function getPurchaseReport($param,$prid){

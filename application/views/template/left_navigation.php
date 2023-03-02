@@ -346,6 +346,9 @@
             {echo "active";}
              else if($this->uri->segment(1)=="Bankdeposit")
               {echo "active";}
+
+              else if($this->uri->segment(1)=="SH_report")
+              {echo "active";}
             ?>">
             <a href="#"><i class="fa fa-money"></i><span>Accounts</span>
               <span class="pull-right-container">
@@ -381,6 +384,25 @@
 
             <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>Bank Deposit</a></li>
 
+            <li class="treeview
+              <?php
+              if($this->uri->segment(1)=='SH_report')
+              {echo "active";}
+              else if($this->uri->segment(1)=='SH_report')
+              {echo "active";}
+              ?>">
+              <a href="#"><i class="fa fa-circle-o"></i>Share Holde Incentive
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+              <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="view"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report/view"><i class="fa fa-circle-o"></i> <span>Add Incentive</span></a></li>
+              <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="list_view"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report/list_view"><i class="fa fa-circle-o"></i> <span>View Incentive</span></a></li>
+              </ul>
+            </li>
+
+
 
            <li class="<?php if($this->uri->segment(1)=="Daybook"){echo "active";}?>" ><a  href="<?php echo base_url();?>Daybook"><i class="fa fa-circle-o"></i> <span>Daybook</span></a></li>
            
@@ -391,6 +413,30 @@
             <li class="<?php if($this->uri->segment(1)=="Balancesheet"){echo "active";}?>" ><a  href="<?php echo base_url();?>Balancesheet"><i class="fa fa-circle-o"></i> <span>Balance Sheet</span></a></li>
           </ul>
         </li>
+
+        <li class="treeview <?php
+         if ($this->uri->segment(1) == "Stockregister") {
+          echo "active";
+        }
+          else if ($this->uri->segment(1) == "Purchaseregister") {
+            echo "active";
+          } else if ($this->uri->segment(1) == "Saleregister") {
+            echo "active";
+          }
+         
+          ?>">
+         <a><i class="fa fa-book"></i><span>Registers</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+          
+           <li class="<?php if ($this->uri->segment(1) == "Stockregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stockregister"><i class="fa fa-circle-o"></i> <span>Stock Register</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseregister"><i class="fa fa-circle-o"></i> <span>Purchase Register</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Saleregister"><i class="fa fa-circle-o"></i> <span>Sale Register</span></a></li>
+          </ul>
+       </li>
 
         <li class="treeview <?php
           if($this->uri->segment(1)=="Employee")
@@ -490,7 +536,7 @@
       </ul>
        </li> 
 
-       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="itemSaleRport"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Shareholder Sale Report</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)==""){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Shareholder Sale Report</span></a></li>
 
      </ul>
          </li>

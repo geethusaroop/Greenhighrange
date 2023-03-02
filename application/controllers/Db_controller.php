@@ -178,7 +178,19 @@ write_file($save, $backup);  */
 
 		 // $sql="ALTER TABLE `tbl_bank` ADD `bank_branch_id_fk` INT NOT NULL AFTER `bank_id`";
 
-$sql="ALTER TABLE `tbl_production_stock_history` CHANGE `pstock_punit_id_fk` `pstock_punit_id_fk` VARCHAR(80) NOT NULL";
+$sql="CREATE TABLE IF NOT EXISTS `tbl_incentive` (
+	`incent_id` int(11) NOT NULL AUTO_INCREMENT,
+	`incent_branch_id_fk` int(11) NOT NULL,
+	`incent_member_id_fk` int(11) NOT NULL,
+	`incent_date` date NOT NULL,
+	`incent_total_purchase_amt` float NOT NULL,
+	`incent_percent` int(11) NOT NULL,
+	`incent_amount` float NOT NULL,
+	`incent_from_date` date NOT NULL,
+	`incent_to_date` date NOT NULL,
+	`incent_status` int(11) NOT NULL,
+	PRIMARY KEY (`incent_id`)
+  ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1";
 		
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 		$query = $this->db->query($sql);

@@ -113,6 +113,7 @@ class Productionitem extends MY_Controller
 						'product_price_r3' => $product_price_r3[$i],
 						'product_des' => $product_des[$i],
 						'product_created_date' => $this->input->post('pstock_date'),
+						'product_updated_date' => $this->input->post('pstock_date'),
 						'product_status' => 1,
 					);
 				//	var_dump($data);

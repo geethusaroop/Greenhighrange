@@ -337,7 +337,7 @@ $(document).on("change",'.price',function(){
 		var product_size = $('#product_size'+counter+'').val();
 		if(product_num){
 			$.ajax({
-            url:"<?php echo base_url();?>brsale/get_purchasedetails",
+            url:"<?php echo base_url();?>BRSale/get_purchasedetails",
             type: 'POST',
 			data:{product_num:product_num,product_size:product_size},
             dataType: 'json',
@@ -423,7 +423,7 @@ $(document).on("change",'.product_num',function(){
         "bDestroy" : true,
         
         "ajax": {
-            "url": "<?php echo base_url();?>brsale/get/",
+            "url": "<?php echo base_url();?>BRSale/get/",
             "type": "POST",
             "data" : function (d) {
                     d.product_num = $("#product").val();

@@ -67,7 +67,7 @@ class ProductTransfer extends MY_Controller
 					'punit_status' => 1,
 					);
 					$result = $this->General_model->add($this->table, $data);
-					$updateData = array('product_stock' =>$punit_bal[$i]);
+					$updateData = array('product_stock' =>$punit_bal[$i],'product_updated_date' => $this->input->post('punit_date'));
 					$datas = $this->General_model->update('tbl_product',$updateData,'product_id',$product_id_fk[$i]);
 					$response_text = 'Product added  successfully';
 		   }

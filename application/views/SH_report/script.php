@@ -183,4 +183,13 @@ $(document).ready(function(){
 	function send()
 {document.theform.submit()}
   
+
+  function getincentive()
+  {
+	var pamt = document.getElementById('pamt').value;
+	var percent1 = document.getElementById('percent').value;
+	var percent=percent1/100;
+	var incentive = parseFloat(pamt) * parseFloat(percent);
+	document.getElementById('incent_amount').value=isNaN(incentive) ? "0.00" : incentive.toFixed(2);
+  }
 </script>

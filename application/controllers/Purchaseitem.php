@@ -165,7 +165,9 @@ class Purchaseitem extends MY_Controller {
 				//$existance=$this->Purchase_model->get_stock_existance($product_id_fk[$i]);
 				//if($existance){
 					//$stock_item_type = 1;
-					$current_stock=$this->Purchase_model->get_current_productstock($product_id_fk[$i]);
+					$branch_id_fk=$this->session->userdata('branch_id_fk');
+					$current_stock=$this->Purchase_model->get_current_productstock($product_id_fk[$i],$branch_id_fk);
+					echo 
 					$new_stock=intval($current_stock)+intval($purchase_quantity[$i]);
 					$updateData = array('product_stock' =>$new_stock, 'product_updated_date'=>$purchase_date,'product_price_r1' => $r1[$i],'product_price_r2' => $r2[$i],'product_price_r3' => $r3[$i]);
 					$data = $this->General_model->update('tbl_product',$updateData,'product_id',$product_id_fk[$i]);
