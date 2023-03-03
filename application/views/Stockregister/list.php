@@ -97,6 +97,12 @@
                             <table class="table table-bordered table-hover" id="dataTable1" style="border:1px solid #0a0a0b;">
                                 <thead style="border:1px solid #0a0a0b;">
                                 <tr>
+                                    <th colspan="10" style="border:1px solid #0a0a0b;text-align:center;">
+                                    GREENHIGHRANGE FARMERS PRODUCER CO. LTD.<br>
+                                        106/14 VAKACHUVADU, PRABHACITY
+                                    </th>
+                                </tr>
+                                <tr>
                                     <th colspan="10" style="border:1px solid #0a0a0b;text-align:center;">Stock Register</th>
                                 </tr>
                                     <tr style="border:1px solid #0a0a0b;">

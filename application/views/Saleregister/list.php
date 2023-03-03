@@ -69,7 +69,7 @@
                                         <div class="input-group-btn">
                                             <button type="button" class="btn btn-primary nohover">From </button>
                                         </div><!-- /btn-group -->
-                                        <input id="pmsDateStart" type="date" name="start_date" class="col-md-5 form-control" placeholder="dd/mm/yyyy" value="<?php if (isset($cdate)) {
+                                        <input id="pmsDateStart" type="date" name="start_date" class="col-md-5 form-control" placeholder="dd/mm/yyyy" value="<?php if (isset($cdate)) {echo $cdate;
                                                                                                                                                                } ?>">
 
                                     </div>
@@ -81,8 +81,8 @@
                                             <button type="button" class="btn btn-primary nohover">To </button>
                                         </div><!-- /btn-group -->
 
-                                        <input id="pmsDateEnd" type="date" name="end_date" class="col-md-5 form-control" placeholder="dd/mm/yyyy" value="<?php if (isset($cdate)) {
-                                                                                                                                                                echo $cdate;
+                                        <input id="pmsDateEnd" type="date" name="end_date" class="col-md-5 form-control" placeholder="dd/mm/yyyy" value="<?php if (isset($edate)) {
+                                                                                                                                                                echo $edate;
                                                                                                                                                             } ?>">
                                     </div>
                                 </div>
@@ -120,6 +120,12 @@
                         <div class="col-md-8">
                             <table class="table table-bordered table-hover" id="dataTable1" style="border:1px solid #0a0a0b;">
                                 <thead style="border:1px solid #0a0a0b;">
+                                <tr>
+                                    <th colspan="10" style="border:1px solid #0a0a0b;text-align:center;">
+                                    GREENHIGHRANGE FARMERS PRODUCER CO. LTD.<br>
+                                        106/14 VAKACHUVADU, PRABHACITY
+                                    </th>
+                                </tr>
                                 <tr>
                                     <th colspan="10" style="border:1px solid #0a0a0b;text-align:center;">Sale Register From <?php echo date('d/m/Y',strtotime($cdate)) ?> To <?php echo date('d/m/Y',strtotime($edate)) ?></th>
                                 </tr>
