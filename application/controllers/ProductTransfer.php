@@ -38,7 +38,7 @@ class ProductTransfer extends MY_Controller
 			$template['hsncode']=$this->HSNcode_model->gethsncode();
 			$template['product_names'] = $this->Item_model->view_by($branch_id_fk);
 			$admno = $this->ProductTransfer_model->get_admno();
-			if(isset($admno->sale_id)){$adm=$admno->batch_no+1;}else{$adm=1;}
+			if(isset($admno->punit_id)){$adm=$admno->batch_no+1;}else{$adm=1;}
 			$template['adm'] = $adm;
 			$this->load->view('template', $template);
 		} else {
@@ -110,6 +110,13 @@ class ProductTransfer extends MY_Controller
 		$data_json = json_encode($response);
 		echo $data_json;
 		redirect('/ProductTransfer/', 'refresh');
+	}
+
+	public function get_invc()
+	{
+		$invc_no = $this->input->post('punit_batch_no');
+		$data = $this->ProductTransfer_model->get_invc($invc_no);
+		echo json_encode($data);
 	}
 
 	public function deleteall()

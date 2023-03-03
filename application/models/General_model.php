@@ -77,7 +77,7 @@ class General_model extends CI_Model{
     public function get_row_ptransfer($punit_batch_no,$branch_id_fk)
     {
        
-        $this->db->select('*,date_format(punit_date,\'%d/%m/%Y\') as punit_date,avg(purchase_price) as purchase_price');
+        $this->db->select('*,date_format(punit_date,\'%d/%m/%Y\') as punit_date,max(purchase_price) as purchase_price');
         $this->db->from('tbl_production_unit');
         $this->db->join('tbl_product','product_id=punit_product_id_fk');
         $this->db->join('tbl_purchase','product_id=product_id_fk');
@@ -86,6 +86,7 @@ class General_model extends CI_Model{
         $this->db->where('punit_batch_no',$punit_batch_no);
         $this->db->where('purchase_branch_id_fk',$branch_id_fk);
         $this->db->order_by('product_id','ASC');
+        $this->db->group_by('product_id');
         $q = $this->db->get();
         return $q->result();
       /*   if($q->num_rows() > 0)

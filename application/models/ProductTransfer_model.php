@@ -12,9 +12,9 @@ class ProductTransfer_model extends CI_Model{
         if($searchValue){
             $this->db->like('product_name', $searchValue);
         }
-        if($item_name){
-            $this->db->like('product_name', $item_name);
-            $this->db->or_like('product_code', $item_name);
+        if($item_name && $item_name!="BATCH000"){
+            $this->db->where('punit_batch_no', $item_name);
+          //  $this->db->or_like('product_code', $item_name);
         }
 
         if(!empty($branch_id_fk) && $branch_id_fk != 0)
@@ -29,7 +29,7 @@ class ProductTransfer_model extends CI_Model{
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
-        $this->db->select('*,date_format(punit_date,\'%d/%m/%Y\') as punit_date');
+        $this->db->select('*,date_format(punit_date,\'%d/%m/%Y\') as punit_date,count(punit_batch_no) as batchcount');
         $this->db->from('tbl_production_unit');
         $this->db->join('tbl_product','product_id=punit_product_id_fk');
         $this->db->join('tbl_unit','tbl_unit.unit_id=punit_unit','left');
@@ -45,8 +45,13 @@ class ProductTransfer_model extends CI_Model{
     }
     public function getClassinfoTotalCount($param = NULL,$branch_id_fk){
         $searchValue =($param['searchValue'])?$param['searchValue']:'';
+        $item_name = ($param['item_name'])?$param['item_name']:'';
         if($searchValue){
             $this->db->like('product_name', $searchValue);
+        }
+        if($item_name && $item_name!="BATCH000"){
+            $this->db->where('punit_batch_no', $item_name);
+          //  $this->db->or_like('product_code', $item_name);
         }
         $this->db->from('tbl_production_unit');
         $this->db->join('tbl_product','product_id=punit_product_id_fk');

@@ -50,8 +50,6 @@ $(function () {
       $('td', row).eq(3).css( "font-weight", "bold" );
      // $('td', row).eq(2).css( "text-align", "center" );
       $('td', row).eq(4).css( "font-weight", "bold" );
-      $('td', row).eq(4).css( "text-align", "center" );
-      $('td', row).eq(5).css( "text-align", "center" );
       $('td', row).eq(5).css( "font-weight", "bold" );
 
       $('td', row).eq(6).css( "text-align", "center" );
@@ -60,63 +58,68 @@ $(function () {
       $('td', row).eq(7).css( "text-align", "center" );
       $('td', row).eq(7).css( "font-weight", "bold" );
 
-      
+      $('td', row).eq(1).html('<center><i class="fa fa-plus iconFontSize-medium" data-punit_batch_no="' + data['punit_batch_no'] + '" data-cdate="' + data['punit_date'] + '" style="color:blue;cursor: pointer;" onclick="edit_data(this);"></i> </center>');
+
 
       if(data['punit_type']==1)
       {
-        $('td', row).eq(3).html('MASALA UNIT');
+        $('td', row).eq(4).html('MASALA UNIT');
       }
       else if(data['punit_type']==2)
       {
-        $('td', row).eq(3).html('SPICES UNIT');
+        $('td', row).eq(4).html('SPICES UNIT');
       }
       else if(data['punit_type']==3)
       {
-        $('td', row).eq(3).html('OIL UNIT');
+        $('td', row).eq(4).html('OIL UNIT');
       }
       else if(data['punit_type']==4)
       {
-        $('td', row).eq(3).html('PICKLE UNIT');
+        $('td', row).eq(4).html('PICKLE UNIT');
       }
 
       else if(data['punit_type']==5)
       {
-        $('td', row).eq(3).html('MISCELLANEOUS ITEMS');
+        $('td', row).eq(4).html('MISCELLANEOUS ITEMS');
       }
 
       if(data['punit_proceed_status']==0)
       {
-        $('td', row).eq(7).html('NOT_PROCESSED');
-        $('td', row).eq(7).css( "font-weight", "bold" );
-        $('td', row).eq(7).css( "color", "orange" );
+        $('td', row).eq(6).html('NOT_PROCESSED');
+        $('td', row).eq(6).css( "font-weight", "bold" );
+        $('td', row).eq(6).css( "color", "orange" );
+        $('td', row).eq(7).html('<center><a href="<?php echo base_url();?>index.php/Productionitem/transfer/'+data['punit_batch_no']+'/'+data['punit_product_id_fk']+'"><button type="button" class="btn btn-success"><i class="fa fa-arrow-right iconFontSize-medium" ></i>ADD STOCK</button></a></center>');
+
       }
 
       else if(data['punit_proceed_status']==1)
       {
-        $('td', row).eq(7).html('ACTIVE');
-        $('td', row).eq(7).css( "font-weight", "bold" );
-        $('td', row).eq(7).css( "color", "green" );
+        $('td', row).eq(6).html('ACTIVE');
+        $('td', row).eq(6).css( "font-weight", "bold" );
+        $('td', row).eq(6).css( "color", "green" );
+        $('td', row).eq(7).html('<center><a href="<?php echo base_url();?>index.php/Productionitem/transfer/'+data['punit_batch_no']+'/'+data['punit_product_id_fk']+'"><button type="button" class="btn btn-success"><i class="fa fa-arrow-right iconFontSize-medium" ></i>ADD STOCK</button></a></center>');
+
       }
 
       else if(data['punit_proceed_status']==2)
       {
-        $('td', row).eq(7).html('COMPLETED');
-        $('td', row).eq(7).css( "font-weight", "bold" );
-        $('td', row).eq(7).css( "color", "green" );
+        $('td', row).eq(6).html('COMPLETED');
+        $('td', row).eq(6).css( "font-weight", "bold" );
+        $('td', row).eq(6).css( "color", "green" );
+        $('td', row).eq(7).html('<center><a href=""><button type="button" class="btn btn-success" disabled><i class="fa fa-arrow-right iconFontSize-medium" ></i>ADD STOCK</button></a></center>');
+
       }
 
-      $('td', row).eq(4).html(''+data['punit_qty']+'-'+data['unit_name']+'');
+     // $('td', row).eq(4).html(''+data['punit_qty']+'-'+data['unit_name']+'');
     
-     $('td', row).eq(8).html('<center><a href="<?php echo base_url();?>index.php/Productionitem/transfer/'+data['punit_batch_no']+'/'+data['punit_product_id_fk']+'"><button type="button" class="btn btn-success"><i class="fa fa-arrow-right iconFontSize-medium" ></i>ADD STOCK</button></a></center>');
     },
     "columns": [
       { "data": "punit_status", "orderable": false },
+      { "data": "punit_batch_no", "orderable": false },
       { "data": "punit_date", "orderable": false },
       { "data": "punit_batch_no", "orderable": false },
       { "data": "punit_type", "orderable": false },
-      { "data": "product_name", "orderable": false },
-      { "data": "product_code", "orderable": false },
-      { "data": "punit_qty", "orderable": false },
+      { "data": "batchcount", "orderable": false },
       { "data": "punit_proceed_status", "orderable": false },
       { "data": "punit_id", "orderable": false }
     ]
@@ -172,4 +175,35 @@ $(document).on('change','#punit_product_id_fk',function(){
 
 
   
+  function edit_data(data) {
+
+var punit_batch_no =data.getAttribute('data-punit_batch_no');
+//var check_id = $('#checkin_number').val(id);
+$('#cdate').val(data.getAttribute('data-cdate'));
+$('#batchno').val(data.getAttribute('data-punit_batch_no'));
+var html ="";
+if(punit_batch_no){
+$.ajax({
+        url: "<?php echo base_url(); ?>ProductTransfer/get_invc",
+        data: {
+          punit_batch_no: punit_batch_no
+        },
+        method: "POST",
+        datatype: "json",
+        success: function(data) {
+            
+            var options = $.parseJSON(data);
+            console.log(options);
+            var count = options.length;
+            var x=1;
+            for(var i=0;i<count;i++){
+                html += '<tr><td>'+x+'</td><td>'+options[i].product_name+'</td><td>'+options[i].product_code+'</td><td>'+options[i].punit_qty+'</td></tr>';
+                x++;
+            }
+            $('#data_room').append(html);
+        }
+    });
+}
+$('#exampleModalLabel').modal('show');
+}
 </script>

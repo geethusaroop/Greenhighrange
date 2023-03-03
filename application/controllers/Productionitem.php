@@ -127,7 +127,7 @@ class Productionitem extends MY_Controller
 						'pstock_r3' => $product_price_r3[$i],
 						'pstock_type'=>$this->input->post('punit_type'),
 						'pstock_date'=>$this->input->post('pstock_date'),
-						'pstock_punit_id_fk'=>$this->input->post('punit_id'),
+						'pstock_punit_id_fk'=>$this->input->post('punit_batch_no'),
 						'pstock_status'=>1
 					];
 
