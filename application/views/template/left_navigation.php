@@ -411,6 +411,10 @@
             <li class="<?php if($this->uri->segment(1)=="Ledger" && $this->uri->segment(2)=='report'){echo "active";}?>" ><a  href="<?php echo base_url();?>Ledger/report"><i class="fa fa-circle-o"></i> <span>Vendor Ledger</span></a></li>
 
             <li class="<?php if($this->uri->segment(1)=="Balancesheet"){echo "active";}?>" ><a  href="<?php echo base_url();?>Balancesheet"><i class="fa fa-circle-o"></i> <span>Balance Sheet</span></a></li>
+       
+            <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor"><i class="fa fa-circle-o"></i> <span>Sundry Creditors</span></a></li>
+
+            <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)=='debtors'){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor/debtors"><i class="fa fa-circle-o"></i> <span>Sundry Debtors</span></a></li>
           </ul>
         </li>
 

@@ -88,6 +88,48 @@ class Purchasereport_model extends CI_Model{
 		return $query->result();
     }
 
+	public function getsundrycreditors($branch_id_fk)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_vendor');
+		$this->db->join('tbl_vendor_voucher','vendor_id = vendor_id_fk','left');
+        $this->db->where("vendorstatus",1);
+		$this->db->where("voucher_status",1);
+		$this->db->order_by('vendorname','ASC');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("vendor_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("vendor_branch_id_fk",0);
+        }
+        $query = $this->db->get();
+		return $query->result();
+	}
+
+
+	public function getsundrydebtors($branch_id_fk)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_member');
+		$this->db->join('tbl_sale','member_id_fk=member_id','left');
+        $this->db->where("member_status",1);
+		$this->db->order_by('member_name','ASC');
+		$this->db->group_by('member_id_fk');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
+        $query = $this->db->get();
+		return $query->result();
+	}
+
+
 	public function getStockRegister1($branch_id_fk) 
     {
         $this->db->select('*');
