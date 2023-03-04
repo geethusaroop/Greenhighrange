@@ -153,7 +153,7 @@
                         
 
                             <div class="col-md-4" id="" style="display: block;">
-                                <label for="">Member Purchase Balance Amount</label>
+                                <label for="">Opening Balance(Purchase)</label>
                                 <input type="text" class="form-control" name="member_sale_balance" placeholder="" value="<?php if (isset($records->member_sale_balance)) echo $records->member_sale_balance ?>">
                             </div>
                         

@@ -79,7 +79,7 @@
 					<th>SALE_AMOUNT</th>
 					<th>OLD_BALANCE</th>
 					<th>DISCOUNT</th>
-					<th>SHAREHOLDER_DISCOUNT</th>
+					<th>SHAREHOLDER_DISCOUNT(%)</th>
 					<th>NET_TOTAL</th>
 					<th>RECEIVED_AMOUNT</th>
 					<th>NEW_BALANCE</th>

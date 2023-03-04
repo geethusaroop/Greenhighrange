@@ -110,11 +110,12 @@ class ProductTransfer_model extends CI_Model{
 		return false;
     }
 
-    public function get_admno()
+    public function get_admno($branch_id_fk)
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_production_unit');
 		$this->db->where('punit_status', 1);
+        $this->db->where('punit_branch_id_fk', $branch_id_fk);
 		$this->db->order_by('punit_id', "DESC");
 		$this->db->limit(1);
 		$query = $this->db->get();

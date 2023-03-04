@@ -90,10 +90,10 @@ class Shareholder extends MY_Controller {
 						'member_ifsc' => $this->input->post('member_ifsc'),
 						'member_bank_id' => $this->input->post('member_bank_id'),
 						'member_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
-						'member_sale_balance'=>$this->input->post('member_sale_balance'),
-						// 'member_img' => $member_img,
+						'member_old_balance'=>$this->input->post('member_sale_balance'),
 						'member_status' => 1
 						);
+		
 						$fund_year = date("Y",strtotime($this->input->post('member_exitdate')));
 						$data_shares = array(
 							'ftype_id_fk' =>1,
@@ -106,6 +106,7 @@ class Shareholder extends MY_Controller {
 
 				$member_id = $this->input->post('member_id');
 				if($member_id){
+				
 					$member_id = $this->input->post('member_id');
                      $data['member_id'] = $member_id;
                      $result = $this->General_model->update($this->table,$data,'member_id',$member_id);

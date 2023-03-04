@@ -183,6 +183,8 @@ write_file($save, $backup);  */
 		//$sql="ALTER TABLE `tbl_production_stock_history` CHANGE `pstock_punit_id_fk` `pstock_punit_id_fk` VARCHAR(50) NOT NULL";
 		
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
+
+		$sql="UPDATE `tbl_production_unit` SET `batch_no` = '2' WHERE `tbl_production_unit`.`punit_id` between 14 and 16";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

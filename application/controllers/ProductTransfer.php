@@ -37,7 +37,7 @@ class ProductTransfer extends MY_Controller
 			$template['unit'] = $this->ProductTransfer_model->get_unit();
 			$template['hsncode']=$this->HSNcode_model->gethsncode();
 			$template['product_names'] = $this->Item_model->view_by($branch_id_fk);
-			$admno = $this->ProductTransfer_model->get_admno();
+			$admno = $this->ProductTransfer_model->get_admno($branch_id_fk);
 			if(isset($admno->punit_id)){$adm=$admno->batch_no+1;}else{$adm=1;}
 			$template['adm'] = $adm;
 			$this->load->view('template', $template);
