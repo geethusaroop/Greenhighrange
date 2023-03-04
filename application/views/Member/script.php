@@ -108,7 +108,7 @@ var d=c+"(IST)";
          $('td',row).eq(2).html('OTHER CUSTOMERS');
       }
 
-      $('td', row).eq(11).html('<center><a href="<?php echo base_url();?>index.php/Member/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+      $('td', row).eq(12).html('<center><a href="<?php echo base_url();?>index.php/Member/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
       },
         "columns": [
             { "data": "member_status", "orderable": false},
@@ -121,7 +121,8 @@ var d=c+"(IST)";
       			{ "data": "member_email", "orderable": false },
             { "data": "member_gst", "orderable": false },
       			{ "data": "m_created_at", "orderable": false },
-            { "data": "member_sale_balance", "orderable": false },
+            { "data": "member_old_balance", "orderable": false } ,
+            { "data": "member_sale_balance", "orderable": false } ,
             { "data": "member_id", "orderable": false }
         ]
     } );

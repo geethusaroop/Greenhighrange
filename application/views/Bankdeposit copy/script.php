@@ -81,7 +81,7 @@ $(document).on('change','#vouch_name',function(){
         "serverSide": true,
         "bDestroy" : true,
         "ajax": {
-            "url": "<?php echo base_url();?>Bank/get",
+            "url": "<?php echo base_url();?>Bankdeposit/get",
             "type": "POST",
             "data" : function (d) {
               d.cat_type = $('#cat_type').val();
@@ -92,29 +92,37 @@ $(document).on('change','#vouch_name',function(){
 			$table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-			$('td', row).eq(7).html('<center><a href="<?php echo base_url();?>Bank/edit/'+data['bank_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['bank_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+            if(data['bd_type']=="1")
+            {
+              $('td', row).eq(3).html('Deposit From Members');
+            }
+            if(data['bd_type']=="2")
+            {
+              $('td', row).eq(3).html('Deposit From Others');
+            }
+			$('td', row).eq(7).html('<center><a href="<?php echo base_url();?>Bankdeposit/edit/'+data['bd_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['bd_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         },
 
         "columns": [
-                    { "data": "bank_status", "orderable": true },
+                    { "data": "bd_status", "orderable": true },
+                    { "data": "bd_date", "orderable": false },
                     { "data": "bank_name", "orderable": false },
-                    { "data": "bank_branch", "orderable": false },
-                    { "data": "bank_address", "orderable": false },
-                    { "data": "bank_accno", "orderable": false },
-                    { "data": "bank_ifsc", "orderable": false },
-                    { "data": "bank_opening_balance", "orderable": false },
-                    { "data": "bank_id", "orderable": false }
+                    { "data": "bd_type", "orderable": false },
+                    { "data": "member_name", "orderable": false },
+                    { "data": "bd_amount", "orderable": false },
+                    { "data": "bd_remark", "orderable": false },
+                    { "data": "bd_id", "orderable": false }
         ]
         
     } );    
   });
 
- function confirmDelete(bank_id){
-    var conf = confirm("Do you want to Delete Bank Details ?");
+ function confirmDelete(bd_id){
+    var conf = confirm("Do you want to Delete Bank Deposit Details ?");
     if(conf){
         $.ajax({
-            url:"<?php echo base_url();?>Bank/delete",
-            data:{bank_id:bank_id},
+            url:"<?php echo base_url();?>Bankdeposit/delete",
+            data:{bd_id:bd_id},
             method:"POST",
             datatype:"json",
             success:function(data){

@@ -184,7 +184,10 @@ write_file($save, $backup);  */
 		
 		//$sql="TRUNCATE TABLE `tbl_branch_transfer`";
 
-		$sql="UPDATE `tbl_production_unit` SET `batch_no` = '2' WHERE `tbl_production_unit`.`punit_id` between 14 and 16";
+		//$sql="ALTER TABLE `tbl_bank_deposit` CHANGE `bd_type` `bd_type` INT(11) NOT NULL COMMENT '1=member_deposit,2=others,3=supplier_withdraw'";
+		
+		$sql="ALTER TABLE `tbl_bank` ADD `bank_date` DATE NOT NULL AFTER `bank_opening_balance`";
+
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

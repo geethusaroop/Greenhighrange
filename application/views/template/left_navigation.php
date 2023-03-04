@@ -349,6 +349,9 @@
 
               else if($this->uri->segment(1)=="SH_report")
               {echo "active";}
+
+              else if($this->uri->segment(1)=='Bankdeposit')
+              {echo "active";}
             ?>">
             <a href="#"><i class="fa fa-money"></i><span>Accounts</span>
               <span class="pull-right-container">
@@ -382,7 +385,25 @@
            
             <li class="<?php if($this->uri->segment(1)=='Fund' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Fund"><i class="fa fa-circle-o"></i>Fund Details</a></li>
 
-            <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>Bank Deposit</a></li>
+
+
+            <li class="treeview
+              <?php
+              if($this->uri->segment(1)=='Bankdeposit')
+              {echo "active";}
+             
+              ?>">
+              <a href="#"><i class="fa fa-bank"></i>Bank Transactions
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>FPO Deposit</a></li>
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='credit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/credit/"><i class="fa fa-circle-o"></i>Credit</a></li>
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='debit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/debit/"><i class="fa fa-circle-o"></i>Credit</a></li>  
+            </ul>
+            </li>
 
             <li class="treeview
               <?php
@@ -391,7 +412,7 @@
               else if($this->uri->segment(1)=='SH_report')
               {echo "active";}
               ?>">
-              <a href="#"><i class="fa fa-circle-o"></i>Share Holde Incentive
+              <a href="#"><i class="fa fa-circle-o"></i>Share Holder Incentive
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>

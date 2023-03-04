@@ -57,14 +57,24 @@
 
 				<div class="form-group">
 					
-					<div class="col-md-6">
+					<div class="col-md-3">
 					<label> Account No </label>
 						<input type="text" class="form-control"  name="bank_accno" id="bank_accno" value="<?php if(isset($records->bank_accno)) echo $records->bank_accno; ?>"/>
 					</div>
 
-					<div class="col-md-6">
+					<div class="col-md-3">
 					<label> Bank IFSC Code </label>
 						<input type="text" class="form-control"  name="bank_ifsc" id="bank_ifsc" value="<?php if(isset($records->bank_ifsc)) echo $records->bank_ifsc; ?>"/>
+					</div>
+
+					<div class="col-md-3">
+					<label> Opening Balance </label>
+						<input type="text" class="form-control"  name="bank_opening_balance" id="bank_opening_balance" value="<?php if(isset($records->bank_opening_balance)) echo $records->bank_opening_balance; ?>"/>
+					</div>
+
+					<div class="col-md-3">
+					<label> Date</label>
+						<input type="date" class="form-control"  name="bank_date" id="bank_date" value="<?php if(isset($records->bank_date)) echo $records->bank_date; ?>"/>
 					</div>
 
 				</div>

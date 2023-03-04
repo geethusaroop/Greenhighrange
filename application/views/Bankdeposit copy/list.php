@@ -3,14 +3,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Bank Details
+        Bank Deposit Details
         <small id="date" class="col-md-4"></small>
         <!-- <small>Optional description</small> -->
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url();?>Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo base_url();?>Bank/add"><i class="fa fa-dashboard"></i> Back To Add</a></li>
-        <li class="active">  Bank Details</li>
+        <li><a href="<?php echo base_url();?>Bankdeposit/add"><i class="fa fa-dashboard"></i> Back To Add</a></li>
+        <li class="active">  Bank Deposit Details</li>
       </ol>
     </section>
 
@@ -31,7 +31,7 @@
               
               <div class="col-sm-2">
                   <div class="input-group">
-                    <a href="<?php echo base_url();?>Bank/add" class="btn btn-danger"><i class="fa fa-plus-square"></i>  Add new</a>
+                    <a href="<?php echo base_url();?>Bankdeposit/add" class="btn btn-danger"><i class="fa fa-plus-square"></i>  Add new</a>
                   </div>
               </div>
             </div>
@@ -39,12 +39,12 @@
                 <thead>
                 <tr>
                   <th>Sl No.</th>
+                  <th>Date</th>
                   <th>Bank_Name</th>
-                  <th>Branch_Name</th>
-                  <th>Address</th>
-                  <th>Account_No</th>
-                  <th>IFSC_Code</th>
-                  <th>bank_opening_balance</th>
+                  <th>Deposit_Type</th>
+                  <th>Member_Name</th>
+                  <th>Deposit_Amount</th>
+                  <th>Remark</th>
                   <th class="text-center">Edit/Delete</th>
                 </tr>
                 </thead>

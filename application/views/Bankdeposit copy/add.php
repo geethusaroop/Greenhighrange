@@ -35,12 +35,12 @@
 				
 				<div class="form-group">
 					
-					<div class="col-md-4">
+					<div class="col-md-6">
 					<label>Date</label>
 						<input type="date" class="form-control"  name="bd_date" id="bd_date" value="<?php if(isset($records->bd_date)) echo $records->bd_date; ?>"/>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-6">
 					<label> Bank Name </label>
 					<select name="bd_bank_id_fk" id="bd_bank_id_fk" class="form-control">
 						<option value="">-SELECT-</option>
@@ -50,11 +50,32 @@
 					</select>
 					</div>
 
+				</div>
+
+				<div class="form-group">
+					
+					<div class="col-md-4">
+					<label> Deposit Type(From)</label>
+					<select name="bd_type" id="bd_type" class="form-control">
+					<option value="">-SELECT-</option>
+					<option <?php if(isset($records->bd_type)){if($records->bd_type==1){echo "selected";}} ?> value="1">Members</option>
+					<option <?php if(isset($records->bd_type)){if($records->bd_type==2){echo "selected";}} ?> value="2">Others</option>
+					</select>
+					</div>
+
+					<div class="col-md-4">
+					<label> Member Name</label>
+					<select name="bd_member_id_fk" id="bd_member_id_fk" class="form-control">
+						<option value="">-SELECT-</option>
+						<?php foreach($member as $row){ ?>
+							<option <?php if(isset($records->bd_member_id_fk)){if($records->bd_member_id_fk==$row->member_id){echo "selected";}} ?> value="<?php echo $row->member_id; ?>"><?php echo $row->member_name; ?></option>
+						<?php } ?>
+					</select>					
+				</div>
 
 				<div class="col-md-4">
 					<label>Amount</label>
-					<input type="hidden" class="form-control"  name="bd_amount1" id="bd_amount1" value="<?php if(isset($records->bd_amount)) echo $records->bd_amount; ?>"/>
-					<input type="text" class="form-control"  name="bd_amount" id="bd_amount" value="<?php if(isset($records->bd_amount)) echo $records->bd_amount; ?>"/>
+						<input type="text" class="form-control"  name="bd_amount" id="bd_amount" value="<?php if(isset($records->bd_amount)) echo $records->bd_amount; ?>"/>
 					</div>
 
 				</div>

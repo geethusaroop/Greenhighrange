@@ -84,7 +84,7 @@ $(document).on('change','#vouch_name',function(){
             "url": "<?php echo base_url();?>Bankdeposit/get",
             "type": "POST",
             "data" : function (d) {
-              d.cat_type = $('#cat_type').val();
+              d.bank = $('#bd_bank_id_fk').val();
            }
         },
         "createdRow": function ( row, data, index ) {
@@ -92,23 +92,14 @@ $(document).on('change','#vouch_name',function(){
 			$table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-            if(data['bd_type']=="1")
-            {
-              $('td', row).eq(3).html('Deposit From Members');
-            }
-            if(data['bd_type']=="2")
-            {
-              $('td', row).eq(3).html('Deposit From Others');
-            }
-			$('td', row).eq(7).html('<center><a href="<?php echo base_url();?>Bankdeposit/edit/'+data['bd_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['bd_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+           
+			$('td', row).eq(5).html('<center><a href="<?php echo base_url();?>Bankdeposit/edit/'+data['bd_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['bd_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         },
 
         "columns": [
                     { "data": "bd_status", "orderable": true },
                     { "data": "bd_date", "orderable": false },
                     { "data": "bank_name", "orderable": false },
-                    { "data": "bd_type", "orderable": false },
-                    { "data": "member_name", "orderable": false },
                     { "data": "bd_amount", "orderable": false },
                     { "data": "bd_remark", "orderable": false },
                     { "data": "bd_id", "orderable": false }

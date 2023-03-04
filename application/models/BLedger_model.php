@@ -60,6 +60,7 @@ class BLedger_model extends CI_Model{
             $this->db->from('tbl_sale');
                $this->db->join('tbl_member','member_id = member_id_fk','left');
             $this->db->where("tbl_sale.sale_status",1);
+            $this->db->where("tbl_sale.sale_mop","Cash");
             $this->db->where("sale_branch_id_fk",$branch_id_fk);
              $this->db->where('sale_date >=',$cdate);
             $this->db->where('sale_date <=',$edate);

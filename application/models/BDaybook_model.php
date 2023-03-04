@@ -93,6 +93,7 @@ public function pupdate_daybook($date,$profit,$stat,$branch_id_fk){
             $this->db->select('*,DATE_FORMAT(sale_date,\'%d/%m/%Y\') AS sale_date,tbl_sale.total_price as total_amount');
             $this->db->from('tbl_sale');
             $this->db->where("tbl_sale.sale_status",1);
+			$this->db->where("tbl_sale.sale_mop","Cash");
              $this->db->where('sale_date',$cdate);
 			 $this->db->where('tbl_sale.sale_branch_id_fk',$branch_id_fk);
 			 $this->db->group_by('auto_invoice');

@@ -4,10 +4,6 @@ Class Bankdeposit_model extends CI_Model{
 	public function getSupplierTable($param,$branch_id_fk){
 		$arOrder = array('','class');
 		$searchValue =($param['searchValue'])?$param['searchValue']:'';
-		$bank =($param['bank'])?$param['bank']:'';
-		if($bank){
-            $this->db->like('bd_bank_id_fk', $bank); 
-        }
          if($searchValue){
             $this->db->like('bank_name', $searchValue); 
         }
@@ -29,7 +25,6 @@ Class Bankdeposit_model extends CI_Model{
         }
 		$this->db->where("bank_status",1);
 		$this->db->where("bd_status",1);
-		$this->db->where("bd_type",2);
 		$this->db->order_by("bd_date",'ASC');
         $query = $this->db->get();
 		
@@ -45,10 +40,7 @@ Class Bankdeposit_model extends CI_Model{
         if($searchValue){
             $this->db->like('bank_name', $searchValue); 
         }
-		$bank =($param['bank'])?$param['bank']:'';
-		if($bank){
-            $this->db->like('bd_bank_id_fk', $bank); 
-        }
+		
 		$this->db->select('*');
 		$this->db->from('tbl_bank_deposit');
 		$this->db->join('tbl_bank','bank_id=bd_bank_id_fk');
@@ -63,7 +55,6 @@ Class Bankdeposit_model extends CI_Model{
         }
 		$this->db->where("bank_status",1);
 		$this->db->where("bd_status",1);
-		$this->db->where("bd_type",2);
 		$this->db->order_by("bd_date",'ASC');
         $query = $this->db->get();
     	return $query->num_rows();
@@ -77,22 +68,6 @@ Class Bankdeposit_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result();
 	}
-
-	public function get_deposit($bd_bank_id_fk,$branch_id_fk)
-    {
-       
-        $this->db->select('*');
-		$this->db->from('tbl_bank');
-		$this->db->where('bank_id',$bd_bank_id_fk);
-		$this->db->where('bank_branch_id_fk',$branch_id_fk);
-		$this->db->where("bank_status",1);
-        $q = $this->db->get();
-        if($q->num_rows() > 0)
-        {
-            return $q->row();
-        }
-        return false;
-    }
 
 }
 

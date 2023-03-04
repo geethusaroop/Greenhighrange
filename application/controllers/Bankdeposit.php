@@ -19,6 +19,8 @@ class Bankdeposit extends MY_Controller {
 	{
 		$template['body'] = 'Bankdeposit/list';
 		$template['script'] = 'Bankdeposit/script';
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$template['bank'] = $this->Bank_model->view_by($branch_id_fk);
 		$this->load->view('template', $template);
 	}
 	public function add(){
@@ -33,11 +35,14 @@ class Bankdeposit extends MY_Controller {
 		}
 		else {
 			$bd_id = $this->input->post('bd_id');
+			$bd_bank_id_fk=$this->input->post('bd_bank_id_fk');
+			$branch_id_fk =$this->session->userdata('branch_id_fk');
+			$bd_amount1=$this->input->post('bd_amount1');
+			$bd_amount=$this->input->post('bd_amount');
 			$data = array(
 						'branch_id_fk' =>$this->session->userdata('branch_id_fk'),	
 						'bd_bank_id_fk' =>$this->input->post('bd_bank_id_fk'),	
-						'bd_type' =>$this->input->post('bd_type'),						
-						'bd_member_id_fk' =>$this->input->post('bd_member_id_fk'),	
+						'bd_type' =>2,						
 						'bd_amount' =>$this->input->post('bd_amount'),
 						'bd_date' =>$this->input->post('bd_date'),
 						'bd_remark' =>$this->input->post('bd_remark'),
@@ -47,10 +52,22 @@ class Bankdeposit extends MY_Controller {
 					 
                      $data['bd_id'] = $bd_id;
                      $result = $this->General_model->update($this->table,$data,'bd_id',$bd_id);
+
+					/*  $bdeposit = $this->Bankdeposit_model->get_deposit($bd_bank_id_fk,$branch_id_fk);
+					$updated_deposit1= intval($bdeposit->bank_opening_balance) - intval($bd_amount1);
+					$updated_deposit= $updated_deposit1 + intval($bd_amount);
+					$deposit_array = ['bank_opening_balance' => $updated_deposit];
+					$result = $this->General_model->update('tbl_bank',$deposit_array,'bank_id',$bd_bank_id_fk); */
+
                      $response_text = 'Bankdeposit Details updated successfully';
                 }
 				else{
 				    $result =  $this->General_model->add($this->table,$data);
+
+					/* $bdeposit = $this->Bankdeposit_model->get_deposit($bd_bank_id_fk,$branch_id_fk);
+					$updated_deposit= intval($bdeposit->bank_opening_balance) + intval($bd_amount);
+					$deposit_array = ['bank_opening_balance' => $updated_deposit];
+					$result = $this->General_model->update('tbl_bank',$deposit_array,'bank_id',$bd_bank_id_fk); */
                      $response_text = 'Bankdeposit Details added  successfully';
 					 
                 }
@@ -73,6 +90,7 @@ class Bankdeposit extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$param['bank'] = (isset($_REQUEST['bank']))?$_REQUEST['bank']:'';
 		$data = $this->Bankdeposit_model->getSupplierTable($param,$branch_id_fk);
     	$json_data = json_encode($data);
     	echo $json_data;
@@ -82,9 +100,9 @@ class Bankdeposit extends MY_Controller {
 	public function edit($bd_id){
 		$template['body'] = 'Bankdeposit/add';
 		$template['script'] = 'Bankdeposit/script';
-		$template['bank'] = $this->Bank_model->view_by();
 		$branch_id_fk =$this->session->userdata('branch_id_fk');
-			$template['member'] = $this->Bankdeposit_model->view_by($branch_id_fk);
+		$template['bank'] = $this->Bank_model->view_by($branch_id_fk);
+		$template['member'] = $this->Bankdeposit_model->view_by($branch_id_fk);
 		$template['records'] = $this->General_model->get_row($this->table,'bd_id',$bd_id);
     	$this->load->view('template', $template);
 	}
