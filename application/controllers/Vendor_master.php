@@ -54,7 +54,7 @@ class Vendor_master extends MY_Controller {
 						'vendorstate' => $this->input->post('vendorstate'),
 						'vendor_statetype' => $this->input->post('vendor_statetype'),
 						'vendor_gsttype' => $this->input->post('vendor_gsttype'),
-						'vendor_oldbal' => $this->input->post('vendor_oldbal'),
+						//'vendor_oldbal' => $this->input->post('vendor_oldbal'),
 						'vendorstatus' => 1
 						);
 			$vendor_id = $this->input->post('vendor_id');

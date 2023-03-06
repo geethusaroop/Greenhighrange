@@ -163,7 +163,10 @@ class BRSale extends MY_Controller {
 								
 				// $result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
 				$result = $this->General_model->updat($this->tbl_stock,$uData,'product_id',$product_branch_id_fk[$i],'branch_id_fk',$branches_id);
-				$mdata=array('member_sale_balance'=> $this->input->post('total_amt'));
+				
+				$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+				$updated_amount = $datass->member_branch_sale_balance + ($this->input->post('total_amt'));
+				$mdata=array('member_branch_sale_balance'=> $updated_amount);
 				$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
 				
 				}

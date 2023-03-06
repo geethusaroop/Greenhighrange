@@ -47,7 +47,8 @@ class Sale_model extends CI_Model
 		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale.member_id_fk', 'left');
 		//	$this->db->join('tbl_member_type','tbl_member_type.member_type_id = tbl_member.member_type','left');
 
-		$this->db->group_by('invoice_number', 'DESC');
+		$this->db->group_by('invoice_number');
+		$this->db->order_by('sale_date', 'ASC');
 		$query = $this->db->get();
 
 		$data['data'] = $query->result();
@@ -89,7 +90,8 @@ class Sale_model extends CI_Model
 		//$this->db->join('tbl_member_type','tbl_member_type.member_type_id = tbl_member.member_type','left');
 		$this->db->where("sale_status", 1);
 		$this->db->where("routsale_status",0);
-		$this->db->group_by('invoice_number', 'DESC');
+		$this->db->order_by('sale_date', 'ASC');
+		$this->db->group_by('invoice_number');
 
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -831,8 +833,8 @@ class Sale_model extends CI_Model
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');
-        $this->db->group_by('invoice_number', 'DESC');
-		$this->db->order_by('return_date','DESC');
+        $this->db->group_by('invoice_number');
+		$this->db->order_by('return_date','ASC');
         $query = $this->db->get();
         
 		$data['data'] = $query->result();
@@ -858,8 +860,8 @@ class Sale_model extends CI_Model
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');
-		$this->db->order_by('return_date', 'DESC');
-        $this->db->group_by('invoice_number', 'DESC');
+		$this->db->order_by('return_date', 'ASC');
+        $this->db->group_by('invoice_number');
         $query = $this->db->get();
 		return $query->num_rows();
 	}

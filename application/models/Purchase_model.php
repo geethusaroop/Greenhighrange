@@ -34,7 +34,7 @@ class Purchase_model extends CI_Model{
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
 		$this->db->group_by('invoice_number');
 		$this->db->group_by('vendor_id_fk');
-		$this->db->order_by('purchase_id','DESC');
+		$this->db->order_by('purchase_date','ASC');
 		$query = $this->db->get();
 		$data['data'] = $query->result();
 		$data['recordsTotal'] = $this->getPurchaseReportTotalCount($param,$branch_id_fk);
@@ -65,7 +65,7 @@ class Purchase_model extends CI_Model{
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
 		$this->db->group_by('invoice_number');
 		$this->db->group_by('vendor_id_fk');
-		$this->db->order_by('purchase_id', 'DESC');
+		$this->db->order_by('purchase_date','ASC');
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
@@ -749,8 +749,8 @@ class Purchase_model extends CI_Model{
 		$this->db->from('tbl_purchase');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
-        $this->db->group_by('invoice_number', 'DESC');
-		$this->db->order_by('purchase_return_date','DESC');
+        $this->db->group_by('invoice_number');
+		$this->db->order_by('purchase_return_date','ASC');
         $query = $this->db->get();
         
 		$data['data'] = $query->result();
@@ -784,8 +784,8 @@ class Purchase_model extends CI_Model{
 		$this->db->from('tbl_purchase');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
-		$this->db->order_by('purchase_return_date', 'DESC');
-        $this->db->group_by('invoice_number', 'DESC');
+		$this->db->order_by('purchase_return_date', 'ASC');
+        $this->db->group_by('invoice_number');
         $query = $this->db->get();
 		return $query->num_rows();
 	}

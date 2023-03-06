@@ -115,13 +115,25 @@
                                     $tasx = 0;
                                     $tot=0;
                                     $net=0;
-                                    foreach ($records as $row) {$i=$i+1; ?>
+                                    foreach ($records as $row) {$i=$i+1;
+                                        if($this->session->userdata('user_type')=="A")
+                                        {
+                                            $old_bal=$row->member_old_balance;
+                                            $current_bal=$row->member_sale_balance;
+                                        }
+                                        else if($this->session->userdata('user_type')=="B")
+                                        {
+                                            $old_bal=$row->member_branch_old_balance;
+                                            $current_bal=$row->member_branch_sale_balance;
+                                        }
+                                    
+                                    ?>
                                         <tr style="border:1px solid #0a0a0b;">
                                             <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
                                             <td style="border:1px solid #0a0a0b;"><?php echo $row->member_name; ?></td>
-                                            <td style="border:1px solid #0a0a0b;"><?php echo $row->member_old_balance; ?></td>
+                                            <td style="border:1px solid #0a0a0b;"><?php   echo $old_bal; ?></td>
                                             <td style="border:1px solid #0a0a0b;text-align:right;"><?php //echo $row->bamount; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($row->member_old_balance+ $row->member_sale_balance)-$row->bamount; ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($old_bal+ $current_bal)-$row->bamount; ?></td>
                                            
                                         </tr>
                                     <?php 

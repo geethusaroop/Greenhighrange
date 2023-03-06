@@ -90,13 +90,16 @@ class Purchasereport_model extends CI_Model{
 
 	public function getsundrycreditors($branch_id_fk)
 	{
-		$this->db->select('*,sum(bd_amount) as bamount');
+		$this->db->select('*,COALESCE(bamount,0) as bamount,COALESCE(purchase_amt,0) as purchase_amt,COALESCE(voucher_amt,0) as voucher_amt');
 		$this->db->from('tbl_vendor');
-		$this->db->join('tbl_vendor_voucher','vendor_id = vendor_id_fk','left');
-		$this->db->join('tbl_bank_deposit','bd_member_id_fk=vendor_id','left');
-		$this->db->where("bd_status",1);
+		$this->db->join('(SELECT *,SUM(voucher_amount) as voucher_amt FROM tbl_vendor_voucher WHERE voucher_status = 1  group by vendor_id_fk) as tvv','tvv.vendor_id_fk=tbl_vendor.vendor_id','left');
+		$this->db->join('(SELECT *,SUM(bd_amount) as bamount FROM tbl_bank_deposit WHERE bd_status = 1  group by bd_member_id_fk) as tbd','tbd.bd_member_id_fk=tbl_vendor.vendor_id','left');
+		$this->db->join('(SELECT *,SUM(purchase_netamt) as purchase_amt FROM tbl_purchase WHERE purchase_status = 1 group by vendor_id_fk) as tp','tp.vendor_id_fk=tbl_vendor.vendor_id','left');
+
+		//	$this->db->join('tbl_vendor_voucher','vendor_id = tbl_vendor_voucher.vendor_id_fk','left');
+	//	$this->db->join('tbl_purchase','tbl_purchase.vendor_id_fk=vendor_id','left');
+		//$this->db->join('tbl_bank_deposit','bd_member_id_fk=vendor_id','left');
         $this->db->where("vendorstatus",1);
-		$this->db->where("voucher_status",1);
 		$this->db->order_by('vendorname','ASC');
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
@@ -113,14 +116,14 @@ class Purchasereport_model extends CI_Model{
 
 	public function getsundrydebtors($branch_id_fk)
 	{
-		$this->db->select('*,sum(bd_amount) as bamount');
+		$this->db->select('*,COALESCE(bamount,0) as bamount');
 		$this->db->from('tbl_member');
+		$this->db->join('(SELECT *,SUM(bd_amount) as bamount FROM tbl_bank_deposit WHERE bd_status = 1 group by bd_member_id_fk) as tbd','tbd.bd_member_id_fk=member_id','left');
 	//	$this->db->join('tbl_sale','member_id_fk=member_id','left');
-		$this->db->join('tbl_bank_deposit','bd_member_id_fk=member_id','left');
+	//	$this->db->join('tbl_bank_deposit','bd_member_id_fk=member_id','left');
         $this->db->where("member_status",1);
-		$this->db->where("bd_status",1);
 		$this->db->order_by('member_name','ASC');
-		$this->db->group_by('bd_member_id_fk');
+		/* $this->db->group_by('bd_member_id_fk');
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("branch_id_fk",$branch_id_fk);
@@ -128,7 +131,7 @@ class Purchasereport_model extends CI_Model{
         else
         {
             $this->db->where("branch_id_fk",0);
-        }
+        } */
         $query = $this->db->get();
 		return $query->result();
 	}

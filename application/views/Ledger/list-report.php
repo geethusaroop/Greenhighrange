@@ -24,7 +24,7 @@
           <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response');?>" />
             <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
             
-              <div class="col-md-4">
+              <div class="col-md-3">
                   <div class="input-group margin">
                       <div class="input-group-btn">
                           <button type="button" class="btn btn-primary nohover">SUPPLIER</button>
@@ -59,7 +59,7 @@
               </div>
           </div>
           
-          <div class="col-sm-2">
+          <div class="col-md-3">
                   <div class="input-group">
                       <button type="submit" id="search" class="btn bg-orange btn-flat margin" >Search</button>
                     
@@ -138,11 +138,11 @@
                    <td style="border-color:#d4d6d5;"><?php echo date('d/m/Y',strtotime($rows1->purchase_date)); ?></td>
                    <td style="border-color:#d4d6d5;"><?php echo $rows1->invoice_number; ?></td>
                  <td style="border-color:#d4d6d5;"><?php echo $rows1->vendorname; ?></td>
-                 <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($rows1->pur_new_bal,2); ?></td>
+                 <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($rows1->total,2); ?></td>
                 <td style="border-color:#d4d6d5;text-align: center;"><?php //echo $rows1->pur_paid_amt; ?></td>
                 <td style="border-color:#d4d6d5;">PURCHASE BILL-<b><?php echo $rows1->invoice_number; ?></b></td>
               </tr>
-            <?php $purchase1s=$purchase1s+$rows1->pur_new_bal;} ?>
+            <?php $purchase1s=$purchase1s+$rows1->total;} ?>
 
             <?php foreach($purc2 as $rows2){ ?>
                 <tr>

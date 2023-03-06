@@ -1111,7 +1111,7 @@ class Ledger_model extends CI_Model{
 
         public function getpurchase_ledger($prid,$cdate,$edate,$vendor_id)
         {
-            $this->db->select('*,sum(total_price) as total');
+            $this->db->select('*,sum(purchase_netamt) as total');
             $this->db->from('tbl_purchase');
             $this->db->join('tbl_vendor','vendor_id = vendor_id_fk','left');
            // $this->db->join('tbl_supp_acc','sup_id_fk = vendor_id');

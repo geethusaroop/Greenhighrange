@@ -118,7 +118,7 @@
                                         <tr style="border:1px solid #0a0a0b;">
                                             <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
                                             <td style="border:1px solid #0a0a0b;"><?php echo $row->vendorname; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($row->vendor_oldbal)-($row->voucher_amount+$row->bamount); ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo round(($row->opening_balance+$row->purchase_amt)-($row->voucher_amount+$row->bamount),2); ?></td>
                                             <td style="border:1px solid #0a0a0b;text-align:right;"></td>
                                         </tr>
                                     <?php 
