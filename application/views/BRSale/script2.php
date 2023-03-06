@@ -1266,7 +1266,10 @@ $(document).on("change",'#customer_nam',function(){
 
         var sale_old_balance = parseFloat(document.getElementById("sale_old_balance").value);
         var discount_price = parseFloat(document.getElementById("discount_prices").value);
-        var total_amt=total+sale_old_balance;
+     //   var total_amt=total+sale_old_balance;
+     //  var nettotal=total_amt-discount_price;
+
+        var total_amt=total;
        var nettotal=total_amt-discount_price;
       
         document.getElementById("net_total").value = isNaN(total_amt) ? "0.00" : total_amt.toFixed(2);
@@ -1359,11 +1362,17 @@ function totalamt(idx) { //alert(idx);
         }
         var sale_old_balance = parseFloat(document.getElementById("sale_old_balance").value);
         var discount_price = parseFloat(document.getElementById("discount_prices").value);
-        var total_amt=total+sale_old_balance;
+      //  var total_amt=total+sale_old_balance;
        // var nettotal=total-discount_price;
+     //  var nettotal=total_amt-discount_price;
+
+     var total_amt=total;
        var nettotal=total_amt-discount_price;
+
+       var gross_total=total+sale_old_balance;
       
         document.getElementById("net_total").value = isNaN(total_amt) ? "0.00" : total_amt.toFixed(2);
+        document.getElementById("gross_total").value = isNaN(gross_total) ? "0.00" : gross_total.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
       //  document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
       //  document.getElementById("total_amt").value = isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);//balance
@@ -1380,7 +1389,8 @@ function getdiscamount() {
     }
 
     function getsharediscamount() {
-        var sharedisc = parseFloat(document.getElementById("sale_shareholder_discount").value);
+        var sharedisc1 = parseFloat(document.getElementById("sale_shareholder_discount").value);
+        var sharedisc =sharedisc1/100;
        var total_amt1 = parseFloat(document.getElementById("net_total").value);
         var discount_price = parseFloat(document.getElementById("discount_prices").value);
         var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;

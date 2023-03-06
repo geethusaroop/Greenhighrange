@@ -234,13 +234,15 @@
                       <tr>
                       <td>Old Balance<input type='text' id='sale_old_balance' class="form-control" name="sale_old_balance" value="0" style="background-color:white;text-align:right;width:250px;"/></td>
                       <td>Total Amount<input type='text' id='net_total' class="form-control" name="net_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
+                      <td>Gross Total<input type='text' id='gross_total' class="form-control" name="gross_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
+                    
                       <td>Qty. Total<input type='text' id='qty_total' class="form-control" name="qty_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                       
                       </tr>
                    
                       <tr>
                         <td>Discount Amount<input type="text" class="form-control" name="discount_prices" id="discount_prices" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" />
-                        <td>Shareholder Discount Amount<input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" />
+                        <td>Shareholder Discount Amount(%)<input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" />
 
                         <td>Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
 

@@ -186,8 +186,18 @@ write_file($save, $backup);  */
 
 		//$sql="ALTER TABLE `tbl_bank_deposit` CHANGE `bd_type` `bd_type` INT(11) NOT NULL COMMENT '1=member_deposit,2=others,3=supplier_withdraw'";
 		
-		$sql="ALTER TABLE `tbl_bank` ADD `bank_date` DATE NOT NULL AFTER `bank_opening_balance`";
+	//	$sql="ALTER TABLE `tbl_member` ADD `member_branch_old_balance` INT NOT NULL AFTER `member_sale_balance`, ADD `member_branch_sale_balance` INT NOT NULL AFTER `member_branch_old_balance`";
 
+		/* $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_return` (
+			`return_id` int(11) NOT NULL AUTO_INCREMENT,
+			`return_branch_id_fk` int(11) NOT NULL,
+			`return_product_id_fk` int(11) NOT NULL,
+			`return_bproduct_id_fk` int(11) NOT NULL,
+			`return_stock` int(11) NOT NULL,
+			`return_date` date NOT NULL,
+			`return_status` int(11) NOT NULL,
+			PRIMARY KEY (`return_id`)
+		  ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1"; */
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}
