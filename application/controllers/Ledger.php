@@ -93,6 +93,7 @@ class Ledger extends MY_Controller {
 		$template['cbal2']=$this->Ledger_model->opening_ledger2($gid,$cdate,$vendor_id);
 		$template['purc1']=$this->Ledger_model->getpurchase_ledger($gid,$cdate,$edate,$vendor_id);
 		$template['purc2']=$this->Ledger_model->getpurchase_ledger_pay($gid,$cdate,$edate,$vendor_id);
+		$template['purc3']=$this->Ledger_model->getbank_ledger_pay($gid,$cdate,$edate,$vendor_id);
 		$template['purchase_return1']=$this->Ledger_model->getpurchasereturn_pay($gid,$cdate,$edate,$vendor_id);
 		//var_dump($template['purc1']);die;
 	    $this->load->view('template', $template);

@@ -129,6 +129,72 @@ class Product_model extends CI_Model{
         return $query->num_rows();
     }
 
+    ##################################################################################################
+    public function getBranchreturninfoTable($param,$branch_id_fk){
+        $arOrder = array('','product_name');
+        $searchValue =($param['searchValue'])?$param['searchValue']:'';
+        $item_name = ($param['item_name'])?$param['item_name']:'';
+        if($searchValue){
+            $this->db->like('product_name', $searchValue);
+        }
+        if($item_name){
+            $this->db->like('product_name', $item_name);
+            $this->db->or_like('product_code', $item_name);
+        }
+       
+        if ($param['start'] != 'false' and $param['length'] != 'false') {
+            $this->db->limit($param['length'],$param['start']);
+        }
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("return_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("return_branch_id_fk",0);
+        }
+        $this->db->select('*');
+        $this->db->from('tbl_branch_return');
+        $this->db->join('tbl_product','tbl_product.product_id=tbl_branch_return.return_product_id_fk');
+        $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
+        $this->db->where("product_status",1);
+        $this->db->where("return_status",1);
+        $this->db->order_by('return_date','ASC');
+        $query = $this->db->get();
+        $data['data'] = $query->result();
+        $data['recordsTotal'] = $this->getBranchreturninfoTotalCount($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getBranchreturninfoTotalCount($param,$branch_id_fk);
+        return $data;
+    }
+    public function getBranchreturninfoTotalCount($param = NULL,$branch_id_fk){
+        $searchValue =($param['searchValue'])?$param['searchValue']:'';
+        if($searchValue){
+            $this->db->like('product_name', $searchValue);
+        }
+        if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("return_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("return_branch_id_fk",0);
+        }
+        $this->db->select('*');
+        $this->db->from('tbl_branch_return');
+        $this->db->join('tbl_product','tbl_product.product_id=tbl_branch_return.return_product_id_fk');
+        $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
+        $this->db->where("product_status",1);
+        $this->db->where("return_status",1);
+        $this->db->order_by('return_date','ASC');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+
+
+
+    #####################################################################################################
+
     function get_unit(){
         $status=1;
         $this->db->select('*');

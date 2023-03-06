@@ -352,6 +352,8 @@
 
               else if($this->uri->segment(1)=='Bankdeposit')
               {echo "active";}
+
+           
             ?>">
             <a href="#"><i class="fa fa-money"></i><span>Accounts</span>
               <span class="pull-right-container">
@@ -400,8 +402,13 @@
               </a>
               <ul class="treeview-menu">
               <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>FPO Deposit</a></li>
+             
               <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='credit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/credit/"><i class="fa fa-circle-o"></i>Credit</a></li>
-              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='debit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/debit/"><i class="fa fa-circle-o"></i>Credit</a></li>  
+             
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='debit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/debit/"><i class="fa fa-circle-o"></i>Debit</a></li>  
+            
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='balance'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/balance/"><i class="fa fa-circle-o"></i>Balance</a></li>  
+
             </ul>
             </li>
 
@@ -433,9 +440,7 @@
 
             <li class="<?php if($this->uri->segment(1)=="Balancesheet"){echo "active";}?>" ><a  href="<?php echo base_url();?>Balancesheet"><i class="fa fa-circle-o"></i> <span>Balance Sheet</span></a></li>
        
-            <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor"><i class="fa fa-circle-o"></i> <span>Sundry Creditors</span></a></li>
-
-            <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)=='debtors'){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor/debtors"><i class="fa fa-circle-o"></i> <span>Sundry Debtors</span></a></li>
+          
           </ul>
         </li>
 
@@ -448,6 +453,9 @@
           } else if ($this->uri->segment(1) == "Saleregister") {
             echo "active";
           }
+
+          else if($this->uri->segment(1)=='Sundrycreditor')
+          {echo "active";}
          
           ?>">
          <a><i class="fa fa-book"></i><span>Registers</span>
@@ -460,6 +468,10 @@
            <li class="<?php if ($this->uri->segment(1) == "Stockregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stockregister"><i class="fa fa-circle-o"></i> <span>Stock Register</span></a></li>
            <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseregister"><i class="fa fa-circle-o"></i> <span>Purchase Register</span></a></li>
            <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Saleregister"><i class="fa fa-circle-o"></i> <span>Sale Register</span></a></li>
+
+           <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor"><i class="fa fa-circle-o"></i> <span>Sundry Creditors</span></a></li>
+
+          <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)=='debtors'){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor/debtors"><i class="fa fa-circle-o"></i> <span>Sundry Debtors</span></a></li>
           </ul>
        </li>
 
@@ -743,9 +755,11 @@
           </ul>
        </li>
 
-
-
        <li class="divider"></li> 
+      
+      <li class="<?php if ($this->uri->segment(1) == "BProduct" && $this->uri->segment(2) == "viewreturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>BProduct/viewreturn"><i class="fa fa-arrow-left"></i><span style="font-weight:bold;">STOCK RETURN</span></a></li>
+     
+      <li class="divider"></li> 
 
 
        <li class="treeview <?php
@@ -808,8 +822,31 @@
            
             <li class="<?php if($this->uri->segment(1)=='Fund' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Fund"><i class="fa fa-circle-o"></i>Fund Details</a></li>
 
-            <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>Bank Deposit</a></li>
+<!--             <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>Bank Deposit</a></li>
+ -->
 
+          <li class="treeview
+              <?php
+              if($this->uri->segment(1)=='Bankdeposit')
+              {echo "active";}
+             
+              ?>">
+              <a href="#"><i class="fa fa-bank"></i>Bank Transactions
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>FPO Deposit</a></li>
+             
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='credit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/credit/"><i class="fa fa-circle-o"></i>Credit</a></li>
+             
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='debit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/debit/"><i class="fa fa-circle-o"></i>Debit</a></li>  
+            
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='balance'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/balance/"><i class="fa fa-circle-o"></i>Balance</a></li>  
+
+            </ul>
+            </li>
 
            <li class="<?php if($this->uri->segment(1)=="BDaybook"){echo "active";}?>" ><a  href="<?php echo base_url();?>BDaybook"><i class="fa fa-circle-o"></i> <span>Daybook</span></a></li>
            
@@ -833,6 +870,10 @@
           } else if ($this->uri->segment(1) == "Saleregister") {
             echo "active";
           }
+
+          else if ($this->uri->segment(1) == "Sundrycreditor") {
+            echo "active";
+          }
          
           ?>">
          <a><i class="fa fa-book"></i><span>Registers</span>
@@ -845,6 +886,10 @@
            <li class="<?php if ($this->uri->segment(1) == "Stockregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stockregister"><i class="fa fa-circle-o"></i> <span>Stock Register</span></a></li>
            <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseregister"><i class="fa fa-circle-o"></i> <span>Purchase Register</span></a></li>
            <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Saleregister"><i class="fa fa-circle-o"></i> <span>Sale Register</span></a></li>
+         
+           <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor"><i class="fa fa-circle-o"></i> <span>Sundry Creditors</span></a></li>
+
+<li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)=='debtors'){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor/debtors"><i class="fa fa-circle-o"></i> <span>Sundry Debtors</span></a></li>
           </ul>
        </li>
 

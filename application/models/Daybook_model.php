@@ -780,6 +780,7 @@ public function pupdate_daybook($date,$profit,$stat){
 			$this->db->join('tbl_member','member_id=bd_member_id_fk','left');
 			$this->db->where("bd_date",$cdate);
 			$this->db->where("bd_status",1);
+			$this->db->where("bd_type",2);
 			$this->db->where("bank_status",1);
 			$query = $this->db->get();
 			$result=$query->result();

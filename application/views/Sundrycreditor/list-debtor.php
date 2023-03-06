@@ -120,8 +120,8 @@
                                             <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
                                             <td style="border:1px solid #0a0a0b;"><?php echo $row->member_name; ?></td>
                                             <td style="border:1px solid #0a0a0b;"><?php echo $row->member_old_balance; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->member_sale_balance; ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php //echo $row->bamount; ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($row->member_old_balance+ $row->member_sale_balance)-$row->bamount; ?></td>
                                            
                                         </tr>
                                     <?php 

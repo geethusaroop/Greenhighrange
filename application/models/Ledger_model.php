@@ -1164,5 +1164,21 @@ class Ledger_model extends CI_Model{
             return $result;
         }
 
+        public function getbank_ledger_pay($gid,$cdate,$edate,$vendor_id)
+        {
+          $status=1;
+          $this->db->select('*,sum(bd_amount) as bamount');
+          $this->db->from('tbl_bank_deposit');
+          $this->db->join('tbl_vendor','vendor_id=bd_member_id_fk','left');
+          $this->db->where("bd_status",1);
+          $this->db->where("bd_type",3);
+          $this->db->order_by("bd_date",'ASC');
+          $this->db->where('vendor_id',$vendor_id);
+          $this->db->where('bd_date >=',$cdate);
+          $this->db->where('bd_date <=',$edate);
+          $query = $this->db->get();
+          return $query->result();
+        }
+
 }
 ?>

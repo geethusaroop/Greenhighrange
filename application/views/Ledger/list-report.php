@@ -100,7 +100,7 @@
                  
                   $purchases=0;
                   $purchase1s=0;
-
+                  $payb=0;
                   $pay=0;
                   $preturn=0;
                   $obal=0;
@@ -151,9 +151,20 @@
                  <td style="border-color:#d4d6d5;"><?php echo $rows2->vendorname; ?></td>
                  <td style="border-color:#d4d6d5;text-align: center;"></td>
                 <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($rows2->voucher_amount,2); ?></td>
-                <td style="border-color:#d4d6d5;"><?php echo $rows2->narration; ?>-<b><?php echo $rows2->voucher_group; ?></b></td>
+                <td style="border-color:#d4d6d5;"><?php echo $rows2->narration; ?>-<b><?php echo $rows2->voucher_group."(CASH)"; ?></b></td>
               </tr>
             <?php $pay=$pay+$rows2->voucher_amount;} ?>
+
+            <?php foreach($purc3 as $rows3){ ?>
+                <tr>
+                   <td style="border-color:#d4d6d5;"><?php echo date('d/m/Y',strtotime($rows3->bd_date)); ?></td>
+                   <td style="border-color:#d4d6d5;"></td>
+                 <td style="border-color:#d4d6d5;"><?php echo $rows3->vendorname; ?></td>
+                 <td style="border-color:#d4d6d5;text-align: center;"></td>
+                <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($rows3->bamount,2); ?></td>
+                <td style="border-color:#d4d6d5;"><?php echo "BANK PAYMENT"; ?></b></td>
+              </tr>
+            <?php $payb=$payb+$rows3->bamount;} ?>
 
          
                         <?php foreach($purchase_return1 as $rows2){ ?>
@@ -179,7 +190,7 @@
                   <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                   <td style="border-color:#d4d6d5;font-weight: bold;color:red;">TOTAL</td>
                   <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo number_format(($purchase1s+$val),2); ?></td>
-                   <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo number_format(($pay+$preturn),2); ?></td>
+                   <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo number_format(($pay+$preturn+$payb),2); ?></td>
                    <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                 </tr>
 
@@ -188,7 +199,7 @@
                   <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                   <td style="border-color:#d4d6d5;font-weight: bold;color:red;">CLOSING BALANCE</td>
                   <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"></td>
-                   <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo number_format((($purchase1s+$val)-($pay+$preturn)),2); ?></td>
+                   <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo number_format((($purchase1s+$val)-($pay+$preturn+$payb)),2); ?></td>
                    <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                 </tr>
               </tfoot>

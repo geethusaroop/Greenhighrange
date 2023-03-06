@@ -151,7 +151,7 @@
                  <td style="border-color:#d4d6d5;"><?php echo $rows2->vendorname; ?></td>
                  <td style="border-color:#d4d6d5;text-align: center;"></td>
                 <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($rows2->voucher_amount,2); ?></td>
-                <td style="border-color:#d4d6d5;"><?php echo $rows2->narration; ?>-<b><?php echo $rows2->voucher_group; ?></b></td>
+                <td style="border-color:#d4d6d5;"><?php echo $rows2->narration; ?>-<b><?php echo $rows2->voucher_group."(CASH)"; ?></b></td>
               </tr>
             <?php $pay=$pay+$rows2->voucher_amount;} ?>
 

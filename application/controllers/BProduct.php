@@ -14,6 +14,8 @@ class BProduct extends MY_Controller
 		$this->load->model('General_model');
 		$this->load->model('Product_model');
 		  $this->load->model('HSNcode_model');
+		  $this->load->model('Item_model');
+		  $this->load->model('Branch_transfer_model');
 	}
 	public function index()
 	{
@@ -122,15 +124,20 @@ class BProduct extends MY_Controller
 		$template['records'] = $this->General_model->get_row($this->table, 'product_id', $product_id);
 		$this->load->view('template', $template);
 	}
-	public function itemCategory()
+
+	public function viewreturn()
 	{
-		
-		$template['body'] = 'ProductCategory/list';
-		$template['script'] = 'ProductCategory/script';
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['body'] = 'BProduct/list-return';
+		$template['script'] = 'BProduct/script-return';
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['product'] = $this->Item_model->view_by($branch_id_fk);
 		$this->load->view('template', $template);
 	}
-	public function getItemCategory()
+
+	public function get_return()
 	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$this->load->model('Product_model');
 		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
 		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
@@ -139,72 +146,138 @@ class BProduct extends MY_Controller
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
 		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
 		$param['item_name'] = (isset($_REQUEST['item_name'])) ? $_REQUEST['item_name'] : '';
-		$data = $this->Product_model->getCategoryInfoTable($param);
+		$data = $this->Product_model->getBranchreturninfoTable($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
-	public function addCategory()
+
+	public function add_return()
 	{
-		$this->form_validation->set_rules('cat_name', ' Category Name', 'required');
-		$this->form_validation->set_rules('cat_code', ' Category Code', 'required');
+		$this->form_validation->set_rules('return_date', 'Date', 'required');
 		if ($this->form_validation->run() == FALSE) {
 			
-			$template['body'] = 'ProductCategory/add';
-			$template['script'] = 'ProductCategory/script';
-			$template['unit'] = $this->Product_model->get_unit();
+			$template['body'] = 'BProduct/add-return';
+			$template['script'] = 'BProduct/script-return';
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$template['product'] = $this->Item_model->view_by($branch_id_fk);
 			$this->load->view('template', $template);
-		} else {
-			$prod_cat_id = $this->input->post('prod_cat_id');
+		} 
+		else {
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$bproduct_id_fk=$this->input->post('bproduct_id_fk');
+			$product_id_fk=$this->input->post('prod_name');
+			$bt_stk=$this->input->post('return_stock');
+			$bt_stk1=$this->input->post('return_stock1');
 			$data = array(
-				'prod_cat_name' => $this->input->post('cat_name'),
-				'prod_cat_code' => strtoupper($this->input->post('cat_code')),
+				'return_branch_id_fk'=>$branch_id_fk,
+				'return_product_id_fk' => $this->input->post('prod_name'),
+				'return_bproduct_id_fk' => $this->input->post('bproduct_id_fk'),
+				'return_stock' => $this->input->post('return_stock'),
+				'return_date' => $this->input->post('return_date'),
+				'return_status' => 1,
 			);
-			if ($prod_cat_id) {
-				$data['prod_cat_id'] = $prod_cat_id;
-				$result = $this->General_model->update($this->table2, $data, 'prod_cat_id', $prod_cat_id);
-				$response_text = 'BProduct Category updated successfully';
-			} else {
-				$result = $this->General_model->add($this->table2, $data);
-				$response_text = 'BProduct Category added  successfully';
+			$return_id = $this->input->post('return_id');
+			if ($return_id) {
+				$data['return_id'] = $return_id;
+				$result = $this->General_model->update('tbl_branch_return', $data, 'return_id', $return_id);
+
+				#########Master product update##################
+				$datass_up = $this->General_model->get_row('tbl_product','product_id',$bproduct_id_fk);
+				$updated_stk_up1 = intval($datass_up->product_stock) - intval($bt_stk1);
+				$updated_stk_up = $updated_stk_up1 + intval($bt_stk);
+				$stk_array_up = ['product_stock' => $updated_stk_up];
+				$result = $this->General_model->update('tbl_product',$stk_array_up,'product_id',$bproduct_id_fk);
+
+				#########Branch product update##################
+				$data_return_up = $this->General_model->get_row('tbl_product','product_id',$product_id_fk);
+				$updated_return_stk_up1 = intval($data_return_up->product_stock) + intval($bt_stk1);
+				$updated_return_stk_up = $updated_return_stk_up1 - intval($bt_stk);
+				$stk_return_up = ['product_stock' => $updated_return_stk_up];
+				$result = $this->General_model->update('tbl_product',$stk_return_up,'product_id',$product_id_fk);
+
+				$response_text = 'Stock Return updated successfully';
+			} 
+			else {
+
+				$result = $this->General_model->add('tbl_branch_return', $data);
+
+
+				#########Master product update##################
+				$datass = $this->General_model->get_row('tbl_product','product_id',$bproduct_id_fk);
+				$updated_stk = intval($datass->product_stock) + intval($bt_stk);
+				$stk_array = ['product_stock' => $updated_stk];
+				$results = $this->General_model->update('tbl_product',$stk_array,'product_id',$bproduct_id_fk);
+				//var_dump($results);die;
+
+				#########Branch product update##################
+				$data_return = $this->General_model->get_row('tbl_product','product_id',$product_id_fk);
+				$updated_return_stk = intval($data_return->product_stock) - intval($bt_stk);
+				$stk_return = ['product_stock' => $updated_return_stk];
+				$result2 = $this->General_model->update('tbl_product',$stk_return,'product_id',$product_id_fk);
+
+				$response_text = 'Stock Return  added  successfully';
 			}
 			if ($result) {
 				$this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
 			} else {
 				$this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
 			}
-			redirect('/BProduct/itemCategory', 'refresh');
+			redirect('/BProduct/viewreturn', 'refresh');
 		}
 	}
-	public function editCategory($prod_cat_id)
+
+	public function getAvailStock()
 	{
-		
-		$template['body'] = 'ProductCategory/add';
-		$template['script'] = 'ProductCategory/script';
-		$template['records'] = $this->General_model->get_row($this->table2, 'prod_cat_id', $prod_cat_id);
+		$prod1 = [];
+		$pid = $this->input->post('prod_id');
+        $data = $this->Branch_transfer_model->getpstock($pid);
+		$prod1['product_stock'] = $data->product_stock;
+        $prod1['bproduct_id_fk'] = $data->bproduct_id_fk;
+		echo json_encode($prod1);
+	}
+
+	public function edit_return($return_id)
+	{
+		$template['body'] = 'BProduct/add-return';
+			$template['script'] = 'BProduct/script-return';
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$template['product'] = $this->Item_model->view_by($branch_id_fk);
+		$template['records'] = $this->General_model->get_row('tbl_branch_return', 'return_id', $return_id);
 		$this->load->view('template', $template);
 	}
-	public function deleteCategory()
-	{
-		$prod_cat_id = $this->input->post('prod_cat_id');
-		$updateData = array('prod_cat_status' => 0);
-		$data = $this->General_model->update($this->table2, $updateData, 'prod_cat_id', $prod_cat_id);
-		if ($data) {
-			$response['text'] = 'Deleted successfully';
-			$response['type'] = 'success';
-		} else {
-			$response['text'] = 'Something went wrong';
-			$response['type'] = 'error';
-		}
-		$response['layout'] = 'topRight';
-		$data_json = json_encode($response);
-		echo $data_json;
-		redirect('/BProduct/itemCategory', 'refresh');
-	}
 
+	public function delete_return(){
+        $return_id = $this->input->post('return_id');
+		$product_id_fk = $this->input->post('return_product_id_fk');
+		$bproduct_id_fk = $this->input->post('return_bproduct_id_fk');
+		$bt_stk = $this->input->post('return_stock');
+
+		#########Master product update##################
+		$datass = $this->General_model->get_row('tbl_product','product_id',$bproduct_id_fk);
+		$updated_stk = intval($datass->product_stock) - intval($bt_stk);
+		$stk_array = ['product_stock' => $updated_stk];
+		$results = $this->General_model->update('tbl_product',$stk_array,'product_id',$bproduct_id_fk);
+		//var_dump($results);die;
+
+		#########Branch product update##################
+		$data_return = $this->General_model->get_row('tbl_product','product_id',$product_id_fk);
+		$updated_return_stk = intval($data_return->product_stock) + intval($bt_stk);
+		$stk_return = ['product_stock' => $updated_return_stk];
+		$result2 = $this->General_model->update('tbl_product',$stk_return,'product_id',$product_id_fk);
+
+        $updateData = array('return_status' => 0);
+        $data = $this->General_model->update('tbl_branch_return',$updateData,'return_id',$return_id);
+        if($data) {
+            $response['text'] = 'Deleted successfully';
+            $response['type'] = 'success';
+        }
+        else{
+            $response['text'] = 'Something went wrong';
+            $response['type'] = 'error';
+        }
+        $response['layout'] = 'topRight';
+        $data_json = json_encode($response);
+        echo $data_json;
+    }
 	
-
-	public function getSubCategories(){
-		$result=$this->Product_model->get_subcategories();
-		return $result;
-	}
 }
