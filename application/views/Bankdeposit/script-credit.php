@@ -93,7 +93,7 @@ $(document).on('change','#vouch_name',function(){
             $table.cell(node).data(index+1);
             });
          
-			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Bankdeposit/edit_credit/'+data['bd_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['bd_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Bankdeposit/edit_credit/'+data['bd_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['bd_id']+','+data['bd_member_id_fk']+','+data['bd_amount']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         },
 
         "columns": [
@@ -109,12 +109,12 @@ $(document).on('change','#vouch_name',function(){
     } );    
   });
 
- function confirmDelete(bd_id){
+ function confirmDelete(bd_id,bd_member_id_fk,bd_amount){
     var conf = confirm("Do you want to Delete Bank Deposit Details ?");
     if(conf){
         $.ajax({
-            url:"<?php echo base_url();?>Bankdeposit/delete",
-            data:{bd_id:bd_id},
+            url:"<?php echo base_url();?>Bankdeposit/delete_credit",
+            data:{bd_id:bd_id,bd_member_id_fk:bd_member_id_fk,bd_amount:bd_amount},
             method:"POST",
             datatype:"json",
             success:function(data){

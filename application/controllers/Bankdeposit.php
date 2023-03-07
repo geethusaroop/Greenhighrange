@@ -146,6 +146,8 @@ class Bankdeposit extends MY_Controller {
 			$this->load->view('template', $template);
 		}
 		else {
+			$branch_id_fk =$this->session->userdata('branch_id_fk');
+			$member_id_fk=$this->input->post('bd_member_id_fk');
 			$bd_id = $this->input->post('bd_id');
 			$data = array(
 						'branch_id_fk' =>$this->session->userdata('branch_id_fk'),	
@@ -161,10 +163,44 @@ class Bankdeposit extends MY_Controller {
 					 
                      $data['bd_id'] = $bd_id;
                      $result = $this->General_model->update($this->table,$data,'bd_id',$bd_id);
+
+					 if($branch_id_fk==0)
+					 {
+						 $datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						 $updated_amount1 = $datass->member_sale_balance + ($this->input->post('bd_amount1'));
+						 $updated_amount = $updated_amount1 - ($this->input->post('bd_amount'));
+						 $mdata=array('member_sale_balance'=> $updated_amount);
+						 $result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					 }
+					 else
+					 {
+						 $datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						 $updated_amount1 = $datass->member_branch_sale_balance + ($this->input->post('bd_amount1'));
+						 $updated_amount = $updated_amount1 - ($this->input->post('bd_amount'));
+						 $mdata=array('member_branch_sale_balance'=> $updated_amount);
+						 $result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					 }
+
                      $response_text = 'Bankdeposit Details updated successfully';
                 }
 				else{
 				    $result =  $this->General_model->add($this->table,$data);
+
+					if($branch_id_fk==0)
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount = $datass->member_sale_balance - ($this->input->post('bd_amount'));
+						$mdata=array('member_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+					else
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount = $datass->member_branch_sale_balance - ($this->input->post('bd_amount'));
+						$mdata=array('member_branch_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+
                      $response_text = 'Bankdeposit Details added  successfully';
 					 
                 }
@@ -204,6 +240,41 @@ class Bankdeposit extends MY_Controller {
 	}
 
 
+	public function delete_credit(){
+        $bd_id = $this->input->post('bd_id');
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$member_id_fk= $this->input->post('bd_member_id_fk');
+		if($branch_id_fk==0)
+		{
+			$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+			$updated_amount = $datass->member_sale_balance + ($this->input->post('bd_amount'));
+			$mdata=array('member_sale_balance'=> $updated_amount);
+			$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+		}
+		else
+		{
+			$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+			$updated_amount = $datass->member_branch_sale_balance + ($this->input->post('bd_amount'));
+			$mdata=array('member_branch_sale_balance'=> $updated_amount);
+			$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+		}
+
+        $updateData = array('bd_status' => 0);
+        $data = $this->General_model->update($this->table,$updateData,'bd_id',$bd_id);
+        if($data) {
+            $response['text'] = 'Deleted successfully';
+            $response['type'] = 'success';
+        }
+        else{
+            $response['text'] = 'Something went wrong';
+            $response['type'] = 'error';
+        }
+        $response['layout'] = 'topRight';
+        $data_json = json_encode($response);
+        echo $data_json;
+    }
+
+
 	public function debit()
 	{
 		$template['body'] = 'Bankdeposit/list-debit';
@@ -225,6 +296,8 @@ class Bankdeposit extends MY_Controller {
 		}
 		else {
 			$bd_id = $this->input->post('bd_id');
+			$branch_id_fk =$this->session->userdata('branch_id_fk');
+			$member_id_fk= $this->input->post('bd_member_id_fk');
 			$data = array(
 						'branch_id_fk' =>$this->session->userdata('branch_id_fk'),	
 						'bd_bank_id_fk' =>$this->input->post('bd_bank_id_fk'),	
@@ -239,10 +312,39 @@ class Bankdeposit extends MY_Controller {
 					 
                      $data['bd_id'] = $bd_id;
                      $result = $this->General_model->update($this->table,$data,'bd_id',$bd_id);
+
+
+						 $datass = $this->General_model->get_row('tbl_vendor','vendor_id',$member_id_fk);
+						$updated_amount1 = $datass->vendor_oldbal + ($this->input->post('bd_amount1'));
+						$updated_amount = $updated_amount1 - ($this->input->post('bd_amount'));
+						$mdata=array('vendor_oldbal'=> $updated_amount);
+						$result = $this->General_model->update('tbl_vendor',$mdata,'vendor_id',$member_id_fk);
+
+
+						$datasup = $this->General_model->get_row('tbl_supp_acc','sup_id_fk',$member_id_fk);
+						$updated_amountup1 = $datasup->old_balance + ($this->input->post('bd_amount1'));
+						$updated_amountup = $updated_amountup1 - ($this->input->post('bd_amount'));
+						$mdataup=array('old_balance'=> $updated_amountup);
+						$result = $this->General_model->update('tbl_supp_acc',$mdataup,'sup_id_fk',$member_id_fk);
+
+
                      $response_text = 'Bank Debit Details updated successfully';
                 }
 				else{
 				    $result =  $this->General_model->add($this->table,$data);
+
+						$datass = $this->General_model->get_row('tbl_vendor','vendor_id',$member_id_fk);
+						$updated_amount = $datass->vendor_oldbal - ($this->input->post('bd_amount'));
+						$mdata=array('vendor_oldbal'=> $updated_amount);
+						$result = $this->General_model->update('tbl_vendor',$mdata,'vendor_id',$member_id_fk);
+
+
+						$datasup = $this->General_model->get_row('tbl_supp_acc','sup_id_fk',$member_id_fk);
+						$updated_amountup = $datasup->old_balance - ($this->input->post('bd_amount'));
+						$mdataup=array('old_balance'=> $updated_amountup);
+						$result = $this->General_model->update('tbl_supp_acc',$mdataup,'sup_id_fk',$member_id_fk);
+					
+
                      $response_text = 'Bank Debit Details added  successfully';
 					 
                 }
@@ -279,6 +381,38 @@ class Bankdeposit extends MY_Controller {
 		$data = $this->Bankdeposit_model->getdebitTable($param,$branch_id_fk);
     	$json_data = json_encode($data);
     	echo $json_data;
+    }
+
+
+	public function delete_debit(){
+        $bd_id = $this->input->post('bd_id');
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$member_id_fk= $this->input->post('bd_member_id_fk');
+
+		$datass = $this->General_model->get_row('tbl_vendor','vendor_id',$member_id_fk);
+		$updated_amount = $datass->vendor_oldbal + ($this->input->post('bd_amount'));
+		$mdata=array('vendor_oldbal'=> $updated_amount);
+		$result = $this->General_model->update('tbl_vendor',$mdata,'vendor_id',$member_id_fk);
+
+
+		$datasup = $this->General_model->get_row('tbl_supp_acc','sup_id_fk',$member_id_fk);
+		$updated_amountup = $datasup->old_balance + ($this->input->post('bd_amount'));
+		$mdataup=array('old_balance'=> $updated_amountup);
+		$result = $this->General_model->update('tbl_supp_acc',$mdataup,'sup_id_fk',$member_id_fk);
+
+        $updateData = array('bd_status' => 0);
+        $data = $this->General_model->update($this->table,$updateData,'bd_id',$bd_id);
+        if($data) {
+            $response['text'] = 'Deleted successfully';
+            $response['type'] = 'success';
+        }
+        else{
+            $response['text'] = 'Something went wrong';
+            $response['type'] = 'error';
+        }
+        $response['layout'] = 'topRight';
+        $data_json = json_encode($response);
+        echo $data_json;
     }
 
 

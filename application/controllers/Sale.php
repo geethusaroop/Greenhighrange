@@ -147,9 +147,9 @@ class Sale extends MY_Controller {
 						 'sale_old_balance' => $this->input->post('sale_old_balance'),
 						 'sale_new_balance' => $this->input->post('total_amt'),
 						 'sale_paid_amount' => $this->input->post('pamount'),//Received AMount
-						'sale_date' => $sale_date,
-						'sale_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
-						'sale_status' => 1
+						 'sale_date' => $sale_date,
+						 'sale_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
+						 'sale_status' => 1
 							);
 				
 				$this->General_model->add($this->table,$data);
@@ -163,7 +163,6 @@ class Sale extends MY_Controller {
 								
 				// $result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
 				$result = $this->General_model->updat($this->tbl_stock,$uData,'product_id',$product_branch_id_fk[$i],'branch_id_fk',$branches_id);
-
 				$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
 				$updated_amount = $datass->member_sale_balance + ($this->input->post('total_amt'));
 				$mdata=array('member_sale_balance'=> $updated_amount);

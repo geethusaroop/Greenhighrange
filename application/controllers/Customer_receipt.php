@@ -35,7 +35,9 @@ class Customer_receipt extends MY_Controller {
 		}
 		else {
 			$receipt_id = $this->input->post('receipt_id');
-			
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$member_id_fk=$this->input->post('member_id_fk');
+			$receipt_amount1=$this->input->post('receipt_amount1');
 			$receipt_date = str_replace('/', '-', $this->input->post('receipt_date'));
 			$receipt_date = date("Y-m-d",strtotime($receipt_date));
 		
@@ -54,11 +56,42 @@ class Customer_receipt extends MY_Controller {
                      $data['receipt_id'] = $receipt_id;
                      $result = $this->General_model->update($this->table,$data,'receipt_id',$receipt_id);
                      $response_text = 'Customer_receipt updated successfully';
+
+					 if($branch_id_fk==0)
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount1 = $datass->member_sale_balance + ($this->input->post('receipt_amount1'));
+						$updated_amount = $updated_amount1 - ($this->input->post('receipt_amount'));
+						$mdata=array('member_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+					else
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount1 = $datass->member_branch_sale_balance + ($this->input->post('receipt_amount1'));
+						$updated_amount = $updated_amount1 - ($this->input->post('receipt_amount'));
+						$mdata=array('member_branch_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+
                 }
 				else{
 				    $result =  $this->General_model->add($this->table,$data);
-				    // $id = $this->db->insert_id();
-					
+				
+				    if($branch_id_fk==0)
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount = $datass->member_sale_balance - ($this->input->post('receipt_amount'));
+						$mdata=array('member_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+					else
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount = $datass->member_branch_sale_balance - ($this->input->post('receipt_amount'));
+						$mdata=array('member_branch_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
                      
                      $response_text = 'Customer_receipt added  successfully';
 					 
@@ -95,6 +128,24 @@ class Customer_receipt extends MY_Controller {
 	}
 	public function delete(){
         $receipt_id = $this->input->post('receipt_id');
+		$member_id_fk = $this->input->post('receipt_member_id_fk');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		if($branch_id_fk==0)
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount = $datass->member_sale_balance + ($this->input->post('receipt_amount'));
+						$mdata=array('member_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+					else
+					{
+						$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+						$updated_amount = $datass->member_branch_sale_balance + ($this->input->post('receipt_amount'));
+						$mdata=array('member_branch_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+					}
+
+
         $updateData = array('receipt_status' => 0);
         $data = $this->General_model->update($this->table,$updateData,'receipt_id',$receipt_id);
         if($data) {

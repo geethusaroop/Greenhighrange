@@ -67,6 +67,8 @@
 				<div class="col-md-6">
 					<label>Amount</label>
 						<input type="text" class="form-control"  name="bd_amount" id="bd_amount" value="<?php if(isset($records->bd_amount)) echo $records->bd_amount; ?>"/>
+						<input type="hidden" class="form-control"  name="bd_amount1" id="bd_amount1" value="<?php if(isset($records->bd_amount)) echo $records->bd_amount; ?>"/>
+
 					</div>
 
 				</div>

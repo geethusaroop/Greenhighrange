@@ -37,19 +37,11 @@ class Vendor_voucher extends MY_Controller {
 		}
 		else {
 			$voucher_id = $this->input->post('voucher_id');
-			// $fin_year = $this->Student_model->get_finyear();
-			// if(isset($fin_year->finyear_id)){$fyear = $fin_year->finyear_id;}else{$fyear =0;}
 			
 			$voucher_date = str_replace('/', '-', $this->input->post('voucher_date'));
 			$voucher_date = date("Y-m-d",strtotime($voucher_date));
-			/* if($this->session->userdata['sub_user_type']=='9')
-			 	{ 
-			 		$type=$this->input->post('cat_type');
-			 	}
-			 	else
-			 	{
-			 		$type=0;
-			 	} */
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
+			$member_id_fk = $this->input->post('vendor_id');
 			$data = array(
 			           // 'finyear_id_fk' =>$fyear,
 						'project_id_fk' =>$this->session->userdata('branch_id_fk'),	
@@ -65,12 +57,36 @@ class Vendor_voucher extends MY_Controller {
 					 
                      $data['voucher_id'] = $voucher_id;
                      $result = $this->General_model->update($this->table,$data,'voucher_id',$voucher_id);
+
+					 $datass = $this->General_model->get_row('tbl_vendor','vendor_id',$member_id_fk);
+					 $updated_amount1 = $datass->vendor_oldbal + ($this->input->post('voucher_amount1'));
+					 $updated_amount = $updated_amount1 - ($this->input->post('voucher_amount'));
+					 $mdata=array('vendor_oldbal'=> $updated_amount);
+					 $result = $this->General_model->update('tbl_vendor',$mdata,'vendor_id',$member_id_fk);
+
+
+					 $datasup = $this->General_model->get_row('tbl_supp_acc','sup_id_fk',$member_id_fk);
+					 $updated_amountup1 = $datasup->old_balance + ($this->input->post('voucher_amount1'));
+					 $updated_amountup = $updated_amountup1 - ($this->input->post('voucher_amount'));
+					 $mdataup=array('old_balance'=> $updated_amountup);
+					 $result = $this->General_model->update('tbl_supp_acc',$mdataup,'sup_id_fk',$member_id_fk);
+
                      $response_text = 'Voucher updated successfully';
                 }
 				else{
 				    $result =  $this->General_model->add($this->table,$data);
-				    // $id = $this->db->insert_id();
 					
+					$datass = $this->General_model->get_row('tbl_vendor','vendor_id',$member_id_fk);
+					$updated_amount = $datass->vendor_oldbal - ($this->input->post('voucher_amount'));
+					$mdata=array('vendor_oldbal'=> $updated_amount);
+					$result = $this->General_model->update('tbl_vendor',$mdata,'vendor_id',$member_id_fk);
+
+
+					$datasup = $this->General_model->get_row('tbl_supp_acc','sup_id_fk',$member_id_fk);
+					$updated_amountup = $datasup->old_balance - ($this->input->post('voucher_amount'));
+					$mdataup=array('old_balance'=> $updated_amountup);
+					$result = $this->General_model->update('tbl_supp_acc',$mdataup,'sup_id_fk',$member_id_fk);
+				  
                      
                      $response_text = 'Voucher added  successfully';
 					 
@@ -106,7 +122,21 @@ class Vendor_voucher extends MY_Controller {
     	$this->load->view('template', $template);
 	}
 	public function delete(){
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
         $voucher_id = $this->input->post('voucher_id');
+		$member_id_fk = $this->input->post('vendor_id');
+
+		$datass = $this->General_model->get_row('tbl_vendor','vendor_id',$member_id_fk);
+		$updated_amount = $datass->vendor_oldbal + ($this->input->post('voucher_amount'));
+		$mdata=array('vendor_oldbal'=> $updated_amount);
+		$result = $this->General_model->update('tbl_vendor',$mdata,'vendor_id',$member_id_fk);
+
+
+		$datasup = $this->General_model->get_row('tbl_supp_acc','sup_id_fk',$member_id_fk);
+		$updated_amountup = $datasup->old_balance + ($this->input->post('voucher_amount'));
+		$mdataup=array('old_balance'=> $updated_amountup);
+		$result = $this->General_model->update('tbl_supp_acc',$mdataup,'sup_id_fk',$member_id_fk);
+		
         $updateData = array('voucher_status' => 0);
         $data = $this->General_model->update($this->table,$updateData,'voucher_id',$voucher_id);
         if($data) {

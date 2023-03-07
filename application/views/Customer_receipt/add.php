@@ -38,7 +38,7 @@
 						<select name="member_id_fk" class="form-control select2" style="font-weight: bold;">
 							<option value="">-SELECT-</option>
 							<?php foreach($member as $row){ ?>
-								<option <?php if(isset($records->member_id_fk)){if($records->member_id_fk==$row->member_id){echo "selected";}} ?> value="<?php echo $row->member_id; ?>"><?php echo $row->member_name."-".$row->member_mid; ?></option>
+								<option <?php if(isset($records->receipt_member_id_fk)){if($records->receipt_member_id_fk==$row->member_id){echo "selected";}} ?> value="<?php echo $row->member_id; ?>"><?php echo $row->member_name."-".$row->member_mid; ?></option>
 							<?php } ?>
 						</select>
 					
@@ -52,6 +52,7 @@
 					<label for="customer_email" class="col-sm-2 control-label"> Amount <span style="color:red">*</span></label>
 					<div class="col-sm-4">
 						<input type="number" step="0.1" class="form-control"  name="receipt_amount" id="receipt_amount" value="<?php if(isset($records->receipt_amount)) echo $records->receipt_amount; ?>"/>
+						<input type="hidden" step="0.1" class="form-control"  name="receipt_amount1" id="receipt_amount1" value="<?php if(isset($records->receipt_amount)) echo $records->receipt_amount; ?>"/>
 					</div>
 					<label for="customer_email" class="col-sm-2 control-label"> Bill No <span style="color:red">*</span></label>
 					<div class="col-sm-4">

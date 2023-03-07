@@ -53,6 +53,8 @@
 					<label for="customer_email" class="col-sm-2 control-label"> Amount <span style="color:red">*</span></label>
 					<div class="col-sm-4">
 						<input type="number" step="0.1" class="form-control"  name="voucher_amount" id="voucher_amount" value="<?php if(isset($records->voucher_amount)) echo $records->voucher_amount; ?>"/>
+						<input type="hidden" step="0.1" class="form-control"  name="voucher_amount1" id="voucher_amount1" value="<?php if(isset($records->voucher_amount)) echo $records->voucher_amount; ?>"/>
+
 					</div>
 					<label for="customer_email" class="col-sm-2 control-label"> Bill No <span style="color:red">*</span></label>
 					<div class="col-sm-4">

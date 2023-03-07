@@ -92,7 +92,7 @@ $(document).on('change','#vouch_name',function(){
 			$table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Vendor_voucher/edit/'+data['voucher_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['voucher_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Vendor_voucher/edit/'+data['voucher_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['voucher_id']+','+data['vendor_id']+','+data['voucher_amount']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         },
 
         "columns": [
@@ -109,12 +109,12 @@ $(document).on('change','#vouch_name',function(){
     } );    
   });
 
- function confirmDelete(voucher_id){
+ function confirmDelete(voucher_id,vendor_id,voucher_amount){
     var conf = confirm("Do you want to Delete Voucher Details ?");
     if(conf){
         $.ajax({
             url:"<?php echo base_url();?>Vendor_voucher/delete",
-            data:{voucher_id:voucher_id},
+            data:{voucher_id:voucher_id,vendor_id:vendor_id,voucher_amount:voucher_amount},
             method:"POST",
             datatype:"json",
             success:function(data){

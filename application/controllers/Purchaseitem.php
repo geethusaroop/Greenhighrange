@@ -158,7 +158,12 @@ class Purchaseitem extends MY_Controller {
 				$AccData = array(
 					'old_balance' =>$this->input->post('net_balance'),
 				);
+
+				$AccData1 = array(
+					'vendor_oldbal' =>$this->input->post('net_balance'),
+				);
 				$this->General_model->update($this->tbl_supp_acc,$AccData,'sup_id_fk',$vendor_id);
+				$this->General_model->update('tbl_vendor',$AccData1,'vendor_id',$vendor_id);
 				$result = $this->General_model->add($this->table,$data);
 
 				$records = $this->Purchase_model->get_invc($auto_invoice);
@@ -318,6 +323,12 @@ class Purchaseitem extends MY_Controller {
 					'old_balance' =>$this->input->post('net_balance'),
 				);
 				$this->General_model->update($this->tbl_supp_acc,$AccData,'sup_id_fk',$vendor_id);
+
+				$AccData1 = array(
+					'vendor_oldbal' =>$this->input->post('net_balance'),
+				);
+				$this->General_model->update('tbl_vendor',$AccData1,'vendor_id',$vendor_id);
+
 				$result = $this->General_model->add($this->table,$data);
 
 				//$records = $this->Purchase_model->get_invc($auto_invoice);

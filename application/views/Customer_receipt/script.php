@@ -92,7 +92,7 @@ $(document).on('change','#vouch_name',function(){
 			$table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Customer_receipt/edit/'+data['receipt_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['receipt_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Customer_receipt/edit/'+data['receipt_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['receipt_id']+','+data['receipt_member_id_fk']+','+data['receipt_amount']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         },
 
         "columns": [
@@ -109,12 +109,12 @@ $(document).on('change','#vouch_name',function(){
     } );    
   });
 
- function confirmDelete(receipt_id){
+ function confirmDelete(receipt_id,receipt_member_id_fk,receipt_amount){
     var conf = confirm("Do you want to Delete Customer Receipt Details ?");
     if(conf){
         $.ajax({
             url:"<?php echo base_url();?>Customer_receipt/delete",
-            data:{receipt_id:receipt_id},
+            data:{receipt_id:receipt_id,receipt_member_id_fk:receipt_member_id_fk,receipt_amount:receipt_amount},
             method:"POST",
             datatype:"json",
             success:function(data){
