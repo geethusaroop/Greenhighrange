@@ -116,10 +116,12 @@ class Purchasereport_model extends CI_Model{
 
 	public function getsundrydebtors($branch_id_fk)
 	{
-		$this->db->select('*,COALESCE(bamount,0) as bamount');
+		$this->db->select('*,COALESCE(bamount,0) as bamount,COALESCE(ramount,0) as ramount');
 		$this->db->from('tbl_member');
 		$this->db->join('(SELECT *,SUM(bd_amount) as bamount FROM tbl_bank_deposit WHERE bd_status = 1 group by bd_member_id_fk) as tbd','tbd.bd_member_id_fk=member_id','left');
-	//	$this->db->join('tbl_sale','member_id_fk=member_id','left');
+		$this->db->join('(SELECT *,SUM(receipt_amount) as ramount FROM tbl_customer_receipt WHERE receipt_status = 1 group by receipt_member_id_fk) as tcr','tcr.receipt_member_id_fk=member_id','left');
+
+		//	$this->db->join('tbl_sale','member_id_fk=member_id','left');
 	//	$this->db->join('tbl_bank_deposit','bd_member_id_fk=member_id','left');
         $this->db->where("member_status",1);
 		$this->db->order_by('member_name','ASC');

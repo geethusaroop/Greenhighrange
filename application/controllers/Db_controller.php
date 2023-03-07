@@ -198,6 +198,20 @@ write_file($save, $backup);  */
 			`return_status` int(11) NOT NULL,
 			PRIMARY KEY (`return_id`)
 		  ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1"; */
+		  
+		  $sql="CREATE TABLE IF NOT EXISTS `tbl_customer_receipt` (
+			`receipt_id` int(11) NOT NULL AUTO_INCREMENT,
+			`receipt_branch_id_fk` int(11) NOT NULL,
+			`receipt_member_id_fk` int(11) NOT NULL,
+			`finyear_id_fk` int(11) DEFAULT NULL,
+			`receipt_amount` float DEFAULT NULL,
+			`paid_to` varchar(255) DEFAULT NULL,
+			`receipt_date` date DEFAULT NULL,
+			`narration` varchar(255) DEFAULT NULL,
+			`receipt_status` int(11) NOT NULL,
+			`receipt_group` int(11) DEFAULT NULL,
+			PRIMARY KEY (`receipt_id`)
+		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

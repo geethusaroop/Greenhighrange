@@ -116,6 +116,7 @@
               $sfund=0;
               $tfund=0;
               $mbtsale=0;
+              $creceipt=0;
               ?>
               <?php foreach ($payroll as $rows1) {if($rows1->salary!=0){ ?>
                 <tr>
@@ -210,6 +211,17 @@
                   <td style="border-color:#d4d6d5;"><?php echo /*(int)*/$row->voucher_amount; ?></td>
                 </tr>
               <?php $vvoucher=$vvoucher+$row->voucher_amount;}} ?>
+
+              <?php foreach($customer_receipt as $row){if($row->receipt_amount!=0){ ?>
+                  <tr>
+                   <td style="border-color:#d4d6d5;"><?php echo "Purchase Amount Paid By-". $row->member_name; ?></td>
+
+                   <td style="border-color:#d4d6d5;"><?php echo $row->receipt_group; ?></td>
+                 
+                  <td style="border-color:#d4d6d5;"><?php echo /*(int)*/$row->receipt_amount; ?></td>
+                  <td style="border-color:#d4d6d5;"></td>
+                </tr>
+              <?php $creceipt=$creceipt+$row->receipt_amount;}} ?>
               <!-------------------------------------------------------------------------------------------------------->
               <?php foreach ($voucher as $row) { ?>
                 <tr>
@@ -249,7 +261,7 @@
                   $obalance1 = 0;
                 }
               }
-              $credit = $treceipt + $obalance + $test+$sfund+$tfund+$mbtsale;
+              $credit = $treceipt + $obalance + $test+$sfund+$tfund+$mbtsale+$creceipt;
               $debit = $tvoucher + $obalance1 + $purchase + $feedpurchase + $sal + $adv+$vvoucher+$bankdep;
               //$credit_sum=
               // $credit_to=$obalance+$credit;

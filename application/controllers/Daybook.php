@@ -37,6 +37,7 @@ class Daybook extends MY_Controller
 		$template['share_deposit'] = $this->Daybook_model->getsharedeposit($sdate);
 		$template['fund'] = $this->Daybook_model->getfund($sdate);
 		$template['mbtsaleincome'] = $this->Daybook_model->getmbtsaleincome($sdate);
+		$template['customer_receipt'] = $this->Daybook_model->getcustomer_receipt($sdate);
 		$template['sdate'] = $sdate;
 		$this->load->view('template', $template);
 	}
@@ -61,6 +62,7 @@ class Daybook extends MY_Controller
 		$template['share_deposit'] = $this->Daybook_model->getsharedeposit($sdate);
 		$template['fund'] = $this->Daybook_model->getfund($sdate);
 		$template['mbtsaleincome'] = $this->Daybook_model->getmbtsaleincome($sdate);
+		$template['customer_receipt'] = $this->Daybook_model->getcustomer_receipt($sdate);
 		$template['sdate'] = $sdate;
 		$pay=$this->Daybook_model->getpayroll($sdate);
 		$template['count']=count($pay);

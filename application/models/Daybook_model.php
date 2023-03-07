@@ -772,6 +772,18 @@ public function pupdate_daybook($date,$profit,$stat){
 			return $result;
 		}
 
+		public function getcustomer_receipt($cdate)
+		{
+			$this->db->select('*,DATE_FORMAT(receipt_date,\'%d/%m/%Y\') AS receipt_date');
+			$this->db->from('tbl_customer_receipt');
+			$this->db->join('tbl_member','member_id = receipt_member_id_fk');
+			$this->db->where("tbl_customer_receipt.receipt_status",1);
+			$this->db->where("receipt_date",$cdate);
+			$query = $this->db->get();
+			$result=$query->result();
+			return $result;
+		}
+
 		public function getbdeposit($cdate)
 		{
 			$this->db->select('*,DATE_FORMAT(bd_date,\'%d/%m/%Y\') AS bd_date');

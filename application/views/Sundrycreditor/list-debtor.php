@@ -133,7 +133,7 @@
                                             <td style="border:1px solid #0a0a0b;"><?php echo $row->member_name; ?></td>
                                             <td style="border:1px solid #0a0a0b;"><?php   echo $old_bal; ?></td>
                                             <td style="border:1px solid #0a0a0b;text-align:right;"><?php //echo $row->bamount; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($old_bal+ $current_bal)-$row->bamount; ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($old_bal+ $current_bal)-($row->bamount+$row->ramount); ?></td>
                                            
                                         </tr>
                                     <?php 
