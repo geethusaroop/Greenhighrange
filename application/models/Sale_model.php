@@ -16,11 +16,15 @@ class Sale_model extends CI_Model
 		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
 
 		if ($product_num) {
-			$this->db->like('tbl_sale.invoice_number', $product_num);
+			//$this->db->like('tbl_sale.invoice_number', $product_num);
+
+			$where1= '(tbl_sale.invoice_number="'.$product_num.'" or member_name = "'.$product_num.'")';
+				$this->db->where($where1);
 		}
 
-		if ($start_date) {
+		if ($start_date && $end_date) {
 			$this->db->where('sale_date >=', $start_date);
+			$this->db->where('sale_date <=', $end_date);
 		}
 		if ($end_date) {
 			$this->db->where('sale_date <=', $end_date);
@@ -39,7 +43,7 @@ class Sale_model extends CI_Model
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'], $param['start']);
 		}
-		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.sale_discount as discount');
+		$this->db->select('*,COUNT(invoice_number) as slcount,ROUND(SUM(sale_netamt),2) as total,sum(sale_quantity) as qty,ROUND((total_price-(sale_discount+sale_shareholder_discount)),2) as tprice,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.sale_discount as discount');
 
 		//$this->db->select('*,tbl_member.*,COUNT(invoice_number) as slcount,SUM(total_price) as total,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
 		$this->db->from('tbl_sale');
@@ -64,7 +68,10 @@ class Sale_model extends CI_Model
 		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
 		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
 		if ($product_num) {
-			$this->db->like('tbl_sale.invoice_number', $product_num);
+			//$this->db->like('tbl_sale.invoice_number', $product_num);
+
+			$where1= '(tbl_sale.invoice_number="'.$product_num.'" or member_name = "'.$product_num.'")';
+				$this->db->where($where1);
 		}
 
 		if ($start_date) {
@@ -810,26 +817,38 @@ class Sale_model extends CI_Model
 
 	}
 
-	public function getSaleReturnReport($param){
+	public function getSaleReturnReport($param,$branch_id_fk){
         $arOrder = array('','invoice_number','shop');
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
         $startDate =(isset($param['startDate']))?$param['startDate']:'';
         $endDate =(isset($param['endDate']))?$param['endDate']:'';
-        if($invoice_number){
-            $this->db->like('invoice_number', $invoice_number); 
-        }
+		if ($invoice_number) {
+			//$this->db->like('tbl_sale.invoice_number', $product_num);
+
+			$where1= '(tbl_sale.invoice_number="'.$invoice_number.'" or member_name = "'.$invoice_number.'")';
+				$this->db->where($where1);
+		}
         if($startDate){
             $this->db->where('return_date >=', $startDate); 
         }
         if($endDate){
             $this->db->where('return_date <=', $endDate); 
         }
+
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
 		$this->db->where("sale_status",1);
 		
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date');
+		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');
@@ -838,25 +857,36 @@ class Sale_model extends CI_Model
         $query = $this->db->get();
         
 		$data['data'] = $query->result();
-        $data['recordsTotal'] = $this->getSaleReportReturnTotalCount($param);
-        $data['recordsFiltered'] = $this->getSaleReportReturnTotalCount($param);
+        $data['recordsTotal'] = $this->getSaleReportReturnTotalCount($param,$branch_id_fk);
+        $data['recordsFiltered'] = $this->getSaleReportReturnTotalCount($param,$branch_id_fk);
         return $data;
 	}
-	public function getSaleReportReturnTotalCount($param){
+	public function getSaleReportReturnTotalCount($param,$branch_id_fk){
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
         $startDate =(isset($param['startDate']))?$param['startDate']:'';
         $endDate =(isset($param['endDate']))?$param['endDate']:'';
-		if($invoice_number){
-            $this->db->like('invoice_number', $invoice_number); 
-        }
+		if ($invoice_number) {
+			//$this->db->like('tbl_sale.invoice_number', $product_num);
+
+			$where1= '(tbl_sale.invoice_number="'.$invoice_number.'" or member_name = "'.$invoice_number.'")';
+				$this->db->where($where1);
+		}
         if($startDate){
             $this->db->where('return_date >=', $startDate); 
         }
         if($endDate){
             $this->db->where('return_date <=', $endDate); 
         }
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("sale_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("sale_branch_id_fk",0);
+        }
 		$this->db->where("sale_status",1);
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,');
+		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');

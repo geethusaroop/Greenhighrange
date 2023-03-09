@@ -245,6 +245,9 @@
             checkboxClass: 'icheckbox_flat-green',
             radioClass: 'iradio_flat-green'
         });
+        $('#search').click(function () {
+        $table.ajax.reload();
+    });
         $table = $('#purchase_details_table').DataTable({
             "fixedHeader": true,
             "searching": false,
@@ -260,7 +263,9 @@
                 "url": "<?php echo base_url(); ?>purchaseitem/get/",
                 "type": "POST",
                 "data": function(d) {
-                    d.invoice_number = $('#invoice_number').val();
+                    d.invoice_number = $('#product').val();
+                    d.start_date = $("#pmsDateStart").val();
+                    d.end_date = $("#pmsDateEnd").val();
                 }
             },
             "createdRow": function(row, data, index) {

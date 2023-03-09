@@ -31,15 +31,15 @@
 				<div class="col-md-3">
 					<div class="input-group margin">
 						<div class="input-group-btn">
-							<button type="button" class="btn btn-primary nohover">Invoice No</button>
+							<button type="button" class="btn btn-primary nohover">Invoice No/Name</button>
 						</div><!-- /btn-group -->
-					<input type="text"  class="form-control"  id="product"  placeholder="">
+					<input type="text"  class="form-control"  id="product"  placeholder="" style="text-transform: uppercase;">
 				</div><!-- /input-group -->
 				</div>
 				<div class="col-md-3">
 				<div class="input-group margin">
 					<div class="input-group-btn">
-						<button type="button" class="btn btn-primary nohover">Sale Date </button>
+						<button type="button" class="btn btn-primary nohover">From Date </button>
 					</div><!-- /btn-group -->
 					<input type="date" class="form-control" id="pmsDateStart" name="start_date">
 				</div>
@@ -48,7 +48,7 @@
 			<div class="col-md-3">
 				<div class="input-group margin">
 					<div class="input-group-btn">
-						<button type="button" class="btn btn-primary nohover">Sale Date </button>
+						<button type="button" class="btn btn-primary nohover">To Date </button>
 					</div><!-- /btn-group -->
 					<input type="date" class="form-control" id="pmsDateEnd" name="end_date">
 				</div>

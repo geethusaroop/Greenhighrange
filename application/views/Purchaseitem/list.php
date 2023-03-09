@@ -25,14 +25,48 @@
             <div class="box-header">
             <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response');?>" />
               <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
-              <div class="col-md-8"><h2 class="box-title"></h2> </div>
+              
+              <div class="row">
+				<div class="col-md-3">
+					<div class="input-group margin">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-primary nohover">Invoice No/Name</button>
+						</div><!-- /btn-group -->
+					<input type="text"  class="form-control"  id="product"  placeholder="" style="text-transform: uppercase;">
+				</div><!-- /input-group -->
+				</div>
+				<div class="col-md-3">
+				<div class="input-group margin">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-primary nohover">From Date </button>
+					</div><!-- /btn-group -->
+					<input type="date" class="form-control" id="pmsDateStart" name="start_date">
+				</div>
+			</div>
 
-              <div class="col-md-2">
-                  <a href="<?php echo base_url();?>Purchaseitem/add" class="btn btn-danger"><i class="fa fa-plus-square"></i>  Add Purchase</a>
-              </div>
-             <!--  <div class="col-md-2">
-                  <a href="<?php echo base_url();?>Purchaseitem/getPurchaseReturnList" class="btn btn-primary"><i class="fa fa-archive"></i> Purcahse Return List</a>
-              </div> -->
+			<div class="col-md-3">
+				<div class="input-group margin">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-primary nohover">To Date </button>
+					</div><!-- /btn-group -->
+					<input type="date" class="form-control" id="pmsDateEnd" name="end_date">
+				</div>
+			</div>
+			<div class="col-sm-1">
+					<div class="input-group">
+						<button type="button" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if(isset($values->mainhead_id))echo $values->mainhead_id;?>">Search</button>
+					</div>
+			</div>
+			 
+            <div class="col-md-1">
+				<div class="input-group margin">
+        <a href="<?php echo base_url();?>Purchaseitem/add" class="btn btn-danger"><i class="fa fa-plus-square"></i>  Add Purchase</a>
+				</div>
+			</div>
+            </div>
+            
+            
+            
             </div>
 
             <!-- /.box-header -->

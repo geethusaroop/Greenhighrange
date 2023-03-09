@@ -357,7 +357,9 @@
             radioClass: 'iradio_flat-green'
         });
 
-
+        $('#search').click(function () {
+        $table.ajax.reload();
+    });
         $table = $('#purchase_details_table').DataTable({
             "searching": false,
             "processing": true,
@@ -373,7 +375,7 @@
                 "url": "<?php echo base_url(); ?>Purchaseitem/getPurchaseReturn/",
                 "type": "POST",
                 "data": function(d) {
-                    d.invoice_number = $('#invoice_number').val();
+                    d.invoice_number = $('#product').val();
                     d.startDate = $('#pmsDateStart').val();
                     d.endDate = $('#pmsDateEnd').val();
                 }
@@ -385,11 +387,12 @@
                 });
                 
                 // $('td', row).eq(8).html('<center><a target ="_blank"  href="<?php echo base_url(); ?>Purchase_Return/invoice/' + data['m_pur_invo'] + '"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
-                $('td', row).eq(6).html('<center><a href="<?php echo base_url(); ?>Purchaseitem/editedPurchaseRet/' + data['auto_invoice'] + '"><i class="fa fa-edit iconFontSize-medium" ></i></a></center>');
+                $('td', row).eq(7).html('<center><a href="<?php echo base_url(); ?>Purchaseitem/editedPurchaseRet/' + data['auto_invoice'] + '"><i class="fa fa-edit iconFontSize-medium" ></i></a></center>');
             },
 
             "columns": [
                 { "data": "purchase_status","orderable": false },
+                { "data": "purchase_dat","orderable": false },
                 { "data": "invoice_number","orderable": false },
                 { "data": "vendorname","orderable": false },
                 { "data": "purchase_return","orderable": false },

@@ -214,7 +214,10 @@ class Purchaseitem extends MY_Controller {
 		$param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
 		$param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-		$sessid = $this->session->userdata['id'];
+		$param['invoice_number'] =(isset($_REQUEST['invoice_number']))?$_REQUEST['invoice_number']:'';
+		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+        $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
+		//$sessid = $this->session->userdata['id'];
 		//$shopid = $this->Purchase_model->get_shop($sessid);
 		//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
 		//$param['shop'] =$shid;
@@ -801,14 +804,18 @@ class Purchaseitem extends MY_Controller {
 	}
 
 	public function getReturnList(){
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
 		$param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10';
 		$param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
 		$param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
 		$param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
 		$param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$param['invoice_number'] =(isset($_REQUEST['invoice_number']))?$_REQUEST['invoice_number']:'';
+		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+        $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		$sessid = $this->session->userdata['id'];
-		$data = $this->Purchase_model->getPurchaseReturnList($param);
+		$data = $this->Purchase_model->getPurchaseReturnList($param,$branch_id_fk);
 		$json_data = json_encode($data);
 		echo $json_data;
 	}
@@ -868,19 +875,9 @@ class Purchaseitem extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-		$sDate = (isset($_REQUEST['startDate'])) ? $_REQUEST['startDate'] : '';
-		$eDate = (isset($_REQUEST['endDate'])) ? $_REQUEST['endDate'] : '';
-		if($sDate){
-            $start_date = str_replace('/', '-', $sDate);
-            $param['startDate'] =  date("Y-m-d",strtotime($start_date));
-        }
-       
-        if($eDate){
-            $end_date = str_replace('/', '-', $eDate);
-            $param['endDate'] =  date("Y-m-d",strtotime($end_date));
-		}	
-        $sessid = $this->session->userdata['id'];
-		
+		$param['invoice_number'] =(isset($_REQUEST['invoice_number']))?$_REQUEST['invoice_number']:'';
+		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+        $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		$data = $this->Purchase_model->getPurchaseReturnReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;

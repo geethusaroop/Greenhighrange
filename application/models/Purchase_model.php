@@ -9,13 +9,25 @@ class Purchase_model extends CI_Model{
 	public function getPurchaseReport($param,$branch_id_fk){
 		$arOrder = array('','invoice_number','shop');
 		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
-		$shop =(isset($param['shop']))?$param['shop']:'';
-		if($invoice_number){
-			$this->db->like('invoice_number', $invoice_number);
+		//$shop =(isset($param['shop']))?$param['shop']:'';
+		
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($invoice_number){
+			
+			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+				$this->db->where($where1);
 		}
-		if($shop!=0){
-			$this->db->where('shop_id_fk', $shop);
+
+		if ($start_date && $end_date) {
+			$this->db->where('purchase_date >=', $start_date);
+			$this->db->where('purchase_date <=', $end_date);
 		}
+		if ($end_date) {
+			$this->db->where('purchase_date <=', $end_date);
+		}
+		
 		$this->db->where("purchase_status",1);
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'],$param['start']);
@@ -33,7 +45,6 @@ class Purchase_model extends CI_Model{
 		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
 		$this->db->group_by('invoice_number');
-		$this->db->group_by('vendor_id_fk');
 		$this->db->order_by('purchase_date','ASC');
 		$query = $this->db->get();
 		$data['data'] = $query->result();
@@ -43,13 +54,24 @@ class Purchase_model extends CI_Model{
 	}
 	public function getPurchaseReportTotalCount($param,$branch_id_fk){
 		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
-		$shop =(isset($param['shop']))?$param['shop']:'';
-		if($invoice_number){
-			$this->db->like('invoice_number', $invoice_number);
+		//$shop =(isset($param['shop']))?$param['shop']:'';
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($invoice_number){
+			
+			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+				$this->db->where($where1);
 		}
-		if($shop!=0){
-			$this->db->where('shop_id_fk', $shop);
+
+		if ($start_date && $end_date) {
+			$this->db->where('purchase_date >=', $start_date);
+			$this->db->where('purchase_date <=', $end_date);
 		}
+		if ($end_date) {
+			$this->db->where('purchase_date <=', $end_date);
+		}
+		
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("purchase_branch_id_fk",$branch_id_fk);
@@ -64,7 +86,7 @@ class Purchase_model extends CI_Model{
 		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
 		$this->db->group_by('invoice_number');
-		$this->db->group_by('vendor_id_fk');
+	//	$this->db->group_by('vendor_id_fk');
 		$this->db->order_by('purchase_date','ASC');
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -426,27 +448,76 @@ class Purchase_model extends CI_Model{
 		return $query->num_rows()>0 ? $query->row()->product_stock : 0;
 	}
 
-	public function getPurchaseReturnList($param){
+	public function getPurchaseReturnList($param,$branch_id_fk){
+		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($invoice_number){
+			
+			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+				$this->db->where($where1);
+		}
+
+		if ($start_date && $end_date) {
+			$this->db->where('purchase_return_date >=', $start_date);
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
+		if ($end_date) {
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
+        }
 		$this->db->where("purchase_status",1);
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'],$param['start']);
 		}
-		$this->db->select('*,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_dat,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_dates');
+		$this->db->select('*,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_date,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_dates');
 		$this->db->from('tbl_purchase');
 		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
 		$this->db->order_by('purchase_id','DESC');
 		$query = $this->db->get();
 		$data['data'] = $query->result();
-		$data['recordsTotal'] = $this->getPurchaseReturnListTotalCount($param);
-		$data['recordsFiltered'] = $this->getPurchaseReturnListTotalCount($param);
+		$data['recordsTotal'] = $this->getPurchaseReturnListTotalCount($param,$branch_id_fk);
+		$data['recordsFiltered'] = $this->getPurchaseReturnListTotalCount($param,$branch_id_fk);
 		return $data;
 	}
 
-	public function getPurchaseReturnListTotalCount($param){
-	
+	public function getPurchaseReturnListTotalCount($param,$branch_id_fk){
+		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($invoice_number){
+			
+			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+				$this->db->where($where1);
+		}
+
+		if ($start_date && $end_date) {
+			$this->db->where('purchase_return_date >=', $start_date);
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
+		if ($end_date) {
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("purchase_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("purchase_branch_id_fk",0);
+        }
 		$this->db->where("purchase_status",1);
-		$this->db->select('*,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_dat');
+		$this->db->select('*,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_date');
 		$this->db->from('tbl_purchase');
 		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
@@ -721,18 +792,26 @@ class Purchase_model extends CI_Model{
 
 	public function getPurchaseReturnReport($param,$branch_id_fk){
         $arOrder = array('','invoice_number','shop');
-        $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
-        $startDate =(isset($param['startDate']))?$param['startDate']:'';
-        $endDate =(isset($param['endDate']))?$param['endDate']:'';
-        if($invoice_number){
-            $this->db->like('invoice_number', $invoice_number); 
-        }
-        if($startDate){
-            $this->db->where('purchase_return_date >=', $startDate); 
-        }
-        if($endDate){
-            $this->db->where('purchase_return_date <=', $endDate); 
-        }
+      //  $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
+      //  $startDate =(isset($param['startDate']))?$param['startDate']:'';
+    //    $endDate =(isset($param['endDate']))?$param['endDate']:'';
+		$invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($invoice_number){
+			
+			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+				$this->db->where($where1);
+		}
+
+		if ($start_date && $end_date) {
+			$this->db->where('purchase_return_date >=', $start_date);
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
+		if ($end_date) {
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
 		$this->db->where("purchase_status",1);
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
@@ -745,12 +824,12 @@ class Purchase_model extends CI_Model{
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
-		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date');
+		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date,DATE_FORMAT(purchase_date,\'%d/%m/%Y\') as purchase_dat');
 		$this->db->from('tbl_purchase');
-		$this->db->join('tbl_product','product_id = product_id_fk','left');
+		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
-        $this->db->group_by('invoice_number');
-		$this->db->order_by('purchase_return_date','ASC');
+		$this->db->group_by('invoice_number');
+		$this->db->order_by('purchase_date','ASC');
         $query = $this->db->get();
         
 		$data['data'] = $query->result();
@@ -760,17 +839,22 @@ class Purchase_model extends CI_Model{
 	}
 	public function getPurchaseReportReturnTotalCount($param,$branch_id_fk){
         $invoice_number =(isset($param['invoice_number']))?$param['invoice_number']:'';
-        $startDate =(isset($param['startDate']))?$param['startDate']:'';
-        $endDate =(isset($param['endDate']))?$param['endDate']:'';
-		if($invoice_number){
-            $this->db->like('invoice_number', $invoice_number); 
-        }
-        if($startDate){
-            $this->db->where('purchase_return_date >=', $startDate); 
-        }
-        if($endDate){
-            $this->db->where('purchase_return_date <=', $endDate); 
-        }
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($invoice_number){
+			
+			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+				$this->db->where($where1);
+		}
+
+		if ($start_date && $end_date) {
+			$this->db->where('purchase_return_date >=', $start_date);
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
+		if ($end_date) {
+			$this->db->where('purchase_return_date <=', $end_date);
+		}
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("purchase_branch_id_fk",$branch_id_fk);
@@ -780,12 +864,12 @@ class Purchase_model extends CI_Model{
             $this->db->where("purchase_branch_id_fk",0);
         }
 		$this->db->where("purchase_status",1);
-		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date,');
+		$this->db->select('*,DATE_FORMAT(purchase_return_date,\'%d/%m/%Y\') as purchase_return_date');
 		$this->db->from('tbl_purchase');
-		$this->db->join('tbl_product','product_id = product_id_fk','left');
+		$this->db->join('tbl_product','product_id = product_id_fk');
 		$this->db->join('tbl_vendor','vendor_id = vendor_id_fk');
-		$this->db->order_by('purchase_return_date', 'ASC');
-        $this->db->group_by('invoice_number');
+		$this->db->group_by('invoice_number');
+		$this->db->order_by('purchase_date','ASC');
         $query = $this->db->get();
 		return $query->num_rows();
 	}

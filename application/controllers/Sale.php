@@ -199,7 +199,7 @@ class Sale extends MY_Controller {
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
 				$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
-				$start_date =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+		/* 		$start_date =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
         $end_date =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		if($start_date){
             $start_date = str_replace('/', '-', $start_date);
@@ -208,7 +208,9 @@ class Sale extends MY_Controller {
         if($end_date){
             $end_date = str_replace('/', '-', $end_date);
             $param['end_date'] =  date("Y-m-d",strtotime($end_date));
-        }
+        } */
+		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+        $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
        // $sessid = $this->session->userdata['id'];
 		//$shopid = $this->Sale_model->get_shop($sessid);
 		//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
@@ -472,13 +474,14 @@ class Sale extends MY_Controller {
 	}
 
 	public function getSaleReturn(){
-		// $prid =$this->session->userdata('prid');
+		 $branch_id_fk =$this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10'; 
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$param['invoice_number'] =(isset($_REQUEST['invoice_number']))?$_REQUEST['invoice_number']:'';
 		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
         $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		/* $sDate = (isset($_REQUEST['startDate'])) ? $_REQUEST['startDate'] : '';
@@ -492,9 +495,9 @@ class Sale extends MY_Controller {
             $end_date = str_replace('/', '-', $eDate);
             $param['endDate'] =  date("Y-m-d",strtotime($end_date));
 		}	 */
-        $sessid = $this->session->userdata['id'];
+        //$sessid = $this->session->userdata['id'];
 		
-		$data = $this->Sale_model->getSaleReturnReport($param);
+		$data = $this->Sale_model->getSaleReturnReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;
     }

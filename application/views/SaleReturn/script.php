@@ -385,11 +385,12 @@
                 });
                 
                 // $('td', row).eq(8).html('<center><a target ="_blank"  href="<?php echo base_url(); ?>Purchase_Return/invoice/' + data['m_pur_invo'] + '"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
-                $('td', row).eq(6).html('<center><a href="<?php echo base_url(); ?>Sale/editedSaleRet/' + data['auto_invoice'] + '"><i class="fa fa-edit iconFontSize-medium" ></i></a></center>');
+                $('td', row).eq(7).html('<center><a href="<?php echo base_url(); ?>Sale/editedSaleRet/' + data['auto_invoice'] + '"><i class="fa fa-exchange iconFontSize-medium" ></i></a></center>');
             },
 
             "columns": [
                 { "data": "sale_status","orderable": false },
+                { "data": "sale_date","orderable": false },
                 { "data": "invoice_number","orderable": false },
                 { "data": "member_name","orderable": false },
                 { "data": "return_qty","orderable": false },
