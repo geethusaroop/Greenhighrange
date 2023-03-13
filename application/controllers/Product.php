@@ -53,7 +53,7 @@ class Product extends MY_Controller
 				'product_hsncode' => strtoupper($this->input->post('product_hsncode')),
 				'product_open_stock' => $this->input->post('product_open_stock'),
 				'min_stock' => $this->input->post('min_stock'),
-				'product_stock' => $this->input->post('product_open_stock'),
+				//'product_stock' => $this->input->post('product_open_stock'),
 				'product_des' => $this->input->post('product_des'),
 				'product_created_date' => date('Y-m-d'),
 				'product_updated_date' => date('Y-m-d'),

@@ -14,21 +14,44 @@
       <div class="row">
         <div class="col-md-12">
           <div class="box">
-            <fieldset>
-              <legend>Shareholder List Import</legend>
+          <div class="box-header">
+            <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response'); ?>" />
+            <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
+            <div class="col-md-8">
+              <h2 class="box-title"></h2>
+            </div>
+          </div>
+          <div class="box-body">
+          <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+              <div class="panel panel-danger" style="box-shadow:2px 2px 2px 2px black;">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><b>IMPORT EXCEL SHEET OF SHAREHOLDER</b></h3>
+                </div>
+                <div class="panel-body" style="font-weight:bold;">
               <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response');?>" />
             <br><br>
                 <div class="form-group">
                   <label for="size_name" class="col-sm-4 control-label" style="font-size: small;">Import Excel<span style="color:red">*</span></label>
                   <div class="col-sm-5">
-                    <input type="file"  class="form-control" name="import_excel" id="import_excel"  value="" accept=".xlsx, .xls, .csv">
+                    <input type="file"  class="form-control" name="uploadFile" id="uploadFile"  value="" accept=".xlsx, .xls, .csv">
                     <small> ONLY <span style="color:red">CSV, XLS, XLSX</span> FILE TYPES ACCEPTED</small>
                   </div>
                 </div>
-                <div class="form-group">
-                  <center> <button type="submit" class="btn btn-primary">Save</button></center>
-                </div>
-            </fieldset>
+                </div></div></div>
+          </div>
+                <div class="box-footer">
+            <div class="row">
+              <div class="col-md-6">
+              </div>
+              <div class="col-md-4">
+              <a href="<?php echo base_url(); ?>Shareholder"  <button type="button" class="btn btn-danger">Cancel</button></a>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+              
+              
           </div>
         </div>
       </div>

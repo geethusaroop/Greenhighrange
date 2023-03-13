@@ -118,8 +118,33 @@ class Purchasereport_model extends CI_Model{
 	{
 		$this->db->select('*,COALESCE(bamount,0) as bamount,COALESCE(ramount,0) as ramount');
 		$this->db->from('tbl_member');
-		$this->db->join('(SELECT *,SUM(bd_amount) as bamount FROM tbl_bank_deposit WHERE bd_status = 1 group by bd_member_id_fk) as tbd','tbd.bd_member_id_fk=member_id','left');
-		$this->db->join('(SELECT *,SUM(receipt_amount) as ramount FROM tbl_customer_receipt WHERE receipt_status = 1 group by receipt_member_id_fk) as tcr','tcr.receipt_member_id_fk=member_id','left');
+		$this->db->join('(SELECT *,SUM(bd_amount) as bamount FROM tbl_bank_deposit WHERE bd_status = 1  and branch_id_fk=0 group by bd_member_id_fk) as tbd','tbd.bd_member_id_fk=member_id','left');
+		$this->db->join('(SELECT *,SUM(receipt_amount) as ramount FROM tbl_customer_receipt WHERE receipt_status = 1 and receipt_branch_id_fk=0 group by receipt_member_id_fk) as tcr','tcr.receipt_member_id_fk=member_id','left');
+
+		//	$this->db->join('tbl_sale','member_id_fk=member_id','left');
+	//	$this->db->join('tbl_bank_deposit','bd_member_id_fk=member_id','left');
+        $this->db->where("member_status",1);
+		$this->db->order_by('member_name','ASC');
+		/* $this->db->group_by('bd_member_id_fk');
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("branch_id_fk",0);
+        } */
+        $query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getsundrybdebtors($branch_id_fk)
+	{
+		$this->db->select('*,COALESCE(bamount,0) as bamount,COALESCE(ramount,0) as ramount');
+		$this->db->from('tbl_member');
+		$this->db->join('(SELECT * FROM tbl_branch_member_balance WHERE bmb_status = 1  and bmb_branch_id_fk="'.$branch_id_fk.'" group by bmb_member_id_fk) as tbmb','tbmb.bmb_member_id_fk=member_id');
+		$this->db->join('(SELECT *,SUM(bd_amount) as bamount FROM tbl_bank_deposit WHERE bd_status = 1  and branch_id_fk="'.$branch_id_fk.'" group by bd_member_id_fk) as tbd','tbd.bd_member_id_fk=member_id','left');
+		$this->db->join('(SELECT *,SUM(receipt_amount) as ramount FROM tbl_customer_receipt WHERE receipt_status = 1 and receipt_branch_id_fk="'.$branch_id_fk.'" group by receipt_member_id_fk) as tcr','tcr.receipt_member_id_fk=member_id','left');
 
 		//	$this->db->join('tbl_sale','member_id_fk=member_id','left');
 	//	$this->db->join('tbl_bank_deposit','bd_member_id_fk=member_id','left');
@@ -141,9 +166,15 @@ class Purchasereport_model extends CI_Model{
 
 	public function getStockRegister1($branch_id_fk) 
     {
-        $this->db->select('*');
+        $this->db->select('*,COALESCE(bstock,0) as bstock,COALESCE(pqty,0) as pqty,COALESCE(sqty,0) as sqty,COALESCE(prqty,0) as prqty,COALESCE(price,0) as price,COALESCE(smqty,0) as smqty');
 		$this->db->from('tbl_product');
-        $this->db->where("product_status",1);
+		$this->db->join('(SELECT *,SUM(bt_stock) as bstock FROM tbl_branch_transfer WHERE bt_status = 1 group by bt_product_id_fk) as tbt','tbt.bt_product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(punit_qty) as pqty FROM tbl_production_unit WHERE punit_status = 1 and punit_branch_id_fk=0 group by punit_product_id_fk) as tpu','tpu.punit_product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(sale_quantity) as sqty FROM tbl_sale WHERE sale_status = 1 and sale_branch_id_fk=0 group by product_id_fk) as tsale','tsale.product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(purchase_quantity) as prqty,sum(purchase_price) as price FROM tbl_purchase WHERE purchase_status = 1 and purchase_branch_id_fk=0 group by tbl_purchase.product_id_fk) as tp','tp.product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(sale_quantity) as smqty FROM tbl_master_branch_sale WHERE sale_status = 1 and sale_branch_id_fk=0 group by product_id_fk) as tmsale','tmsale.product_id_fk=product_id','left');
+
+		$this->db->where("product_status",1);
 		$this->db->where("product_category",1);
 		$this->db->order_by('product_name','ASC');
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
@@ -160,9 +191,11 @@ class Purchasereport_model extends CI_Model{
 
 	public function getStockRegister2($branch_id_fk) 
     {
-        $this->db->select('*');
+        $this->db->select('*,COALESCE(sqty,0) as sqty,COALESCE(ptotal,0) as ptotal');
 		$this->db->from('tbl_product');
-        $this->db->where("product_status",1);
+		$this->db->join('(SELECT *,SUM(sale_quantity) as sqty FROM tbl_sale WHERE sale_status = 1 and sale_branch_id_fk=0 group by product_id_fk) as tsale','tsale.product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(pstock_total) as ptotal FROM tbl_production_stock_history  WHERE pstock_status = 1 group by pstock_product_id_fk) as tpstock','tpstock.pstock_product_id_fk=product_id','left');
+		$this->db->where("product_status",1);
 		$this->db->where("product_category",2);
 		$this->db->order_by('product_name','ASC');
 		if(!empty($branch_id_fk) && $branch_id_fk != 0)
@@ -173,6 +206,39 @@ class Purchasereport_model extends CI_Model{
         {
             $this->db->where("branch_id_fk",0);
         }
+        $query = $this->db->get();
+		return $query->result();
+    }
+
+	public function getBStockRegister1($branch_id_fk) 
+    {
+        $this->db->select('*,COALESCE(bstock,0) as bstock,COALESCE(pqty,0) as pqty,COALESCE(sqty,0) as sqty,COALESCE(prqty,0) as prqty,COALESCE(price,0) as price,COALESCE(smqty,0) as smqty');
+		$this->db->from('tbl_product');
+		$this->db->join('(SELECT *,SUM(bt_stock) as bstock FROM tbl_branch_transfer WHERE bt_status = 1 and bt_branch_id_fk="'.$branch_id_fk.'" group by bt_product_id_fk) as tbt','tbt.bt_product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(punit_qty) as pqty FROM tbl_production_unit WHERE punit_status = 1 and punit_branch_id_fk="'.$branch_id_fk.'" group by punit_product_id_fk) as tpu','tpu.punit_product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(sale_quantity) as sqty FROM tbl_sale WHERE sale_status = 1 and sale_branch_id_fk="'.$branch_id_fk.'" group by product_id_fk) as tsale','tsale.product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(purchase_quantity) as prqty,sum(purchase_price) as price FROM tbl_purchase WHERE purchase_status = 1 and purchase_branch_id_fk="'.$branch_id_fk.'" group by tbl_purchase.product_id_fk) as tp','tp.product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(sale_quantity) as smqty FROM tbl_master_branch_sale WHERE sale_status = 1 and sale_branch_id_fk="'.$branch_id_fk.'" group by product_id_fk) as tmsale','tmsale.product_id_fk=product_id','left');
+
+		$this->db->where("product_status",1);
+		$this->db->where("product_category",1);
+		$this->db->order_by('product_name','ASC');
+         $this->db->where("branch_id_fk",$branch_id_fk);
+        $query = $this->db->get();
+		return $query->result();
+    }
+
+	public function getBStockRegister2($branch_id_fk) 
+    {
+        $this->db->select('*,COALESCE(sqty,0) as sqty,COALESCE(ptotal,0) as ptotal');
+		$this->db->from('tbl_product');
+		$this->db->join('(SELECT *,SUM(sale_quantity) as sqty FROM tbl_sale WHERE sale_status = 1 and sale_branch_id_fk="'.$branch_id_fk.'" group by product_id_fk) as tsale','tsale.product_id_fk=product_id','left');
+		$this->db->join('(SELECT *,SUM(pstock_total) as ptotal FROM tbl_production_stock_history  left join tbl_production_unit on(punit_batch_no=pstock_punit_id_fk)  WHERE pstock_status = 1 and punit_branch_id_fk="'.$branch_id_fk.'" group by pstock_product_id_fk) as tpstock','tpstock.pstock_product_id_fk=product_id','left');
+
+		$this->db->where("product_status",1);
+		$this->db->where("product_category",2);
+		$this->db->order_by('product_name','ASC');
+		$this->db->where("branch_id_fk",$branch_id_fk);
         $query = $this->db->get();
 		return $query->result();
     }

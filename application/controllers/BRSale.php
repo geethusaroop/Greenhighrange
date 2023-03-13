@@ -164,10 +164,27 @@ class BRSale extends MY_Controller {
 				// $result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
 				$result = $this->General_model->updat($this->tbl_stock,$uData,'product_id',$product_branch_id_fk[$i],'branch_id_fk',$branches_id);
 				
-				$datass = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
-				$updated_amount = $datass->member_branch_sale_balance + ($this->input->post('total_amt'));
-				$mdata=array('member_branch_sale_balance'=> $updated_amount);
-				$result = $this->General_model->update('tbl_member',$mdata,'member_id',$member_id_fk);
+
+				$bresult = $this->BRSale_model->getmemberexist($member_id_fk,$branches_id);
+				if($bresult)
+				{
+					$datass = $this->General_model->get_row_member_exist($member_id_fk,$branches_id);
+					$updated_amount = $datass->bmb_sale_balance + ($this->input->post('total_amt'));
+					$mdata=array('bmb_sale_balance'=> $updated_amount);
+					$result = $this->General_model->update('tbl_branch_member_balance',$mdata,'bmb_member_id_fk',$member_id_fk);
+				}
+				else
+				{
+					$membal = array(
+						'bmb_branch_id_fk' =>$this->session->userdata('branch_id_fk'),
+						'bmb_member_id_fk'=>$member_id_fk,
+						'bmb_sale_balance'=>$this->input->post('total_amt'),
+						'bmb_date' =>date('Y-m-d'),
+						'bmb_status'=>1
+						);
+						$this->General_model->add('tbl_branch_member_balance',$membal);
+				}
+
 				
 				}
 	       redirect('/BRSale/invoice/'.$invoice_no, 'refresh');
@@ -199,21 +216,9 @@ class BRSale extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-				$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
-				$start_date =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
-        $end_date =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
-		if($start_date){
-            $start_date = str_replace('/', '-', $start_date);
-            $param['start_date'] =  date("Y-m-d",strtotime($start_date));
-        }
-        if($end_date){
-            $end_date = str_replace('/', '-', $end_date);
-            $param['end_date'] =  date("Y-m-d",strtotime($end_date));
-        }
-       // $sessid = $this->session->userdata['id'];
-		//$shopid = $this->BRSale_model->get_shop($sessid);
-		//if(isset($shopid[0]->shop_id_fk)){$shid=$shopid[0]->shop_id_fk;}else{$shid=0;}
-		//$param['shop'] =$shid;
+		$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
+		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
+        $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		$data = $this->BRSale_model->getSaleReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;
@@ -473,30 +478,17 @@ class BRSale extends MY_Controller {
 	}
 
 	public function getSaleReturn(){
-		// $prid =$this->session->userdata('prid');
-		$param['branch_id'] = $this->session->userdata('branch_id_fk');
+		$branch_id_fk = $this->session->userdata('branch_id_fk');
 		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
         $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10'; 
         $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$param['invoice_number'] = (isset($_REQUEST['invoice_number']))?$_REQUEST['invoice_number']:'';
 		$param['start_date'] =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
         $param['end_date'] =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
-		/* $sDate = (isset($_REQUEST['startDate'])) ? $_REQUEST['startDate'] : '';
-		$eDate = (isset($_REQUEST['endDate'])) ? $_REQUEST['endDate'] : '';
-		if($sDate){
-            $start_date = str_replace('/', '-', $sDate);
-            $param['startDate'] =  date("Y-m-d",strtotime($start_date));
-        }
-       
-        if($eDate){
-            $end_date = str_replace('/', '-', $eDate);
-            $param['endDate'] =  date("Y-m-d",strtotime($end_date));
-		}	 */
-        $sessid = $this->session->userdata['id'];
-		
-		$data = $this->BRSale_model->getSaleReturnReport($param);
+		$data = $this->BRSale_model->getSaleReturnReport($param,$branch_id_fk);
 		$json_data = json_encode($data);
     	echo $json_data;
     }

@@ -442,6 +442,129 @@ class Bankdeposit extends MY_Controller {
 	    $this->load->view('template', $template);
 	}
 
+
+
+	#######################################BRANCH CREDIT################################################################
+	public function bcredit()
+	{
+		$template['body'] = 'Bankdeposit/list-bcredit';
+		$template['script'] = 'Bankdeposit/script-bcredit';
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$template['bank'] = $this->Bank_model->view_by($branch_id_fk);
+		$this->load->view('template', $template);
+	}
+
+	public function add_bcredit(){
+		$this->form_validation->set_rules('bd_bank_id_fk', 'Name', 'required');
+		if ($this->form_validation->run() == FALSE) {
+			$template['body'] = 'Bankdeposit/add-bcredit';
+			$template['script'] = 'Bankdeposit/script-bcredit';
+			$branch_id_fk =$this->session->userdata('branch_id_fk');
+			$template['bank'] = $this->Bank_model->view_by($branch_id_fk);
+			$template['member'] = $this->Bankdeposit_model->view_by();
+			$this->load->view('template', $template);
+		}
+		else {
+			$branch_id_fk =$this->session->userdata('branch_id_fk');
+			$member_id_fk=$this->input->post('bd_member_id_fk');
+			$bd_id = $this->input->post('bd_id');
+			$data = array(
+						'branch_id_fk' =>$this->session->userdata('branch_id_fk'),	
+						'bd_bank_id_fk' =>$this->input->post('bd_bank_id_fk'),	
+						'bd_type' =>1,						
+						'bd_member_id_fk' =>$this->input->post('bd_member_id_fk'),	
+						'bd_amount' =>$this->input->post('bd_amount'),
+						'bd_date' =>$this->input->post('bd_date'),
+						'bd_remark' =>$this->input->post('bd_remark'),
+						'bd_status' => 1
+						);
+				if($bd_id){
+					 
+                     $data['bd_id'] = $bd_id;
+                     $result = $this->General_model->update($this->table,$data,'bd_id',$bd_id);
+
+						 $datass = $this->General_model->get_row_member_exist($member_id_fk,$branch_id_fk);
+						 $updated_amount1 = $datass->bmb_sale_balance + ($this->input->post('bd_amount1'));
+						 $updated_amount = $updated_amount1 - ($this->input->post('bd_amount'));
+						 $mdata=array('bmb_sale_balance'=> $updated_amount);
+						 $result = $this->General_model->update('tbl_branch_member_balance',$mdata,'bmb_member_id_fk',$member_id_fk);
+					 
+                     $response_text = 'Bankdeposit Details updated successfully';
+                }
+				else{
+				   	 $result =  $this->General_model->add($this->table,$data);
+
+						$datass = $this->General_model->get_row_member_exist($member_id_fk,$branch_id_fk);
+						$updated_amount = $datass->bmb_sale_balance - ($this->input->post('bd_amount'));
+						$mdata=array('bmb_sale_balance'=> $updated_amount);
+						$result = $this->General_model->update('tbl_branch_member_balance',$mdata,'bmb_member_id_fk',$member_id_fk);
+					
+
+                     $response_text = 'Bankdeposit Details added  successfully';
+					 
+                }
+				if($result){
+	            $this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
+				}
+				else{
+	            $this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
+				}
+				redirect('/Bankdeposit/credit');
+		}
+	}
+
+
+	public function get_bcredit(){
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$param['draw'] = (isset($_REQUEST['draw']))?$_REQUEST['draw']:'';
+        $param['length'] =(isset($_REQUEST['length']))?$_REQUEST['length']:'10'; 
+        $param['start'] = (isset($_REQUEST['start']))?$_REQUEST['start']:'0';
+        $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
+        $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
+        $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
+		$param['bank'] = (isset($_REQUEST['bank']))?$_REQUEST['bank']:'';
+		$data = $this->Bankdeposit_model->getbcreditTable($param,$branch_id_fk);
+    	$json_data = json_encode($data);
+    	echo $json_data;
+    }
+
+	public function edit_bcredit($bd_id){
+		$template['body'] = 'Bankdeposit/add-bcredit';
+		$template['script'] = 'Bankdeposit/script-bcredit';
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$template['bank'] = $this->Bank_model->view_by($branch_id_fk);
+		$template['member'] = $this->Bankdeposit_model->view_by();
+		$template['records'] = $this->General_model->get_row($this->table,'bd_id',$bd_id);
+    	$this->load->view('template', $template);
+	}
+
+
+	public function delete_bcredit(){
+        $bd_id = $this->input->post('bd_id');
+		$branch_id_fk =$this->session->userdata('branch_id_fk');
+		$member_id_fk= $this->input->post('bd_member_id_fk');
+		
+			$datass = $this->General_model->get_row_member_exist($member_id_fk,$branch_id_fk);
+			$updated_amount = $datass->bmb_sale_balance + ($this->input->post('bd_amount'));
+			$mdata=array('bmb_sale_balance'=> $updated_amount);
+			$result = $this->General_model->update('tbl_branch_member_balance',$mdata,'bmb_sale_balance',$member_id_fk);
+
+        $updateData = array('bd_status' => 0);
+        $data = $this->General_model->update($this->table,$updateData,'bd_id',$bd_id);
+        if($data) {
+            $response['text'] = 'Deleted successfully';
+            $response['type'] = 'success';
+        }
+        else{
+            $response['text'] = 'Something went wrong';
+            $response['type'] = 'error';
+        }
+        $response['layout'] = 'topRight';
+        $data_json = json_encode($response);
+        echo $data_json;
+    }
+################################################################################################
+
 	
 	
 	

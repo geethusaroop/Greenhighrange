@@ -20,5 +20,15 @@ class Stockregister extends MY_Controller {
 		$template['record']=$this->Purchasereport_model->getStockRegister2($branch_id_fk);
 		$this->load->view('template', $template);
 	}
+
+	public function index1()
+	{
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['body'] = 'Stockregister/list-bstock';
+		$template['script'] = 'Stockregister/script';
+		$template['records']=$this->Purchasereport_model->getBStockRegister1($branch_id_fk);
+		$template['record']=$this->Purchasereport_model->getBStockRegister2($branch_id_fk);
+		$this->load->view('template', $template);
+	}
 	
 }

@@ -186,7 +186,7 @@ write_file($save, $backup);  */
 
 		//$sql="ALTER TABLE `tbl_bank_deposit` CHANGE `bd_type` `bd_type` INT(11) NOT NULL COMMENT '1=member_deposit,2=others,3=supplier_withdraw'";
 		
-	//	$sql="ALTER TABLE `tbl_member` ADD `member_branch_old_balance` INT NOT NULL AFTER `member_sale_balance`, ADD `member_branch_sale_balance` INT NOT NULL AFTER `member_branch_old_balance`";
+		$sql="ALTER TABLE `tbl_branch_member_balance` ADD `bmb_opening_date` DATE NOT NULL AFTER `bmb_date`";
 
 		/* $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_return` (
 			`return_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -199,7 +199,7 @@ write_file($save, $backup);  */
 			PRIMARY KEY (`return_id`)
 		  ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1"; */
 		  
-		  $sql="CREATE TABLE IF NOT EXISTS `tbl_customer_receipt` (
+		 /*  $sql="CREATE TABLE IF NOT EXISTS `tbl_customer_receipt` (
 			`receipt_id` int(11) NOT NULL AUTO_INCREMENT,
 			`receipt_branch_id_fk` int(11) NOT NULL,
 			`receipt_member_id_fk` int(11) NOT NULL,
@@ -211,7 +211,7 @@ write_file($save, $backup);  */
 			`receipt_status` int(11) NOT NULL,
 			`receipt_group` int(11) DEFAULT NULL,
 			PRIMARY KEY (`receipt_id`)
-		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3";
+		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3"; */
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

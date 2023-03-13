@@ -36,7 +36,7 @@ class BSale_model extends CI_Model
 		if ($param['start'] != 'false' and $param['length'] != 'false') {
 			$this->db->limit($param['length'], $param['start']);
 		}
-		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.sale_discount as discount');
+		$this->db->select('*,COUNT(invoice_number) as slcount,ROUND(SUM(sale_netamt),2) as total,sum(sale_quantity) as qty,ROUND((total_price-(sale_discount+sale_shareholder_discount)),2) as tprice,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,tbl_sale.sale_discount as discount');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale.member_id_fk', 'left');
         $this->db->join('tbl_branch','tbl_branch.branch_id=tbl_sale.sale_branch_id_fk');

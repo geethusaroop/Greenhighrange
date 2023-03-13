@@ -16,8 +16,10 @@ class Purchase_model extends CI_Model{
 
 		if ($invoice_number){
 			
-			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_purchase.invoice_number', $invoice_number);
+			$this->db->or_like('vendorname', $invoice_number);
 		}
 
 		if ($start_date && $end_date) {
@@ -60,8 +62,10 @@ class Purchase_model extends CI_Model{
 
 		if ($invoice_number){
 			
-			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_purchase.invoice_number', $invoice_number);
+			$this->db->or_like('vendorname', $invoice_number);
 		}
 
 		if ($start_date && $end_date) {
@@ -801,8 +805,10 @@ class Purchase_model extends CI_Model{
 
 		if ($invoice_number){
 			
-			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_purchase.invoice_number', $invoice_number);
+			$this->db->or_like('vendorname', $invoice_number);
 		}
 
 		if ($start_date && $end_date) {
@@ -844,8 +850,10 @@ class Purchase_model extends CI_Model{
 
 		if ($invoice_number){
 			
-			$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_purchase.invoice_number="'.$invoice_number.'" or vendorname = "'.$invoice_number.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_purchase.invoice_number', $invoice_number);
+			$this->db->or_like('vendorname', $invoice_number);
 		}
 
 		if ($start_date && $end_date) {

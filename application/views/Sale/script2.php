@@ -1183,15 +1183,15 @@ $(document).on("change",'#customer_nam',function(){
                           $('#hsn'+row).html(d.hsncode);
                           $('#hsn'+row).val(d.hsncode);
 
-                          $('#igst'+row).html(d.igst);
-                          $('#igst'+row).val(d.igst);
+                            $('#igst'+row).html(d.igst);
+                            $('#igst'+row).val(d.igst);
 
-                          $('#cgst'+row).html(d.igst);
-                          $('#cgst'+row).val(d.igst);
+                            $('#cgst'+row).html(d.igst);
+                            $('#cgst'+row).val(d.igst);
 
-                          $('#sgst'+row).html(d.igst);
-                          $('#sgst'+row).val(d.igst);
-
+                            $('#sgst'+row).html(d.igst);
+                            $('#sgst'+row).val(d.igst);
+                        
                           $('#prod_branch_id'+row).html(d.prod_id_branch);
                           $('#prod_branch_id'+row).val(d.prod_id_branch);
                           
@@ -1396,6 +1396,7 @@ function getdiscamount() {
         var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;
        // document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("sale_shareholder_discounts").value=isNaN(sharedisc) ? "0.00" : sharedisc.toFixed(2);
     }
 
     function getamount() {

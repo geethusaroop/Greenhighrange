@@ -390,7 +390,7 @@
 
             "columns": [
                 { "data": "sale_status","orderable": false },
-                { "data": "sale_date","orderable": false },
+                { "data": "sale_dates","orderable": false },
                 { "data": "invoice_number","orderable": false },
                 { "data": "member_name","orderable": false },
                 { "data": "return_qty","orderable": false },

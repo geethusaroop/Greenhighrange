@@ -139,11 +139,12 @@ Class Vendor_voucher_model extends CI_Model{
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,tbl_sale.sale_discount as discount');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id_fk=product_id');
+		$this->db->join('tbl_branch','branch_id_fk=branch_id','left');
 		$this->db->where('sale_date >=', $cdate);
 		$this->db->where('sale_date <=', $edate);
 		$this->db->where('member_id_fk', $shareholder_id_fk);
 		$this->db->where('sale_status', 1);
-		$this->db->where('sale_branch_id_fk', 0);
+		//$this->db->where('sale_branch_id_fk', 0);
 		$this->db->order_by('sale_date',"ASC");
 		$this->db->group_by('invoice_number');
 		$query = $this->db->get();
@@ -158,7 +159,7 @@ Class Vendor_voucher_model extends CI_Model{
 		$this->db->where('incent_date <=', $edate);
 		$this->db->where('incent_member_id_fk', $shareholder_id_fk);
 		$this->db->where('incent_status', 1);
-		$this->db->where('incent_branch_id_fk', 0);
+	//	$this->db->where('incent_branch_id_fk', 0);
 		$q = $this->db->get();
 		return $q->result();
 	/* 	if($q->num_rows() > 0)

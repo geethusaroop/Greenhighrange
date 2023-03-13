@@ -127,8 +127,8 @@
                                             <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->product_open_stock; ?></td>
                                             <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->prqty; ?></td>
                                             <td style="border:1px solid #0a0a0b;text-align:right;"></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php $stock =($row->prqty)-($row->bstock+$row->pqty+$row->sqty+$row->smqty);echo $stock * $row->price; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($row->prqty)-($row->bstock+$row->pqty+$row->sqty+$row->smqty) ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php $stock =($row->prqty+$row->bstock+$row->smqty)-($row->pqty+$row->sqty);echo $stock * $row->price; ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($row->prqty+$row->bstock+$row->smqty)-($row->pqty+$row->sqty) ?></td>
                                         </tr>
                                     <?php 
                                    

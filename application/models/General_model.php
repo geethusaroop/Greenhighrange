@@ -57,6 +57,23 @@ class General_model extends CI_Model{
         return false;
     }
 
+
+    public function get_row_member_exist($member_id_fk,$branch_id_fk)
+    {
+       
+        $this->db->select('*');
+		$this->db->from('tbl_branch_member_balance');
+		$this->db->where('bmb_member_id_fk',$member_id_fk);
+		$this->db->where('bmb_branch_id_fk',$branch_id_fk);
+		$this->db->where("bmb_status",1);
+        $q = $this->db->get();
+        if($q->num_rows() > 0)
+        {
+            return $q->row();
+        }
+        return false;
+    }
+
     public function get_row_production($product_id,$branch_id_fk,$punit_batch_no)
     {
        

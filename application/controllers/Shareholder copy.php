@@ -6,8 +6,7 @@ class Shareholder extends MY_Controller {
 	public $page  = 'Shareholder';
 	public function __construct() {
 		parent::__construct();
-	//	$this->load->library('excel');
-	$this->load->helper(array('url','html','form'));
+		$this->load->library('excel');
         $this->load->model('General_model');
         $this->load->model('Shareholder_model');
 	}
@@ -256,106 +255,165 @@ class Shareholder extends MY_Controller {
 
 	public function insert_Excel_Sharholder()
 	{
-		$path = 'excel/';
-		require_once APPPATH . "/libraries/PHPExcel.php";
-		$config['upload_path'] = $path;
-		$config['allowed_types'] = 'xlsx|xls|csv';
-		$config['remove_spaces'] = TRUE;
-		$this->load->library('upload', $config);
-		$this->upload->initialize($config);            
-		if (!$this->upload->do_upload('uploadFile')) {
-			$error = array('error' => $this->upload->display_errors());
-		} else {
-			$data = array('upload_data' => $this->upload->data());
-		}
-		if(empty($error)){
-		  if (!empty($data['upload_data']['file_name'])) {
-			$import_xls_file = $data['upload_data']['file_name'];
-		} else {
-			$import_xls_file = 0;
-		}
-		$inputFileName = $path . $import_xls_file;
-		 
-		try {
-			$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-			$objPHPExcel = $objReader->load($inputFileName);
-			$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-			$count = count($allDataInSheet);
-			$flag = true;
+		if(isset($_FILES["import_excel"]["name"])){
+		$path = $_FILES["import_excel"]["tmp_name"];
+			$object = PHPExcel_IOFactory::load($path);
+			foreach($object->getWorksheetIterator() as $worksheet)
+			{
+				$highestRow = $worksheet->getHighestRow();
+				$highestColumn = $worksheet->getHighestColumn();
+				for($row=3; $row<=$highestRow; $row++)
+				{
+					if(!empty($worksheet->getCellByColumnAndRow(0, $row)->getValue())){
+					
+					$shareholder_id = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+					$shareholder_name = $worksheet->getCellByColumnAndRow(1, $row)->getValue();			
+					$shareholder_gender = $worksheet->getCellByColumnAndRow(2, $row)->getValue();	
+					//gender_value
+					if($shareholder_gender == "Male"){
+						$share_gender = 1;
+					}
+					else if($shareholder_gender == "Female"){
+						$share_gender = 2;
+					}	
+					$shareholder_dob = $worksheet->getCellByColumnAndRow(3, $row)->getValue();		
+					$dob_con = \PHPExcel_Style_NumberFormat::toFormattedString($shareholder_dob, 'YYYY-MM-DD');
+					$shareholder_address = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+					$shareholder_email = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+					$shareholder_phone = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+					$shareholder_state = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+					//search if(State exist)
+					@$state_exist_id  = $this->Shareholder_model->get_excel_import_state($shareholder_state);
+					if($state_exist_id){
+						$state_id_no = $state_exist_id;
+					}
+					else
+					{
+						if(!empty($shareholder_state)){
+						$state_data = [
+							'state_name'=>$shareholder_state,
+							'state_number'=>0,
+							'state_incharge'=>'ree',
+							'state_status'=>1
+						];
+						$result = $this->General_model->add('tbl_state',$state_data);
+						@$state_exist_id  = $this->Shareholder_model->get_excel_import_state($shareholder_state);
+						$state_id_no = $state_exist_id;
+					}
+					else
+					{
+						$state_id_no = 1;
+					}
+					}
+					//endstate
+					$shareholder_district = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+					//district_exist_id
+					@$district_exist_id  = $this->Shareholder_model->get_excel_import_district($shareholder_district);
+					if($district_exist_id){
+						$district_id_no = $district_exist_id;
+					}
+					else
+					{
+						if(!empty($shareholder_district)){
+						$district_data = [
+							'district_state_id_fk'=>$state_id_no,
+							'district_name'=>$shareholder_district,
+							'district_number'=>123,
+							'district_incharge'=>'test',
+							'district_status'=>1
+						];
+						$result = $this->General_model->add('tbl_district',$district_data);
+						@$district_exist_id  = $this->Shareholder_model->get_excel_import_district($shareholder_district);
+						$district_id_no = $district_exist_id;
+					}
+					else
+					{
+						$district_id_no = 1;
+					}
+					}
+					//enddistrict
+					$shareholder_panchayat = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+					//search if(panchayat exist)
+					@$panchayat_exist_id  = $this->Shareholder_model->get_excel_import_panchayat($shareholder_panchayat);
+					if($panchayat_exist_id){
+						$panchayat_id_no = $panchayat_exist_id;
+					}
+					else
+					{
+						if(!empty($shareholder_panchayat)){
+						$panchayat_data = [
+							'panchayath_district'=>$district_id_no,
+							'panchayath_name'=>$shareholder_panchayat,
+							'panchayath_address'=>123,
+							'panchayath_incharge'=>'test',
+							'panchayath_status'=>1,
+							'panchayath_created_at'=>date('Y-m-d h:i:sa'),
+							'panchayath_updated_at'=>date('Y-m-d h:i:sa')
+						];
+						$result = $this->General_model->add('tbl_panchayath',$panchayat_data);
+						@$panchayat_exist_id  = $this->Shareholder_model->get_excel_import_panchayat($shareholder_panchayat);
+						$panchayat_id_no = $panchayat_exist_id;
+					}
+					else
+					{
+						$panchayat_id_no = 1;
+					}
+					}
 
-  for($i=2;$i<=$count;$i++){
-		
-	
-			 if($allDataInSheet[$i]['A']!="")
-			 {
-
-				$date = str_replace('/', '-', $allDataInSheet[$i]['I']);
-				$newDate = date("Y-m-d", strtotime($date));
-
-				$ddate = str_replace('/', '-', $allDataInSheet[$i]['D']);
-				$dob = date("Y-m-d", strtotime($ddate));
-			  
-				$inserdata[$i]['member_mid'] = $allDataInSheet[$i]['A'];
-				$inserdata[$i]['member_name'] = $allDataInSheet[$i]['B'];
-				$inserdata[$i]['member_gender'] = $allDataInSheet[$i]['C'];
-				$inserdata[$i]['member_dob'] = $dob;
-				$inserdata[$i]['member_address'] = $allDataInSheet[$i]['E'];
-				$inserdata[$i]['member_email'] = $allDataInSheet[$i]['F'];
-				$inserdata[$i]['member_pnumber'] = $allDataInSheet[$i]['G'];
-				$inserdata[$i]['member_wnumber'] = $allDataInSheet[$i]['H'];
-				$inserdata[$i]['m_created_at'] = $newDate;
-				$inserdata[$i]['member_share_aahar'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_share_pan'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_share_no_shares'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_bank'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_branch'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_account'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_ifsc'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_bank_id'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_sale_balance'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_status'] = 1;
-				$inserdata[$i]['member_type'] = 1;
-				$result = $this->General_model->add($this->table,$inserdata[$i]);
-				$last_insert_id = $this->db->insert_id();
-
-				  $sdate = str_replace('/', '-', $allDataInSheet[$i]['I']);
-				  $fund_year = date("Y", strtotime($sdate));
-
-				$inserdatas[$i]['fund_date'] = $newDate;
-				$inserdatas[$i]['fund_member_id_fk'] = $last_insert_id;
-				$inserdatas[$i]['fund_year'] = $fund_year;
-				$inserdatas[$i]['fund_amount'] = $allDataInSheet[$i]['J'];
-				$inserdatas[$i]['ftype_id_fk'] =1;
-				$inserdatas[$i]['fund_status'] =1;
-
-				 $results = $this->General_model->add($this->table1,$inserdatas[$i]);
-
+					$shareholder_area_shed = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+					$shareholder_capacity = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+					$shareholder_join_date = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+					$shareholder_aadhar_no = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+					$shareholder_pan_no = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+					$shareholder_no_of_share_held = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+					$shareholder_nominee = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+					$shareholder_father_husband = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+					$shareholder_serail_no = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+					$shareholder_block = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+					$shareholder_ledger_folio = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+					
+					$data = array(
+						'member_mid' => $shareholder_id,
+						'member_name' => $shareholder_name,
+						'member_gender' => $share_gender,
+						'member_dob' => $dob_con,
+						'member_type' => 1,
+						'member_email' => $shareholder_email,
+						'member_pnumber' => $shareholder_phone,
+						'member_address' => $shareholder_address,
+						'member_panchayath' => $panchayat_id_no,
+						'member_district' =>$district_id_no,
+						'member_state' => $state_id_no,
+						'area_of_shed' => $shareholder_area_shed,
+						'area_capacity' => $shareholder_capacity,
+						'created_at' => date('Y-m-d'),
+                        'member_share_aahar' => $shareholder_aadhar_no,
+                        'member_share_pan' => $shareholder_pan_no,
+                        'member_share_no_shares' => $shareholder_no_of_share_held,
+                        'member_share_nominee' => $shareholder_nominee,
+                        'member_share_father_husband' => $shareholder_father_husband,
+                        'member_share_serial_number' => $shareholder_serail_no,
+                        'member_block_number' => $shareholder_block,
+						'member_share_ledger_folio' => $shareholder_ledger_folio,
+						'member_status' => 1
+					);
+					$result = $this->General_model->add_returnID('tbl_member',$data);
+				}
+				else
+				{
+					break;
+				}
+				}
 			}
-			
-			
-			} 
-		  
-			 $response_text = 'Share Holder Added successfully';
-
-			 if($result){
-
-	  $this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
-		  }
-		  else{
-				$this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
-		  } 
-
-			 } catch (Exception $e) {
-		   die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
-				   . '": ' .$e->getMessage());
+			if($result){	
+				$response_text = 'Shareholder added successfully';
+			$this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
+			}
+			else{
+			$this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
+			}
+			redirect('Shareholder','refresh');
 		}
-	  }else{
-		  echo $error['error'];
-		 }
-
-
-		redirect('Shareholder/', 'refresh');
-
 	}
+
 }

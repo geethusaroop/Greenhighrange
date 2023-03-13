@@ -47,20 +47,17 @@
                                 <span tabindex="-1" class="input-group-btn select-calendar date-range"><button type="button" tabindex="-1" class="btn btn-default"><i class=" fa fa-calendar"></i></button></span>
                             </div>
                         </div> -->
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <div class="input-group">
                                 <button type="button" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if (isset($values->mainhead_id)) echo $values->mainhead_id; ?>">Search</button>
                                 <a href="<?php echo base_url(); ?>Shareholder/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Shareholder</a>
-                               
+                                &nbsp; <a href="<?php echo base_url(); ?>Shareholder/addExcelShareholder" class="btn btn-danger"><i class="fa fa-plus-square"></i> Import Excel</a>
+
                             </div>
                             
                         </div>
                        
-                      <!--   <div class="col-sm-2">
-                            <div class="input-group">
-                            <a href="<?php echo base_url(); ?>Shareholder/addExcelShareholder" class="btn btn-danger"><i class="fa fa-plus-square"></i> Import Excel</a>
-                            </div>
-                        </div> -->
+                      
                     </div>
                     <br>
                 </div>

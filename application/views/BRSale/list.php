@@ -19,9 +19,6 @@
 		
             <div class="box-header">
 
-              <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
-
-			  
 		</div>
 
             <!-- /.box-header -->
@@ -31,15 +28,15 @@
 				<div class="col-md-3">
 					<div class="input-group margin">
 						<div class="input-group-btn">
-							<button type="button" class="btn btn-primary nohover">Invoice No</button>
+							<button type="button" class="btn btn-primary nohover">Invoice No/Name</button>
 						</div><!-- /btn-group -->
-					<input type="text"  class="form-control"  id="product"  placeholder="">
+					<input type="text"  class="form-control"  id="product"  placeholder="" style="text-transform: uppercase;">
 				</div><!-- /input-group -->
 				</div>
 				<div class="col-md-3">
 				<div class="input-group margin">
 					<div class="input-group-btn">
-						<button type="button" class="btn btn-primary nohover">Sale Date </button>
+						<button type="button" class="btn btn-primary nohover">From Date </button>
 					</div><!-- /btn-group -->
 					<input type="date" class="form-control" id="pmsDateStart" name="start_date">
 				</div>
@@ -48,7 +45,7 @@
 			<div class="col-md-3">
 				<div class="input-group margin">
 					<div class="input-group-btn">
-						<button type="button" class="btn btn-primary nohover">Sale Date </button>
+						<button type="button" class="btn btn-primary nohover">To Date </button>
 					</div><!-- /btn-group -->
 					<input type="date" class="form-control" id="pmsDateEnd" name="end_date">
 				</div>
@@ -58,9 +55,7 @@
 						<button type="button" id="search" class="btn bg-orange btn-flat margin" onclick="<?php if(isset($values->mainhead_id))echo $values->mainhead_id;?>">Search</button>
 					</div>
 			</div>
-			  <!--<div class="col-md-2">
-                  <a href="<?php echo base_url();?>index.php/brsale/" class="btn btn-success"><i class="glyphicon glyphicon-user"></i>Sale List</a>
-              </div>-->
+			
             <div class="col-md-1">
 				<div class="input-group margin">
 					<a href="<?php echo base_url();?>BRSale/add" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Add Sale</a>

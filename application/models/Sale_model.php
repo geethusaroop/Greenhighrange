@@ -18,8 +18,10 @@ class Sale_model extends CI_Model
 		if ($product_num) {
 			//$this->db->like('tbl_sale.invoice_number', $product_num);
 
-			$where1= '(tbl_sale.invoice_number="'.$product_num.'" or member_name = "'.$product_num.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_sale.invoice_number="'.$product_num.'" or member_name = "'.$product_num.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_sale.invoice_number', $product_num);
+			$this->db->or_like('member_name', $product_num);
 		}
 
 		if ($start_date && $end_date) {
@@ -70,8 +72,10 @@ class Sale_model extends CI_Model
 		if ($product_num) {
 			//$this->db->like('tbl_sale.invoice_number', $product_num);
 
-			$where1= '(tbl_sale.invoice_number="'.$product_num.'" or member_name = "'.$product_num.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_sale.invoice_number="'.$product_num.'" or member_name = "'.$product_num.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_sale.invoice_number', $product_num);
+			$this->db->or_like('member_name', $product_num);
 		}
 
 		if ($start_date) {
@@ -525,11 +529,12 @@ class Sale_model extends CI_Model
 
 	public function getproduct_names($id,$branch_id_fk)
 	{
+		$response=[];
 		$this->db->select('*');
 		$this->db->from('tbl_product');
 		$this->db->where("product_status", 1);
 		$this->db->like("product_name", $id);
-		$this->db->where("branch_id_fk",$branch_id_fk);
+		$this->db->where("branch_id_fk",0);
 		/* if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("branch_id_fk",$branch_id_fk);
@@ -551,9 +556,10 @@ class Sale_model extends CI_Model
 
 		$this->db->select('*');
 		$this->db->from('tbl_product');
-		$this->db->join('tbl_hsncode', 'hsncode=product_hsncode', 'left');
+		$this->db->join('tbl_hsncode','hsncode=product_hsncode','left');
 		$this->db->where('product_status', 1);
 		$this->db->where('product_name', $p_name);
+		$this->db->where('branch_id_fk', 0);
 		$q = $this->db->get();
 
 		if ($q->num_rows() > 0) {
@@ -568,7 +574,7 @@ class Sale_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_product');
-		$this->db->join('tbl_hsncode', 'hsncode=product_hsncode', 'left');
+		$this->db->join('tbl_hsncode', 'hsncode=product_hsncode','left');
 		$this->db->where('product_status', 1);
 		$this->db->where('product_name', $p_name);
 		$this->db->where('branch_id_fk', $branches_id);
@@ -825,8 +831,10 @@ class Sale_model extends CI_Model
 		if ($invoice_number) {
 			//$this->db->like('tbl_sale.invoice_number', $product_num);
 
-			$where1= '(tbl_sale.invoice_number="'.$invoice_number.'" or member_name = "'.$invoice_number.'")';
-				$this->db->where($where1);
+			//$where1= '(tbl_sale.invoice_number="'.$invoice_number.'" or member_name = "'.$invoice_number.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_sale.invoice_number', $invoice_number);
+			$this->db->or_like('member_name', $invoice_number);
 		}
         if($startDate){
             $this->db->where('return_date >=', $startDate); 
@@ -848,12 +856,12 @@ class Sale_model extends CI_Model
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
+		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');
         $this->db->group_by('invoice_number');
-		$this->db->order_by('return_date','ASC');
+		$this->db->order_by('sale_date','ASC');
         $query = $this->db->get();
         
 		$data['data'] = $query->result();
@@ -868,8 +876,10 @@ class Sale_model extends CI_Model
 		if ($invoice_number) {
 			//$this->db->like('tbl_sale.invoice_number', $product_num);
 
-			$where1= '(tbl_sale.invoice_number="'.$invoice_number.'" or member_name = "'.$invoice_number.'")';
-				$this->db->where($where1);
+		//	$where1= '(tbl_sale.invoice_number="'.$invoice_number.'" or member_name = "'.$invoice_number.'")';
+			//	$this->db->where($where1);
+			$this->db->like('tbl_sale.invoice_number', $invoice_number);
+			$this->db->or_like('member_name', $invoice_number);
 		}
         if($startDate){
             $this->db->where('return_date >=', $startDate); 
@@ -886,11 +896,11 @@ class Sale_model extends CI_Model
             $this->db->where("sale_branch_id_fk",0);
         }
 		$this->db->where("sale_status",1);
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_date');
+		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');
-		$this->db->order_by('return_date', 'ASC');
+		$this->db->order_by('sale_date', 'ASC');
         $this->db->group_by('invoice_number');
         $query = $this->db->get();
 		return $query->num_rows();

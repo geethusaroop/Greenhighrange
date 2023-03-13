@@ -37,12 +37,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-      <center>  Stock Register</center>
+      <center> Sundry Debtors</center>
             <!-- <small>Optional description</small> -->
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url(); ?>Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Stock Register</li>
+            <li class="active">Sundry Debtors</li>
         </ol>
     </section>
 
@@ -61,15 +61,16 @@
 
                         <div class="col-md-12">
 
-                            <div class="row" style="border:ridge;border-radius:20px;box-shadow:2px 2px 2px 2px grey;">
+                            <div class="row">
                             <div class="col-md-8"></div>
-                                
+                               
+
                                 <div class="col-md-4">
                                     <div class="input-group">
-                                         <a href="<?php echo base_url(); ?>Stockregister/"><button class="btn bg-navy btn-flat margin">Refresh</button></a>
+                                    <button type="button" class="btn btn-success"  data-toggle="modal" data-target=".bd-example-modal-lg">Add Opening Balance</button>&nbsp;&nbsp;
                                         <a class="btn btn-primary" onclick="printDiv();"><i class="fa fa-print"></i> Print</a>
                                         &nbsp;&nbsp;
-                                        <div class="dropdown" style="margin-top:10px;float:right">
+                                        <div class="dropdown" style="margin-top:1px;float:right">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export
                                                 <span class="caret"></span></button>
                                             <ul class="dropdown-menu">
@@ -78,18 +79,19 @@
                                                 <li><a  class="dataExport" data-type="txt">TXT</a></li>
                                             </ul>
                                         </div>
+              
+
                                     </div>
                                 </div>
 
                             </div>
 
                         </div>
-                    
-                    <br> <br> <br>
-                </div>
+               
+               
 
                 <!-- /.box-header -->
-                                                                                                                                                          
+                      <br>                                                                                                                              
                 <div class="box-body table-responsive" style="font-size:15px;color:black;">
                     <div id="divName">
                         <div class="col-md-2"></div>
@@ -97,22 +99,18 @@
                             <table class="table table-bordered table-hover" id="dataTable1" style="border:1px solid #0a0a0b;">
                                 <thead style="border:1px solid #0a0a0b;">
                                 <tr>
-                                    <th colspan="10" style="border:1px solid #0a0a0b;text-align:center;">
+                                    <th colspan="5" style="border:1px solid #0a0a0b;text-align:center;">
                                     GREENHIGHRANGE FARMERS PRODUCER CO. LTD.<br>
                                         106/14 VAKACHUVADU, PRABHACITY
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th colspan="10" style="border:1px solid #0a0a0b;text-align:center;">Stock Register</th>
-                                </tr>
+                              
                                     <tr style="border:1px solid #0a0a0b;">
                                     <th style="border:1px solid #0a0a0b;">SL.NO</th>
-                                    <th style="border:1px solid #0a0a0b;">PRODUCT_NAME</th>
-                                    <th style="border:1px solid #0a0a0b;">OPENING_STOCK</th>
-                                    <th style="border:1px solid #0a0a0b;">PURCHASE_STOCK</th>
-                                    <th style="border:1px solid #0a0a0b;">PRODUCTION_STOCK</th>
-                                    <th style="border:1px solid #0a0a0b;text-align:right;">CLOSING_STOCK(VALUE)</th>
-                                    <th style="border:1px solid #0a0a0b;text-align:right;">CLOSING_STOCK(NO)</th>
+                                    <th style="border:1px solid #0a0a0b;">NAME</th>
+                                    <th style="border:1px solid #0a0a0b;">OPENING_BALANCE</th>
+                                        <th style="border:1px solid #0a0a0b;text-align:right;">Cr.AMT</th>
+                                        <th style="border:1px solid #0a0a0b;text-align:right;">Dr.AMT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,42 +118,34 @@
                                     $tasx = 0;
                                     $tot=0;
                                     $net=0;
-                                    foreach ($records as $row) {$i=$i+1; ?>
+                                    foreach ($records as $row) {$i=$i+1;
+                                       
+                                        if($this->session->userdata('user_type')=="B")
+                                        {
+                                            $old_bal=$row->bmb_opening_balance;
+                                            $current_bal=$row->bmb_sale_balance;
+                                        }
+                                    
+                                    ?>
                                         <tr style="border:1px solid #0a0a0b;">
                                             <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
-                                            <td style="border:1px solid #0a0a0b;width:350px;"><?php echo $row->product_name; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->product_open_stock; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->prqty; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php $stock =($row->prqty)-($row->bstock+$row->pqty+$row->sqty+$row->smqty);echo $stock * $row->price; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($row->prqty)-($row->bstock+$row->pqty+$row->sqty+$row->smqty) ?></td>
+                                            <td style="border:1px solid #0a0a0b;"><?php echo $row->member_name; ?></td>
+                                            <td style="border:1px solid #0a0a0b;"><?php   echo $old_bal; ?></td>
+                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php //echo $row->bamount; ?></td>
+                                           <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($old_bal+ $current_bal); ?></td>
                                         </tr>
                                     <?php 
-                                   
-                                        } 
-                                    foreach ($record as $row) {$i=$i+1; ?>
-                                        <tr style="border:1px solid #0a0a0b;">
-                                            <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
-                                            <td style="border:1px solid #0a0a0b;"><?php echo $row->product_name; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->product_open_stock; ?></td>
-                                            <td style="border:1px solid #0a0a0b;"></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->ptotal; ?></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"></td>
-                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $row->ptotal-$row->sqty; ?></td>
-                                        </tr>
-                                    <?php 
-                                   
                                     } ?>
 
                                 </tbody>
                                
-                                
                                
                             </table>
                         </div>
                     </div>
                 </div>
-               
+                </div>
+              
                 <!-- /.box-body -->
             </div>
         </div>
@@ -163,3 +153,50 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="exampleModalLabel" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title"><b>Add Opening Balance</b></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-horizontal" method="POST" action="<?php echo base_url();?>index.php/Sundrycreditor/add_opening_balance" enctype="multipart/form-data">
+      <div class="modal-body" style="font-weight: bold;">
+    
+
+<div class="form-group">
+
+    <div class="col-md-4">
+    <label>Member Name<span style="color:red"></span></label>
+    <select name="bmb_member_id_fk" id="bmb_member_id_fk" class="form-control" style="font-weight: bold;">
+                      <option value="">-SELECT-</option>
+							<?php foreach($member as $row){ ?>
+								<option <?php if(isset($records->bmb_member_id_fk)){if($records->bmb_member_id_fk==$row->member_id){echo "selected";}} ?> value="<?php echo $row->member_id; ?>"><?php echo $row->member_name."-".$row->member_mid; ?></option>
+							<?php } ?>
+                    </select>
+    </div>
+
+
+    <div class="col-md-4">
+       <label>Date<span style="color:red"></span></label>
+      <input type="date" data-pms-required="true" autofocus class="form-control" name="bmb_opening_date"  value="<?php echo "2021-03-31"; ?>">
+    </div>
+ <div class="col-md-4">
+        <label>Opening Balance<span style="color:red"></span></label>
+      <input type="text" data-pms-required="true" autofocus class="form-control" name="bmb_opening_balance"  value="">
+    </div>
+</div> 
+
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div><!--endds add dmlogin-->

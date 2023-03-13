@@ -118,9 +118,9 @@
                       <td style="border-color:#d4d6d5;">PURCHASE BILL-<b><?php echo $sh_report->invoice_number; ?></b></td>
                     </tr>
                   <?php 
-                  $total1=number_format($total1+$sh_report->tprice, 2);
-                  $total2=number_format($total2+$sh_report->sale_paid_amount, 2);
-                  $total3=number_format($total3+$sh_report->sale_new_balance, 2);
+                  $total1=$total1+$sh_report->tprice;
+                  $total2=$total2+$sh_report->sale_paid_amount;
+                  $total3=$total3+$sh_report->sale_new_balance;
                   $total4=$total4+$sh_report->tprice;
                   } ?>
                 </tbody>

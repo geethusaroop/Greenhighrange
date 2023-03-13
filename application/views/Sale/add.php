@@ -192,7 +192,7 @@
 
                           <th style="text-transform:uppercase;" width="49">IGST_Amount</th> 
                         <th style="text-transform:uppercase;" width="49">NetAmount</th>
-                        <th style="text-transform:uppercase;" width="49" colspan="5"></th>
+                        <th style="text-transform:uppercase;" width="49" colspan="6"></th>
                       </tr>
                     </thead>
                     <tbody style="background: white;color:black;">
@@ -242,8 +242,13 @@
                       </tr>
                    
                       <tr>
-                        <td>Discount Amount<input type="text" class="form-control" name="discount_prices" id="discount_prices" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" />
-                        <td>Shareholder Discount Amount(%)<input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" />
+                        <td>Discount Amount<input type="text" class="form-control" name="discount_prices" id="discount_prices" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" /></td>
+                        <td>Shareholder Discount(%)
+                          <input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" />
+                          </td>
+                          <td> Shareholder Discount Amount
+                            <input type="text" class="form-control" name="sale_shareholder_discounts" id="sale_shareholder_discounts" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" />
+                          </td>
 
                         <td>Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
 

@@ -198,7 +198,7 @@ class Sale extends MY_Controller {
         $param['order'] = (isset($_REQUEST['order'][0]['column']))?$_REQUEST['order'][0]['column']:'';
         $param['dir'] = (isset($_REQUEST['order'][0]['dir']))?$_REQUEST['order'][0]['dir']:'';
         $param['searchValue'] =(isset($_REQUEST['search']['value']))?$_REQUEST['search']['value']:'';
-				$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
+		$param['product_num'] = (isset($_REQUEST['product_num']))?$_REQUEST['product_num']:'';
 		/* 		$start_date =(isset($_REQUEST['start_date']))?$_REQUEST['start_date']:'';
         $end_date =(isset($_REQUEST['end_date']))?$_REQUEST['end_date']:'';
 		if($start_date){
@@ -411,8 +411,10 @@ class Sale extends MY_Controller {
 		$prod1['sgst'] = $data['product_name1']->hsn_sgst;
 		$prod1['prod_cod'] = $data['product_name1']->product_code;
 		$prod1['prod_id'] = $data['product_name1']->product_id;
-		$prod1['prod_id_branch'] = $data['product_name2']->product_id;
-		$prod1['stock'] = $data['product_name2']->product_stock;
+		$prod1['prod_id_branch'] = 0;
+		$prod1['stock'] = $data['product_name1']->product_stock;
+		/* $prod1['prod_id_branch'] = $data['product_name2']->product_id;
+		$prod1['stock'] = $data['product_name2']->product_stock; */
 		echo json_encode($prod1);
 	} 
 

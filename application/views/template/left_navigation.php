@@ -791,6 +791,9 @@
             {echo "active";}
              else if($this->uri->segment(1)=="Bankdeposit")
               {echo "active";}
+
+              else if($this->uri->segment(1)=="BCustomer_receipt")
+              {echo "active";}
             ?>">
             <a href="#"><i class="fa fa-money"></i><span>Accounts</span>
               <span class="pull-right-container">
@@ -822,7 +825,7 @@
            
             <li class="<?php if($this->uri->segment(1)=='Vendor_voucher' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Vendor_voucher"><i class="fa fa-circle-o"></i>Vendor Voucher(Cash)</a></li>
            
-            <li class="<?php if($this->uri->segment(1)=='Customer_receipt' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Customer_receipt"><i class="fa fa-circle-o"></i>Customer Receipt(Cash)</a></li>
+            <li class="<?php if($this->uri->segment(1)=='BCustomer_receipt' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>BCustomer_receipt"><i class="fa fa-circle-o"></i>Customer Receipt(Cash)</a></li>
 
 
             <li class="<?php if($this->uri->segment(1)=='Fund' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Fund"><i class="fa fa-circle-o"></i>Fund Details</a></li>
@@ -844,7 +847,7 @@
               <ul class="treeview-menu">
               <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)==''){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit"><i class="fa fa-circle-o"></i>FPO Deposit</a></li>
              
-              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='credit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/credit/"><i class="fa fa-circle-o"></i>Credit</a></li>
+              <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='bcredit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/bcredit/"><i class="fa fa-circle-o"></i>Credit</a></li>
              
               <li class="<?php if($this->uri->segment(1)=='Bankdeposit' && $this->uri->segment(2)=='debit'){echo "active";}?>" ><a href="<?php echo base_url();?>Bankdeposit/debit/"><i class="fa fa-circle-o"></i>Debit</a></li>  
             
@@ -888,13 +891,13 @@
          </a>
          <ul class="treeview-menu ">
           
-           <li class="<?php if ($this->uri->segment(1) == "Stockregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stockregister"><i class="fa fa-circle-o"></i> <span>Stock Register</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "Stockregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stockregister/index1"><i class="fa fa-circle-o"></i> <span>Stock Register</span></a></li>
            <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseregister"><i class="fa fa-circle-o"></i> <span>Purchase Register</span></a></li>
            <li class="<?php if ($this->uri->segment(1) == "Purchaseregister") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Saleregister"><i class="fa fa-circle-o"></i> <span>Sale Register</span></a></li>
          
            <li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)==''){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor"><i class="fa fa-circle-o"></i> <span>Sundry Creditors</span></a></li>
 
-<li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)=='debtors'){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor/debtors"><i class="fa fa-circle-o"></i> <span>Sundry Debtors</span></a></li>
+<li class="<?php if($this->uri->segment(1)=="Sundrycreditor" && $this->uri->segment(2)=='bdebtors'){echo "active";}?>" ><a  href="<?php echo base_url();?>Sundrycreditor/bdebtors"><i class="fa fa-circle-o"></i> <span>Sundry Debtors</span></a></li>
           </ul>
        </li>
 
