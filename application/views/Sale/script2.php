@@ -1397,7 +1397,7 @@ function getdiscamount() {
 
         var total1 = parseFloat(total_amt1) * parseFloat(sharedisc) ;
 
-        var total =parseFloat(total1) -(parseFloat(discount_price));
+        var total =parseFloat(total_amt1)-(parseFloat(total1) +(parseFloat(discount_price)));
 
        // document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);

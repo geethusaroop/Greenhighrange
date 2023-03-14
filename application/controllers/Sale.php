@@ -2,6 +2,7 @@
 ob_start();
 require 'vendor/autoload.php';
 use Dompdf\Dompdf;
+use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Sale extends MY_Controller {
 	public $table = 'tbl_sale';
@@ -540,6 +541,51 @@ class Sale extends MY_Controller {
 			
 		}
 		redirect('/Sale/SaleReturn/', 'refresh');
+	}
+
+
+	// public function send_whatsapp()
+	// {
+	// 	$whatsapp_cloud_api = new WhatsAppCloudApi([
+	// 		'from_phone_number_id' => '112710228397137',
+	// 		'access_token' => 'EAAIpGm6NuEABAL1INyZAlEAW6KUVrGSjYTv3B1x24R9nGh8aDQ0mPXZB4ZAJC9CZAAw7hqhVP9tLDYt84NMpMVZAxQdy75tbZAunmYkZCvbyptR6wM5j8UYnSbELSkJdr7ZCP05ZCho0DP9ZAVzGzcKZBh959sbVZCfDtKOfOWuw0fGPwoRqK5OUxKqvg6xy5hjCsZBhL0bMwSahsggZDZD',
+	// 	]);
+		
+	// 	$whatsapp_cloud_api->sendTextMessage('9562414825', 'Hey there! I\'m using WhatsApp Cloud API. Visit https://www.netflie.es');
+	// }
+
+	public function send_whatsapp()
+	{
+		$INSTANCE_ID = 'YOUR_INSTANCE_ID_HERE';  // TODO: Replace it with your gateway instance ID here
+		$CLIENT_ID = "YOUR_CLIENT_ID_HERE";  // TODO: Replace it with your Premium client ID here
+		$CLIENT_SECRET = "YOUR_CLIENT_SECRET_HERE";   // TODO: Replace it with your Premium client secret here
+	  
+		$pathToDocument = "/tmp/your_doc.pdf";    // TODO: Replace it with the path to your document
+		$docData = file_get_contents($pathToDocument);
+		$base64Doc = base64_encode($docData);
+		$fn = "anyname.pdf";                      // TODO: Replace it with a name you like
+	  
+		$postData = array(
+		  'number' => '12025550108',  // TODO: Specify the recipient's number (NOT the gateway number) here.
+		  'document' => $base64Doc,
+		  'filename' => $fn
+		);
+	  
+		$headers = array(
+		  'Content-Type: application/json',
+		  'X-WM-CLIENT-ID: '.$CLIENT_ID,
+		  'X-WM-CLIENT-SECRET: '.$CLIENT_SECRET
+		);
+	  
+		$url = 'http://api.whatsmate.net/v3/whatsapp/single/document/message/' . $INSTANCE_ID;
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+		$response = curl_exec($ch);
+		echo "Response: ".$response;
+		curl_close($ch);
 	}
 
 }
