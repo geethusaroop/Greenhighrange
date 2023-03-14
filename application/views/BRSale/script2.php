@@ -1393,10 +1393,14 @@ function getdiscamount() {
         var sharedisc =sharedisc1/100;
        var total_amt1 = parseFloat(document.getElementById("net_total").value);
         var discount_price = parseFloat(document.getElementById("discount_prices").value);
-        var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;
+       // var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;
+
+        var total1 = parseFloat(total_amt1) * parseFloat(sharedisc) ;
+
+        var total =parseFloat(total1) -(parseFloat(discount_price));
        // document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("sale_shareholder_discounts").value=isNaN(sharedisc) ? "0.00" : sharedisc.toFixed(2);
+        document.getElementById("sale_shareholder_discounts").value=isNaN(total1) ? "0.00" : total1.toFixed(2);
     }
 
     function getamount() {

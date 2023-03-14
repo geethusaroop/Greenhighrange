@@ -54,6 +54,22 @@ Class Customer_receipt_model extends CI_Model{
     	return $query->num_rows();
     }
 
+    public function getreceipt($receipt_id)
+	{
+		$this->db->select('*,DATE_FORMAT(receipt_date,\'%d/%m/%Y\')as receipt_date');
+		$this->db->from('tbl_customer_receipt');
+        $this->db->join('tbl_member','tbl_member.member_id=tbl_customer_receipt.receipt_member_id_fk');
+		$this->db->order_by('receipt_date', 'ASC');
+        $this->db->where("receipt_status",1);
+		$this->db->where("receipt_id",$receipt_id);
+		$q = $this->db->get();
+        if($q->num_rows() > 0)
+        {
+            return $q->row();
+        }
+        return false;
+	}
+
 
 	public function get_admno($prid)
 

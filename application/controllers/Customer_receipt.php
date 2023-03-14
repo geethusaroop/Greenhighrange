@@ -160,6 +160,15 @@ class Customer_receipt extends MY_Controller {
         $data_json = json_encode($response);
         echo $data_json;
     }
+
+
+	public function receipt($receipt_id){
+		$template['body'] = 'Customer_receipt/receipt';
+		$template['script'] = 'Customer_receipt/script-receipt';
+		$template['records'] = $this->Customer_receipt_model->getreceipt($receipt_id);
+		$this->load->view('template', $template);
+	}
+	
 	
 	
 	

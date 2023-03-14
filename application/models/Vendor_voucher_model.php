@@ -53,6 +53,22 @@ Class Vendor_voucher_model extends CI_Model{
     	return $query->num_rows();
     }
 
+	public function getvoucher($voucher_id)
+	{
+		$this->db->select('*,DATE_FORMAT(voucher_date,\'%d/%m/%Y\')as voucher_date');
+		$this->db->from('tbl_vendor_voucher');
+		$this->db->join('tbl_vendor','tbl_vendor.vendor_id=tbl_vendor_voucher.vendor_id_fk');
+		$this->db->where("voucher_status",1);
+		$this->db->where("voucher_id",$voucher_id);
+		$this->db->order_by('voucher_id', 'ASCE');
+		$q = $this->db->get();
+        if($q->num_rows() > 0)
+        {
+            return $q->row();
+        }
+        return false;
+	}
+
     public function view_by1($prid)
 	{
 		$status=1;

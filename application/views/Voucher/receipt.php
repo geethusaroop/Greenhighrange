@@ -278,11 +278,9 @@ h4 {
 
                                 <tbody><tr>
 
-                                    <td class="content-block" style="padding: 0 0 20px;
+                                    <td class="content-block" style="padding: 0 0 20px;">
 
-}">
-
-<center><img src="<?php echo base_url(); ?>/Images/logo.jpeg" align="center" style="width:100px;border-radius: 50px;">
+<center><img src="<?php echo base_url(); ?>/Images/logo.png" align="center" style="width:100px;border-radius: 50px;">
                                       <address><h3 style="margin-top: 3px;"> 
                                           <strong>GREENHIGHRANGE FARMERS PRODUCER COMPANY LIMITED</strong></h3><h4>
                                           No, 106/14,
@@ -297,9 +295,7 @@ h4 {
 
                                 <tr>
 
-                                    <td class="content-block" style="padding: 0 0 20px;
-
-}">
+                                    <td class="content-block" style="padding: 0 0 20px;">
 
                                         <table class="invoices" style=" margin: 40px auto;
 

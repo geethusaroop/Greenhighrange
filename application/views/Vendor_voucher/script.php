@@ -92,7 +92,9 @@ $(document).on('change','#vouch_name',function(){
 			$table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-			$('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Vendor_voucher/edit/'+data['voucher_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['voucher_id']+','+data['vendor_id']+','+data['voucher_amount']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+            $('td', row).eq(6).html('<center><a href="<?php echo base_url();?>Vendor_voucher/receipt/'+data['voucher_id']+'"><i class="fa fa-file iconFontSize-medium" ></i></a></center>');
+
+			$('td', row).eq(7).html('<center><a href="<?php echo base_url();?>Vendor_voucher/edit/'+data['voucher_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a>&nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['voucher_id']+','+data['vendor_id']+','+data['voucher_amount']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         },
 
         "columns": [
@@ -103,6 +105,7 @@ $(document).on('change','#vouch_name',function(){
                     { "data": "voucher_amount", "orderable": false },
                   
                     { "data": "narration", "orderable": false },
+                    { "data": "voucher_id", "orderable": false },
                     { "data": "voucher_id", "orderable": false }
         ]
         

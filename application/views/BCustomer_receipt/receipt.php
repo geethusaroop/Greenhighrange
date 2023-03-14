@@ -1,106 +1,3 @@
-<!-- Content Wrapper. Contains page content -->
-<!-- <style type="text/css">
-/* -------------------------------------
-    GLOBAL
-    A very basic CSS reset
-------------------------------------- */
-
-
-/* Let's make sure all tables have defaults */
-table td {
-    vertical-align: top;
-}
-
-/* -------------------------------------
-    BODY & CONTAINER
-
-/* -------------------------------------
-    HEADER, FOOTER, MAIN
-------------------------------------- */
-.main {
-    background: #fff;
-    border: 1px solid #e9e9e9;
-    border-radius: 3px;
-}
-
-.content-wrap {
-    padding: 20px;
-}
-
-.content-block {
-    padding: 0 0 20px;
-}
-
-
-
-/* -------------------------------------
-    TYPOGRAPHY
-------------------------------------- */
-h1, h2, h3 {
-    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    color: #000;
-    margin: 40px 0 0;
-    line-height: 1.2;
-    font-weight: 400;
-}
-
-h1 {
-    font-size: 32px;
-    font-weight: 500;
-}
-
-h2 {
-    font-size: 24px;
-}
-
-h3 {
-    font-size: 18px;
-}
-
-h4 {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-
-
-/* -------------------------------------
-    LINKS & BUTTONS
-------------------------------------- */
-
-
-/* -------------------------------------
-    OTHER STYLES THAT MIGHT BE USEFUL
-------------------------------------- */
-
-
-/* -------------------------------------
-    INVOICE
-    Styles for the billing table
-------------------------------------- */
-.invoices {
-    margin: 40px auto;
-    text-align: left;
-    width: 80%;
-}
-.invoices td {
-    padding: 5px 0;
-}
-.invoices .invoice-items {
-    width: 100%;
-}
-.invoices .invoice-items td {
-    border-top: #eee 1px solid;
-}
-.invoices .invoice-items .total td {
-    border-top: 2px solid #333;
-    border-bottom: 2px solid #333;
-    font-weight: 700;
-}
-
-
-</style> -->
-
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -113,7 +10,6 @@ h4 {
         <li class="active">Receipt</li>
       </ol>
     </section>
-
      <!-- Main content -->
   <section class="invoice">
       <!-- title row -->
@@ -126,7 +22,6 @@ h4 {
       </div>
       <!-- info row -->
      
-
       <!-- Table row -->
         <div id="divName">
       <div class="row">
@@ -139,7 +34,7 @@ h4 {
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tbody><tr>
                                     <td class="content-block" style="padding: 0 0 20px;">
-                                        <center><img src="<?php echo base_url(); ?>/Images/logo.png" align="center" style="width:100px;border-radius: 50px;">
+<center><img src="<?php echo base_url(); ?>/Images/logo.png" align="center" style="width:100px;border-radius: 50px;">
                                       <address><h3 style="margin-top: 3px;"> 
                                           <strong>GREENHIGHRANGE FARMERS PRODUCER COMPANY LIMITED</strong></h3><h4>
                                           No, 106/14,
@@ -161,12 +56,12 @@ h4 {
                                                         <tbody>
                                                           <tr>
                                                             <td>Receipt Date</td>
-                                                            <td style="font-weight: bold;" class="alignright"><?php echo $records->rept_date; ?></td>
+                                                            <td style="font-weight: bold;" class="alignright"><?php echo $records->receipt_date; ?></td>
                                                         </tr>
                                                        
                                                         <tr>
                                                             <td style="padding-top: 20px;">Receipt Head</td>
-                                                            <td style="padding-top: 20px;font-weight: bold;" class="alignright"><?php echo $records->receipt_head; ?></td>
+                                                            <td style="padding-top: 20px;font-weight: bold;" class="alignright"><?php echo "Payment From Member"; ?></td>
                                                         </tr>
                                                         
                                                         <tr>
@@ -176,9 +71,8 @@ h4 {
                                                         
                                                          <tr>
                                                             <td style="padding-top: 20px;">Received From</td>
-                                                            <td style="padding-top: 20px;font-weight: bold;" class="alignright"><?php echo $records->paid_to; ?></td>
+                                                            <td style="padding-top: 20px;font-weight: bold;" class="alignright"><?php echo $records->member_name; ?></td>
                                                         </tr>
-
                                                         <tr class="total" style=" border-top: 2px solid #333;
     border-bottom: 2px solid #333;
     font-weight: 700;padding-top: 20px;">
@@ -201,7 +95,6 @@ h4 {
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
       <div class="row">
         <!-- accepted payments column--> 
        <div class="col-xs-4">
@@ -210,7 +103,6 @@ h4 {
         <!-- /.col -->
         <div class="col-xs-6">
         
-
           <div class="table-responsive">
            
           </div>
@@ -219,22 +111,15 @@ h4 {
       </div>
 	   </div>
       <!-- /.row -->
-
       <!-- this row will not appear when printing -->
       <div class="row no-print"><hr>
         <div class="col-xs-12">
           <a target="_blank" class="btn btn-default" id="print" onclick="printDiv('divName')"><i class="fa fa-print"></i> Print</a>
        
-		  <a href="<?php echo base_url();?>Allotment" class="btn btn-primary pull-right"><i class="fa fa-eye"></i> Go to View</a>
+		  <a href="<?php echo base_url();?>BCustomer_receipt" class="btn btn-primary pull-right"><i class="fa fa-eye"></i> Go to View</a>
          </div>
       </div>
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-
-
-
-
-

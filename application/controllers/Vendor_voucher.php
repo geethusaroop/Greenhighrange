@@ -151,6 +151,15 @@ class Vendor_voucher extends MY_Controller {
         $data_json = json_encode($response);
         echo $data_json;
     }
+
+
+	public function receipt($voucher_id){
+		$template['body'] = 'Vendor_voucher/receipt';
+		$template['script'] = 'Vendor_voucher/script-receipt';
+		
+		$template['records'] = $this->Vendor_voucher_model->getvoucher($voucher_id);
+		$this->load->view('template', $template);
+	}
 	
 	
 	

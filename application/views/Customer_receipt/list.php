@@ -42,6 +42,7 @@
                   <th>Date</th>
                   <th>Amount</th>
                   <th>Narration</th>
+                  <th class="text-center">Receipt</th>
                   <th class="text-center">Edit/Delete</th>
                 </tr>
                 </thead>
