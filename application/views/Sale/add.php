@@ -199,7 +199,7 @@
                       <TR style="border:ridge;background: white;color:black;">
                         <TD><INPUT type="checkbox" name="chk[]" /></TD>
                         <TD style="color:black;"> 1 </TD>
-                        <TD> <INPUT type="text" class="form-control" name="product_code[]" id="product_code1" style="width:150px;" /> </TD>
+                        <TD> <INPUT type="text" class="form-control" name="product_code[]" id="product_code1" style="width:150px;" onblur="getprod(<?php echo $i=1; ?>)"/> </TD>
                         <td><input type="text" name="product_name[]" class="form-control" id="product_name1"  placeholder="product name" style="color:black;width:350px;text-transform:uppercase;" onchange="getproductdetails(<?php echo $i=1; ?>);"/></td>
                         <td><input type="text" name="hsn[]" class="form-control" id="hsn1"  placeholder="" style="color:black;width:150px;text-transform:uppercase;"/></td>
                         <TD> <select class="form-control" name="rate_type" id="rate_type1" onchange="getratetype(<?php echo $i=1; ?>);">

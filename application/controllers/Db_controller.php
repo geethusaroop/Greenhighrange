@@ -186,9 +186,18 @@ write_file($save, $backup);  */
 
 		//$sql="ALTER TABLE `tbl_bank_deposit` CHANGE `bd_type` `bd_type` INT(11) NOT NULL COMMENT '1=member_deposit,2=others,3=supplier_withdraw'";
 		
-		$sql="ALTER TABLE `tbl_branch_member_balance` ADD `bmb_opening_date` DATE NOT NULL AFTER `bmb_date`";
+		$sql="ALTER TABLE `tbl_member` CHANGE `member_email` `member_email` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_branch` `member_branch` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_bank_id` `member_bank_id` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_bank` `member_bank` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_account` `member_account` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_ifsc` `member_ifsc` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_address` `member_address` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_pnumber` `member_pnumber` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_wnumber` `member_wnumber` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_gender` `member_gender` INT(11) NULL";
 
-		/* $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_return` (
+		//$sql="ALTER TABLE `tbl_member` CHANGE `member_bank` `member_bank` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL"
+		
+	//	$sql="ALTER TABLE `tbl_member` CHANGE `member_account` `member_account` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_ifsc` `member_ifsc` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL";
+		
+
+	//$sql="ALTER TABLE `tbl_member` CHANGE `member_address` `member_address` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL";
+	
+//	$sql="ALTER TABLE `tbl_member` CHANGE `member_pnumber` `member_pnumber` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_wnumber` `member_wnumber` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL";
+	
+	/* $sql="CREATE TABLE IF NOT EXISTS `tbl_branch_return` (
 			`return_id` int(11) NOT NULL AUTO_INCREMENT,
 			`return_branch_id_fk` int(11) NOT NULL,
 			`return_product_id_fk` int(11) NOT NULL,

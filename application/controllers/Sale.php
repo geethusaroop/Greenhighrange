@@ -3,7 +3,7 @@ ob_start();
 require 'vendor/autoload.php';
 
 use Dompdf\Dompdf;
-use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
+//use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 
 //require 'vendor/netflie/whatsapp-cloud-api/src/WhatsAppCloudApi.php';
 
@@ -166,7 +166,7 @@ class Sale extends MY_Controller
 
 				$this->General_model->add($this->table, $data);
 				$branches_id = $this->session->userdata('branch_id_fk');
-				$stok = $this->Purchase_model->get_current_productstock($product_branch_id_fk[$i], $branches_id);
+				$stok = $this->Purchase_model->get_current_productstock($product_id_fk[$i], $branches_id);
 				$nwstk = $stok - $sale_quantity[$i];
 				$uData = array(
 					'product_stock' => $nwstk,
@@ -174,7 +174,7 @@ class Sale extends MY_Controller
 				);
 
 				// $result = $this->General_model->update($this->tbl_stock,$uData,'product_id',$product_id_fk[$i]);
-				$result = $this->General_model->updat($this->tbl_stock, $uData, 'product_id', $product_branch_id_fk[$i], 'branch_id_fk', $branches_id);
+				$result = $this->General_model->updat($this->tbl_stock, $uData, 'product_id', $product_id_fk[$i], 'branch_id_fk', $branches_id);
 				$datass = $this->General_model->get_row('tbl_member', 'member_id', $member_id_fk);
 				$updated_amount = $datass->member_sale_balance + ($this->input->post('total_amt'));
 				$mdata = array('member_sale_balance' => $updated_amount);
@@ -427,6 +427,27 @@ class Sale extends MY_Controller
 		echo json_encode($data);
 	}
 
+	public function getProductcodeDetails1()
+	{
+		$prod1 = [];
+		$branches_id = $this->session->userdata('branch_id_fk');
+		$p_name = $this->input->post('p_name');
+		$data['product_name1'] =  $this->Sale_model->get_row_code($p_name);
+		$prod1['hsncode'] = $data['product_name1']->product_hsncode;
+		$prod1['igst'] = $data['product_name1']->hsn_igst;
+		$prod1['cgst'] = $data['product_name1']->hsn_cgst;
+		$prod1['sgst'] = $data['product_name1']->hsn_sgst;
+		$prod1['prod_cod'] = $data['product_name1']->product_name;
+		$prod1['prod_id'] = $data['product_name1']->product_id;
+		$prod1['prod_id_branch'] = 0;
+		$prod1['stock'] = $data['product_name1']->product_stock;
+		/* $prod1['prod_id_branch'] = $data['product_name2']->product_id;
+		$prod1['stock'] = $data['product_name2']->product_stock; */
+		echo json_encode($prod1);
+	}
+
+
+
 	public function getProductDetails1()
 	{
 		$prod1 = [];
@@ -567,147 +588,91 @@ class Sale extends MY_Controller
 	}
 
 
-	 public function send_whatsapp()
-	 {
-	 	$whatsapp_cloud_api = new WhatsAppCloudApi([
-			'from_phone_number_id' => '112710228397137',
-			'access_token' => 'EAAIpGm6NuEABAMQwExIJDvnkaNUJhvaOhZCzBZC46RZCbc1FyMkz1j7Awc7SuXtJRUMcSRdguKs4cQhEnQzWS7xgXf2gPNaHNaRcZC8JzplPHmZBIsjdzhhAXoFeum18avkzp7N2LNzua4LJPBh6fRrmo8zwuM6ID0iWm2eKinDe2KN75DlZCgQuzTzPm5fAVWIWNkjfzmZAwZDZD',
-	 	]);
-
-		$whatsapp_cloud_api->sendTextMessage('9562414825', 'Hey there! I\'m using WhatsApp Cloud API. Visit https://www.netflie.es');
-	 }
-
-	public function send_whatsapps()
+	public function addmsg()
 	{
-		$params = array(
-			'token' => '{EAAIpGm6NuEABAMQwExIJDvnkaNUJhvaOhZCzBZC46RZCbc1FyMkz1j7Awc7SuXtJRUMcSRdguKs4cQhEnQzWS7xgXf2gPNaHNaRcZC8JzplPHmZBIsjdzhhAXoFeum18avkzp7N2LNzua4LJPBh6fRrmo8zwuM6ID0iWm2eKinDe2KN75DlZCgQuzTzPm5fAVWIWNkjfzmZAwZDZD}',
-			'to' => '9562414825',
-			'filename' => 'hello.pdf',
-			'document' => 'https://file-example.s3-accelerate.amazonaws.com/documents/cv.pdf',
-			'caption' => 'document caption'
-		);
-		$curl = curl_init();
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => "https://api.ultramsg.com/{instance1150}/messages/document",
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "POST",
-			CURLOPT_POSTFIELDS => http_build_query($params),
-			CURLOPT_HTTPHEADER => array(
-				"content-type: application/x-www-form-urlencoded"
-			),
-		));
-
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
-			echo "cURL Error #:" . $err;
-		} else {
-			echo $response;
-		}
-	}
-
-	public function send_2()
-	{
-		$YOUR_WHATSAPP_ACCESS_TOKEN = 'EAAIpGm6NuEABAMQwExIJDvnkaNUJhvaOhZCzBZC46RZCbc1FyMkz1j7Awc7SuXtJRUMcSRdguKs4cQhEnQzWS7xgXf2gPNaHNaRcZC8JzplPHmZBIsjdzhhAXoFeum18avkzp7N2LNzua4LJPBh6fRrmo8zwuM6ID0iWm2eKinDe2KN75DlZCgQuzTzPm5fAVWIWNkjfzmZAwZDZD';
-		$FileName = "Caption Name or Image Name";
-		$messageBody = [
-			"messaging_product" => "whatsapp",
-			"recipient_type" => "individual",
-			"to" => "9562414825",
-
-		];
-
-		$curl = curl_init();
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'https://graph.facebook.com/v16.0/112710228397137/messages ',
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => 'POST',
-			CURLOPT_POSTFIELDS => json_encode($messageBody),
-			CURLOPT_HTTPHEADER => array(
-				"Authorization:Bearer $YOUR_WHATSAPP_ACCESS_TOKEN",
-				'Content-Type: application/json'
-			),
-		));
-		$response = json_decode(curl_exec($curl), true);
-		$status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		curl_close($curl);
-
-		echo $status_code;
-	}
-
-	function sendWhatsAppMessage()
-	{
-		$accessToken = 'EAAIpGm6NuEABAMQwExIJDvnkaNUJhvaOhZCzBZC46RZCbc1FyMkz1j7Awc7SuXtJRUMcSRdguKs4cQhEnQzWS7xgXf2gPNaHNaRcZC8JzplPHmZBIsjdzhhAXoFeum18avkzp7N2LNzua4LJPBh6fRrmo8zwuM6ID0iWm2eKinDe2KN75DlZCgQuzTzPm5fAVWIWNkjfzmZAwZDZD';
-		$recipientNumber = '9562414825';
-		$url = 'https://graph.facebook.com/v15.0/112710228397137/messages?access_token=' . $accessToken;
-		$headers = array(
-			'Content-Type: application/json',
-		);
-		$data = array(
-			'messaging_type' => 'whatsapp',
-			'recipient' => array(
-				'phone_number' => $recipientNumber,
-			),
-			'message' => array(
-				'text' => 'Hello, world!',
-			),
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-		$result = curl_exec($ch);
-		curl_close($ch);
-
-		return $result;
+		$template['body'] = 'Sale/sendmsg';
+		$template['script'] = 'Sale/scriptmsg';
+		$id = ['member_status' => 1];
+		$template['member_names'] = $this->General_model->getall('tbl_member', $id);
+		$this->load->view('template', $template);
 	}
 
 
-	public function send_3()
+	/* public function sendmsg()
 	{
-		$ch = curl_init();
-		$url = 'https://graph.facebook.com/v15.0/112710228397137/messages';
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "{ \"messaging_product\": \"whatsapp\", \"to\": \"9562414825\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" } } }");
+		$msg_date = $this->input->post('msg_date');
+		$msg_phone = $this->input->post('msg_phone');
 
-		$headers = array();
-		$headers[] = 'Authorization: Bearer EAAIpGm6NuEABAMQwExIJDvnkaNUJhvaOhZCzBZC46RZCbc1FyMkz1j7Awc7SuXtJRUMcSRdguKs4cQhEnQzWS7xgXf2gPNaHNaRcZC8JzplPHmZBIsjdzhhAXoFeum18avkzp7N2LNzua4LJPBh6fRrmo8zwuM6ID0iWm2eKinDe2KN75DlZCgQuzTzPm5fAVWIWNkjfzmZAwZDZD';
-		$headers[] = 'Content-Type: application/json';
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		if(!empty($_FILES['msg_document']['name']))
+		{
+				$config['upload_path'] = 'upload/message/';
+				$config['allowed_types'] = 'xlsx|csv|doc|txt|pdf';
+				$config['file_name'] = $_FILES['msg_document']['name'];
+				$pic = $_FILES['msg_document']['name'];
+				//Load upload library and initialize configuration
+				$this->load->library('upload',$config);
+				$this->upload->initialize($config);
+				if($this->upload->do_upload('msg_document'))
+				{
+					$uploadData = $this->upload->data();
+					$msg_document = $uploadData['file_name'];
+				}
+				else
+				{
+						$msg_document = '';
+				}
+			}
+		else{
+				
+					$msg_document ='Not uploaded';
+				
+			 }
 
-		$result = curl_exec($ch);
-		if (curl_errno($ch)) {
-			echo 'Error:' . curl_error($ch);
-		}
-		curl_close($ch);
-	}
-
-	public function latest()
-	{
-		$whatsapp_cloud_api = new WhatsAppCloudApi([
-			'from_phone_number_id' => '112710228397137',
-			'access_token' => 'EAAIpGm6NuEABAMQwExIJDvnkaNUJhvaOhZCzBZC46RZCbc1FyMkz1j7Awc7SuXtJRUMcSRdguKs4cQhEnQzWS7xgXf2gPNaHNaRcZC8JzplPHmZBIsjdzhhAXoFeum18avkzp7N2LNzua4LJPBh6fRrmo8zwuM6ID0iWm2eKinDe2KN75DlZCgQuzTzPm5fAVWIWNkjfzmZAwZDZD',
-		]);
+			 $data = array(
+				'msg_date' => $msg_date,
+				'msg_phone' => $msg_phone,
+				'msg_document' => $msg_document,
+				'msg_status'=>1
+			);
 		
-		$whatsapp_cloud_api->sendTextMessage('9562414825', 'Hey there! I\'m using WhatsApp Cloud API. Visit https://www.netflie.es');
+
+		$result=$this->General_model->add('tbl_message', $data);
+		$insert_id=$this->db->insert_id();
+		if($result)
+		{
+			$records=$this->General_model->get_row('tbl_message','msg_id',$insert_id);
+
+			$to=$msg_phone; 
+			$document=  base_url().'upload/message/'.$msg_document;
+			
+			$response_text = 'Message Send  successfully';
+
+			if($result){
+	            $this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
+				}
+				else{
+	            $this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
+				}
+
+			redirect('/Sale/addmsg/', 'refresh');
+		}
+
+	
 	}
+
+	public function getmsg()
+	{
+		$branch_id_fk = $this->session->userdata('branch_id_fk');
+		$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
+		$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
+		$param['start'] = (isset($_REQUEST['start'])) ? $_REQUEST['start'] : '0';
+		$param['order'] = (isset($_REQUEST['order'][0]['column'])) ? $_REQUEST['order'][0]['column'] : '';
+		$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
+		$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
+		$data = $this->Sale_model->getmessage($param, $branch_id_fk);
+		$json_data = json_encode($data);
+		echo $json_data;
+	} */
+
+	
 }

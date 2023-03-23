@@ -402,6 +402,24 @@ class BRSale extends MY_Controller {
 		echo json_encode($data);
 	}
 
+	public function getProductcodeDetails1()
+	{
+		$prod1 = [];
+		$branches_id = $this->session->userdata('branch_id_fk');
+		$p_name = $this->input->post('p_name');
+		// $data['product_name1'] =  $this->BRSale_model->get_row_barcode($p_name);
+		$data['product_name2'] =  $this->BRSale_model->get_row_code_branch($p_name,$branches_id);
+		$prod1['hsncode'] = $data['product_name2']->product_hsncode;
+		$prod1['igst'] = $data['product_name2']->hsn_igst;
+		$prod1['cgst'] = $data['product_name2']->hsn_cgst;
+		$prod1['sgst'] = $data['product_name2']->hsn_sgst;
+		$prod1['prod_cod'] = $data['product_name2']->product_name;
+		$prod1['prod_id'] = $data['product_name2']->product_id;
+		$prod1['prod_id_branch'] = $data['product_name2']->product_id;
+		$prod1['stock'] = $data['product_name2']->product_stock;
+		echo json_encode($prod1);
+	} 
+
 	public function getProductDetails1()
 	{
 		$prod1 = [];

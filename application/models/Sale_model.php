@@ -108,6 +108,37 @@ class Sale_model extends CI_Model
 		return $query->num_rows();
 	}
 
+
+	/* public function getmessage($param,$branch_id_fk)
+	{
+		$arOrder = array('', 'product_num');
+	
+		if ($param['start'] != 'false' and $param['length'] != 'false') {
+			$this->db->limit($param['length'], $param['start']);
+		}
+		$this->db->select('*,DATE_FORMAT(msg_date,\'%d/%m/%Y\') as msg_date');
+
+		$this->db->from('tbl_message');
+		$this->db->where("msg_status", 1);
+		$this->db->order_by('msg_date', 'ASC');
+		$query = $this->db->get();
+
+		$data['data'] = $query->result();
+		$data['recordsTotal'] = $this->getgetmessageTotalCount($param,$branch_id_fk);
+		$data['recordsFiltered'] = $this->getgetmessageTotalCount($param,$branch_id_fk);
+		//return $this->db->last_query();
+		return $data;
+	}
+	public function getgetmessageTotalCount($param,$branch_id_fk)
+	{
+		$this->db->from('tbl_message');
+		$this->db->where("msg_status", 1);
+		$this->db->order_by('msg_date', 'ASC');
+
+		$query = $this->db->get();
+		return $query->num_rows();
+	} */
+
 	function getproductname()
 	{
 		$this->db->select('item_id,item_name');
@@ -549,6 +580,26 @@ class Sale_model extends CI_Model
 			$response[] = array("name" => $row->product_name);
 		}
 		return $response;
+	}
+
+
+	public function get_row_code($p_name)
+	{
+
+		$this->db->select('*');
+		$this->db->from('tbl_product');
+		$this->db->join('tbl_hsncode','hsncode=product_hsncode','left');
+		$this->db->where('product_status', 1);
+		$this->db->where('product_code', $p_name);
+		$this->db->where('branch_id_fk', 0);
+		$q = $this->db->get();
+
+		if ($q->num_rows() > 0) {
+
+			return $q->row();
+		}
+
+		return false;
 	}
 
 	public function get_row_barcode($p_name)

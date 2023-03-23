@@ -295,6 +295,33 @@ class Shareholder extends MY_Controller {
 
 				$ddate = str_replace('/', '-', $allDataInSheet[$i]['D']);
 				$dob = date("Y-m-d", strtotime($ddate));
+
+				if($allDataInSheet[$i]['M']!="")
+				{
+					$member_bank=$allDataInSheet[$i]['M'];
+				}
+				else
+				{
+					$member_bank="none";
+				}
+
+				if($allDataInSheet[$i]['L']!="")
+				{
+					$share=$allDataInSheet[$i]['L'];
+				}
+				else
+				{
+					$share=0;
+				}
+
+				if($allDataInSheet[$i]['R']!="")
+				{
+					$old_bal=$allDataInSheet[$i]['R'];
+				}
+				else
+				{
+					$old_bal=0;
+				}
 			  
 				$inserdata[$i]['member_mid'] = $allDataInSheet[$i]['A'];
 				$inserdata[$i]['member_name'] = $allDataInSheet[$i]['B'];
@@ -306,14 +333,14 @@ class Shareholder extends MY_Controller {
 				$inserdata[$i]['member_wnumber'] = $allDataInSheet[$i]['H'];
 				$inserdata[$i]['m_created_at'] = $newDate;
 				$inserdata[$i]['member_share_aahar'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_share_pan'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_share_no_shares'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_bank'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_branch'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_account'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_ifsc'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_bank_id'] = $allDataInSheet[$i]['J'];
-				$inserdata[$i]['member_sale_balance'] = $allDataInSheet[$i]['J'];
+				$inserdata[$i]['member_share_pan'] = $allDataInSheet[$i]['K'];
+				$inserdata[$i]['member_share_no_shares'] = $share;
+				$inserdata[$i]['member_bank'] = $member_bank;
+				$inserdata[$i]['member_branch'] = $allDataInSheet[$i]['N'];
+				$inserdata[$i]['member_account'] = $allDataInSheet[$i]['O'];
+				$inserdata[$i]['member_ifsc'] = $allDataInSheet[$i]['P'];
+				$inserdata[$i]['member_bank_id'] = $allDataInSheet[$i]['Q'];
+				$inserdata[$i]['member_old_balance'] = $old_bal;
 				$inserdata[$i]['member_status'] = 1;
 				$inserdata[$i]['member_type'] = 1;
 				$result = $this->General_model->add($this->table,$inserdata[$i]);
@@ -325,7 +352,7 @@ class Shareholder extends MY_Controller {
 				$inserdatas[$i]['fund_date'] = $newDate;
 				$inserdatas[$i]['fund_member_id_fk'] = $last_insert_id;
 				$inserdatas[$i]['fund_year'] = $fund_year;
-				$inserdatas[$i]['fund_amount'] = $allDataInSheet[$i]['J'];
+				$inserdatas[$i]['fund_amount'] = $share;
 				$inserdatas[$i]['ftype_id_fk'] =1;
 				$inserdatas[$i]['fund_status'] =1;
 

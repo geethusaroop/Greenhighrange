@@ -314,6 +314,11 @@
 
 
 
+       <li class="divider"></li> 
+      
+<!--        <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "addmsg") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale/addmsg"><span style="font-weight:bold;color:green;">WHATSAPP MESSAGE</span>  </a></li>
+ -->      
+      
       <li class="divider"></li> 
 
 

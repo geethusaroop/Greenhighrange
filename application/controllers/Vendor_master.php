@@ -60,13 +60,9 @@ class Vendor_master extends MY_Controller {
 			$vendor_id = $this->input->post('vendor_id');
 			if($vendor_id){
 				$data['vendor_id'] = $vendor_id;
-				$supdata = array(
-								'old_bal'=>$this->input->post('vendor_oldbal'),
-								'credit'=>$this->input->post('vendor_oldbal'),
-								'new_bal'=>$this->input->post('vendor_oldbal'),
-								'up_date'=>date('Y-m-d'));
+				
 				$AccData = array(
-								'old_balance'=>$this->input->post('vendor_oldbal')
+								'old_balance'=>0
 								);
 				$this->General_model->update($this->tbl_account,$AccData,'sup_id_fk',$vendor_id);
 				//$this->General_model->update($this->tbl_accountlog,$supdata,'sup_id_fk',$vendor_id);
@@ -76,18 +72,10 @@ class Vendor_master extends MY_Controller {
 			else{
 				$result = $this->General_model->add($this->table,$data);
 				$insert_id = $this->db->insert_id();
-								$supdata = array(
-								'sup_id_fk' => $insert_id,
-								'voucher_type' =>'Opening',
-								'old_bal'=>$this->input->post('vendor_oldbal'),
-								'debit'=>0,
-								'credit'=>$this->input->post('vendor_oldbal'),
-								'new_bal'=>$this->input->post('vendor_oldbal'),
-								'up_date'=>date('Y-m-d'),
-								'slog_status'=>1);
+							
 				$AccData = array(
 								'sup_id_fk' => $insert_id,
-								'old_balance'=>$this->input->post('vendor_oldbal'),
+								'old_balance'=>0,
 								'sacc_status' =>1
 								);
 				$this->General_model->add($this->tbl_account,$AccData);

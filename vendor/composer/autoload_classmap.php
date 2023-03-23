@@ -11,6 +11,7 @@ return array(
     'Dompdf\\Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
     'Stringable' => $vendorDir . '/myclabs/php-enum/stubs/Stringable.php',
+    'UltraMsg\\WhatsAppApi' => $vendorDir . '/ultramsg/whatsapp-php-sdk/ultramsg.class.php',
     'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
     'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );

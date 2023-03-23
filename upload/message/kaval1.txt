@@ -1,0 +1,48 @@
+Kaval -child information
+
+education: sslc,plus two,degree,vocational courses,dropout,other
+
+start date : 
+
+family status : nuclear,joint family,
+
+parental status : orphan,semi orphan,divorce or seperated
+
+living status : CCI,Family
+
+remove adhar number ,phone,image 
+
+police /Excise :police station/excise range
+add occupation field
+--------------------------------------
+intervention
+
+intervention given by : cordinator,case worker,both
+
+type : individual conunselling,family conuselling,networking and linkages,tele counselling,
+
+Type change to Status :add others 
+
+field visit 
+
+field work done by:cordinator,case worker,both
+
+home visit ,JJB,other
+
+
+program :
+-----------
+child line : police station
+Bene chang to child
+
+
+phone call
+call attended by: name designaion
+
+remove age and add designation
+
+Action Taken -new field
+
+Outreach 
+Change CCC.Ref to refered by
+Closing Date : closed by :both in outreach an 

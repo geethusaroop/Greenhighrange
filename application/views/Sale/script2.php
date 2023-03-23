@@ -963,7 +963,8 @@ $(document).on("change",'#customer_nam',function(){
     element3.setAttribute("class", "democlass");
     element3.id = "product_code"+rowCount;
       //  element8.required = "required";
-        element3.onkeyup=function() {getdata(rowCount,this);}
+      element3.onblur=function() {getprod(rowCount);}
+       // element3.onkeyup=function() {getdata(rowCount,this);}
         cell3.appendChild(element3);
             var cell4 = row.insertCell(3);
     var element4 = document.createElement("input");
@@ -1494,6 +1495,44 @@ function getcustomer()
     };
     $("#product_name1").easyAutocomplete(options);
 
+    function getprod(row)
+    { 
+                  $.ajax({
+                      type: 'POST',
+                      url: '<?php echo base_url() . 'index.php/Sale/getProductcodeDetails1'; ?>',
+                      data: {
+                          p_name: $("#product_code"+row).val()
+                      },
+                      success: function(data) {
+                          d = JSON.parse(data);
+                          console.log(d);
+                          $('#product_name'+row).html(d.prod_cod);
+                          $('#product_name'+row).val(d.prod_cod);
+                          $('#product_num'+row).html(d.prod_id);
+                          $('#product_num'+row).val(d.prod_id);
+                          $('#hsn'+row).html(d.hsncode);
+                          $('#hsn'+row).val(d.hsncode);
+
+                          $('#igst'+row).html(d.igst);
+                          $('#igst'+row).val(d.igst);
+
+                          $('#cgst'+row).html(d.cgst);
+                          $('#cgst'+row).val(d.cgst);
+
+                          $('#sgst'+row).html(d.sgst);
+                          $('#sgst'+row).val(d.sgst);
+
+                          $('#prod_branch_id'+row).html(d.prod_id_branch);
+                          $('#prod_branch_id'+row).val(d.prod_id_branch);
+                          
+                          $('#quant').html(d.stock);
+                          $('#myDiv').show();
+                      },
+                      error: function() {
+                      }
+                  });
+    }
+
     function getproductdetails(row)
     { 
                   $.ajax({
@@ -1515,11 +1554,11 @@ function getcustomer()
                           $('#igst'+row).html(d.igst);
                           $('#igst'+row).val(d.igst);
 
-                          $('#cgst'+row).html(d.igst);
-                          $('#cgst'+row).val(d.igst);
+                          $('#cgst'+row).html(d.cgst);
+                          $('#cgst'+row).val(d.cgst);
 
-                          $('#sgst'+row).html(d.igst);
-                          $('#sgst'+row).val(d.igst);
+                          $('#sgst'+row).html(d.sgst);
+                          $('#sgst'+row).val(d.sgst);
 
                           $('#prod_branch_id'+row).html(d.prod_id_branch);
                           $('#prod_branch_id'+row).val(d.prod_id_branch);
