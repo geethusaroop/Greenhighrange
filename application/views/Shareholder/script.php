@@ -92,7 +92,18 @@ var d=c+"(IST)";
             });
             $('td',row).eq(11).html('Bank Name :<b>'+data['member_bank']+'</b><br>Branch:   <b>'+data['member_branch']+'</b>,  <br>A/C No : <b>'+data['member_account']+'</b>,  <br>IFSC : <b>'+data['member_ifsc']+'</b>');
 
-            $('td', row).eq(14).html('<center><a href="<?php echo base_url();?>index.php/Shareholder/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+            if(data['member_supplier_status']==0)
+            {
+                $('td', row).eq(14).html('<center><i class="fa fa-plus iconFontSize-medium"  data-toggle="modal" data-id="'+data['member_id']+'" data-member_name="'+data['member_name']+'"  data-member_address="'+data['member_address']+'"  data-member_pnumber="'+data['member_pnumber']+'"  data-member_email="'+data['member_email']+'" style="color:blue;cursor: pointer;" onclick="edit_data(this);"></i> </center>');
+
+            }
+            else if(data['member_supplier_status']==1)
+            {
+                $('td', row).eq(14).html('<center><span class="badge badge-pill badge-success" style="background:green;">Added</span></center>');
+
+            }
+
+            $('td', row).eq(15).html('<center><a href="<?php echo base_url();?>index.php/Shareholder/edit/'+data['member_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['member_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
         
         }, 
         "columns": [
@@ -111,6 +122,7 @@ var d=c+"(IST)";
             { "data": "member_bank", "orderable": false } ,
             { "data": "member_old_balance", "orderable": false } ,
             { "data": "member_sale_balance", "orderable": false } ,
+            { "data": "member_id", "orderable": false },        
             { "data": "member_id", "orderable": false }        
             
         ]
@@ -190,4 +202,18 @@ function confirmDelete(member_id){
  }); 
   
 });
+
+
+function edit_data(data){
+  var id=data.getAttribute('data-id');
+  //alert(id);
+ 
+  $('#exampleModalLabel1').modal('show');
+  $('#member_id').val(data.getAttribute('data-id'));
+  $('#member_name').val(data.getAttribute('data-member_name'));
+ $('#member_address').val(data.getAttribute('data-member_address'));
+  $('#member_pnumber').val(data.getAttribute('data-member_pnumber'));
+  $('#member_email').val(data.getAttribute('data-member_email'));
+
+}
 </script>

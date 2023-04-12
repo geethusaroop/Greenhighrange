@@ -112,6 +112,16 @@
                  <textarea class="form-control" name="product_des" rows="3"><?php if(isset($records->product_des)) echo $records->product_des ?></textarea>
                 </div>
               </div>
+              <div class="form-group row">
+                        <div class="col-md-6">
+                          <label class="fsize">Product Type <span style="color:red"> *</span></label>
+                          <select name="product_category"  id="product_category" class="form-control" style="font-weight: bold;">
+                            <option value="">-SELECT-</option>
+                              <option value="1" <?php if(isset($records->product_category)) { if($records->product_category==1){ echo "selected"; } } ?>>Purchased Product</option>
+                              <option value="2" <?php if(isset($records->product_category)) { if($records->product_category==2){ echo "selected"; } } ?>>Production Item</option>
+                            </select>
+                        </div>
+              </div>
             <!-- /.box-header -->
           </div>
         </div>

@@ -3,21 +3,21 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Shareholder Purchase Report
+      Purchase From Shareholder Report
       <small id="date" class="col-md-4"></small>
       <!-- <small>Optional description</small> -->
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo base_url(); ?>Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="<?php echo base_url(); ?>Ledger/add"><i class="fa fa-dashboard"></i> Back to Add</a></li>
-      <li class="active">Shareholder Purchase Report</li>
+      <li class="active">Purchase From Shareholder  Report</li>
     </ol>
   </section>
   <!-- Main content -->
   <section class="content">
     <div class="row">
       <div class="box">
-        <form name="" method="post" action="<?php echo base_url(); ?>SH_report/getledger_report">
+        <form name="" method="post" action="<?php echo base_url(); ?>SH_report/getpledger_report">
           <div class="box-header">
             <input type="hidden" id="response" value="<?php echo $this->session->flashdata('response'); ?>" />
             <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
@@ -30,10 +30,10 @@
                   <option value="">SELECT</option>
                   <?php foreach ($member_names as $row) { ?>
                     <option <?php if (isset($vendor)) {
-                              if ($vendor == $row->member_id) {
+                              if ($vendor == $row->vendor_id) {
                                 echo "selected";
                               }
-                            } ?> value="<?php echo $row->member_id; ?>"><?php echo $row->member_name; ?></option>
+                            } ?> value="<?php echo $row->vendor_id; ?>"><?php echo $row->vendorname; ?></option>
                   <?php } ?>
                 </select>
               </div><!-- /input-group -->
@@ -79,7 +79,7 @@
                 <thead>
                   <tr style="border-color:#d4d6d5;">
                     <th colspan="12" style="border-color:#d4d6d5;">
-                      <center>SHAREHOLDER SALE REPORT</center>
+                      <center>PURCHASE FROM SHAREHOLDER REPORT</center>
                     </th>
                   </tr>
                   <tr>
@@ -87,10 +87,8 @@
                     <th style="border-color:#d4d6d5;">DATE</th>
                     <th style="border-color:#d4d6d5;">INVOICE</th>
                     <th style="border-color:#d4d6d5;">TOTAL_QTY</th>
-                    <th style="border-color:#d4d6d5;">SALE_AMOUNT</th>
-                    <th style="border-color:#d4d6d5;">OLD_BALANCE</th>
+                    <th style="border-color:#d4d6d5;">PURCHASE_AMOUNT</th>
                     <th style="border-color:#d4d6d5;">DISCOUNT</th>
-                    <th style="border-color:#d4d6d5;">SPECIAL_DISCOUNT</th>
                     <th style="border-color:#d4d6d5;">NET_TOTAL</th>
                     <th style="border-color:#d4d6d5;">PAID_AMOUNT</th>
                     <th style="border-color:#d4d6d5;">NEW_BALANCE</th>
@@ -107,29 +105,25 @@
                   <?php foreach ($sale as $sh_report) { ?>
                     <tr>
                    
-                      <td style="border-color:#d4d6d5;"><?php echo date('d/m/Y', strtotime($sh_report->sale_date)); ?></td>
+                      <td style="border-color:#d4d6d5;"><?php echo date('d/m/Y', strtotime($sh_report->purchase_date)); ?></td>
                       <td style="border-color:#d4d6d5;"><?php echo $sh_report->invoice_number; ?></td>
                       <td style="border-color:#d4d6d5;text-align: center;"><?php echo $sh_report->qty; ?></td>
                       <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->total, 2); ?></td>
-                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->sale_old_balance, 2); ?></td>
                       <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->discount, 2); ?></td>
-                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->sale_shareholder_discount, 2); ?></td>
                       <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->tprice, 2); ?></td>
-                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->sale_paid_amount, 2); ?></td>
-                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->sale_new_balance, 2); ?></td>
+                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->pur_paid_amt, 2); ?></td>
+                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->pur_new_bal, 2); ?></td>
                       <td style="border-color:#d4d6d5;">PURCHASE BILL-<b><?php echo $sh_report->invoice_number; ?></b></td>
                       <td style="border-color:#d4d6d5;"><?php echo $sh_report->branch_name; ?></td>
                     </tr>
                   <?php 
                   $total1=$total1+$sh_report->tprice;
-                  $total2=$total2+$sh_report->sale_paid_amount;
-                  $total3=$total3+$sh_report->sale_new_balance;
+                  $total2=$total2+$sh_report->pur_paid_amt;
+                  $total3=$total3+$sh_report->pur_new_bal;
                   } ?>
                 </tbody>
                  <tfoot>
                   <tr>
-                    <td style="border-color:#d4d6d5;font-weight: bold;"></td>
-                    <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                     <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                     <td style="border-color:#d4d6d5;font-weight: bold;"></td>
                     <td style="border-color:#d4d6d5;font-weight: bold;"></td>

@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Shareholder extends MY_Controller {
 	public $table = 'tbl_member';
 	public $table1 = 'tbl_fund';
+	public $table2 = 'tbl_vendor';
+	public $tbl_account = 'tbl_supp_acc';
 	public $page  = 'Shareholder';
 	public function __construct() {
 		parent::__construct();
@@ -48,29 +50,7 @@ class Shareholder extends MY_Controller {
 			$this->load->view('template', $template);
 		}
 		else {
-			// if(!empty($_FILES['member_img']['name'])){
-            //     $config['upload_path'] = 'uploads/';
-            //     $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            //     $config['file_name'] = $_FILES['member_img']['name'];
-            //     $pic = $_FILES['member_img']['name'];
-            //     //Load upload library and initialize configuration
-            //     $this->load->library('upload',$config);
-            //     $this->upload->initialize($config);
-            //     if($this->upload->do_upload('member_img')){
-            //         $uploadData = $this->upload->data();
-            //         $member_img = $uploadData['file_name'];
-            //     }else{
-            //         $member_img = '';
-            //     }
-			// }else{
-			// 		if($member_id)
-			// 		{
-			// 			$member_img = $this->input->post('member_img1');
-			// 		}
-			// 		else{
-			// 			$member_img ='Not uploaded';
-			// 		}
-			// 	 }
+			
 			$data = array(
 						'member_mid' => $this->input->post('member_mid'),
 						'member_name' => $this->input->post('member_name'),
@@ -92,9 +72,13 @@ class Shareholder extends MY_Controller {
 						'member_bank_id' => $this->input->post('member_bank_id'),
 						'member_branch_id_fk'=>$this->session->userdata('branch_id_fk'),
 						'member_old_balance'=>$this->input->post('member_sale_balance'),
-						'member_status' => 1
+						'member_status' => 1,
+						'member_supplier_status' => 1
 						);
 		
+
+						
+
 						$fund_year = date("Y",strtotime($this->input->post('member_exitdate')));
 						$data_shares = array(
 							'ftype_id_fk' =>1,
@@ -114,10 +98,11 @@ class Shareholder extends MY_Controller {
 					 $results = $this->General_model->update($this->table1,$data_shares,'fund_member_id_fk',$member_id);
                      $response_text = 'Shareholder updated successfully';
                 }
+
+
 				else{
                      $result = $this->General_model->add($this->table,$data);
 					 $insert_id=$this->db->insert_id();
-
 					 $data_share = array(
 						'ftype_id_fk' =>1,
 						'fund_date' => $this->input->post('member_exitdate'),
@@ -129,6 +114,28 @@ class Shareholder extends MY_Controller {
 						//var_dump($data_share);die;
 					 $results = $this->General_model->add($this->table1,$data_share);
 
+					 	$datas = array(
+						'vendorname' => $this->input->post('member_name'),
+						'vendoraddress' => $this->input->post('member_address'),
+						'vendorphone' => $this->input->post('member_pnumber'),
+						'vendoremail' => $this->input->post('member_email'),
+						'vendorstatus' => 1,
+						'vendortype'=>2
+						);
+
+					 $result_v = $this->General_model->add($this->table2,$datas);
+					 $insert_idv=$this->db->insert_id();
+
+					 $AccData = array(
+						'sup_id_fk' => $insert_idv,
+						'old_balance'=>0,
+						'sacc_status' =>1
+						);
+						$this->General_model->add($this->tbl_account,$AccData);
+
+					/* 	$data_trans['member_supplier_status'] = 1;
+						$result = $this->General_model->update($this->table,$data_trans,'member_id',$insert_id); */
+
                      $response_text = 'Shareholder added  successfully';
 			}
 				if($result){
@@ -139,6 +146,44 @@ class Shareholder extends MY_Controller {
 				}
 	        redirect('/Shareholder/', 'refresh');
 		}
+	}
+
+
+	public function add_to_vendor(){
+		
+					$member_id=$this->input->post('member_id');
+					 	$datas = array(
+						'vendorname' => $this->input->post('member_name'),
+						'vendoraddress' => $this->input->post('member_address'),
+						'vendorphone' => $this->input->post('member_pnumber'),
+						'vendoremail' => $this->input->post('member_email'),
+						'vendorstatus' => 1,
+						'vendortype'=>2
+						);
+
+					 $result_v = $this->General_model->add($this->table2,$datas);
+					 $insert_idv=$this->db->insert_id();
+
+					 $AccData = array(
+						'sup_id_fk' => $insert_idv,
+						'old_balance'=>0,
+						'sacc_status' =>1
+						);
+						$this->General_model->add($this->tbl_account,$AccData);
+
+					 	$data_trans['member_supplier_status'] = 1;
+						$result = $this->General_model->update($this->table,$data_trans,'member_id',$member_id);
+
+                     $response_text = 'Shareholder added  To Vendor List successfully';
+			
+				if($result){
+	            $this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
+				}
+				else{
+	            $this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
+				}
+	        redirect('/Shareholder/', 'refresh');
+		
 	}
 
 	public function delete(){

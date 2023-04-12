@@ -4,7 +4,7 @@
   <section class="content-header">
     <h1>
     <?php if($this->session->userdata['user_type'] == "A"){ ?>
-      Purchased Products Information
+      Products Information
       <?php } else{ ?>
         Stock From Master Branch
         <?php } ?>
@@ -45,7 +45,7 @@
           <?php if($this->session->userdata['user_type'] == "A"){ ?>
           <div class="col-md-2">
            
-            <a href="<?php echo base_url(); ?>Product/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Purchased Products</a>
+            <a href="<?php echo base_url(); ?>Product/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Products</a>
           </div>
           <?php } ?>
         </div>

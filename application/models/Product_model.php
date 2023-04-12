@@ -35,7 +35,7 @@ class Product_model extends CI_Model{
         //$this->db->join('tbl_product_category','tbl_product_category.prod_cat_id=tbl_product.product_type','left');
         //$this->db->join('tbl_subcategories','tbl_subcategories.subcat_id=tbl_product.product_sub_type','left');
         $this->db->where('product_status',1);
-        $this->db->where('product_category',1);
+       // $this->db->where('product_category',1);
         $this->db->order_by('product_id','ASC');
         $query = $this->db->get();
         $data['data'] = $query->result();
@@ -53,7 +53,7 @@ class Product_model extends CI_Model{
         $this->db->join('tbl_unit','tbl_unit.unit_id=tbl_product.product_unit','left');
       //  $this->db->join('tbl_product_category','tbl_product_category.prod_cat_id=tbl_product.product_type','left');
         $this->db->where('product_status',1);
-        $this->db->where('product_category',1);
+      //  $this->db->where('product_category',1);
         if(!empty($branch_id_fk) && $branch_id_fk != 0)
         {
             $this->db->where("branch_id_fk",$branch_id_fk);

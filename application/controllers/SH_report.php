@@ -43,6 +43,34 @@ class SH_report extends MY_Controller {
 	}
 
 
+	public function preport()
+	{
+		$template['body'] = 'SH_report/list-purchase-report';
+		$template['script'] = 'SH_report/script';
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['member_names'] = $this->Vendor_voucher_model->view_by_shareholder_vendor($branch_id_fk);
+		$this->load->view('template', $template);
+	}
+
+	public function getpledger_report()
+	{
+		$shareholder_id_fk=$this->input->post('shareholder_id_fk');
+		$cdate=$this->input->post('cdate');
+		$edate=$this->input->post('edate');
+		$branch_id_fk=$this->session->userdata('branch_id_fk');
+		$template['member_names'] = $this->Vendor_voucher_model->view_by_shareholder_vendor($branch_id_fk);
+		$template['body'] = 'SH_report/list-purchase-report';
+		$template['script'] = 'SH_report/script';
+		// $template['gid']=$gid;
+	    $template['cdate']=$cdate;
+	    $template['edate']=$edate;
+	    $template['vendor']=$shareholder_id_fk;
+		$template['sale']=$this->Vendor_voucher_model->get_shareholder_purchase_report($cdate,$edate,$shareholder_id_fk);
+	    $this->load->view('template', $template);
+
+	}
+
+
 	public function view()
 	{
 		$template['body'] = 'SH_report/list';

@@ -285,10 +285,31 @@
                 { "data": "total","orderable": false },
              //   { "data": "invoice_number","orderable": false },
                 { "data": "invoice_number","orderable": false },
-                { "data": "invoice_number","orderable": false },
+                { "data": "auto_invoice","orderable": false },
             ]
         });
     });
+
+
+    function confirmDelete(auto_invoice) {//alert(auto_invoice);
+        var conf = confirm("Do you want to Delete Purchase ?");
+        if (conf) {
+            $.ajax({
+                url: "<?php echo base_url(); ?>Purchaseitem/delete",
+                data: {
+                    auto_invoice: auto_invoice
+                },
+                method: "POST",
+                datatype: "json",
+                success: function(data) {
+                    var options = $.parseJSON(data);
+                    noty(options);
+                    $table.ajax.reload();
+                }
+            });
+        }
+    }
+
     function getVendorName(el, event, item) {
         console.log(item);
         if (item.vendor_id) {

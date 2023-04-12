@@ -110,27 +110,27 @@ h4:after {
                             </div>
                             <div class="col-md-2">
                               <label>State Type</label>
-                              <input type="text" data-pms-required="true" id="vendor_statetype" class="form-control" name="vendor_statetype" placeholder="State Type" value="<?php if(isset($records->vendor_statetype)) echo $records->vendor_statetype ?>" style="font-weight: bold;">
+                              <input type="text" id="vendor_statetype" class="form-control" name="vendor_statetype" placeholder="State Type" value="<?php if(isset($records->vendor_statetype)) echo $records->vendor_statetype ?>" style="font-weight: bold;">
                               </div>
                               <div class="col-md-2">
                                 <label>Place Of Sale</label>
-                                <input type="text" data-pms-required="true" id="vendorstate" class="form-control" name="vendorstate" placeholder="State with TIN" value="<?php if(isset($records->vendorstate)) echo $records->vendorstate ?>" style="font-weight: bold;">
+                                <input type="text" id="vendorstate" class="form-control" name="vendorstate" placeholder="State with TIN" value="<?php if(isset($records->vendorstate)) echo $records->vendorstate ?>" style="font-weight: bold;">
                                 </div>
                                 <div class="col-md-2">
                                   <label>GSTIN No.</label>
-                                  <input type="text" data-pms-required="true" id="vendorgst" class="form-control" name="vendorgst" placeholder="GST Number" value="<?php if(isset($records->vendorgst)) echo $records->vendorgst ?>" style="font-weight: bold;">
+                                  <input type="text" id="vendorgst" class="form-control" name="vendorgst" placeholder="GST Number" value="<?php if(isset($records->vendorgst)) echo $records->vendorgst ?>" style="font-weight: bold;">
                                   </div>
                                   <div class="col-md-2">
                                     <label>Tax Type</label>
-                                    <input type="text" data-pms-required="true" id="vendor_gsttype" class="form-control" name="vendor_gsttype" placeholder="Tax Type" value="<?php if(isset($records->vendor_gsttype)) echo $records->vendor_gsttype ?>" style="font-weight: bold;">
+                                    <input type="text" id="vendor_gsttype" class="form-control" name="vendor_gsttype" placeholder="Tax Type" value="<?php if(isset($records->vendor_gsttype)) echo $records->vendor_gsttype ?>" style="font-weight: bold;">
                                     </div>
                                   </div>
                                   <br><br>
                                   <!-- <h4><b>PURCHASE ITEMS</b></h4>-->
                                   <button type="submit" class="btn btn-primary" value="Add Row" onClick="addRow('dataTable')">Add</button>
                                   <button type="button" class="btn btn-danger" value="Delete Row" onClick="deleteRow('dataTable')">Delete</button>
-                                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myItems">Add Item</button>
-                                  <br> <br>
+<!--                                   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myItems">Add Item</button>
+ -->                                  <br> <br>
                                   <div class="table-responsive">
                                   <table id="dataTable" class="table table-striped table-bordered tc-table footable" style="border:1px solid #ccc;color:black;">
                                     <thead>
@@ -222,7 +222,7 @@ h4:after {
                                         <div class=" form-group pull-right" >
                                           <div class="col-md-12">
                                             <label>Paid Amount: &nbsp; </label>
-                                            <input type="text" class="form-control" name="paid_amt" id="paid_amt" onkeyup="getamount();" value="0" style="text-align: right;font-weight: bold;" />
+                                            <input type="text" class="form-control" name="paid_amt" id="paid_amt" onkeyup="getamount();" value="" required style="text-align: right;font-weight: bold;" />
                                           </div><br>
                                           <div class="col-md-12">
                                             <label>Total Amount: &nbsp; </label>
@@ -265,48 +265,88 @@ h4:after {
                           <div class="modal-content">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">Add Vendor</h4>
+                              <h3 class="modal-title">Add Vendor</h3>
                             </div>
+                            <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Purchaseitem/addVendor">
                             <div class="modal-body">
-                            <form method="POST" action="<?php echo base_url(); ?>Purchaseitem/addVendor">
-                                <div class="form-row">
-                                  <div class="form-group col-md-12">
-                                    <label for="vendor_name">Vendor Name</label>
-                                    <input type="text" name="vendor_name" class="form-control" id="vendor_name" placeholder="Enter Vendor Name">
-                                  </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                  <label for="vendor_name">Vendor Name</label>
+                                  <input type="text" name="vendor_name" class="form-control" id="vendor_name" placeholder="Enter Vendor Name">
                                 </div>
-                                <div class="form-row">
-                                  <div class="form-group col-md-12">
-                                    <label for="vendor_name">Vendor Address</label>
-                                    <textarea name="vendor_address" class="form-control" id="" placeholder="Enter Vendor Address"></textarea>
-                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="col-md-12">
+                                  <label for="vendor_name">Vendor Address</label>
+                                  <textarea name="vendor_address" class="form-control" id="" placeholder="Enter Vendor Address"></textarea>
                                 </div>
-                                <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="vendor_name">Phone Number</label>
-                                    <input type="text" name="vendor_phone_number" class="form-control" id="vendor_name" placeholder="Enter Vendor Phone Number">
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                    <label for="vendor_name">Email ID</label>
-                                    <input type="text" name="vendor_email" class="form-control" id="vendor_name" placeholder="Enter Vendor Email ID">
-                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="col-md-6">
+                                  <label for="vendor_name">Phone Number</label>
+                                  <input type="text" name="vendor_phone_number" class="form-control" id="vendor_name" placeholder="Enter Vendor Phone Number">
                                 </div>
-                                <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="vendor_name">GST NO</label>
-                                    <input type="text" name="vendor_gst" class="form-control" id="vendor_name" placeholder="Enter Vendor GST NO">
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                    <label for="vendor_name">OLD BALANCE</label>
-                                    <input type="text" name="vendor_old_bal" class="form-control" id="vendor_name" placeholder="Enter Vendor OLD BALANCE">
-                                  </div>
+
+                                <div class="col-md-6">
+                                  <label for="vendor_name">Email ID</label>
+                                  <input type="text" name="vendor_email" class="form-control" id="vendor_name" placeholder="Enter Vendor Email ID">
                                 </div>
-                                <button type="submit" class="btn btn-primary">SAVE</button>
-                              </form>
+                              </div>
+
+                              <div class="form-group">
+                                <div class="col-md-12">
+                                  <label>State</label>
+                                    <select name="vendorstate" class="form-control">
+                                      <option value="">-SELECT-</option>
+                                      <?php foreach($state as $st){?>
+                                      <option <?php if(isset($records->vendorstate)) {if($records->vendorstate==$st->state_name."-"." ".$st->state_gst_code){echo "selected";}}  ?> value="<?php echo $st->state_name."-"." ".$st->state_gst_code; ?>"><?php echo $st->state_name."-"." ".$st->state_gst_code; ?></option>
+                                    <?php } ?>
+                                      
+                                    </select>
+                              </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-md-12">
+                            <label>State Type</label>
+                            <select name="vendor_statetype" class="form-control">
+                              <option value="">-SELECT-</option>
+                              <option <?php if(isset($records->vendor_statetype)) {if($records->vendor_statetype=="INTRA STATE"){echo "selected";}}  ?> value="INTRA STATE">INTRA STATE</option>
+                                <option <?php if(isset($records->vendor_statetype)) {if($records->vendor_statetype=="INTER STATE"){echo "selected";}}  ?> value="INTER STATE">INTER STATE</option>
+                        
+                            </select>
+                              </div>
+                            </div>
+                              <div class="form-group">
+                                        <div class="col-md-12">
+                                          <label>GST</label>
+                                      <input type="text"  class="form-control" name="vendor_gst" id="vendor_gst"  value="<?php if(isset($records->vendorgst)) echo $records->vendorgst ?>">
+                                      </div>
+                              </div>
+                                  <div class="form-group">
+                                <div class="col-md-12">
+                                    <label>Tax Type</label>
+                                    <select name="vendor_gsttype" class="form-control">
+                                      <option value="">-SELECT-</option>
+                                      <option <?php if(isset($records->vendor_gsttype)) {if($records->vendor_gsttype=="GSTR1 B2B"){echo "selected";}}  ?> value="GSTR1 B2B">GSTR1 B2B</option>
+                                        <option <?php if(isset($records->vendor_gsttype)) {if($records->vendor_gsttype=="GSTR1 B2CL"){echo "selected";}}  ?> value="GSTR1 B2CL">GSTR1 B2CL</option>
+                                          <option <?php if(isset($records->vendor_gsttype)) {if($records->vendor_gsttype=="GSTR1 B2CS"){echo "selected";}}  ?> value="GSTR1 B2CS">GSTR1 B2CS</option>
+                                            <option <?php if(isset($records->vendor_gsttype)) {if($records->vendor_gsttype=="GSTR1 B2BA"){echo "selected";}}  ?> value="GSTR1 B2BA">GSTR1 B2BA</option>
+                                              <option <?php if(isset($records->vendor_gsttype)) {if($records->vendor_gsttype=="GSTR1 B2CLA"){echo "selected";}}  ?> value="GSTR1 B2CLA">GSTR1 B2CLA</option>
+                                    </select>
+                                </div>
+                              </div>
+                            
+                         
+                              
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save</button>
                             </div>
+                            </form>
                           </div>
                         </div>
                       </div>

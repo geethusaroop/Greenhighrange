@@ -43,6 +43,7 @@ class Routsale extends MY_Controller
 			//$routsale_id = $this->input->post('routsale_id');
 			$routsale_product_id_fk=$this->input->post('product_name');
 			$routsale_stock=$this->input->post('product_stock');
+			$branch_id_fk=$this->session->userdata('branch_id_fk');
 			 $temp =count($this->input->post('product_name'));
 			for($i=0;$i<$temp;$i++){
 				$data = array(
@@ -57,7 +58,7 @@ class Routsale extends MY_Controller
 				);
 			//	var_dump($data);die;
 			
-				$stok=$this->Purchase_model->get_current_productstock($routsale_product_id_fk[$i]);
+				$stok=$this->Purchase_model->get_current_productstock($routsale_product_id_fk[$i],$branch_id_fk);
             	$nwstk = $stok - $routsale_stock[$i];
 				$updateData = array('product_stock' =>$nwstk);
 				$datas = $this->General_model->update('tbl_product',$updateData,'product_id',$routsale_product_id_fk[$i]);

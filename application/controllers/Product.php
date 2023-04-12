@@ -58,7 +58,7 @@ class Product extends MY_Controller
 				'product_created_date' => date('Y-m-d'),
 				'product_updated_date' => date('Y-m-d'),
 				'product_status' => 1,
-				'product_category' => 1
+				'product_category' => $this->input->post('product_category')
 			);
 			$product_id = $this->input->post('product_id');
 			if ($product_id) {

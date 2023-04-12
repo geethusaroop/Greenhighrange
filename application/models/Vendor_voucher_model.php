@@ -150,6 +150,25 @@ Class Vendor_voucher_model extends CI_Model{
 		return $query->result();
 	}
 
+	public function view_by_shareholder_vendor($branch_id_fk)
+	{
+		$status=1;
+		$this->db->select('*');
+		$this->db->from('tbl_vendor');
+		$this->db->where('vendorstatus', $status);
+		$this->db->where('vendortype', 2);
+		if(!empty($branch_id_fk) && $branch_id_fk != 0)
+        {
+            $this->db->where("vendor_branch_id_fk",$branch_id_fk);
+        }
+        else
+        {
+            $this->db->where("vendor_branch_id_fk",0);
+        }
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function get_shareholder_sale_report($cdate,$edate,$shareholder_id_fk)
 	{
 		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,tbl_sale.sale_discount as discount');
@@ -162,6 +181,23 @@ Class Vendor_voucher_model extends CI_Model{
 		$this->db->where('sale_status', 1);
 		//$this->db->where('sale_branch_id_fk', 0);
 		$this->db->order_by('sale_date',"ASC");
+		$this->db->group_by('invoice_number');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_shareholder_purchase_report($cdate,$edate,$shareholder_id_fk)
+	{
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(total_price) as total,SUM(discount_price) as discount,SUM(purchase_netamt) as tprice,sum(purchase_quantity) as qty');
+		$this->db->from('tbl_purchase');
+		$this->db->join('tbl_product','product_id_fk=product_id');
+		$this->db->join('tbl_branch','purchase_branch_id_fk=branch_id','left');
+		$this->db->where('purchase_date >=', $cdate);
+		$this->db->where('purchase_date <=', $edate);
+		$this->db->where('vendor_id_fk', $shareholder_id_fk);
+		$this->db->where('purchase_status', 1);
+		//$this->db->where('sale_branch_id_fk', 0);
+		$this->db->order_by('purchase_date',"ASC");
 		$this->db->group_by('invoice_number');
 		$query = $this->db->get();
 		return $query->result();

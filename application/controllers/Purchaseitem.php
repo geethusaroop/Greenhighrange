@@ -56,6 +56,7 @@ class Purchaseitem extends MY_Controller {
 	//	$template['category'] = $this->Product_model->get__category();
 		$template['unit'] = $this->Product_model->get_unit();
 		$template['hsncode']=$this->HSNcode_model->gethsncode();
+		$template['state']=$this->Vendor_model->getstate();
 		//$template['subcategories'] = $this->General_model->get_all('tbl_subcategories');
 		$this->form_validation->set_rules('vendor_id', ' Vendor Name', 'required');
 		if ($this->form_validation->run() == FALSE) {
@@ -233,7 +234,35 @@ class Purchaseitem extends MY_Controller {
 		$json_data = json_encode($result);
 		echo $json_data;
 	}
-	public function delete($purchase_id){
+
+	public function delete(){
+		$auto_invoice = $this->input->post('auto_invoice');
+		//var_dump($auto_invoice);die;
+		$records = $this->Purchase_model->get_invc($auto_invoice);
+		for ($i = 0; $i < count($records); $i++) {
+			$stok = $this->Purchase_model->get_prodstk($records[$i]->product_id);
+			//var_dump($stok);die;
+			$nwstk = $stok[0]->product_stock - $records[$i]->purchase_quantity;
+
+			$updateData = array('product_stock' => $nwstk);
+
+			$datas = $this->General_model->update('tbl_product', $updateData, 'product_id', $records[$i]->product_id);
+		}
+		$updateDatas = array('purchase_status' => 0);
+		$data = $this->General_model->update($this->table, $updateDatas, 'auto_invoice', $auto_invoice);
+		if ($data) {
+			$response['text'] = 'Deleted successfully';
+			$response['type'] = 'success';
+		} else {
+			$response['text'] = 'Something went wrong';
+			$response['type'] = 'error';
+		}
+		$response['layout'] = 'topRight';
+		$data_json = json_encode($response);
+		echo $data_json;
+	}
+
+	/* public function delete($purchase_id){
 		$updateData = array('purchase_status' => 0);
 		$data = $this->General_model->update($this->table,$updateData,'purchase_id',$purchase_id);
 		$response_text = 'Purchase Details deleted successfully';
@@ -244,7 +273,7 @@ class Purchaseitem extends MY_Controller {
 			$this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
 		}
 		redirect('/Purchaseitem/', 'refresh');
-	}
+	} */
 	public function edit(){
 			$finyear = $this->Purchase_model->get_fyear();
 			if(isset($finyear[0]->fin_year)){$fin=$finyear[0]->fin_year;}else{$fin=0;}
@@ -742,8 +771,11 @@ class Purchaseitem extends MY_Controller {
 				'vendoraddress' => $vendor_address,
 				'vendorphone' => $vendor_phone,
 				'vendoremail' => $vendor_email,
-				'vendor_oldbal' => $vendor_gst,
-				'vendorgst' => $vendor_old_balance,
+				//'vendor_oldbal' => $vendor_gst,
+				'vendorgst' => $vendor_gst,
+				'vendorstate' => $this->input->post('vendorstate'),
+				'vendor_statetype' => $this->input->post('vendor_statetype'),
+				'vendor_gsttype' => $this->input->post('vendor_gsttype'),
 				'vendorstatus' => 1,
 			];
 			$result = $this->General_model->add('tbl_vendor',$data);

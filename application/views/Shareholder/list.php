@@ -80,6 +80,9 @@
                                  <th>BANK_DETAILS</th> 
                                  <th>OPENING_BALANCE(PURCHASE)</th> 
                                  <th>CURRENT_BALANCE(PURCHASE)</th> 
+                                 <th>
+                                    <center>ADD_TO_VENDORS</center>
+                                </th>
                                 <th>
                                     <center>EDIT/DELETE</center>
                                 </th>
@@ -97,3 +100,55 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" id="exampleModalLabel1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="font-weight: bold;background-color:#dfe3eb;">
+    <div class="modal-header">
+        <h4 class="modal-title"><b> Add Shareholder To Vendor</b></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-horizontal" method="POST" action="<?php echo base_url();?>index.php/Shareholder/add_to_vendor" enctype="multipart/form-data">
+      <div class="modal-body"  style="font-weight: bold;font-size:16px;background-color:#eff2f5;">
+
+      <input type="hidden" data-pms-required="true" autofocus class="form-control" name="member_id" id="member_id" value="" placeholder="Enter Shareholder Name">
+
+   
+<div class="form-group">
+ 
+                    <div class="col-md-6">
+                      <label class="fsize">Shareholder Name<span style="color: red;"> *</span></label>
+                      <input type="text" data-pms-required="true" autofocus class="form-control" name="member_name" id="member_name" value="" placeholder="Enter Shareholder Name">
+                    </div>
+
+</div> 
+
+<div class="form-group row">
+                    <div class="col-md-12">
+                      <label class="fsize">Address </label>
+                      <textarea autofocus class="form-control" name="member_address" id="member_address" placeholder="Enter Shareholder Address"></textarea>
+                    </div>
+</div>
+<div class="form-group">
+                        <div class="col-md-4">
+                      <label class="fsize">Email ID</label>
+                      <input type="text" autofocus class="form-control" name="member_email" id="member_email" value="" placeholder="Enter Email">
+                    </div>
+                    <div class="col-md-4">
+                      <label class="fsize">Phone Number</label>
+                      <input type="text"" autofocus class="form-control" name="member_pnumber" id="member_pnumber" value="" placeholder="Enter Phone Number">
+                    </div>
+</div> 
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div><!--endds add dmlogin-->
+

@@ -34,8 +34,8 @@
       <div class="col-sm-2">
 					<div class="input-group">
 						<button type="button" id="search" class="btn bg-orange btn-flat margin">Search</button>
-            <a href="<?php echo base_url(); ?>Production/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add New</a>
-
+<!--             <a href="<?php echo base_url(); ?>Production/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add New</a>
+ -->
 					</div>
 			</div>
     </div>

@@ -139,7 +139,7 @@
 
            <li class="<?php if ($this->uri->segment(1) == "HSNcode") {echo "active";} ?>"><a href="<?php echo base_url(); ?>HSNcode"><i class="fa fa-circle-o"></i><span>Tax Master</span></a></li>
 
-           <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-circle-o"></i><span>Purchase Products</span></a></li>
+           <li class="<?php if ($this->uri->segment(1) == "Product") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Product"><i class="fa fa-circle-o"></i><span>Products</span></a></li>
 
           </ul>
        </li>
@@ -352,7 +352,10 @@
              else if($this->uri->segment(1)=="Bankdeposit")
               {echo "active";}
 
-              else if($this->uri->segment(1)=="SH_report")
+              else if($this->uri->segment(1)=="SH_report" &&  $this->uri->segment(2)=="view")
+              {echo "active";}
+
+              else if($this->uri->segment(1)=="SH_report" &&  $this->uri->segment(2)=="list_view")
               {echo "active";}
 
               else if($this->uri->segment(1)=='Bankdeposit')
@@ -525,6 +528,8 @@
        {echo "active";}
  
        else  if($this->uri->segment(1)=='Sale_Report'){echo "active";}
+
+       else  if($this->uri->segment(1)=='SH_report'){echo "active";}
        ?>">
            <a><i class="fa fa-laptop"></i><span>Reports</span>
              <span class="pull-right-container">
@@ -566,6 +571,7 @@
        <?php 
        if($this->uri->segment(1)=='Salereport'){echo "active";}
        else  if($this->uri->segment(1)=='Sale_Report'){echo "active";}
+     
        ?>">
             <a href="#"><i class="fa fa-circle-o"></i> Sale Report
              <span class="pull-right-container">
@@ -580,7 +586,8 @@
       </ul>
        </li> 
 
-       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)==""){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Shareholder Sale Report</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)==""){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Shareholder Purchase Report</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="preport"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report/preport"><i class="fa fa-circle-o"></i> <span>Shareholder Sale Report</span></a></li>
 
      </ul>
          </li>

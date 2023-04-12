@@ -186,7 +186,7 @@ write_file($save, $backup);  */
 
 		//$sql="ALTER TABLE `tbl_bank_deposit` CHANGE `bd_type` `bd_type` INT(11) NOT NULL COMMENT '1=member_deposit,2=others,3=supplier_withdraw'";
 		
-		$sql="ALTER TABLE `tbl_member` CHANGE `member_email` `member_email` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_branch` `member_branch` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_bank_id` `member_bank_id` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_bank` `member_bank` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_account` `member_account` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_ifsc` `member_ifsc` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_address` `member_address` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_pnumber` `member_pnumber` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, CHANGE `member_wnumber` `member_wnumber` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,CHANGE `member_gender` `member_gender` INT(11) NULL";
+		$sql="ALTER TABLE `tbl_vendor` ADD `vendortype` INT NOT NULL AFTER `vendorstatus`";
 
 		//$sql="ALTER TABLE `tbl_member` CHANGE `member_bank` `member_bank` VARCHAR(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL"
 		
@@ -221,6 +221,7 @@ write_file($save, $backup);  */
 			`receipt_group` int(11) DEFAULT NULL,
 			PRIMARY KEY (`receipt_id`)
 		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3"; */
+		  $sql="ALTER TABLE `tbl_member` ADD `member_supplier_status` INT NOT NULL AFTER `member_branch_sale_balance`";
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}
