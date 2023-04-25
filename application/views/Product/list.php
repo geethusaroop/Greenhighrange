@@ -43,9 +43,12 @@
             <h2 class="box-title"></h2>
           </div>
           <?php if($this->session->userdata['user_type'] == "A"){ ?>
-          <div class="col-md-2">
+          <div class="col-md-4">
            
             <a href="<?php echo base_url(); ?>Product/add" class="btn btn-danger"><i class="fa fa-plus-square"></i> Add Products</a>
+
+            &nbsp; <a href="<?php echo base_url(); ?>Product/addExcelProduct" class="btn btn-info"><i class="fa fa-plus-square"></i> Import Excel</a>
+
           </div>
           <?php } ?>
         </div>
@@ -58,8 +61,8 @@
                 <th>ITEM NAME</th>
                 <th style="text-align: left;">ITEM CODE</th>
                  <th>HSNCODE</th>
-
-                 <th>STOCK</th>
+                 <th>OPENING_STOCK</th>
+                 <th>CURRENT_STOCK</th>
                 <th style="text-align: center;">ITEM UNIT</th>
               
                 <th style="text-align: center;">

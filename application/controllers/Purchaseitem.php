@@ -21,6 +21,7 @@ class Purchaseitem extends MY_Controller {
 		$this->load->model('Tax_model');
 		$this->load->model('Product_model');
 		$this->load->model('HSNcode_model');
+		$this->load->model('Sale_model');
 	}
 	public function index()
 	{
@@ -239,11 +240,12 @@ class Purchaseitem extends MY_Controller {
 		$auto_invoice = $this->input->post('auto_invoice');
 		//var_dump($auto_invoice);die;
 		$records = $this->Purchase_model->get_invc($auto_invoice);
+		//var_dump($records);
 		for ($i = 0; $i < count($records); $i++) {
-			$stok = $this->Purchase_model->get_prodstk($records[$i]->product_id);
-			//var_dump($stok);die;
+			$stok = $this->Sale_model->get_prodstk($records[$i]->product_id);
 			$nwstk = $stok[0]->product_stock - $records[$i]->purchase_quantity;
-
+			//var_dump($stok);
+			//var_dump($nwstk);die;
 			$updateData = array('product_stock' => $nwstk);
 
 			$datas = $this->General_model->update('tbl_product', $updateData, 'product_id', $records[$i]->product_id);
@@ -364,8 +366,8 @@ class Purchaseitem extends MY_Controller {
 				$result = $this->General_model->add($this->table,$data);
 
 				//$records = $this->Purchase_model->get_invc($auto_invoice);
-				
-					$current_stock=$this->Purchase_model->get_current_productstock($product_id_fk[$i]);
+				$branch_id_fk=$this->session->userdata('branch_id_fk');
+					$current_stock=$this->Purchase_model->get_current_productstock($product_id_fk[$i],$branch_id_fk);
 					if($current_purchase_data){
 						if(intval($current_purchase_data[$i]->purchase_quantity) > intval($purchase_quantity[$i])){
 							$new_stk = (intval($current_purchase_data[$i]->purchase_quantity) - intval($purchase_quantity[$i]));

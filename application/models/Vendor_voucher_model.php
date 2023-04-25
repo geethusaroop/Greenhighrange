@@ -146,6 +146,7 @@ Class Vendor_voucher_model extends CI_Model{
         {
             $this->db->where("member_branch_id_fk",0);
         }
+		$this->db->order_by('member_name','ASC');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -171,7 +172,7 @@ Class Vendor_voucher_model extends CI_Model{
 
 	public function get_shareholder_sale_report($cdate,$edate,$shareholder_id_fk)
 	{
-		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,tbl_sale.sale_discount as discount');
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,tbl_sale.sale_discount as discount,,sum(return_qty) as return_qty,sum(return_price) as return_price');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id_fk=product_id');
 		$this->db->join('tbl_branch','branch_id_fk=branch_id','left');
@@ -182,6 +183,23 @@ Class Vendor_voucher_model extends CI_Model{
 		//$this->db->where('sale_branch_id_fk', 0);
 		$this->db->order_by('sale_date',"ASC");
 		$this->db->group_by('invoice_number');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_shareholder_summary_report($cdate,$edate,$branch_id_fk)
+	{
+		$this->db->select('*,COUNT(invoice_number) as slcount,SUM(sale_netamt) as total,sum(sale_quantity) as qty,(total_price-(sale_discount+sale_shareholder_discount)) as tprice,tbl_sale.sale_discount as discount');
+		$this->db->from('tbl_sale');
+		$this->db->join('tbl_product','product_id_fk=product_id');
+		$this->db->join('tbl_branch','branch_id_fk=branch_id','left');
+		$this->db->where('sale_date >=', $cdate);
+		$this->db->where('sale_date <=', $edate);
+		$this->db->where('branch_id_fk', $branch_id_fk);
+		$this->db->where('sale_status', 1);
+		//$this->db->where('sale_branch_id_fk', 0);
+		$this->db->order_by('sale_date',"ASC");
+		$this->db->group_by('member_id_fk');
 		$query = $this->db->get();
 		return $query->result();
 	}

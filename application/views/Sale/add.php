@@ -107,7 +107,7 @@
                     <label>MOP</label>
                       <select name="purchase_mop" data-pms-required="true" class="form-control" style="font-weight: bold;">
                         <option value="">-SELECT-</option>
-                        <option selected value="Cash">Cash</option>
+                        <option  value="Cash">Cash</option>
                         <option value="Credit">Credit</option>
                       </select>
                     </div>                                                                                                           
@@ -116,7 +116,7 @@
                   <div class="form-group" style="margin-left: 20px;">
                   <div class="col-md-4">
                       <label class="fsize">Customer Type</label>
-                      <select name="member_type" class="form-control" id="member_types_all" onchange="getcustomer();">
+                      <select name="member_type" class="form-control" id="member_types_all" onchange="getcustomer();" required>
                         <option value="">Please Select</option>
                         <option value="1">Share Holder</option>
                         <option value="2">Wholesale Customer</option>
@@ -210,7 +210,7 @@
                       </select> </TD>
                         <TD> <INPUT type="text" class="form-control" id="rate1" name="rate[]" style="width:120px;" /> </TD>
                     <TD> <INPUT type="text" class="form-control" name="sale_quantity[]" id="pquantity_1" style="width:110px;" required onKeyUp="gettotal(<?php echo $i=1; ?>,this)" />  </TD>
-                    <TD> <INPUT type="text" class="form-control" id="discount_1" name="discount_price[]"  style="width:80px;" onKeyUp="gettotalgrid(<?php echo $i=1; ?>,this)"/> </TD>
+                    <TD> <INPUT type="text" class="form-control" id="discount_1" name="discount_price[]"  value="0" style="width:80px;" onKeyUp="gettotalgrid(<?php echo $i=1; ?>,this)"/> </TD>
                         <TD> <INPUT type="text" class="form-control" name="tamount[]" id="tamount1" style="width:120px;" /> </TD>
                         <TD> <INPUT type="text" class="form-control" id="taxamount1" name="taxamount[]" style="width:120px;" /> </TD>
                         <TD> <INPUT type="text" class="form-control" id="igst1" name="igst[]"  style="width:80px;"/> </TD>
@@ -250,7 +250,7 @@
                             <input type="text" class="form-control" name="sale_shareholder_discounts" id="sale_shareholder_discounts" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" />
                           </td>
 
-                        <td>Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
+                        <td>Received Amount<input type='text' required id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
 
                         <td style="float:right;">Balance <input type='text' id='total_amt' class="form-control" name="total_amt" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                       </tr>
@@ -258,7 +258,9 @@
                     <table align="left" class="table table-bordered" style="box-shadow: 4px 3px 4px 3px #97989b;">
                   
                       <tr>
-                        <td style="text-align: right;font-size:20px;color:blue;">Net Amount &nbsp;&nbsp; :&nbsp;&nbsp;<span id="net"></span></td>
+                        <td style="text-align: right;font-size:20px;color:blue;">Net Amount &nbsp;&nbsp; :&nbsp;&nbsp;<span id="net"></span>
+                        <input type="hidden" name="sale_net_total" id="sale_net_total" value="">
+                      </td>
                       </tr>
                     </table>
                     <div class="row" style="border:#000;">

@@ -2,7 +2,7 @@
 $table = $('#distributionTable').DataTable( {
   "fixedHeader": true, 
   "processing": true,
-  "serverSide": false,
+  "serverSide": true,
   "bDestroy" : true,
   "ajax": {
     "url": "<?php echo base_url();?>StockStatus/getStockDetails",
@@ -15,7 +15,7 @@ $table = $('#distributionTable').DataTable( {
     $table.column(0).nodes().each(function(node,index,dt){
       $table.cell(node).data(index+1);
     });
-    $('td', row).eq(4).html('<center><a href="<?php echo base_url();?>index.php/StockStatus/purchase/'+data['product_id']+'"><button type="button" class="btn btn-success">PURCHASE</button></a> &nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/production/'+data['product_id']+'"><button type="button" class="btn btn-danger">PRODUCTION UNIT-STOCK TRANSFER</button></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/sale/'+data['product_id']+'"><button type="button" class="btn btn-info">SALE</button></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/branchstock/'+data['product_id']+'"><button type="button" class="btn btn-warning">BRANCH TRANSFER</button></a></center>');
+    $('td', row).eq(4).html('<center><a href="<?php echo base_url();?>index.php/StockStatus/purchase/'+data['product_id']+'"><button type="button" class="btn btn-success">PURCHASE</button></a> &nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/production/'+data['product_id']+'"><button type="button" class="btn btn-primary">PRODUCTION UNIT-STOCK TRANSFER</button></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/sale/'+data['product_id']+'"><button type="button" class="btn btn-info">SALE</button></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/branchstock/'+data['product_id']+'"><button type="button" class="btn btn-danger">BRANCH TRANSFER</button></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/StockStatus/Damage/'+data['product_id']+'"><button type="button" class="btn btn-warning">DAMAGED ITEMS</button></a></center>');
 
    
   },

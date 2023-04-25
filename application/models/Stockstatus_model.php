@@ -99,5 +99,18 @@ class Stockstatus_model extends CI_Model{
         $query = $this->db->get();
 		return $query->result();
     }
+
+    public function getdamage($product_id) 
+    {
+        $this->db->select('*,DATE_FORMAT(damage_date,\'%d/%m/%Y\') as damage_date');
+		$this->db->from('tbl_damage');
+		$this->db->join('tbl_product','product_id = damage_item_id_fk','left');
+        $this->db->join('tbl_branch','branch_id_fk = branch_id','left');
+		$this->db->where('damage_item_id_fk', $product_id); 
+        $this->db->where("damage_status",1);
+		$this->db->order_by('damage_date','DESC');
+        $query = $this->db->get();
+		return $query->result();
+    }
 }
 ?>

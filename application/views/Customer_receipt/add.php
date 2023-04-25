@@ -48,6 +48,16 @@
 					    <input type="date" class="form-control" name="receipt_date" id="receipt_date" value="<?php if(isset($records->receipt_date)) echo $records->receipt_date; ?>">
 					</div>
 				</div>
+
+				<?php if(!isset($records->receipt_id)){ ?>
+				<div class="form-group">
+					<label for="customer_email" class="col-sm-2 control-label">Total Amount <span style="color:red">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control"  name="total_amount" id="total_amount" value=""/>
+					</div>
+				</div>
+
+				<?php } ?>
 				<div class="form-group">
 					<label for="customer_email" class="col-sm-2 control-label"> Amount <span style="color:red">*</span></label>
 					<div class="col-sm-4">

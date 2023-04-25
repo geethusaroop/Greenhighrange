@@ -221,7 +221,24 @@ write_file($save, $backup);  */
 			`receipt_group` int(11) DEFAULT NULL,
 			PRIMARY KEY (`receipt_id`)
 		  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3"; */
-		  $sql="ALTER TABLE `tbl_member` ADD `member_supplier_status` INT NOT NULL AFTER `member_branch_sale_balance`";
+		/*   $sql="CREATE TABLE IF NOT EXISTS `tbl_damage` (
+			`damage_id` int(11) NOT NULL AUTO_INCREMENT,
+			`damage_item_id_fk` int(11) NOT NULL,
+			`damage_count` float NOT NULL,
+			`damage_unit` int(11) NOT NULL,
+			`current_stock` float NOT NULL,
+			`current_stock_unit` varchar(20) NOT NULL,
+			`damage_remark` varchar(80) NOT NULL,
+			`damage_date` date NOT NULL,
+			`damage_status` int(11) NOT NULL,
+			PRIMARY KEY (`damage_id`)
+		  ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1"; */
+		//  $sql="ALTER TABLE `tbl_product` CHANGE `product_open_stock` `product_open_stock` FLOAT(11) NOT NULL, CHANGE `product_stock` `product_stock` FLOAT(20) NOT NULL";
+		
+	//	$sql="ALTER TABLE `tbl_sale` ADD `return_taxamount` FLOAT NOT NULL AFTER `return_qty`, ADD `return_igst` FLOAT NOT NULL AFTER `return_taxamount`, ADD `return_igstamt` FLOAT NOT NULL AFTER `return_igst`,ADD `return_status` INT NOT NULL AFTER `return_date`";
+		$sql="ALTER TABLE `tbl_sale` ADD `sale_shareholder_discount_amount` FLOAT NOT NULL AFTER `sale_discount`, ADD `sale_net_total` FLOAT NOT NULL COMMENT 'final sale amount' AFTER `sale_shareholder_discount_amount`"; 
+		
+		
 		$query = $this->db->query($sql);
 		 if($query){ echo "Success"; }else{ echo "Failed"; } die;
 	}

@@ -1035,7 +1035,7 @@ $(document).on("change",'#customer_nam',function(){
         element9.setAttribute("size", "6");
         element9.setAttribute("class", "democlass");
         element9.id = "discount_"+rowCount;
-      //  element8.required = "required";
+        element9.value = "0";
       element9.onkeyup=function() {gettotalgrid(rowCount,this);}
         cell9.appendChild(element9);
     
@@ -1271,11 +1271,23 @@ $(document).on("change",'#customer_nam',function(){
        var nettotal=total_amt-discount_price; */
 
        var total_amt=total;
-       var nettotal=total_amt-discount_price;
+       var sharedisc1 = parseFloat(document.getElementById("sale_shareholder_discount").value);
+        if(sharedisc1)
+        {
+            var sharedisc =sharedisc1/100;
+            var total_disc = parseFloat(total_amt) * parseFloat(sharedisc) ;
+        }
+        else
+        {
+            var total_disc=0;
+        }
+       var nettotal=Math.round(total_amt-(total_disc+discount_price));
+      // var nettotal=total_amt-discount_price;
       
         document.getElementById("net_total").value = isNaN(total_amt) ? "0.00" : total_amt.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
+        document.getElementById("sale_net_total").value=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
       
        /*  document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
@@ -1292,15 +1304,42 @@ function gettotal(idx,bal)
         var prate = parseFloat(document.getElementById("rate"+idx).value);
    
         var total_amount = parseFloat(prate) * parseFloat(qty);
+
+        var cgst1 = parseFloat(document.getElementById("cgst"+idx).value);
+            var cgst =cgst1/100;
+             var sgst1 = parseFloat(document.getElementById("sgst"+idx).value);
+            var sgst =sgst1/100;
+              var igst1 = parseFloat(document.getElementById("igst"+idx).value);
+            var igst =igst1/100;
+            var discount=parseFloat(document.getElementById("discount_"+idx).value);
+            if(discount >0)
+            {
+                var discount_amount = parseFloat(total_amount) - ((parseFloat(total_amount) * parseFloat(discount)) / 100);
+            }
+             else
+             {
+                var discount_amount = parseFloat(total_amount);
+             }
+              var cgstamt=discount_amount * cgst;
+             var sgstamt=discount_amount * sgst;
+               var igstamt=discount_amount * igst;
+                 var total= parseFloat(discount_amount) + parseFloat(igstamt);
+      //  alert(total);
+            document.getElementById("tamount"+idx).value= isNaN(discount_amount)?"0.00":discount_amount.toFixed(2);
+              document.getElementById("taxamount"+idx).value= isNaN(discount_amount)?"0.00":discount_amount.toFixed(2);
+               document.getElementById("cgstamt"+idx).value= isNaN(cgstamt)?"0.00":cgstamt.toFixed(2);
+              document.getElementById("sgstamt"+idx).value= isNaN(sgstamt)?"0.00":sgstamt.toFixed(2);
+              document.getElementById("igstamt"+idx).value= isNaN(igstamt)?"0.00":igstamt.toFixed(2);
+                document.getElementById("netamt"+idx).value= isNaN(total)?"0.00":total.toFixed(2);
       
-        var discount_amount = parseFloat(total_amount);
+       /*  var discount_amount = parseFloat(total_amount);
        
         var total = parseFloat(discount_amount);
       //  var idx = 1;
         document.getElementById("tamount"+idx).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
         document.getElementById("taxamount"+idx).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
       
-        document.getElementById("netamt"+idx).value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("netamt"+idx).value = isNaN(total) ? "0.00" : total.toFixed(2); */
         totalamt(idx);
             
 }
@@ -1368,7 +1407,20 @@ function totalamt(idx) { //alert(idx);
      //  var nettotal=total_amt-discount_price;
 
         var total_amt=total;
-       var nettotal=total_amt-discount_price;
+        var sharedisc1 = parseFloat(document.getElementById("sale_shareholder_discount").value);
+
+        if(sharedisc1)
+        {
+            var sharedisc =sharedisc1/100;
+            var total_disc = parseFloat(total_amt) * parseFloat(sharedisc) ;
+        }
+        else
+        {
+            var total_disc=0;
+        }
+        //  var nettotal=total_amt-discount_price;
+        var nettotal =Math.round(parseFloat(total_amt)-(parseFloat(discount_price) +(parseFloat(total_disc))));
+    //   var nettotal=total_amt-discount_price;
 
        var gross_total=total+sale_old_balance;
       
@@ -1378,6 +1430,7 @@ function totalamt(idx) { //alert(idx);
       //  document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
       //  document.getElementById("total_amt").value = isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);//balance
         document.getElementById("net").innerHTML=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
+        document.getElementById("sale_net_total").value=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
     }
 
 function getdiscamount() {
@@ -1398,10 +1451,11 @@ function getdiscamount() {
 
         var total1 = parseFloat(total_amt1) * parseFloat(sharedisc) ;
 
-        var total =parseFloat(total_amt1)-(parseFloat(total1) +(parseFloat(discount_price)));
+        var total =Math.round(parseFloat(total_amt1)-(parseFloat(total1) +(parseFloat(discount_price))));
 
        // document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("sale_net_total").value=isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("sale_shareholder_discounts").value=isNaN(total1) ? "0.00" : total1.toFixed(2);
     }
 
@@ -1527,6 +1581,8 @@ function getcustomer()
                           
                           $('#quant').html(d.stock);
                           $('#myDiv').show();
+
+                          $('#rate_type'+row).focus();
                       },
                       error: function() {
                       }
@@ -1565,6 +1621,9 @@ function getcustomer()
                           
                           $('#quant').html(d.stock);
                           $('#myDiv').show();
+
+                          $('#rate_type'+row).focus();
+
                       },
                       error: function() {
                       }

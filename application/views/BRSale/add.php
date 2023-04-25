@@ -53,12 +53,12 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?php echo base_url(); ?>dashboard/"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="<?php echo base_url(); ?>BRSale/"><i class="fa fa-dashboard"></i> Back to List</a></li>
+      <li><a href="<?php echo base_url(); ?>Sale/"><i class="fa fa-dashboard"></i> Back to List</a></li>
       <li class="active">Sales Form</li>
     </ol>
   </section>
   <!-- Main content -->
-  <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>BRSale/add">
+  <form class="form-horizontal" method="POST" action="<?php echo base_url(); ?>Sale/add">
     <section class="content">
       <div class="row">
         <!-- right column -->
@@ -107,7 +107,7 @@
                     <label>MOP</label>
                       <select name="purchase_mop" data-pms-required="true" class="form-control" style="font-weight: bold;">
                         <option value="">-SELECT-</option>
-                        <option selected value="Cash">Cash</option>
+                        <option  value="Cash">Cash</option>
                         <option value="Credit">Credit</option>
                       </select>
                     </div>                                                                                                           
@@ -116,7 +116,7 @@
                   <div class="form-group" style="margin-left: 20px;">
                   <div class="col-md-4">
                       <label class="fsize">Customer Type</label>
-                      <select name="member_type" class="form-control" id="member_types_all" onchange="getcustomer();">
+                      <select name="member_type" class="form-control" id="member_types_all" onchange="getcustomer();" required>
                         <option value="">Please Select</option>
                         <option value="1">Share Holder</option>
                         <option value="2">Wholesale Customer</option>
@@ -192,14 +192,14 @@
 
                           <th style="text-transform:uppercase;" width="49">IGST_Amount</th> 
                         <th style="text-transform:uppercase;" width="49">NetAmount</th>
-                        <th style="text-transform:uppercase;" width="49" colspan="5"></th>
+                        <th style="text-transform:uppercase;" width="49" colspan="6"></th>
                       </tr>
                     </thead>
                     <tbody style="background: white;color:black;">
                       <TR style="border:ridge;background: white;color:black;">
                         <TD><INPUT type="checkbox" name="chk[]" /></TD>
                         <TD style="color:black;"> 1 </TD>
-                        <TD> <INPUT type="text" class="form-control" name="product_code[]" id="product_code1" style="width:150px;" onblur="getprod(<?php echo $i=1; ?>);"/> </TD>
+                        <TD> <INPUT type="text" class="form-control" name="product_code[]" id="product_code1" style="width:150px;" onblur="getprod(<?php echo $i=1; ?>)"/> </TD>
                         <td><input type="text" name="product_name[]" class="form-control" id="product_name1"  placeholder="product name" style="color:black;width:350px;text-transform:uppercase;" onchange="getproductdetails(<?php echo $i=1; ?>);"/></td>
                         <td><input type="text" name="hsn[]" class="form-control" id="hsn1"  placeholder="" style="color:black;width:150px;text-transform:uppercase;"/></td>
                         <TD> <select class="form-control" name="rate_type" id="rate_type1" onchange="getratetype(<?php echo $i=1; ?>);">
@@ -210,7 +210,7 @@
                       </select> </TD>
                         <TD> <INPUT type="text" class="form-control" id="rate1" name="rate[]" style="width:120px;" /> </TD>
                     <TD> <INPUT type="text" class="form-control" name="sale_quantity[]" id="pquantity_1" style="width:110px;" required onKeyUp="gettotal(<?php echo $i=1; ?>,this)" />  </TD>
-                    <TD> <INPUT type="text" class="form-control" id="discount_1" name="discount_price[]"  style="width:80px;" onKeyUp="gettotalgrid(<?php echo $i=1; ?>,this)"/> </TD>
+                    <TD> <INPUT type="text" class="form-control" id="discount_1" name="discount_price[]"  value="0" style="width:80px;" onKeyUp="gettotalgrid(<?php echo $i=1; ?>,this)"/> </TD>
                         <TD> <INPUT type="text" class="form-control" name="tamount[]" id="tamount1" style="width:120px;" /> </TD>
                         <TD> <INPUT type="text" class="form-control" id="taxamount1" name="taxamount[]" style="width:120px;" /> </TD>
                         <TD> <INPUT type="text" class="form-control" id="igst1" name="igst[]"  style="width:80px;"/> </TD>
@@ -234,6 +234,7 @@
                       <tr>
                       <td>Old Balance<input type='text' id='sale_old_balance' class="form-control" name="sale_old_balance" value="0" style="background-color:white;text-align:right;width:250px;"/></td>
                       <td>Total Amount<input type='text' id='net_total' class="form-control" name="net_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
+                      
                       <td>Gross Total<input type='text' id='gross_total' class="form-control" name="gross_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                     
                       <td>Qty. Total<input type='text' id='qty_total' class="form-control" name="qty_total" readonly style="background-color:white;text-align:right;width:250px;"/></td>
@@ -242,12 +243,14 @@
                    
                       <tr>
                         <td>Discount Amount<input type="text" class="form-control" name="discount_prices" id="discount_prices" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getdiscamount();" /></td>
-                        <td>Shareholder Discount(%)<input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" /></td>
-                        <td> Shareholder Discount Amount
+                        <td>Shareholder Discount(%)
+                          <input type="text" class="form-control" name="sale_shareholder_discount" id="sale_shareholder_discount" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" onkeyup="getsharediscamount();" />
+                          </td>
+                          <td> Shareholder Discount Amount
                             <input type="text" class="form-control" name="sale_shareholder_discounts" id="sale_shareholder_discounts" value="0" style="width:250px;text-align: right;font-weight: bold;background: white;" />
                           </td>
 
-                        <td>Received Amount<input type='text' id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
+                        <td>Received Amount<input type='text' required id='pamount' class="form-control" name="pamount"  onkeyup="getamount();" style="background-color:white;text-align:right;width:250px;"/></td>
 
                         <td style="float:right;">Balance <input type='text' id='total_amt' class="form-control" name="total_amt" readonly style="background-color:white;text-align:right;width:250px;"/></td>
                       </tr>
@@ -255,7 +258,9 @@
                     <table align="left" class="table table-bordered" style="box-shadow: 4px 3px 4px 3px #97989b;">
                   
                       <tr>
-                        <td style="text-align: right;font-size:20px;color:blue;">Net Amount &nbsp;&nbsp; :&nbsp;&nbsp;<span id="net"></span></td>
+                        <td style="text-align: right;font-size:20px;color:blue;">Net Amount &nbsp;&nbsp; :&nbsp;&nbsp;<span id="net"></span>
+                        <input type="hidden" name="sale_net_total" id="sale_net_total" value="">
+                      </td>
                       </tr>
                     </table>
                     <div class="row" style="border:#000;">
@@ -301,7 +306,7 @@
                   <div class="col-md-6">
                   </div>
                   <div class="col-md-4">
-                  <a href="<?php echo base_url(); ?>BRSale/"> <button type="button" class="btn btn-danger">Cancel</button></a>
+                    <button type="button" class="btn btn-danger" onclick="window.location.reload();">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
                   </div>
                 </div>

@@ -385,7 +385,7 @@
                 });
                 
                 // $('td', row).eq(8).html('<center><a target ="_blank"  href="<?php echo base_url(); ?>Purchase_Return/invoice/' + data['m_pur_invo'] + '"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
-                $('td', row).eq(7).html('<center><a href="<?php echo base_url(); ?>Sale/editedSaleRet/' + data['auto_invoice'] + '"><i class="fa fa-exchange iconFontSize-medium" ></i></a></center>');
+                $('td', row).eq(12).html('<center><a href="<?php echo base_url(); ?>Sale/editedSaleRet/' + data['auto_invoice'] + '"><i class="fa fa-exchange iconFontSize-medium" ></i></a></center>');
             },
 
             "columns": [
@@ -393,6 +393,11 @@
                 { "data": "sale_dates","orderable": false },
                 { "data": "invoice_number","orderable": false },
                 { "data": "member_name","orderable": false },
+                { "data": "qty","orderable": false },
+                { "data": "total","orderable": false },
+                { "data": "discount","orderable": false },
+                { "data": "sale_shareholder_discount","orderable": false },
+                { "data": "sale_net_total","orderable": false },
                 { "data": "return_qty","orderable": false },
                 { "data": "return_price","orderable": false },
                 { "data": "return_date","orderable": false },

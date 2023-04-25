@@ -86,17 +86,17 @@
                   <div class="form-group" style="float:right;">
                     <div class="col-md-6">
                       <label>Bill Number</label>
-                      <input type="text" data-pms-required="true" id="invoice_no" class="form-control" name="invoice_no" placeholder="Invoice Number" value="<?php  echo(isset($records[0]->invoice_number))? $records[0]->invoice_number:$adm=0;  ?>" style="font-weight: bold;">
+                      <input type="text" data-pms-required="true" id="invoice_no" class="form-control" name="invoice_no" placeholder="Invoice Number" value="<?php  echo(isset($records[0]->invoice_number))? "SR".$records[0]->invoice_number:$adm=0;  ?>" style="font-weight: bold;">
                     </div>
                     <div class="col-md-6">
                       <label>Return Date: </label>
-                      <input type="date" placeholder="Date" class="form-control" name="return_date" value="<?php if(isset($records[0]->return_date)) echo $records[0]->return_date; ?>" style="font-weight: bold;" required>
+                      <input type="date" placeholder="Date" class="form-control" name="return_date" value="<?php echo date('Y-m-d'); ?>" style="font-weight: bold;" required>
                     </div>                                                                                              
                   </div>
                   <!--<h4><b>SUPPLIER DETAILS</b></h4>--->
                   <div class="form-group" style="margin-left: 20px;">
                     <div class="col-md-6" style="font-weight: bold;">
-                      <label>Supplier Name </label>
+                      <label>Customer Name </label>
                       <select class="form-control select2" data-pms-required="required" name="vendor_id" id="vendor_ids">
                         <option value="">SELECT</option>
                         <?php foreach($member_names as $names){ ?>
@@ -118,6 +118,7 @@
                 
                 </div>
                   <br>
+                  <div class="table-responsive">
                   <table id="dataTable" class="table table-striped table-bordered tc-table footable" style="border:ridge;background: #ffff;color:black;">
                   <thead>
                       <tr>
@@ -127,6 +128,9 @@
                         <th width="69">Saled Rate</th>
                         <th style="border:ridge;" width="72">Saled Qty</th>
                         <th style="border:ridge;" width="49">Return Qty</th>
+                        <th style="border:ridge;" width="49">Taxable Amt</th>
+                        <th width="69">GST%</th>
+                        <th style="border:ridge;" width="49">IGST Amt</th>
                         <th style="border:ridge;" width="40">Return Amt</th>
                         <th style="border:ridge;" width="49">Saled_Date</th>
                       </tr>
@@ -140,6 +144,9 @@
                         <TD> <INPUT type="text" class="form-control" id="rate_<?php echo $x ?>" value="<?php echo $listed->sale_price ?>" name="rate[]" style="width:120px;" readonly/> </TD>
                         <TD><INPUT type="text" class="form-control"  id="pquantity_<?php echo $x ?>" name="sale_quantity[]" value="<?php $qtys +=$listed->sale_quantity; echo $listed->sale_quantity ?>"  style="width:150px;" readonly/></TD>                       
                         <TD> <INPUT type="text" class="form-control" id="tamount_<?php echo $x ?>" name="return_qty[]" value="<?php echo $listed->return_qty ?>"  style="width:120px;" required onKeyUp="gettotal(this,<?php echo $x ?>)"/> </TD>
+                        <TD> <INPUT type="text" class="form-control" id="taxableamount_<?php echo $x ?>" name="taxableamount[]" value=""  style="width:120px;"/> </TD>
+                        <TD> <INPUT type="text" class="form-control" id="sale_igst<?php echo $x ?>" value="<?php echo $listed->sale_igst ?>" name="sale_igst[]" style="width:120px;" readonly/> </TD>
+                        <TD> <INPUT type="text" class="form-control" id="sale_igstamt<?php echo $x ?>" value="" name="sale_igstamt[]" style="width:120px;" /> </TD>
                         <TD> <INPUT type="text" class="form-control" id="taxamount_<?php echo $x ?>" value="<?php echo $listed->return_price ?>" name="return_price[]" style="width:120px;" /> </TD>
                         <TD> <INPUT type="text" class="form-control" id="pdate_<?php echo $x ?>" value="<?php echo $listed->sale_date ?>" name="pdate[]" style="width:120px;" readonly/> 
                         <INPUT type="hidden" class="form-control" id="purchase_id<?php echo $x ?>" value="<?php echo $listed->sale_id ?>" name="sale_idss[]"/> 
@@ -147,10 +154,20 @@
                       </TR>
                       <?php } ?>
                   </table>
+                  </div>
                   <br><br>
                   <!-------------------------------------------------------------------------------------------------->
                   <div class="panel-body" style="font-weight:bold;">
                     <div class="row" style="border:#000;">
+
+                    <table align="left" class="table table-bordered" style="box-shadow: 4px 3px 4px 3px #97989b;">
+                  
+                      <tr>
+                        <td style="text-align: right;font-size:20px;color:blue;">Net Amount &nbsp;&nbsp; :&nbsp;&nbsp;<span id="net"></span>
+                      <input type="hidden" name="netamt" id="netamt" value="">
+                      </td>
+                      </tr>
+                    </table>
                     </div>
                     <i class="col-sm-5"></i>
                     <!--first panel-->

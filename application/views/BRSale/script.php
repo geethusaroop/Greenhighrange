@@ -90,7 +90,7 @@ function addMore() {
         }, 1000);
         });
     $.ajax({
-            url: "<?php echo base_url()?>BRSale/getproductname",
+            url: "<?php echo base_url()?>Sale/getproductname",
             type: 'POST',
             success: function(data)
             {
@@ -112,7 +112,7 @@ function addMore() {
             });
     $.ajax({
             type: "POST",
-            url: "<?php echo base_url()?>BRSale/gettax",
+            url: "<?php echo base_url()?>Sale/gettax",
             success: function(cities)
             {
             $('#taxtype_'+counter+'').append('<option value="">Tax</option>');
@@ -160,7 +160,7 @@ $(document).on("change",'.product_num',function(){
     if(p_id)
      {
          $.ajax({
-             url:"<?php echo base_url();?>BRSale/get_price",
+             url:"<?php echo base_url();?>Sale/get_price",
             data:{p_id:p_id},
             type:'POST',
             dataType:"json",
@@ -225,7 +225,7 @@ $(document).on("change",'.amountclass',function(){
                 let product_name = '';
                 var k = $('#total_price_'+counter+'').val();
                 $.ajax({
-                    url: "<?php echo base_url()?>BRSale/getproductname1",
+                    url: "<?php echo base_url()?>Sale/getproductname1",
                     data:{p_id:prodd},
                     type: 'POST',
                     success: function(data)
@@ -323,7 +323,7 @@ $(document).on("change",'.price',function(){
     //     var product_size = $('#product_size'+counter+'').val();
     //     if(product_num){
     //         $.ajax({
-    //         url:"<?php echo base_url();?>brsale/get_purchasedetails",
+    //         url:"<?php echo base_url();?>sale/get_purchasedetails",
     //         type: 'POST',
     //         data:{product_num:product_num,product_size:product_size},
     //         dataType: 'json',
@@ -352,7 +352,7 @@ $(document).on("change",'.product_num',function(){
     var product_id = $(this).val();
     if(product_id){
         $.ajax({
-        url:"<?php echo base_url();?>BRSale/getstock",
+        url:"<?php echo base_url();?>Sale/getstock",
         type: 'POST',
         data:{product_id:product_id,shop_id:shop_id},
         dataType: 'json',
@@ -414,7 +414,7 @@ $(document).on("change",'.product_num',function(){
         "serverSide": true,
         "bDestroy" : true,
         "ajax": {
-            "url": "<?php echo base_url();?>BRSale/get/",
+            "url": "<?php echo base_url();?>sale/get/",
             "type": "POST",
             "data" : function (d) {
                     d.product_num = $("#product").val();
@@ -428,7 +428,8 @@ $(document).on("change",'.product_num',function(){
             $table.cell(node).data(index+1);
             });
              $('td', row).eq(2).css('color','red');
-            $('td', row).eq(12).html('<center><a target ="_blank"  href="<?php echo base_url();?>BRSale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
+             $('td', row).eq(8).html(''+data['sale_shareholder_discount']+'(INR.'+data['sale_shareholder_discount_amount']+')');
+            $('td', row).eq(12).html('<center><a target ="_blank"  href="<?php echo base_url();?>Sale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
             },
         "columns": [
             { "data": "sale_status", "orderable": false },
@@ -466,7 +467,7 @@ $(document).on("change",'.product_num',function(){
                     "orderable": false
                 },
                 {
-                    "data": "tprice",
+                    "data": "sale_net_total",
                     "orderable": false
                 },
                 {
@@ -501,7 +502,7 @@ $(document).on("change",'.product_num',function(){
         var conf = confirm("Do you want to Delete All Item from This Sale ?");
         if (conf) {
             $.ajax({
-                url: "<?php echo base_url(); ?>BRSale/delete",
+                url: "<?php echo base_url(); ?>Sale/delete",
                 data: {
                     invoice_id: invoice_id
                 },
@@ -902,7 +903,7 @@ function send()
 //   if(member_id != '')
 //   {
 //    $.ajax({
-//     url:"<?php echo site_url('BRSale/get_memberaddress');?>",
+//     url:"<?php echo site_url('Sale/get_memberaddress');?>",
 //     method:"POST",
 //     data:{member_id:member_id},
 //     success:function(data)
@@ -919,7 +920,7 @@ $(document).on("change",'#customer_name',function(){
         var id = $(this).val();
         if(id){
             $.ajax({
-            url:"<?php echo base_url();?>BRSale/get_memberaddress",
+            url:"<?php echo base_url();?>Sale/get_memberaddress",
             type: 'POST',
             data:{id:id},
             dataType: 'json',
@@ -928,7 +929,7 @@ $(document).on("change",'#customer_name',function(){
             }
             });
             $.ajax({
-                url:"<?php echo base_url();?>BRSale/get_phone",
+                url:"<?php echo base_url();?>Sale/get_phone",
                 type: 'POST',
                 data:{id:id},
                 dataType: 'json',
@@ -937,7 +938,7 @@ $(document).on("change",'#customer_name',function(){
                 }
             });
             $.ajax({
-                url:"<?php echo base_url();?>BRSale/getOldBalance",
+                url:"<?php echo base_url();?>Sale/getOldBalance",
                 type: 'POST',
                 data:{id:id},
                 dataType: 'json',
@@ -983,7 +984,7 @@ $(document).on("change",'#customer_name',function(){
         var mem_id = this.value;
         //alert(mem_id);
         $.ajax({
-                url:"<?php echo base_url();?>BRSale/getMemberList",
+                url:"<?php echo base_url();?>Sale/getMemberList",
                 type: 'POST',
                 data:{mem_id:mem_id},
                 dataType: 'json',

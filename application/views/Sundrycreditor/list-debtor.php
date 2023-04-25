@@ -115,7 +115,7 @@
                                     $tasx = 0;
                                     $tot=0;
                                     $net=0;
-                                    foreach ($records as $row) {$i=$i+1;
+                                    foreach ($records as $row) {
                                         if($this->session->userdata('user_type')=="A")
                                         {
                                             $old_bal=$row->member_old_balance;
@@ -126,7 +126,9 @@
                                             $old_bal=$row->member_branch_old_balance;
                                             $current_bal=$row->member_branch_sale_balance;
                                         }
-                                    
+                                    if($old_bal!=0 || $current_bal!=0)
+                                    {
+                                        $i=$i+1;
                                     ?>
                                         <tr style="border:1px solid #0a0a0b;">
                                             <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
@@ -136,10 +138,19 @@
                                            <!--  <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($old_bal+ $current_bal)-($row->bamount+$row->ramount); ?></td> -->
                                            <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo ($old_bal+ $current_bal); ?></td>
                                         </tr>
-                                    <?php 
-                                    } ?>
+                                    <?php $tot=$tot+$old_bal;$net=$net+($old_bal+ $current_bal);}} ?>
+                                    
 
                                 </tbody>
+                                <tfoot>
+                                    <tr style="color:red;font-weight:bold;">
+                                        <td style="border:1px solid #0a0a0b;" colspan="2">TOTAL</td>
+                                        <td style="border:1px solid #0a0a0b;"><?php echo $tot; ?></td>
+                                        <td style="border:1px solid #0a0a0b;"></td>
+                                        <td style="border:1px solid #0a0a0b;text-align:right;"><?php echo $net; ?></td>
+                                    </tr>
+
+                                    </tfoot>
                                
                                
                             </table>

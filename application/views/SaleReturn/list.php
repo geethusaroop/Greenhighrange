@@ -68,9 +68,14 @@
 					          <th>SINO</th>
                     <th>SALE_DATE</th>
 					          <th>INVOICE</th>
-					          <th>MEMBER NAME</th>
-                    <th>RETURN QTY</th>
-                    <th>RETURN AMT</th>
+					          <th>MEMBER_NAME</th>
+                    <th>TOTAL_QTY</th>
+					          <th>SALE_AMOUNT</th>
+                    <th>DISCOUNT</th>
+                    <th>SHAREHOLDER_DISCOUNT(%)</th>
+                    <th>NET_TOTAL</th>
+                    <th>RETURN_QTY</th>
+                    <th>RETURN_AMT</th>
                     <th>RETURN_DATE</th>
                     <th class="text-center">ACTION</th>
                 </tr>

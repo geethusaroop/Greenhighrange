@@ -1,4 +1,5 @@
 <?php
+ob_start();
 defined('BASEPATH') or exit('No direct script access allowed');
 class Product extends MY_Controller
 {
@@ -11,6 +12,7 @@ class Product extends MY_Controller
 		if (!$this->is_logged_in()) {
 			redirect('/login');
 		}
+		$this->load->helper(array('url','html','form'));
 		$this->load->model('General_model');
 		$this->load->model('Product_model');
 		  $this->load->model('HSNcode_model');
@@ -52,8 +54,12 @@ class Product extends MY_Controller
 				'product_hsn' => strtoupper($this->input->post('product_hsn')),
 				'product_hsncode' => strtoupper($this->input->post('product_hsncode')),
 				'product_open_stock' => $this->input->post('product_open_stock'),
+				'product_stock' => $this->input->post('product_open_stock'),
 				'min_stock' => $this->input->post('min_stock'),
-				//'product_stock' => $this->input->post('product_open_stock'),
+				'product_price_r1' => $this->input->post('product_price_r1'),
+				'product_price_r2' => $this->input->post('product_price_r2'),
+				'product_price_r3' => $this->input->post('product_price_r3'),
+				'product_unit_type' => $this->input->post('product_unit_type'),
 				'product_des' => $this->input->post('product_des'),
 				'product_created_date' => date('Y-m-d'),
 				'product_updated_date' => date('Y-m-d'),
@@ -62,8 +68,43 @@ class Product extends MY_Controller
 			);
 			$product_id = $this->input->post('product_id');
 			if ($product_id) {
-				$data['product_id'] = $product_id;
-				$result = $this->General_model->update($this->table, $data, 'product_id', $product_id);
+
+				$openstock=$this->input->post('product_open_stock');
+				$openstock1=$this->input->post('product_open_stock1');
+				$product_stock=$this->input->post('product_stock');
+				if($openstock==$openstock1)
+				{
+					$stock=$product_stock;
+				}
+				else
+				{
+					$newstock=$product_stock-$openstock1;
+					$stock=$newstock+$openstock;
+				}
+
+				$data1 = array(
+					'branch_id_fk'=>$branch_id_fk,
+					'product_code' => strtoupper($this->input->post('prod_code')),
+					'product_name' => $this->input->post('product_name'),
+					'product_unit' => $this->input->post('product_unit'),
+					'product_hsn' => strtoupper($this->input->post('product_hsn')),
+					'product_hsncode' => strtoupper($this->input->post('product_hsncode')),
+					'product_open_stock' => $this->input->post('product_open_stock'),
+					'product_stock' => $stock,
+					'min_stock' => $this->input->post('min_stock'),
+					'product_price_r1' => $this->input->post('product_price_r1'),
+					'product_price_r2' => $this->input->post('product_price_r2'),
+					'product_price_r3' => $this->input->post('product_price_r3'),
+					'product_unit_type' => $this->input->post('product_unit_type'),
+					'product_des' => $this->input->post('product_des'),
+					'product_created_date' => date('Y-m-d'),
+					'product_updated_date' => date('Y-m-d'),
+					'product_status' => 1,
+					'product_category' => $this->input->post('product_category')
+				);
+
+				$data1['product_id'] = $product_id;
+				$result = $this->General_model->update($this->table, $data1, 'product_id', $product_id);
 				$response_text = 'Product updated successfully';
 			} else {
 				$result = $this->General_model->add($this->table, $data);
@@ -202,5 +243,115 @@ class Product extends MY_Controller
 	public function getSubCategories(){
 		$result=$this->Product_model->get_subcategories();
 		return $result;
+	}
+
+	//EXCEL IMPORT
+	public function addExcelProduct()
+	{
+			$template['body'] = 'Product/excel';
+			$template['script'] = 'Product/script';
+			$this->load->view('template', $template);
+
+	}
+
+	public function insert_Excel_Product()
+	{
+		$path = 'excel/';
+		require_once APPPATH . "/libraries/PHPExcel.php";
+		$config['upload_path'] = $path;
+		$config['allowed_types'] = 'xlsx|xls|csv';
+		$config['remove_spaces'] = TRUE;
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);            
+		if (!$this->upload->do_upload('uploadFile')) {
+			$error = array('error' => $this->upload->display_errors());
+		} else {
+			$data = array('upload_data' => $this->upload->data());
+		}
+		if(empty($error)){
+		  if (!empty($data['upload_data']['file_name'])) {
+			$import_xls_file = $data['upload_data']['file_name'];
+		} else {
+			$import_xls_file = 0;
+		}
+		$inputFileName = $path . $import_xls_file;
+		 
+		try {
+			$inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			$objPHPExcel = $objReader->load($inputFileName);
+			@$allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+			$count = count($allDataInSheet);
+			$flag = true;
+
+  		for($i=3;$i<=$count;$i++){
+		
+			 if($allDataInSheet[$i]['B']!="")
+			 {
+
+				$date ="2023-04-14";
+
+				if($allDataInSheet[$i]['J']=="")
+				{
+					$product_price_r1=0;
+				}
+				else
+				{
+					$product_price_r1=$allDataInSheet[$i]['J'];
+				}
+
+				if($allDataInSheet[$i]['K']=="")
+				{
+					$product_price_r2=0;
+				}
+				else
+				{
+					$product_price_r2=$allDataInSheet[$i]['K'];
+				}
+
+				if($allDataInSheet[$i]['L']=="")
+				{
+					$product_price_r3=0;
+				}
+				else
+				{
+					$product_price_r3=$allDataInSheet[$i]['L'];
+				}
+			  
+				$inserdata[$i]['product_name'] = $allDataInSheet[$i]['B'];
+				$inserdata[$i]['product_open_stock'] = $allDataInSheet[$i]['C'];
+				$inserdata[$i]['product_stock'] = $allDataInSheet[$i]['G'];
+				$inserdata[$i]['product_price_r1'] = $product_price_r1;
+				$inserdata[$i]['product_price_r2'] = $product_price_r2;
+				$inserdata[$i]['product_price_r3'] = $product_price_r3;
+				$inserdata[$i]['product_created_date'] = $date;
+				$inserdata[$i]['product_status'] = 1;
+				$result = $this->General_model->add($this->table,$inserdata[$i]);
+			//	var_dump($result);die;
+			}
+			
+			} 
+		  
+			 $response_text = 'Product Added successfully';
+
+			 if($result){
+
+	  $this->session->set_flashdata('response', "{&quot;text&quot;:&quot;$response_text&quot;,&quot;layout&quot;:&quot;topRight&quot;,&quot;type&quot;:&quot;success&quot;}");
+		  }
+		  else{
+				$this->session->set_flashdata('response', '{&quot;text&quot;:&quot;Something went wrong,please try again later&quot;,&quot;layout&quot;:&quot;bottomRight&quot;,&quot;type&quot;:&quot;error&quot;}');
+		  } 
+
+			 } catch (Exception $e) {
+		   die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME)
+				   . '": ' .$e->getMessage());
+		}
+	  }else{
+		  echo $error['error'];
+		 }
+
+
+		redirect('Product/', 'refresh');
+
 	}
 }

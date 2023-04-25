@@ -156,6 +156,8 @@ class Sale extends MY_Controller
 					'sale_netamt' => $sale_netamt[$i],
 					'sale_discount' => $this->input->post('discount_prices'),
 					'sale_shareholder_discount' => $this->input->post('sale_shareholder_discount'),
+					'sale_shareholder_discount_amount' => $this->input->post('sale_shareholder_discounts'),
+					'sale_net_total' => $this->input->post('sale_net_total'),
 					'sale_old_balance' => $this->input->post('sale_old_balance'),
 					'sale_new_balance' => $this->input->post('total_amt'),
 					'sale_paid_amount' => $this->input->post('pamount'), //Received AMount
@@ -261,6 +263,12 @@ class Sale extends MY_Controller
 			$updateData = array('product_stock' => $nwstk);
 
 			$datas = $this->General_model->update('tbl_product', $updateData, 'product_id', $records[$i]->product_id);
+
+
+			$datass = $this->General_model->get_row('tbl_member', 'member_id', $records[$i]->member_id_fk);
+				$updated_amount = $datass->member_sale_balance - ($records[$i]->sale_new_balance);
+				$mdata = array('member_sale_balance' => $updated_amount);
+				$result = $this->General_model->update('tbl_member', $mdata, 'member_id', $records[$i]->member_id_fk);
 		}
 		$updateDatas = array('sale_status' => 0);
 		$data = $this->General_model->update($this->table, $updateDatas, 'auto_invoice', $invoice_number);
@@ -498,6 +506,8 @@ class Sale extends MY_Controller
 		$dompdf->render();
 		// Output the generated PDF to Browser
 		$dompdf->stream("" . $auto_invoice . ".pdf");
+
+	//	$dompdf->stream("test.pdf", array("Attachment"=>0));
 	}
 
 	public function get_old_bal()
@@ -560,7 +570,7 @@ class Sale extends MY_Controller
 		$this->load->view('template', $template);
 	}
 
-	public function editReturnSale2()
+/* 	public function editReturnSale2()
 	{
 		$return_qty = $this->input->post('return_qty');
 		$return_price = $this->input->post('return_price');
@@ -586,6 +596,105 @@ class Sale extends MY_Controller
 		}
 		redirect('/Sale/SaleReturn/', 'refresh');
 	}
+ */
+
+		public function editReturnSale2()
+		{
+			$member_id_fk = $this->input->post('vendor_id');
+			$invoice_no = $this->input->post('invoice_no');
+			$return_qty = $this->input->post('return_qty');
+			$return_taxamount = $this->input->post('taxableamount');
+			$return_igst = $this->input->post('sale_igst');
+			$return_igstamt = $this->input->post('sale_igstamt');
+			$return_price = $this->input->post('return_price');
+			$return_date = $this->input->post('return_date');
+			$sale_idss = $this->input->post('sale_idss');
+			$product_id_fk = $this->input->post('product_id_fk');
+			$temp = count($sale_idss);
+			for ($i = 0; $i < $temp; $i++) 
+			{
+				if($return_qty[$i]!="")
+				{
+					$data = array(
+						'return_qty' => $return_qty[$i],
+						'return_taxamount' => $return_taxamount[$i],
+						'return_igst' => $return_igst[$i],
+						'return_igstamt' => $return_igstamt[$i],
+						'return_price' => $return_price[$i],
+						'return_date' => $return_date,
+						'return_status' => 1,
+					);
+						if (isset($sale_idss[$i])) {
+							$this->General_model->update('tbl_sale', $data, 'sale_id', $sale_idss[$i]);
+							$stok[$i] = $this->Sale_model->get_stoks($product_id_fk[$i]);
+							$nwstk = $stok[$i][0]->product_stock + $return_qty[$i];
+							$uData = array(
+								'product_stock' => $nwstk,
+							);
+							$result = $this->General_model->update('tbl_product', $uData, 'product_id', $product_id_fk[$i]);
+
+						}
+
+				
+						$data_return = array(
+							'sreturn_invoice_number' => $invoice_no,
+							'sreturn_member_id_fk' => $member_id_fk,
+							'sreturn_sale_id_fk' => $sale_idss[$i],
+							'sreturn_product_id_fk' => $product_id_fk[$i],
+							'sreturn_qty' => $return_qty[$i],
+							'sreturn_taxamount' => $return_taxamount[$i],
+							'sreturn_igst' => $return_igst[$i],
+							'sreturn_igstamt' => $return_igstamt[$i],
+							'sreturn_netamt' => $return_price[$i],
+							'sreturn_date' => $return_date,
+							'sreturn_status' => 1,
+						);
+						$this->General_model->add('tbl_sale_return', $data_return);
+
+				}
+			}
+	 
+	 $datass = $this->General_model->get_row('tbl_member', 'member_id', $member_id_fk);
+	 $updated_amount = $datass->member_sale_balance - ($this->input->post('netamt'));
+	 $mdata = array('member_sale_balance' => $updated_amount);
+	 $result = $this->General_model->update('tbl_member', $mdata, 'member_id', $member_id_fk);
+
+	 redirect('/Sale/Returninvoice/'. $invoice_no.'/'.$member_id_fk, 'refresh');
+ }
+
+		public function Returninvoice($invoice_no,$member_id_fk)
+		{
+			$template['body'] = 'SaleReturn/Invoice';
+			$template['script'] = 'SaleReturn/script';
+			$template['member'] = $this->General_model->get_row('tbl_member', 'member_id', $member_id_fk);
+			$template['records'] = $this->Sale_model->get_return_invc($invoice_no);
+			$this->load->view('template', $template);
+		}
+
+
+		public function Returnlist()
+		{
+			$template['body'] = 'SaleReturn/list-return';
+			$template['script'] = 'SaleReturn/script-return';
+				$this->load->view('template', $template);
+		}
+
+		public function getreturn()
+		{
+			$branch_id_fk = $this->session->userdata('branch_id_fk');
+			$param['draw'] = (isset($_REQUEST['draw'])) ? $_REQUEST['draw'] : '';
+			$param['length'] = (isset($_REQUEST['length'])) ? $_REQUEST['length'] : '10';
+			$param['start'] = (isset($_REQUEST['start'])) ? $_REQUEST['start'] : '0';
+			$param['order'] = (isset($_REQUEST['order'][0]['column'])) ? $_REQUEST['order'][0]['column'] : '';
+			$param['dir'] = (isset($_REQUEST['order'][0]['dir'])) ? $_REQUEST['order'][0]['dir'] : '';
+			$param['searchValue'] = (isset($_REQUEST['search']['value'])) ? $_REQUEST['search']['value'] : '';
+			$param['product_num'] = (isset($_REQUEST['product_num'])) ? $_REQUEST['product_num'] : '';
+			$param['start_date'] = (isset($_REQUEST['start_date'])) ? $_REQUEST['start_date'] : '';
+			$param['end_date'] = (isset($_REQUEST['end_date'])) ? $_REQUEST['end_date'] : '';
+			$data = $this->Sale_model->getSaleReturnDetails($param, $branch_id_fk);
+			$json_data = json_encode($data);
+			echo $json_data;
+		}
 
 
 	public function addmsg()

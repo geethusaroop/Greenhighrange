@@ -428,6 +428,7 @@ $(document).on("change",'.product_num',function(){
             $table.cell(node).data(index+1);
             });
              $('td', row).eq(2).css('color','red');
+             $('td', row).eq(8).html(''+data['sale_shareholder_discount']+'(INR.'+data['sale_shareholder_discount_amount']+')');
             $('td', row).eq(12).html('<center><a target ="_blank"  href="<?php echo base_url();?>Sale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
             },
         "columns": [
@@ -466,7 +467,7 @@ $(document).on("change",'.product_num',function(){
                     "orderable": false
                 },
                 {
-                    "data": "tprice",
+                    "data": "sale_net_total",
                     "orderable": false
                 },
                 {

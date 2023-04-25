@@ -63,4 +63,14 @@ class StockStatus extends MY_Controller {
 		$this->load->view('template', $template);
 	}
 
+
+	public function damage($product_id){
+		$template['body'] = 'StockStatus/list-damage';
+		$template['script'] = 'StockStatus/script-purchase';
+		$template['product_id'] =$product_id;
+		$template['records']= $this->Stockstatus_model->getdamage($product_id);
+		$template['record'] = $this->General_model->get_row('tbl_product', 'product_id', $product_id);
+		$this->load->view('template', $template);
+	}
+
 }

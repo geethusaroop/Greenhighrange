@@ -1244,23 +1244,19 @@
         var qty = $('#tamount_'+id).val();
         var prate = parseFloat(document.getElementById("rate_"+id).value);
         var total_amount = parseFloat(prate) * parseFloat(qty);
-        var discount_amount = parseFloat(total_amount);
-        var total = parseFloat(discount_amount);
+     //   var discount_amount = parseFloat(total_amount);
+      //  var total = parseFloat(discount_amount);
         var idx = 1;
-        document.getElementById("taxamount_"+id).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
-    }
-
-    function gettotalgrid(idx, bal) { //alert(idx);
-        var qty = parseFloat(document.getElementById("pquantity_" + idx).value);
-        var prate = parseFloat(document.getElementById("rate" + idx).value);
-        var total_amount = parseFloat(prate) * parseFloat(qty);
-        var discount_amount = parseFloat(total_amount);
-        var total = parseFloat(discount_amount);
-        document.getElementById("tamount" + idx).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
-        document.getElementById("taxamount" + idx).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
-        document.getElementById("netamt" + idx).value = isNaN(total) ? "0.00" : total.toFixed(2);
+        var igst1 = parseFloat(document.getElementById("sale_igst"+id).value);
+        var igst =igst1/100;
+        var igstamt=total_amount * igst;
+        var total=Math.round(parseFloat(total_amount) + parseFloat(igstamt));
+        document.getElementById("taxableamount_"+id).value = isNaN(total_amount) ? "0.00" : total_amount.toFixed(2);
+        document.getElementById("sale_igstamt"+id).value= isNaN(igstamt)?"0.00":igstamt.toFixed(2);
+        document.getElementById("taxamount_"+id).value= isNaN(total)?"0.00":total.toFixed(2);
         totalamt(idx);
     }
+
 
     function totalamt(idx) { //alert(idx);
         var total = 0;
@@ -1268,38 +1264,14 @@
         var total2 = 0;
         var total3 = 0;
         for (var i = 1; i <= idx; i++) {
-            var price = parseFloat(document.getElementById("netamt" + i).value);
-            var tamount = parseFloat(document.getElementById("tamount" + i).value);
-            var pquantity = parseFloat(document.getElementById("pquantity_" + i).value);
+            var price = parseFloat(document.getElementById("taxamount_" + i).value);
             total += isNaN(price) ? 0 : price;
-            total1 += isNaN(tamount) ? 0 : tamount;
-            total2 += isNaN(pquantity) ? 0 : pquantity;
         }
-        document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
-        document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("netamt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML = isNaN(total) ? "0.00" : total.toFixed(2);
     }
 
-    function getdiscamount() {
-        var total_amt1 = parseFloat(document.getElementById("net_total").value);
-        var discount_price = parseFloat(document.getElementById("discount_price").value);
-        var total = parseFloat(total_amt1) - parseFloat(discount_price);
-        document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
-        document.getElementById("net").innerHTML = isNaN(total) ? "0.00" : total.toFixed(2);
-    }
-
-    function getamount() {
-        var total_amt = parseFloat(document.getElementById("total_amt").value);
-        var paid_amt = parseFloat(document.getElementById("paid_amt").value);
-        if (total_amt > paid_amt) {
-            var total = parseFloat(total_amt) - parseFloat(paid_amt);
-        } else if (total_amt < paid_amt) {
-            var total = parseFloat(paid_amt) - parseFloat(total_amt);
-        }
-        document.getElementById("net_balances").value = isNaN(total) ? "0.00" : total.toFixed(2);
-    }
+   
 
     var options = {
         // url: "<?php echo base_url() ?>Sale/getproduct_names",

@@ -689,6 +689,7 @@ class Sale_model extends CI_Model
 
 
 		$date = date("d/m/Y", strtotime($array[0]->sale_date));
+		
 		$output = '<style>
 		' . file_get_contents(base_url() . "assets/bootstrap/css/bootstrap.min.css") . '
 		</style>';
@@ -702,103 +703,203 @@ class Sale_model extends CI_Model
       </div>
       <div class="row">
         <div class="col-md-12">
-          <small class="pull-right"><b>CIN:U01100KL2021PTC071331</b></small><br>
-          <center style="color:#cb262d;">
+          <center>
             <h4><b>GREENHIGHRANGE FARMERS PRODUCER COMPANY LIMITED</b></h4>
-            <p>[FPO Established under Govt of India scheme by NABARD and Peermade Development Society]</p>
-            <p>Green Highrange Farmer Producer Company Ltd,Building No, 106/14,Vakachuvadu, Prabhacity,Kanjikuzhy,Idukki, Kerala - 685606</p>
-            <p>Ph:+91 7907753352, Email:greenhighrangeidk@gmail.com</p>
-          </center>
-          <b>GSTIN:32BWUPG1355F1ZM</b><br>
-          <p class="pull-right">Date: ' . $date . '</p>
-          Invoice No. <b>' . $array[0]->invoice_number . '</b>
-          <br><br>
-          Buyer Details: <strong>' . $array[0]->member_name . '</strong>,
-		  ' . $array[0]->member_address . ',
-          , Phone: ' . $array[0]->member_pnumber . '
-          , Email: ' . $array[0]->member_email . '
+			<br><span style="font-weight: bold;font-size: 16px;">[FPO Established under Govt of India scheme by NABARD and Peermade Development Society]</span>
+			<br><span style="font-weight: bold;font-size: 16px;">Green Highrange Farmer Producer Company Ltd,Building No, 106/14,Vakachuvadu, Prabhacity,Kanjikuzhy,Idukki, Kerala - 685606</span>
+			<br><span style="font-weight:bold;font-size: 16px;"> Ph:+91 7907753352, Email:greenhighrangeidk@gmail.com
+				<br></span>
+			<span style="font-weight: bold;font-size: 16px;">GSTIN:32BWUPG1355F1ZM</span><br>
+			<span style="font-weight: bold;font-size: 16px;">CIN:U01100KL2021PTC071331</span>
+         
       </div>
     </div>
-    <br>
-      <!-- /.row -->
-      <!-- Table row -->
-      <div class="row">
+<hr>
+	<div class="row invoice-info">
+                    <div class="col-lg-12">
+					<table class="" width="100%" cellpadding="2" cellspacing="0">
+					<tr>
+					<td style="padding :2px;font-size: 14px;"><strong>Name</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<span style="color:black;font-style: "Times New Roman", Times, serif;">
+					' . $array[0]->member_name . '
+					</td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;"><b style="color:black"></b></td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;"><b style="color:black"></b></td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;"><b style="color:black"></b></td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;font-size: 14px;"><strong>Date</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<span style="color:black;font-style: "Times New Roman", Times, serif;">
+					' . $date . '
+					</td>
+					</tr>
+
+					<tr>
+					<td style="padding :2px;font-size: 14px;"><strong>Address</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<span style="color:black;font-style: "Times New Roman", Times, serif;">
+					' . $array[0]->member_address . '
+					</td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;"><b style="color:black"></b></td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;"><b style="color:black"></b></td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;"><b style="color:black"></b></td>
+					<td style="padding :2px;"><b style="color:black"></b></td>
+
+					<td style="padding :2px;font-size: 14px;"><strong>Bill No</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<span style="color:black;font-style: "Times New Roman", Times, serif;">
+					' . $array[0]->invoice_number  . '
+					</td>
+					</tr>
+
+					</div>
+
+	<br>
+	<div class="col-lg-12">
           <table width="100%" style="border-right:1px solid #ddd;border-left: 1px solid #ddd;">
             <thead>
-           <tr style="border-top: 1px solid #ddd;border-bottom:  1px solid #ddd;">
-              <th style="border-right: 1px solid #ddd;padding: 10px;">S.No.</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;">Particular or Discription of Goods</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;text-align: right;">HSN/SAC</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;">Unit Price</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;">Rate After Discount</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;text-align:center;">QTY</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;">Amount</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;">GST%</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;text-align:center;">TAX Amount</th>
-              <th style="border-right: 1px solid #ddd;padding: 10px;">Total Amount</th>
+           <tr style="border:ridge;">
+              <th style="text-align: left;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">S.No.</th>
+              <th style="text-align: left;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">Description of Goods</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">QTY</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">RATE</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">Discount(%)</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">Taxable_Amount</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">GST%</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">TaxAmt</th>
+			  <th style="text-align: right;padding :2px;border:ridge;text-transform:uppercase;font-size: 14px;">TOTAL</th>
           </tr>
             </thead>
             <tbody>
-              <tr style="border-bottom:  1px solid #ddd;"></tr>';
+              <tr style="border:ridge;"></tr>';
 		$sum = 0;
+		$quantity_sum = 0;
+		$dis = 0;
 		$j = 1;
 		for ($i = 0; $i < count($array); $i++) {
 			$output .= '	
             <tr>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">' . $j . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;font-weight: bold;">' . strtoupper($array[$i]->product_name) . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;font-weight: bold;">' . strtoupper($array[$i]->sale_hsn) . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">Rs.' . $array[$i]->sale_price . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">Rs.' . $array[$i]->discount_price . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">' . $array[$i]->sale_quantity . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">' . $array[$i]->total_price . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">' . $array[$i]->sale_igst . '%</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;">Rs.' . $array[$i]->taxamount . '</td>
-              <td style="border-right: 1px solid #ddd;padding: 10px;font-weight: bold;">Rs.' . $array[$i]->total_price . '</td>
+              <td style="border:ridge;padding: 10px;">' . $j . '</td>
+              <td style="border:ridge;padding:2px;font-weight: bold;">' . strtoupper($array[$i]->product_name) . '</td>
+              <td style="border:ridge;padding:2px;font-weight: bold;text-align: right;">' . strtoupper($array[$i]->sale_quantity) . '</td>
+              <td style="border:ridge;padding:2px;text-align: right;">' . $array[$i]->sale_price . '</td>
+              <td style="border:ridge;padding:2px;text-align: right;">' . $array[$i]->discount_price . '</td>
+              <td style="border:ridge;padding:2px;text-align: right;">' . $array[$i]->taxamount . '</td>
+              <td style="border:ridge;padding:2px;text-align: right;">' . $array[$i]->sale_igst . '</td>
+              <td style="border:ridge;padding:2px;text-align: right;">' . $array[$i]->sale_igstamt . '%</td>
+              <td style="padding: 10px;border:ridge;text-align: right;">' . $array[$i]->sale_netamt . '</td>
             </tr>';
 			$j++;
-			$sum += $array[$i]->total_price;
+		//	$sum += $array[$i]->total_price;
+
+			$sum = $sum + ($array[$i]->sale_price * $array[$i]->sale_quantity);
+                                $dis = $dis + $array[$i]->discount_price;
+                                $v = $sum - $dis;
+                                $quantity_sum = $quantity_sum + $array[$i]->sale_quantity;
 		}
 		$output .= '
-          <tr> <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;"></td>
-            <td style="border-right: 1px solid #ddd;padding :100px;"></td>
-          </tr>
+         
             </tbody>
-            <tfoot style="font-weight: bold;border-top:  1px solid #ddd;border-bottom: 1px solid #ddd;">
-              <tr>
-                <td style="border-right: 1px solid #ddd;" colspan="8"></td>  <td style="border-right: 1px solid #ddd;text-align: center;">Total</td><td style="padding: 10px;border-right: 1px solid #ddd;text-align: right;"><i class="fa fa-inr"></i>' . $sum . '</td>
-              </tr>
-            </tfoot>
+			<tr style="font-weight: bold;">
+			<td style="padding :2px;text-align: left;border:ridge;font-size: 14px;"></td>
+			<td style="padding :2px;text-align: left;border:ridge;font-size: 14px;">Total</td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;">'. $quantity_sum.'</td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;"></td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;"></td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;"></td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;"></td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;"></td>
+			<td style="text-align: right;padding :2px;border:ridge;font-size: 14px;">'.$array[0]->total_price.'</td>
+		</tr>
           </table>
            <table width="100%" style="border-right:1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;">
             <tr>
               <td style="padding: 10px;">Amount Chargable (In Words)<br>
-                <span style="font-weight: bold;">' . $this->convert2word($sum) . '</span>
+                <span style="font-weight: bold;">' . $this->convert2word($array[0]->sale_net_total) . '</span>
               </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-           </table>
-           <div class="row">
-             <div class="col-md-6"></div>
-             <div class="col-md-6">
-               <table width="100%">
-                 <tr>
-                   <br><br><br><br><br><br>
-                   <td><center>Authorised Signatory & Seal<center></td>
-                 </tr>
+			  <td style="padding :2px;"></td>
+			  <td style="padding :2px;"></td>
+			  <td style="padding :2px;"></td>
+			  <td style="padding :2px;"></td>
+			  <td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;">Total Amount</td>
+			  <td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;"><i class="fa fa-inr"></i> '.$array[0]->total_price.'</td>
+
+          </tr>';
+		  $net=($array[0]->total_price) - ($array[0]->sale_discount + $array[0]->sale_shareholder_discount);
+		  if ($array[0]->member_type == 1) {
+			$output .= '<tr>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;">Share Holder Discount Amount</td>
+			<td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;"><i class="fa fa-inr"></i>'.$array[0]->sale_shareholder_discount_amount.'</td>
+		</tr>';
+		  }
+		  
+			$output .= ' 
+			   <tr>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;">Discount Amount</td>
+			<td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;"><i class="fa fa-inr"></i>'.$array[0]->sale_discount.'</td>
+		</tr>
+
+		<tr>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="padding :2px;"></td>
+			<td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;">Net Amount</td>
+			<td style="text-align: right;padding :2px;font-weight:bold;font-size: 14px;"><i class="fa fa-inr"></i>'.$array[0]->sale_net_total.'</td>
+		</tr>
+		<tr>
+		<td style="padding :2px;border-bottom: ridge;"></td>
+		<td style="padding :2px;border-bottom: ridge;"></td>
+		<td style="padding :2px;border-bottom: ridge;"></td>
+		<td style="padding :2px;border-bottom: ridge;"></td>
+		<td style="padding :2px;border-bottom: ridge;"></td>
+		<td style="text-align: right;padding :2px;border-bottom: ridge;font-weight:bold;font-size: 14px;">Received Amount</td>
+		<td style="text-align: right;padding :2px;border-bottom: ridge;font-weight:bold;font-size: 14px;"><i class="fa fa-inr"></i>'. $array[0]->sale_paid_amount.'</td>
+	</tr>
+
+	<tr>
+		<td style="padding :2px;"></td>
+		<td style="padding :2px;"></td>
+		<td style="padding :2px;"></td>
+		<td style="padding :2px;"></td>
+		<td style="padding :2px;"></td>
+		<td style="padding :2px;"></td>
+		<td style="padding :2px;"></td>
+	</tr>
+
+	<tr>
+		<td style="padding: 2px;border:none;font-weight:bold;font-size: 14px;">Declaration<br>
+			<p style="font-weight: bold;font-size: 14px;">We declare that this invoice shows the actual price of the goods<br> described and that all particulars are true and correct.</p>
+
+		</td>
+		<td style="padding: 2px;border:none;font-weight: bold;"></td>
+		<td style="padding: 2px;border:none;"></td>
+		<td style="padding: 2px;border:none;font-weight: bold;"></td>
+		<td style="padding: 2px;border:none;"></td>
+		<td style="padding :2px;"></td>
+		<td style="padding: 2px;border:none;"><span style="float:right;font-weight: bold;font-size: 14px;">Authorised Signatory & Seal</span></td>
+
+	</tr>
                </table>
              </div>
+			 </div>
         <!-- /.col -->
       </div>
       <!-- /.row -->
@@ -907,7 +1008,7 @@ class Sale_model extends CI_Model
         if ($param['start'] != 'false' and $param['length'] != 'false') {
             $this->db->limit($param['length'],$param['start']);
         }
-		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates');
+		$this->db->select('*,DATE_FORMAT(return_date,\'%d/%m/%Y\') as return_date,DATE_FORMAT(sale_date,\'%d/%m/%Y\') as sale_dates,sum(return_qty) as return_qty,sum(return_price) as return_price,ROUND(SUM(sale_netamt),2) as total,sum(sale_quantity) as qty,tbl_sale.sale_discount as discount');
 		$this->db->from('tbl_sale');
 		$this->db->join('tbl_product','product_id = product_id_fk','left');
 		$this->db->join('tbl_member','member_id = member_id_fk');
@@ -977,4 +1078,93 @@ class Sale_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	public function getSaleReturnDetails($param,$branch_id_fk)
+	{
+		$arOrder = array('', 'product_num');
+		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+
+		if ($product_num) {
+			
+			$this->db->like('tbl_sale_return.sreturn_invoice_number', $product_num);
+			$this->db->or_like('member_name', $product_num);
+		}
+
+		if ($start_date && $end_date) {
+			$this->db->where('sreturn_date >=', $start_date);
+			$this->db->where('sreturn_date <=', $end_date);
+		}
+		if ($end_date) {
+			$this->db->where('sreturn_date <=', $end_date);
+		}
+		
+		$this->db->where("sreturn_status", 1);
+
+		if ($param['start'] != 'false' and $param['length'] != 'false') {
+			$this->db->limit($param['length'], $param['start']);
+		}
+		$this->db->select('*,COUNT(sreturn_invoice_number) as slcount,ROUND(SUM(sreturn_netamt),2) as total,,ROUND(SUM(sreturn_taxamount),2) as taxamount,ROUND(SUM(sreturn_igstamt),2) as igstamt,sum(sreturn_qty) as qty,DATE_FORMAT(sreturn_date,\'%d/%m/%Y\') as sreturn_dates');
+
+		$this->db->from('tbl_sale_return');
+		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale_return.sreturn_member_id_fk', 'left');
+		$this->db->group_by('sreturn_invoice_number');
+		$this->db->order_by('sreturn_date', 'ASC');
+		$query = $this->db->get();
+
+		$data['data'] = $query->result();
+		$data['recordsTotal'] = $this->getSaleReturnDetailsTotalCount($param,$branch_id_fk);
+		$data['recordsFiltered'] = $this->getSaleReturnDetailsTotalCount($param,$branch_id_fk);
+		//return $this->db->last_query();
+		return $data;
+	}
+	public function getSaleReturnDetailsTotalCount($param,$branch_id_fk)
+	{
+		$product_num = (isset($param['product_num'])) ? $param['product_num'] : '';
+		//$shop =(isset($param['shop']))?$param['shop']:'';
+		$start_date = (isset($param['start_date'])) ? $param['start_date'] : '';
+		$end_date = (isset($param['end_date'])) ? $param['end_date'] : '';
+		if ($product_num) {
+			
+			$this->db->like('tbl_sale_return.sreturn_invoice_number', $product_num);
+			$this->db->or_like('member_name', $product_num);
+		}
+
+		if ($start_date) {
+			$this->db->where('sreturn_date >=', $start_date);
+		}
+		if ($end_date) {
+			$this->db->where('sreturn_date <=', $end_date);
+		}
+		
+		$this->db->select('*');
+
+		//	$this->db->select('*,tbl_member.*,COUNT(sreturn_invoice_number) as slcount,SUM(total_price) as total,DATE_FORMAT(sreturn_date,\'%d/%m/%Y\') as sreturn_dates');
+		$this->db->from('tbl_sale_return');
+
+		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale_return.sreturn_member_id_fk', 'left');
+		//$this->db->join('tbl_member_type','tbl_member_type.member_type_id = tbl_member.member_type','left');
+		$this->db->where("sreturn_status", 1);
+		$this->db->order_by('sreturn_date', 'ASC');
+		$this->db->group_by('sreturn_invoice_number');
+
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function get_return_invc($invc_no)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_sale_return');
+		$this->db->where('sreturn_status', 1);
+		$this->db->join('tbl_product', 'tbl_product.product_id = tbl_sale_return.sreturn_product_id_fk', 'left');
+		$this->db->join('tbl_member', 'tbl_member.member_id = tbl_sale_return.sreturn_member_id_fk', 'left');
+		$this->db->join('tbl_sale', 'sale_id = tbl_sale_return.sreturn_sale_id_fk', 'left');
+		$this->db->group_by('product_id');
+		$this->db->where('tbl_sale_return.sreturn_invoice_number', $invc_no);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 }

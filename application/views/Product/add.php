@@ -100,12 +100,35 @@
                 <div class="col-md-6">
                   <label class="fsize">Opening Stock <span style="color:red"> *</span></label>
                   <input type="text" data-pms-required="true" autofocus class="form-control" name="product_open_stock"  value="<?php if(isset($records->product_open_stock)) echo $records->product_open_stock ?>">
+                  <input type="hidden"autofocus class="form-control" name="product_open_stock1"  value="<?php if(isset($records->product_open_stock)) echo $records->product_open_stock ?>">
+                  <input type="hidden" autofocus class="form-control" name="product_stock"  value="<?php if(isset($records->product_stock)) echo $records->product_stock ?>">
+
                 </div>
                 <div class="col-md-6">
                   <label class="fsize">Minimum Stock</label>
                   <input type="text" data-pms-required="true" autofocus class="form-control" name="min_stock"  value="<?php if(isset($records->min_stock)) echo $records->min_stock ?>">
                 </div>
               </div>
+              <?php //if(isset($records->product_id)){ ?>
+                
+                
+              <div class="form-group row">
+                <div class="col-md-4">
+                  <label class="fsize">R1 Price<span style="color:red"> *</span></label>
+                  <input type="text" data-pms-required="true" autofocus class="form-control" name="product_price_r1"  value="<?php if(isset($records->product_price_r1)) echo $records->product_price_r1 ?>">
+                </div>
+
+                <div class="col-md-4">
+                  <label class="fsize">R2 Price</label>
+                  <input type="text" data-pms-required="true" autofocus class="form-control" name="product_price_r2"  value="<?php if(isset($records->product_price_r2)) echo $records->product_price_r2 ?>">
+                </div>
+
+                <div class="col-md-4">
+                  <label class="fsize">R3 Price</label>
+                  <input type="text" data-pms-required="true" autofocus class="form-control" name="product_price_r3"  value="<?php if(isset($records->product_price_r3)) echo $records->product_price_r3 ?>">
+                </div>
+              </div>
+                <?php //} ?>
                <div class="form-group row">
                 <div class="col-md-12">
                   <label class="fsize">Description</label>
@@ -115,12 +138,25 @@
               <div class="form-group row">
                         <div class="col-md-6">
                           <label class="fsize">Product Type <span style="color:red"> *</span></label>
-                          <select name="product_category"  id="product_category" class="form-control" style="font-weight: bold;">
+                          <select name="product_category"  id="product_category" required class="form-control" style="font-weight: bold;">
                             <option value="">-SELECT-</option>
                               <option value="1" <?php if(isset($records->product_category)) { if($records->product_category==1){ echo "selected"; } } ?>>Purchased Product</option>
                               <option value="2" <?php if(isset($records->product_category)) { if($records->product_category==2){ echo "selected"; } } ?>>Production Item</option>
                             </select>
                         </div>
+
+                        <div class="col-md-6">
+                                <label class="fsize">Production Unit<span style="color:red"> *</span></label>
+                                <select name="product_unit_type"  id="product_unit_type" class="form-control" required style="font-weight: bold;">
+                                  <option value="">-SELECT-</option>
+                                  <option <?php if(isset($records->product_unit_type)) {if($records->product_unit_type==0){echo "selected";}} ?> value="0">Other Items</option>
+                                  <option <?php if(isset($records->product_unit_type)) {if($records->product_unit_type==1){echo "selected";}} ?> value="1">Masala Unit</option>
+                                  <option <?php if(isset($records->product_unit_type)) {if($records->product_unit_type==2){echo "selected";}} ?> value="2">Spices Unit</option>
+                                  <option <?php if(isset($records->product_unit_type)) {if($records->product_unit_type==3){echo "selected";}} ?> value="3">Oil Unit</option>
+                                  <option <?php if(isset($records->product_unit_type)) {if($records->product_unit_type==4){echo "selected";}} ?> value="4">Pickle Unit</option>
+                                  <option <?php if(isset($records->product_unit_type)) {if($records->product_unit_type==5){echo "selected";}} ?> value="5">Miscellaneous Unit</option>
+                                </select>
+                      </div>
               </div>
             <!-- /.box-header -->
           </div>

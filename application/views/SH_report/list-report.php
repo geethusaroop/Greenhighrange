@@ -95,7 +95,11 @@
                     <th style="border-color:#d4d6d5;">PAID_AMOUNT</th>
                     <th style="border-color:#d4d6d5;">NEW_BALANCE</th>
                     <th style="border-color:#d4d6d5;">NARRATION</th>
+                    <th style="border-color:#d4d6d5;">RETURN_QTY</th>
+                    <th style="border-color:#d4d6d5;">RETURN_AMOUNT</th>
+                    <th style="border-color:#d4d6d5;">NEW_BALANCE</th>
                     <th style="border-color:#d4d6d5;">BRANCH</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -103,6 +107,8 @@
                   $total1 = 0;
                   $total2 = 0;
                   $total3 = 0;
+                  $total4=0;
+                  $total5=0;
                   ?>
                   <?php foreach ($sale as $sh_report) { ?>
                     <tr>
@@ -118,12 +124,17 @@
                       <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->sale_paid_amount, 2); ?></td>
                       <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->sale_new_balance, 2); ?></td>
                       <td style="border-color:#d4d6d5;">PURCHASE BILL-<b><?php echo $sh_report->invoice_number; ?></b></td>
+                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo $sh_report->return_qty; ?></td>
+                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format($sh_report->return_price, 2); ?></td>
+                      <td style="border-color:#d4d6d5;text-align: center;"><?php echo number_format(($sh_report->sale_new_balance-$sh_report->return_price), 2); ?></td>
                       <td style="border-color:#d4d6d5;"><?php echo $sh_report->branch_name; ?></td>
                     </tr>
                   <?php 
                   $total1=$total1+$sh_report->tprice;
                   $total2=$total2+$sh_report->sale_paid_amount;
                   $total3=$total3+$sh_report->sale_new_balance;
+                  $total4=number_format($total4+$sh_report->return_price, 2);
+                  $total5=number_format($total5+($sh_report->sale_new_balance-$sh_report->return_price), 2);
                   } ?>
                 </tbody>
                  <tfoot>
@@ -139,6 +150,9 @@
                     <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo $total2; ?></td>
                     <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo $total3; ?></td>
                     <td style="border-color:#d4d6d5;font-weight: bold;"></td>
+                    <td style="border-color:#d4d6d5;font-weight: bold;"></td>
+                    <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo $total4; ?></td>
+                    <td style="border-color:#d4d6d5;font-weight: bold;text-align: center;"><?php echo $total5; ?></td>
                   </tr>
                 
                 </tfoot> 

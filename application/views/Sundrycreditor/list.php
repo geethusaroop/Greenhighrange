@@ -114,7 +114,14 @@
                                     $tasx = 0;
                                     $tot=0;
                                     $net=0;
-                                    foreach ($records as $row) {$i=$i+1; ?>
+                                    foreach ($records as $row) {
+                                    
+                                        $bal=round(($row->opening_balance+$row->purchase_amt)-($row->voucher_amount+$row->bamount),2);
+                                        if($bal!=0)
+                                        {
+                                            $i=$i+1;
+                                      
+                                    ?>
                                         <tr style="border:1px solid #0a0a0b;">
                                             <td style="border:1px solid #0a0a0b;"><?php echo $i; ?></td>
                                             <td style="border:1px solid #0a0a0b;"><?php echo $row->vendorname; ?></td>
@@ -122,7 +129,7 @@
                                             <td style="border:1px solid #0a0a0b;text-align:right;"></td>
                                         </tr>
                                     <?php 
-                                    } ?>
+                                    } } ?>
 
                                 </tbody>
                                

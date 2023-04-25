@@ -159,6 +159,10 @@
           else if ($this->uri->segment(1) == "Sale") {
             echo "active";
           }
+          else   if ($this->uri->segment(1) == "Damage") {
+            echo "active";
+          }
+     
 
           ?>">
          <a><i class="fa fa-shopping-cart"></i><span>Inventory</span>
@@ -171,7 +175,10 @@
 
          <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale"><i class="fa fa-circle-o"></i><span>Sale</span></a></li>
 
-         <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "SaleReturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale/SaleReturn"><i class="fa fa-circle-o"></i><span>Sale Return</span></a></li>
+         <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "SaleReturn") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale/SaleReturn"><i class="fa fa-circle-o"></i><span>Sales Return Form</span></a></li>
+
+
+         <li class="<?php if ($this->uri->segment(1) == "Sale" && $this->uri->segment(2) == "Returnlist") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Sale/Returnlist"><i class="fa fa-circle-o"></i><span>Sales Return Details</span></a></li>
 
          
            <li class="<?php if ($this->uri->segment(1) == "Purchaseitem") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Purchaseitem"><i class="fa fa-circle-o"></i><span>Purchase</span></a></li>
@@ -182,6 +189,27 @@
            <li class="<?php if ($this->uri->segment(1) == "Stock") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Stock"><i class="fa fa-circle-o"></i><span>Stock Details</span></a></li>
 
            <li class="<?php if ($this->uri->segment(1) == "StockStatus") {echo "active";} ?>"><a href="<?php echo base_url(); ?>StockStatus"><i class="fa fa-circle-o"></i><span>Stock Status</span></a></li>
+
+
+            <li class="treeview <?php
+          if ($this->uri->segment(1) == "Damage") {
+            echo "active";
+          }
+     
+          ?>">
+         <a><i class="fa fa-circle-o"></i><span>Damaged Product</span>
+           <span class="pull-right-container">
+             <i class="fa fa-angle-left pull-right"></i>
+           </span>
+         </a>
+         <ul class="treeview-menu ">
+         
+           <li class="<?php if ($this->uri->segment(1) == "Damage" && $this->uri->segment(2) == "add") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Damage/add"><i class="fa fa-circle-o"></i><span>Add</span></a></li>
+
+           <li class="<?php if ($this->uri->segment(1) == "Damage" && $this->uri->segment(2) == "") {echo "active";} ?>"><a href="<?php echo base_url(); ?>Damage/"><i class="fa fa-circle-o"></i><span>Manage</span></a></li>
+
+          </ul>
+       </li>
 
           </ul>
        </li>
@@ -586,9 +614,25 @@
       </ul>
        </li> 
 
-       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)==""){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Shareholder Purchase Report</span></a></li>
-       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="preport"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report/preport"><i class="fa fa-circle-o"></i> <span>Shareholder Sale Report</span></a></li>
+       <li class="treeview 
+       <?php 
+       if($this->uri->segment(1)=='SH_report'){echo "active";}
+     
+       ?>">
+            <a href="#"><i class="fa fa-circle-o"></i> Shareholder Report
+             <span class="pull-right-container">
+                 <i class="fa fa-angle-left pull-right"></i>
+             </span>
+            </a>
+       <ul class="treeview-menu">
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)==""){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report"><i class="fa fa-circle-o"></i> <span>Purchase Report</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="summary"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report/summary"><i class="fa fa-circle-o"></i> <span>Purchase Summary</span></a></li>
+       <li class="<?php if($this->uri->segment(1)=="SH_report" && $this->uri->segment(2)=="preport"){echo "active";}?>" ><a href="<?php echo base_url();?>SH_report/preport"><i class="fa fa-circle-o"></i> <span>Sale Report</span></a></li>
 
+      </ul>
+       </li> 
+
+   
      </ul>
          </li>
  

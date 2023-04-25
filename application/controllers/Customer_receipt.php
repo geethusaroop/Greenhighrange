@@ -168,6 +168,13 @@ class Customer_receipt extends MY_Controller {
 		$template['records'] = $this->Customer_receipt_model->getreceipt($receipt_id);
 		$this->load->view('template', $template);
 	}
+
+	public function gettotalamount()
+    {
+        $member_id_fk = $this->input->post('member_id_fk');
+        $data = $this->General_model->get_row('tbl_member','member_id',$member_id_fk);
+        echo json_encode($data);
+    }
 	
 	
 	

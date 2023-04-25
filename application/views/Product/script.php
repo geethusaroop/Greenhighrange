@@ -52,16 +52,17 @@ $(function () {
       $('td', row).eq(4).css( "font-weight", "bold" );
       $('td', row).eq(4).css( "text-align", "left" );
       $('td', row).eq(5).css( "font-weight", "bold" );
-      $('td', row).eq(5).css( "text-align", "center" );
       $('td', row).eq(6).css( "font-weight", "bold" );
-    
-     $('td', row).eq(6).html('<center><a href="<?php echo base_url();?>index.php/Product/edit/'+data['product_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['product_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
+      $('td', row).eq(6).css( "text-align", "center" );
+
+     $('td', row).eq(7).html('<center><a href="<?php echo base_url();?>index.php/Product/edit/'+data['product_id']+'"><i class="fa fa-edit iconFontSize-medium" ></i></a> &nbsp;&nbsp;&nbsp;<a onclick="return confirmDelete('+data['product_id']+')"><i class="fa fa-trash-o iconFontSize-medium" ></i></a></center>');
     },
     "columns": [
       { "data": "product_status", "orderable": false },
       { "data": "product_name", "orderable": false },
       { "data": "product_code", "orderable": false },
        { "data": "product_hsncode", "orderable": false },
+       { "data": "product_open_stock", "orderable": false },
        { "data": "product_stock", "orderable": false },
       { "data": "unit_name", "orderable": false },
       { "data": "product_status", "orderable": false }

@@ -100,7 +100,7 @@ function addMore() {
 	
 	$.ajax({
 			
-			url: "<?php echo base_url()?>BRSale/getproductname",
+			url: "<?php echo base_url()?>Sale/getproductname",
             type: 'POST',
             success: function(data)
             {		
@@ -128,7 +128,7 @@ function addMore() {
             // if(product_id_fk != '')
             //     {
             //         $.ajax({
-            //               url: "<?php echo base_url();?>BRSale/getprice",
+            //               url: "<?php echo base_url();?>Sale/getprice",
             //               method:"POST", //This is the form method
             //               data:{product_id_fk:product_id_fk},
             //               type: "application/json",
@@ -147,7 +147,7 @@ function addMore() {
             // });
     $.ajax({
             type: "POST",
-            url: "<?php echo base_url()?>BRSale/gettax",
+            url: "<?php echo base_url()?>Sale/gettax",
             success: function(cities)
             { 
             
@@ -178,7 +178,7 @@ $(document).on("change",'.product_num',function(){
     if(p_id)    
      {
          $.ajax({
-             url:"<?php echo base_url();?>BRSale/get_price",
+             url:"<?php echo base_url();?>Sale/get_price",
             data:{p_id:p_id},
             type:'POST',
             dataType:"json",
@@ -245,7 +245,7 @@ $(document).on("change",'.amountclass',function(){
                 let product_name = '';
                 var k = $('#total_price_'+counter+'').val();
                 $.ajax({
-                    url: "<?php echo base_url()?>BRSale/getproductname1",
+                    url: "<?php echo base_url()?>Sale/getproductname1",
                     data:{p_id:prodd},
                     type: 'POST',
                     success: function(data)
@@ -337,7 +337,7 @@ $(document).on("change",'.price',function(){
 		var product_size = $('#product_size'+counter+'').val();
 		if(product_num){
 			$.ajax({
-            url:"<?php echo base_url();?>BRSale/get_purchasedetails",
+            url:"<?php echo base_url();?>sale/get_purchasedetails",
             type: 'POST',
 			data:{product_num:product_num,product_size:product_size},
             dataType: 'json',
@@ -357,7 +357,7 @@ $(document).on("change",'.product_num',function(){
 	var product_id = $(this).val();
 	if(product_id){
 		$.ajax({
-		url:"<?php echo base_url();?>BRSale/getstock",
+		url:"<?php echo base_url();?>Sale/getstock",
 		type: 'POST',
 		data:{product_id:product_id,shop_id:shop_id},
 		dataType: 'json',
@@ -423,7 +423,7 @@ $(document).on("change",'.product_num',function(){
         "bDestroy" : true,
         
         "ajax": {
-            "url": "<?php echo base_url();?>BRSale/get/",
+            "url": "<?php echo base_url();?>sale/get/",
             "type": "POST",
             "data" : function (d) {
                     d.product_num = $("#product").val();
@@ -437,7 +437,7 @@ $(document).on("change",'.product_num',function(){
             $table.column(0).nodes().each(function(node,index,dt){
             $table.cell(node).data(index+1);
             });
-			$('td', row).eq(6).html('<center><a target ="_blank"  href="<?php echo base_url();?>BRSale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
+			$('td', row).eq(6).html('<center><a target ="_blank"  href="<?php echo base_url();?>Sale/invoiceview/'+data['invoice_number']+'"><i class="fa  fa-file iconFontSize-medium" ></i></a></center>');
             },
         "columns": [
             { "data": "sale_status", "orderable": false },
@@ -886,7 +886,7 @@ function send()
 //   if(member_id != '')
 //   {
 //    $.ajax({
-//     url:"<?php echo site_url('BRSale/get_memberaddress');?>",
+//     url:"<?php echo site_url('Sale/get_memberaddress');?>",
 //     method:"POST",
 //     data:{member_id:member_id},
 //     success:function(data)
@@ -905,7 +905,7 @@ $(document).on("change",'#customer_nam',function(){
         var id = $(this).val();
         if(id){
             $.ajax({
-            url:"<?php echo base_url();?>BRSale/get_memberaddress",
+            url:"<?php echo base_url();?>Sale/get_memberaddress",
             type: 'POST',
             data:{id:id},
             dataType: 'json',
@@ -915,7 +915,7 @@ $(document).on("change",'#customer_nam',function(){
             });
             
             $.ajax({
-                url:"<?php echo base_url();?>BRSale/get_phone",
+                url:"<?php echo base_url();?>Sale/get_phone",
                 type: 'POST',
                 data:{id:id},
                 dataType: 'json',
@@ -963,8 +963,8 @@ $(document).on("change",'#customer_nam',function(){
     element3.setAttribute("class", "democlass");
     element3.id = "product_code"+rowCount;
       //  element8.required = "required";
-     //   element3.onkeyup=function() {getdata(rowCount,this);}
-     element3.onblur=function() {getprod(rowCount);}
+      element3.onblur=function() {getprod(rowCount);}
+       // element3.onkeyup=function() {getdata(rowCount,this);}
         cell3.appendChild(element3);
             var cell4 = row.insertCell(3);
     var element4 = document.createElement("input");
@@ -1035,7 +1035,7 @@ $(document).on("change",'#customer_nam',function(){
         element9.setAttribute("size", "6");
         element9.setAttribute("class", "democlass");
         element9.id = "discount_"+rowCount;
-      //  element8.required = "required";
+        element9.value = "0";
       element9.onkeyup=function() {gettotalgrid(rowCount,this);}
         cell9.appendChild(element9);
     
@@ -1153,9 +1153,9 @@ $(document).on("change",'#customer_nam',function(){
 
 
         var options = {
-        // url: "<?php echo base_url() ?>BRSale/getproduct_names",
+        // url: "<?php echo base_url() ?>Sale/getproduct_names",
         url: function(phrase) {
-            return "<?php echo base_url() ?>BRSale/getproduct_names?phrase=" + phrase + "&format=json";
+            return "<?php echo base_url() ?>Sale/getproduct_names?phrase=" + phrase + "&format=json";
         },
         getValue: "name",
         list: {
@@ -1166,51 +1166,11 @@ $(document).on("change",'#customer_nam',function(){
     };
     $("#product_name"+rowCount).easyAutocomplete(options);
 
-
-    function getprod(row)
-    {
-                  $.ajax({
-                      type: 'POST',
-                      url: '<?php echo base_url() . 'index.php/BRSale/getProductcodeDetails1'; ?>',
-                      data: {
-                          p_name: $("#product_code"+row).val()
-                      },
-                      success: function(data) {
-                          d = JSON.parse(data);
-                          console.log(d);
-                          $('#product_name'+row).html(d.prod_cod);
-                          $('#product_name'+row).val(d.prod_cod);
-                          $('#product_num'+row).html(d.prod_id);
-                          $('#product_num'+row).val(d.prod_id);
-                          $('#hsn'+row).html(d.hsncode);
-                          $('#hsn'+row).val(d.hsncode);
-
-                          $('#igst'+row).html(d.igst);
-                          $('#igst'+row).val(d.igst);
-
-                          $('#cgst'+row).html(d.cgst);
-                          $('#cgst'+row).val(d.cgst);
-
-                          $('#sgst'+row).html(d.sgst);
-                          $('#sgst'+row).val(d.sgst);
-
-                          $('#prod_branch_id'+row).html(d.prod_id_branch);
-                          $('#prod_branch_id'+row).val(d.prod_id_branch);
-                          
-                          $('#quant').html(d.stock);
-                          $('#myDiv').show();
-                      },
-                      error: function() {
-                      }
-                  });
-    }
-
-
     function getproductdetails(rowCount)
     { 
                   $.ajax({
                       type: 'POST',
-                      url: '<?php echo base_url() . 'index.php/BRSale/getProductDetails1'; ?>',
+                      url: '<?php echo base_url() . 'index.php/Sale/getProductDetails1'; ?>',
                       data: {
                           p_name: $("#product_name"+row).val()
                       },
@@ -1224,15 +1184,15 @@ $(document).on("change",'#customer_nam',function(){
                           $('#hsn'+row).html(d.hsncode);
                           $('#hsn'+row).val(d.hsncode);
 
-                          $('#igst'+row).html(d.igst);
-                          $('#igst'+row).val(d.igst);
+                            $('#igst'+row).html(d.igst);
+                            $('#igst'+row).val(d.igst);
 
-                          $('#cgst'+row).html(d.cgst);
-                          $('#cgst'+row).val(d.cgst);
+                            $('#cgst'+row).html(d.igst);
+                            $('#cgst'+row).val(d.igst);
 
-                          $('#sgst'+row).html(d.sgst);
-                          $('#sgst'+row).val(d.sgst);
-
+                            $('#sgst'+row).html(d.igst);
+                            $('#sgst'+row).val(d.igst);
+                        
                           $('#prod_branch_id'+row).html(d.prod_id_branch);
                           $('#prod_branch_id'+row).val(d.prod_id_branch);
                           
@@ -1248,7 +1208,7 @@ $(document).on("change",'#customer_nam',function(){
     { //alert($("#product_num"+row).val());
                   $.ajax({
                       type: 'POST',
-                      url: '<?php echo base_url() . 'index.php/BRSale/getProductDetails2'; ?>',
+                      url: '<?php echo base_url() . 'index.php/Sale/getProductDetails2'; ?>',
                       data: {
                         product_num: $("#prod_branch_id_"+row).val(),rate_type: $("#rate_type"+row).val()
                       },
@@ -1307,15 +1267,27 @@ $(document).on("change",'#customer_nam',function(){
 
         var sale_old_balance = parseFloat(document.getElementById("sale_old_balance").value);
         var discount_price = parseFloat(document.getElementById("discount_prices").value);
-     //   var total_amt=total+sale_old_balance;
-     //  var nettotal=total_amt-discount_price;
+     /*    var total_amt=total+sale_old_balance;
+       var nettotal=total_amt-discount_price; */
 
-        var total_amt=total;
-       var nettotal=total_amt-discount_price;
+       var total_amt=total;
+       var sharedisc1 = parseFloat(document.getElementById("sale_shareholder_discount").value);
+        if(sharedisc1)
+        {
+            var sharedisc =sharedisc1/100;
+            var total_disc = parseFloat(total_amt) * parseFloat(sharedisc) ;
+        }
+        else
+        {
+            var total_disc=0;
+        }
+       var nettotal=Math.round(total_amt-(total_disc+discount_price));
+      // var nettotal=total_amt-discount_price;
       
         document.getElementById("net_total").value = isNaN(total_amt) ? "0.00" : total_amt.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
+        document.getElementById("sale_net_total").value=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
       
        /*  document.getElementById("net_total").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("qty_total").value = isNaN(total2) ? "0.00" : total2.toFixed(2);
@@ -1332,15 +1304,42 @@ function gettotal(idx,bal)
         var prate = parseFloat(document.getElementById("rate"+idx).value);
    
         var total_amount = parseFloat(prate) * parseFloat(qty);
+
+        var cgst1 = parseFloat(document.getElementById("cgst"+idx).value);
+            var cgst =cgst1/100;
+             var sgst1 = parseFloat(document.getElementById("sgst"+idx).value);
+            var sgst =sgst1/100;
+              var igst1 = parseFloat(document.getElementById("igst"+idx).value);
+            var igst =igst1/100;
+            var discount=parseFloat(document.getElementById("discount_"+idx).value);
+            if(discount >0)
+            {
+                var discount_amount = parseFloat(total_amount) - ((parseFloat(total_amount) * parseFloat(discount)) / 100);
+            }
+             else
+             {
+                var discount_amount = parseFloat(total_amount);
+             }
+              var cgstamt=discount_amount * cgst;
+             var sgstamt=discount_amount * sgst;
+               var igstamt=discount_amount * igst;
+                 var total= parseFloat(discount_amount) + parseFloat(igstamt);
+      //  alert(total);
+            document.getElementById("tamount"+idx).value= isNaN(discount_amount)?"0.00":discount_amount.toFixed(2);
+              document.getElementById("taxamount"+idx).value= isNaN(discount_amount)?"0.00":discount_amount.toFixed(2);
+               document.getElementById("cgstamt"+idx).value= isNaN(cgstamt)?"0.00":cgstamt.toFixed(2);
+              document.getElementById("sgstamt"+idx).value= isNaN(sgstamt)?"0.00":sgstamt.toFixed(2);
+              document.getElementById("igstamt"+idx).value= isNaN(igstamt)?"0.00":igstamt.toFixed(2);
+                document.getElementById("netamt"+idx).value= isNaN(total)?"0.00":total.toFixed(2);
       
-        var discount_amount = parseFloat(total_amount);
+       /*  var discount_amount = parseFloat(total_amount);
        
         var total = parseFloat(discount_amount);
       //  var idx = 1;
         document.getElementById("tamount"+idx).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
         document.getElementById("taxamount"+idx).value = isNaN(discount_amount) ? "0.00" : discount_amount.toFixed(2);
       
-        document.getElementById("netamt"+idx).value = isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("netamt"+idx).value = isNaN(total) ? "0.00" : total.toFixed(2); */
         totalamt(idx);
             
 }
@@ -1407,8 +1406,21 @@ function totalamt(idx) { //alert(idx);
        // var nettotal=total-discount_price;
      //  var nettotal=total_amt-discount_price;
 
-     var total_amt=total;
-       var nettotal=total_amt-discount_price;
+        var total_amt=total;
+        var sharedisc1 = parseFloat(document.getElementById("sale_shareholder_discount").value);
+
+        if(sharedisc1)
+        {
+            var sharedisc =sharedisc1/100;
+            var total_disc = parseFloat(total_amt) * parseFloat(sharedisc) ;
+        }
+        else
+        {
+            var total_disc=0;
+        }
+        //  var nettotal=total_amt-discount_price;
+        var nettotal =Math.round(parseFloat(total_amt)-(parseFloat(discount_price) +(parseFloat(total_disc))));
+    //   var nettotal=total_amt-discount_price;
 
        var gross_total=total+sale_old_balance;
       
@@ -1418,6 +1430,7 @@ function totalamt(idx) { //alert(idx);
       //  document.getElementById("pamount").value = isNaN(total) ? "0.00" : total.toFixed(2);
       //  document.getElementById("total_amt").value = isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);//balance
         document.getElementById("net").innerHTML=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
+        document.getElementById("sale_net_total").value=isNaN(nettotal) ? "0.00" : nettotal.toFixed(2);
     }
 
 function getdiscamount() {
@@ -1434,14 +1447,15 @@ function getdiscamount() {
         var sharedisc =sharedisc1/100;
        var total_amt1 = parseFloat(document.getElementById("net_total").value);
         var discount_price = parseFloat(document.getElementById("discount_prices").value);
-       // var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;
+      //  var total = parseFloat(total_amt1) -(parseFloat(discount_price)+parseFloat(sharedisc)) ;
 
         var total1 = parseFloat(total_amt1) * parseFloat(sharedisc) ;
 
-      //  var total =parseFloat(total1) -(parseFloat(discount_price));
-        var total =parseFloat(total_amt1)-(parseFloat(total1) +(parseFloat(discount_price)));
+        var total =Math.round(parseFloat(total_amt1)-(parseFloat(total1) +(parseFloat(discount_price))));
+
        // document.getElementById("total_amt").value = isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("net").innerHTML=isNaN(total) ? "0.00" : total.toFixed(2);
+        document.getElementById("sale_net_total").value=isNaN(total) ? "0.00" : total.toFixed(2);
         document.getElementById("sale_shareholder_discounts").value=isNaN(total1) ? "0.00" : total1.toFixed(2);
     }
 
@@ -1487,7 +1501,7 @@ function getcustomer()
         var mem_id = this.value;
         //alert(mem_id);
         $.ajax({
-                url:"<?php echo base_url();?>BRSale/getMemberList",
+                url:"<?php echo base_url();?>Sale/getMemberList",
                 type: 'POST',
                 data:{mem_id:mem_id},
                 dataType: 'json',
@@ -1507,24 +1521,24 @@ function getcustomer()
       
         var mem_id = this.value;
         $.ajax({
-                url: "<?php echo base_url(); ?>BRSale/get_old_bal",
+                url: "<?php echo base_url(); ?>Sale/get_old_bal",
                 type: 'POST',
                 data: {
                     vid: mem_id
                 },
                 dataType: 'json',
                 success: function(data) {
-                    $('#sale_old_balance').html(data[0]['bmb_sale_balance']);
-                    $('#sale_old_balance').val(data[0]['bmb_sale_balance']);
+                    $('#sale_old_balance').html(Number(data[0]['member_old_balance'])+Number(data[0]['member_sale_balance']));
+                    $('#sale_old_balance').val(Number(data[0]['member_old_balance'])+Number(data[0]['member_sale_balance']));
                    
                 }
             });
     })
 
     var options = {
-        // url: "<?php echo base_url() ?>BRSale/getproduct_names",
+        // url: "<?php echo base_url() ?>Sale/getproduct_names",
         url: function(phrase) {
-            return "<?php echo base_url() ?>BRSale/getproduct_names?phrase=" + phrase + "&format=json";
+            return "<?php echo base_url() ?>Sale/getproduct_names?phrase=" + phrase + "&format=json";
         },
         getValue: "name",
         list: {
@@ -1536,10 +1550,10 @@ function getcustomer()
     $("#product_name1").easyAutocomplete(options);
 
     function getprod(row)
-    {
+    { 
                   $.ajax({
                       type: 'POST',
-                      url: '<?php echo base_url() . 'index.php/BRSale/getProductcodeDetails1'; ?>',
+                      url: '<?php echo base_url() . 'index.php/Sale/getProductcodeDetails1'; ?>',
                       data: {
                           p_name: $("#product_code"+row).val()
                       },
@@ -1556,17 +1570,19 @@ function getcustomer()
                           $('#igst'+row).html(d.igst);
                           $('#igst'+row).val(d.igst);
 
-                          $('#cgst'+row).html(d.igst);
-                          $('#cgst'+row).val(d.igst);
+                          $('#cgst'+row).html(d.cgst);
+                          $('#cgst'+row).val(d.cgst);
 
-                          $('#sgst'+row).html(d.igst);
-                          $('#sgst'+row).val(d.igst);
+                          $('#sgst'+row).html(d.sgst);
+                          $('#sgst'+row).val(d.sgst);
 
                           $('#prod_branch_id'+row).html(d.prod_id_branch);
                           $('#prod_branch_id'+row).val(d.prod_id_branch);
                           
                           $('#quant').html(d.stock);
                           $('#myDiv').show();
+
+                          $('#rate_type'+row).focus();
                       },
                       error: function() {
                       }
@@ -1577,7 +1593,7 @@ function getcustomer()
     { 
                   $.ajax({
                       type: 'POST',
-                      url: '<?php echo base_url() . 'index.php/BRSale/getProductDetails1'; ?>',
+                      url: '<?php echo base_url() . 'index.php/Sale/getProductDetails1'; ?>',
                       data: {
                           p_name: $("#product_name"+row).val()
                       },
@@ -1594,17 +1610,20 @@ function getcustomer()
                           $('#igst'+row).html(d.igst);
                           $('#igst'+row).val(d.igst);
 
-                          $('#cgst'+row).html(d.igst);
-                          $('#cgst'+row).val(d.igst);
+                          $('#cgst'+row).html(d.cgst);
+                          $('#cgst'+row).val(d.cgst);
 
-                          $('#sgst'+row).html(d.igst);
-                          $('#sgst'+row).val(d.igst);
+                          $('#sgst'+row).html(d.sgst);
+                          $('#sgst'+row).val(d.sgst);
 
                           $('#prod_branch_id'+row).html(d.prod_id_branch);
                           $('#prod_branch_id'+row).val(d.prod_id_branch);
                           
                           $('#quant').html(d.stock);
                           $('#myDiv').show();
+
+                          $('#rate_type'+row).focus();
+
                       },
                       error: function() {
                       }
@@ -1615,7 +1634,7 @@ function getcustomer()
     { //alert($("#product_num"+row).val());
                   $.ajax({
                       type: 'POST',
-                      url: '<?php echo base_url() . 'index.php/BRSale/getProductDetails2'; ?>',
+                      url: '<?php echo base_url() . 'index.php/Sale/getProductDetails2'; ?>',
                       data: {
                         product_num: $("#product_num"+row).val(),rate_type: $("#rate_type"+row).val()
                       },

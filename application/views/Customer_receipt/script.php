@@ -129,4 +129,19 @@ $(document).on('change','#vouch_name',function(){
 
     }
     }
+
+    $('#member_id_fk').on('change',function(){
+    var member_id_fk = this.value;
+    $.ajax({
+            url:"<?php echo base_url();?>Customer_receipt/gettotalamount",
+            data:{member_id_fk:member_id_fk},
+            method:"POST",
+            datatype:"json",
+            success:function(data){
+                var options = $.parseJSON(data);
+                $('#total_amount').val(options.member_sale_balance);
+                $('#total_amount').html(options.member_sale_balance);
+            }
+        });
+  })
 </script>
